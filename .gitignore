@@ -1,0 +1,34 @@
+# PATRIX - .gitignore
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dépendances (si ajout futur)
+node_modules/
+bower_components/
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache/
+
+# Builds (si ajout futur)
+dist/
+build/
+
+# Environnement
+.env
+.env.local

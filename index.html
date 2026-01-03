@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Patri-X - Transforme le désespoir en grands rêves. Un jeu de blocs inspirant.">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4fc3f7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PATRI-X">
+    
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="assets/images/icon-32.svg">
+    <link rel="icon" type="image/svg+xml" sizes="192x192" href="assets/images/icon-192.svg">
+    <link rel="apple-touch-icon" href="assets/images/icon-192.svg">
+
+    <title>Patri-X - Transformer le Désespoir en Grands Rêves</title>
+    
+    <!-- Styles CSS modulaires -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Conteneur principal - Grille maximisée -->
+    <div class="game-wrapper">
+        <!-- Grille de jeu maximisée -->
+        <div class="game-board">
+            <!-- Top bar - Panneau d'affichage mécanique compact -->
+            <div class="mechanical-display">
+                <div class="display-section title-section">
+                    <span class="game-title">PATRI-X</span>
+                </div>
+                
+                <div class="display-section next-section">
+                    <div class="next-content">
+                        <div class="next-grid" id="nextGrid"></div>
+                        
+                        <div class="stats-container">
+                            <div class="stat-line">
+                                <span class="stat-label">LINES</span>
+                                <span class="stat-value" id="lines">000</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">COMBO</span>
+                                <span class="stat-value combo-value" id="combo">00</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">SCORE</span>
+                                <span class="stat-value" id="score">000000</span>
+                            </div>
+                            <div class="combo-crosses" id="comboCrosses">
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="next-header">
+                        <span class="display-label">NEXT</span>
+                        <div class="swap-indicator">
+                            <div class="swap-dots" id="swapDots">
+                                <div class="swap-dot"></div>
+                                <div class="swap-dot"></div>
+                                <div class="swap-dot"></div>
+                            </div>
+                        </div>
+                        <div class="wall-break-indicator" id="wallBreakIndicator">
+                            <div class="wall-charges" id="wallCharges">
+                                <div class="wall-charge"></div>
+                                <div class="wall-charge"></div>
+                                <div class="wall-charge"></div>
+                            </div>
+                        </div>
+                        <div class="stat-line">
+                            <span class="stat-label">LEVEL</span>
+                            <span class="stat-value" id="level">00</span>
+                        </div>
+                        <button class="trophy-button-compact" id="trophyBtn">🏆</button>
+                        <button class="game-button-mini" id="audioBtn" title="Son">🔊</button>
+                        <button class="game-button-mini" id="musicBtn" title="Musique">🎵</button>
+                        <button class="game-button-mini" id="pauseBtn">⏸</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Canvas pour tracer les lignes -->
+            <canvas id="connectionCanvas" class="connection-canvas"></canvas>
+            <!-- La grille sera générée par JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Panel Game Over -->
+    <div class="game-over-panel" id="gameOver">
+        <h2>Partie Terminée</h2>
+        <p id="gameOverMessage">Continue de rêver !</p>
+        <p>Score Final: <span id="finalScore">0</span></p>
+        <button class="game-button" id="restartBtn">Recommencer</button>
+    </div>
+    
+    <!-- Panel Pause -->
+    <div class="pause-panel" id="pausePanel">
+        <h2>⏸️ Pause</h2>
+        <p style="color: #ffeb3b; margin-top: 10px;">Appuyez sur P ou Échap pour continuer</p>
+    </div>
+    
+    <!-- Modal Trésor -->
+    <div class="treasure-modal" id="treasureModal">
+        <div class="treasure-content">
+            <div class="treasure-icon">💎</div>
+            <div class="treasure-level">Niveau <span id="treasureLevel">1</span></div>
+            <div class="treasure-message" id="treasureMessage"></div>
+            <button class="treasure-button" id="treasureContinue">Continuer ✨</button>
+        </div>
+    </div>
+    
+    <!-- Modal Trophée -->
+    <div class="trophy-modal" id="trophyModal">
+        <div class="trophy-content">
+            <div class="trophy-banner">🏆 TROPHÉE DÉBLOQUÉ 🏆</div>
+            <div class="trophy-icon" id="trophyIcon">⭐</div>
+            <div class="trophy-name" id="trophyName">CHAMPION</div>
+            <div class="trophy-message" id="trophyMessage"></div>
+            <button class="trophy-button" id="trophyContinue">Merci ! 🙏</button>
+        </div>
+    </div>
+    
+    <!-- Panel Trophées -->
+    <button class="trophies-toggle" id="trophiesToggle" style="display: none;">
+        🏆
+        <span class="trophies-count" id="trophiesCount">0/62</span>
+    </button>
+    <div class="trophies-panel" id="trophiesPanel">
+        <div class="trophies-header">
+            <h2>🏆 MES TROPHÉES</h2>
+            <button class="trophies-close" id="trophiesClose">✕</button>
+        </div>
+        <div class="trophies-grid" id="trophiesGrid">
+            <!-- Les trophées seront générés par JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Modal Connexion -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>PATRI-X</h2>
+            <p class="login-subtitle">Bienvenue courageux petit explorateur</p>
+            
+            <div class="user-info" id="userInfo" style="display: none;">
+                <div class="user-avatar">👤</div>
+                <div class="user-name" id="userName">Invité</div>
+                <div class="user-max-score">
+                    <span class="label">Meilleur Score:</span>
+                    <span class="value" id="userMaxScore">0</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+            </div>
+            
+            <div class="login-form" id="loginForm">
+                <input 
+                    type="text" 
+                    id="usernameInput" 
+                    placeholder="Ton nom d'utilisateur" 
+                    maxlength="20"
+                    autocomplete="off"
+                />
+                <button class="login-btn" id="loginBtn">Se Connecter ✨</button>
+                <p class="login-note">Minimum 3 caractères</p>
+            </div>
+            
+            <button class="play-guest-btn" id="playGuestBtn">Jouer sans compte</button>
+            
+            <div class="leaderboard-preview" id="leaderboardPreview">
+                <h3>🏆 TOP 5 JOUEURS</h3>
+                <div class="leaderboard-list" id="leaderboardList">
+                    <div class="loading">Chargement...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modules JavaScript (ordre important !) -->
+    <script src="js/config.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/user-manager.js"></script>
+    <script src="js/game-engine.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/line-tracer.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Service Worker pour PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('[PATRI-X] Service Worker enregistré'))
+                    .catch(err => console.warn('[PATRI-X] Service Worker erreur:', err));
+            });
+        }
+    </script>
+</body>
+</html>

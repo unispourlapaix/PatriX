@@ -1,0 +1,1316 @@
+/**
+ * PATRIX - Styles Principaux
+ * Thème: Lumineux, Positif, Inspirant
+ * Auteur: Emmanuel Payet
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Dégradé nuit → aube dorée */
+    background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1a2e 100%);
+    font-family: 'Consolas', 'Courier New', 'SF Mono', monospace;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Effet d'étoiles supprimé - causait des bugs de layout */
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Panneau d'affichage mécanique - Compact intégré au-dessus de la grille */
+.mechanical-display {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 3px 3px 0 0;
+    padding: 3px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-start;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+/* Section titre */
+.title-section {
+    width: 100%;
+    text-align: center;
+    padding: 4px 0;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.title-section .game-title {
+    font-size: 1.4em;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: #000;
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* Section du panneau */
+.display-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    min-width: 0;
+}
+
+.next-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+}
+
+.next-content {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.stat-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 4px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 2px;
+}
+
+.stat-label {
+    font-size: 0.45em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-family: 'Consolas', monospace;
+}
+
+.stat-value {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1em;
+    font-weight: 800;
+    color: #000;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.stat-value.combo-value {
+    font-size: 1.2em;
+    color: #ff8c00;
+}
+
+/* Wrapper pour next et swap */
+    align-items: center;
+    gap: 0px;
+    min-width: 0;
+}
+
+/* Stats ligne 2 plus espacées */
+.mechanical-display > .display-section:nth-child(4),
+.mechanical-display > .display-section:nth-child(5) {
+    padding: 2px 6px;
+}
+.next-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.next-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+.game-title {
+    font-size: 1em;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: #000;
+    font-family: 'Consolas', 'Courier New', monospace;
+    margin-right: 8px;
+}
+
+.next-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 9px);
+    grid-template-rows: repeat(4, 9px);
+    gap: 0.5px;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 1px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.next-grid:hover {
+    border-color: #ff8c00;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 140, 0, 0.4);
+}
+
+.next-grid.swappable {
+    animation: swapPulse 2s ease-in-out infinite;
+}
+
+@keyframes swapPulse {
+    0%, 100% { 
+        border-color: #2a2a2a;
+    }
+    50% { 
+        border-color: #ff8c00;
+        box-shadow: 
+            inset 0 2px 4px rgba(0, 0, 0, 0.8),
+            0 0 15px rgba(255, 140, 0, 0.6);
+    }
+}
+
+/* Indicateur de swap */
+.swap-indicator {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: transparent;
+    padding: 0;
+}
+
+.swap-label {
+    display: none;
+}
+
+.swap-dots {
+    display: flex;
+    gap: 2px;
+}
+
+.swap-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.swap-dot.active {
+    background: #ff8c00;
+}
+
+/* Indicateur de wall break */
+.wall-break-indicator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    background: transparent;
+    padding: 0;
+}
+
+.wall-icon {
+    display: none;
+}
+
+.wall-charges {
+    display: flex;
+    gap: 2px;
+}
+
+.wall-charge {
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    background: rgba(139, 69, 19, 0.2);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.wall-charge.active {
+    background: #8b4513;
+}
+
+/* Labels style mécanique */
+.display-label {
+    font-size: 0.5em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-family: 'Consolas', monospace;
+}
+
+.stat-group .display-label {
+    font-size: 0.55em;
+    font-weight: 700;
+}
+
+.combo-label {
+    font-size: 0.55em;
+    font-weight: 800;
+    color: rgba(255, 140, 0, 0.8);
+}
+
+.next-section .display-label {
+    font-size: 0.7em;
+    font-weight: 800;
+}
+
+.next-header .stat-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.next-header .stat-label {
+    font-size: 0.7em;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-family: 'Consolas', monospace;
+}
+
+.next-header .stat-value {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1em;
+    font-weight: 800;
+    color: #000;
+    letter-spacing: 1px;
+}
+
+/* Chiffres mécaniques style flip */
+.mechanical-digits {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    letter-spacing: 0px;
+    min-width: 30px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.mechanical-digits.big {
+    font-size: 1.3em;
+    font-weight: 800;
+    padding: 4px 8px;
+    min-width: 60px;
+    letter-spacing: 1px;
+}
+
+/* COMBO spécial - encore plus visible */
+#combo {
+    font-size: 1.6em;
+    font-weight: 900;
+    padding: 5px 10px;
+    min-width: 70px;
+    letter-spacing: 2px;
+    background: rgba(255, 140, 0, 0.08);
+    border-color: rgba(255, 140, 0, 0.2);
+}
+
+/* Amélioration pour les grands nombres avec suffixes */
+#score, #lines, #level, #combo {
+    font-size: 0.75em;
+}
+
+/* Style spécial pour pop combo */
+.mechanical-digits.pop-combo {
+    color: #ff8c00;
+    background: rgba(255, 140, 0, 0.1);
+    border-color: rgba(255, 140, 0, 0.3);
+    font-weight: 700;
+}
+
+.combo-crosses {
+    display: flex;
+    gap: 1px;
+    margin-top: 1px;
+}
+
+.combo-cross {
+    width: 8px;
+    height: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6px;
+    color: #000;
+    opacity: 0.2;
+    transition: all 0.2s ease;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+}
+
+.combo-cross.active {
+    opacity: 1;
+    transform: scale(1.1);
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 0 8px rgba(255, 215, 0, 0.8),
+        inset 0 0 4px rgba(255, 215, 0, 0.3);
+}
+
+.pause-section {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.game-button-mini {
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    color: #000;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+
+
+@keyframes windPulse {
+    0%, 100% { transform: scale(0.95); }
+    50% { transform: scale(1.2); box-shadow: 0 0 30px rgba(135, 206, 250, 1); }
+}
+
+.game-button-mini:hover {
+    background: rgba(255, 140, 0, 0.1);
+    border-color: rgba(255, 140, 0, 0.3);
+}
+
+.game-button-mini:active {
+    transform: scale(0.95);
+}
+
+.trophy-button-compact {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 3px;
+    color: #000;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.trophy-button-compact:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.trophy-button-compact:active {
+    transform: scale(0.95);
+}
+
+/* Titre en bandeau blanc en haut */
+.game-title-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: #000;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* Message spirituel - En haut au centre - Style cristal blanc */
+.spiritual-message {
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 241, 232, 0.95));
+    color: #d4af37;
+    padding: 20px 40px;
+    border-radius: 12px;
+    border: 3px solid #d4af37;
+    font-size: 1.3em;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.5);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    max-width: 80%;
+    letter-spacing: 1px;
+}
+
+.spiritual-message.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Game wrapper - Conteneur maximisé */
+.game-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Game board - Conteneur maximisé */
+.game-board {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    overflow: hidden;
+}
+
+/* Footer supprimé - Plus utilisé */
+
+/* Titre en bas - Style moderne carbone */
+.game-title {
+    font-size: 1.5em;
+    font-weight: 900;
+    margin: 0;
+    font-family: 'Consolas', 'SF Mono', 'Monaco', monospace;
+    color: #c0c0c0;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 
+        1px 1px 0px rgba(80, 80, 80, 0.8),
+        2px 2px 2px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(79, 195, 247, 0.3);
+    filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.4));
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px
+        ),
+        linear-gradient(135deg, #a8a8a8 0%, #8a8a8a 50%, #b0b0b0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 4px 0;
+}
+
+/* Stats bar - Infos dynamiques */
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .mechanical-display {
+        padding: 3px;
+        grid-template-columns: auto 1fr auto;
+        grid-gap: 3px;
+        margin-bottom: 3px;
+    }
+    
+    .next-section {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .pause-section {
+        grid-column: 3;
+        grid-row: 1;
+    }
+    
+    .display-label {
+        font-size: 0.35em;
+    }
+    
+    .mechanical-digits {
+        font-size: 0.65em;
+        padding: 2px 3px;
+        min-width: 28px;
+    }
+    
+    .next-grid {
+        grid-template-columns: repeat(4, 9px);
+        grid-template-rows: repeat(4, 9px);
+    }
+    
+    .swap-dot {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .combo-cross {
+        width: 7px;
+        height: 7px;
+        font-size: 5px;
+    }
+    
+    .game-button-mini {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9em;
+    }
+    
+    .spiritual-message {
+        font-size: 0.55em;
+        top: 10px;
+    }
+    
+    .game-board {
+        padding: 10px 8px 60px 8px;
+    }
+    
+    .board {
+        max-height: calc(100vh - 105px);
+        padding: 4px;
+        gap: 0.5px;
+    }
+    
+    .game-title {
+        font-size: 1.2em;
+    }
+    
+    .game-footer-dynamic {
+        bottom: 5px;
+    }
+}
+
+/* Mobile ultra compact */
+@media (max-width: 430px) {
+    .mechanical-display {
+        padding: 2px;
+        grid-gap: 2px;
+        grid-template-columns: auto 1fr auto;
+    }
+    
+    .display-section {
+        gap: 0.5px;
+    }
+    
+    .next-section {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .pause-section {
+        grid-column: 3;
+        grid-row: 1;
+    }
+    
+    .display-label {
+        font-size: 0.32em;
+    }
+    
+    .mechanical-digits {
+        font-size: 0.6em;
+        padding: 1px 2px;
+        min-width: 25px;
+    }
+    
+    .next-grid {
+        grid-template-columns: repeat(4, 8px);
+        grid-template-rows: repeat(4, 8px);
+    }
+    
+    .swap-dot, .wall-charge {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .combo-cross {
+        width: 6px;
+        height: 6px;
+        font-size: 4px;
+    }
+    
+    .game-button-mini {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85em;
+    }
+    
+    .spiritual-message {
+        font-size: 0.48em;
+        top: 8px;
+    }
+    
+    .board {
+        max-height: calc(100vh - 95px);
+    }
+    
+    .game-title {
+        font-size: 1em;
+        letter-spacing: 0.15em;
+    }
+}
+/* ============================================
+   TROPHÉES
+   ============================================ */
+
+/* Bouton toggle trophées */
+.trophies-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    border: 3px solid #ffeb3b;
+    border-radius: 50%;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 9000;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.trophies-count {
+    font-size: 10px;
+    font-weight: bold;
+    color: #1a1a2e;
+    margin-top: -2px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 4px;
+    border-radius: 8px;
+}
+
+.trophies-toggle:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+}
+
+.trophies-toggle.has-new {
+    animation: trophyPulse 2s ease-in-out infinite;
+}
+
+@keyframes trophyPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+}
+
+/* Panel des trophées */
+.trophies-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    max-width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-left: 3px solid #ffd700;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.8);
+    z-index: 9500;
+    transition: transform 0.4s ease;
+    overflow-y: auto;
+    padding: 20px;
+    display: none;
+    transform: translateX(100%);
+}
+
+.trophies-panel.show {
+    display: block;
+    transform: translateX(0);
+}
+
+.trophies-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.trophies-header h2 {
+    color: #ffd700;
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.trophies-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.trophies-close:hover {
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+    transform: rotate(90deg);
+}
+
+/* Grille de trophées */
+.trophies-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.trophy-card {
+    background: rgba(255, 215, 0, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.trophy-card.unlocked {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.trophy-card.locked {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.trophy-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.trophy-card-icon {
+    font-size: 40px;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.trophy-card-info {
+    flex: 1;
+}
+
+.trophy-card-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.trophy-card-condition {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.trophy-card-message {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #ffffff;
+    font-style: italic;
+}
+
+.trophy-card.unlocked .trophy-card-message {
+    color: #ffeb3b;
+}
+
+/* Modal de trophée débloqué - Style cristal blanc épuré */
+.trophy-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10500;
+    animation: fadeIn 0.3s ease;
+}
+
+.trophy-modal.show {
+    display: flex;
+}
+
+.trophy-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 241, 232, 0.95));
+    border: 3px solid #d4af37;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 
+        0 20px 60px rgba(212, 175, 55, 0.4),
+        inset 0 0 40px rgba(255, 255, 255, 0.5);
+    animation: trophyUnlock 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.trophy-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    animation: shine 3s infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes trophyUnlock {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.trophy-banner {
+    font-size: 18px;
+    font-weight: 600;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+@keyframes bannerGlow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+.trophy-icon {
+    font-size: 100px;
+    margin: 20px 0;
+    animation: trophyBounce 1s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes trophyBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.1); }
+}
+
+.trophy-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+    font-weight: 600;
+}
+
+.trophy-message {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #5a5a5a;
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(212, 175, 55, 0.05);
+    border-radius: 10px;
+    border-left: 4px solid #d4af37;
+    text-align: left;
+}
+
+.trophy-button {
+    background: linear-gradient(135deg, #d4af37 0%, #c0c0c0 100%);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 10;
+}
+
+.trophy-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+}
+
+.trophy-button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .trophies-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .trophies-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .trophy-content {
+        padding: 30px 20px;
+    }
+    
+    .trophy-icon {
+        font-size: 70px;
+    }
+    
+    .trophy-name {
+        font-size: 22px;
+    }
+    
+    .trophy-message {
+        font-size: 16px;
+    }
+}
+/* ============================================
+   CONNEXION UTILISATEUR
+   ============================================ */
+
+.login-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 241, 232, 0.8);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 11000;
+    animation: fadeIn 0.3s ease;
+}
+
+.login-modal.show {
+    display: flex;
+}
+
+.login-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 241, 232, 0.95));
+    border: 3px solid #d4af37;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 
+        0 20px 60px rgba(212, 175, 55, 0.4),
+        inset 0 0 40px rgba(255, 255, 255, 0.5);
+}
+
+.login-content h2 {
+    color: #d4af37;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+    letter-spacing: 1px;
+}
+
+.login-subtitle {
+    color: #7a7a7a;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.user-info {
+    background: rgba(212, 175, 55, 0.05);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.user-avatar {
+    font-size: 60px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+}
+
+.user-name {
+    font-size: 24px;
+    color: #d4af37;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.user-max-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.user-max-score .label {
+    color: #7a7a7a;
+}
+
+.user-max-score .value {
+    color: #d4af37;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.login-form {
+    margin: 30px 0;
+}
+
+#usernameInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+    color: #5a5a5a;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+#usernameInput:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    background: rgba(255, 255, 255, 1);
+}
+
+#usernameInput::placeholder {
+    color: rgba(90, 90, 90, 0.5);
+}
+
+.login-btn, .logout-btn, .play-guest-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #d4af37 0%, #c0c0c0 100%);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+    margin-bottom: 10px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+}
+
+.logout-btn {
+    background: rgba(212, 175, 55, 0.1);
+    color: #c0c0c0;
+    border: 2px solid rgba(192, 192, 192, 0.4);
+    margin-top: 10px;
+}
+
+.logout-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #c0c0c0;
+    transform: translateY(-2px);
+}
+
+.play-guest-btn {
+    background: transparent;
+    color: #7a7a7a;
+    border: 2px solid rgba(122, 122, 122, 0.3);
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.play-guest-btn:hover {
+    color: #5a5a5a;
+    border-color: rgba(90, 90, 90, 0.6);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.login-note {
+    color: #9a9a9a;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.leaderboard-preview {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.leaderboard-preview h3 {
+    color: #d4af37;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+.leaderboard-list {
+    text-align: left;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin: 5px 0;
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-item:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+.leaderboard-rank {
+    font-size: 20px;
+    font-weight: 600;
+    color: #d4af37;
+    width: 30px;
+}
+
+.leaderboard-name {
+    flex: 1;
+    color: #5a5a5a;
+    font-size: 16px;
+}
+
+.leaderboard-score {
+    color: #c0c0c0;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.loading {
+    color: #9a9a9a;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Media query pour PC - Format 9/16 centré */
+@media (min-width: 768px) {
+    .game-wrapper {
+        width: auto;
+        height: 100vh;
+        aspect-ratio: 9 / 16;
+        max-width: 56.25vh;
+    }
+    
+    .board {
+        width: 325px !important;
+    }
+}

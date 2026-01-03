@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- Fond style grille de jeu -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f1e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fffef9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5f1e8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="crossGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD1DC;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#FFC0CB;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFB6C1;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#FFC0CB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFD1DC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fond avec bordure dorée comme la grille -->
+  <rect x="0" y="0" width="192" height="192" fill="url(#bgGradient)" rx="12"/>
+  <rect x="0" y="0" width="192" height="192" fill="none" stroke="#d4af37" stroke-width="6" rx="12"/>
+  
+  <!-- Pièce croix (type T Tetris) centrée - style des cellules du jeu -->
+  <g transform="translate(96, 96)">
+    <!-- Bloc du haut -->
+    <rect x="-16" y="-48" width="32" height="32" 
+          fill="url(#crossGradient)" 
+          stroke="#4a5568" 
+          stroke-width="2" 
+          rx="2"/>
+    
+    <!-- Bloc gauche -->
+    <rect x="-48" y="-16" width="32" height="32" 
+          fill="url(#crossGradient)" 
+          stroke="#4a5568" 
+          stroke-width="2" 
+          rx="2"/>
+    
+    <!-- Bloc centre -->
+    <rect x="-16" y="-16" width="32" height="32" 
+          fill="url(#crossGradient)" 
+          stroke="#4a5568" 
+          stroke-width="2" 
+          rx="2"/>
+    
+    <!-- Bloc droit -->
+    <rect x="16" y="-16" width="32" height="32" 
+          fill="url(#crossGradient)" 
+          stroke="#4a5568" 
+          stroke-width="2" 
+          rx="2"/>
+    
+    <!-- Bloc du bas -->
+    <rect x="-16" y="16" width="32" height="32" 
+          fill="url(#crossGradient)" 
+          stroke="#4a5568" 
+          stroke-width="2" 
+          rx="2"/>
+  </g>
+  
+  <!-- Texte PATRIX en bas -->
+  <text x="96" y="175" 
+        font-family="Arial Black, sans-serif" 
+        font-size="20" 
+        font-weight="900" 
+        text-anchor="middle" 
+        fill="#4a5568" 
+        stroke="#d4af37" 
+        stroke-width="0.5">
+    PATRIX
+  </text>
+</svg>

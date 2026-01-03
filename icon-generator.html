@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATRIX - Générateur d'Icônes et Visuels Sociaux</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="color"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .preview-section {
+            margin-bottom: 40px;
+        }
+
+        .preview-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .icon-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #ddd;
+        }
+
+        .icon-item h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        .icon-preview {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .social-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ddd;
+        }
+
+        .social-item h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .social-preview {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .size-info {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .shape-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .shape-btn {
+            flex: 1;
+            padding: 10px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .shape-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .pattern-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pattern-btn {
+            padding: 8px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .pattern-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 PATRIX Icon Generator</h1>
+        <p class="subtitle">Générateur d'icônes et visuels pour réseaux sociaux</p>
+
+        <!-- Contrôles -->
+        <div class="controls">
+            <div class="control-group">
+                <label>Texte Principal</label>
+                <input type="text" id="mainText" value="PATRIX" placeholder="Entrez le texte">
+            </div>
+
+            <div class="control-group">
+                <label>Forme de la pièce</label>
+                <div class="shape-selector">
+                    <button class="shape-btn active" data-shape="cross">✙ Croix</button>
+                    <button class="shape-btn" data-shape="heart">♥ Cœur</button>
+                    <button class="shape-btn" data-shape="star">★ Étoile</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Motif de fond</label>
+                <div class="pattern-selector">
+                    <button class="pattern-btn active" data-pattern="gradient">Dégradé</button>
+                    <button class="pattern-btn" data-pattern="solid">Uni</button>
+                    <button class="pattern-btn" data-pattern="grid">Grille</button>
+                </div>
+            </div>
+
+            <div class="color-grid">
+                <div class="control-group">
+                    <label>Couleur Fond 1</label>
+                    <input type="color" id="bgColor1" value="#f5f1e8">
+                </div>
+                <div class="control-group">
+                    <label>Couleur Fond 2</label>
+                    <input type="color" id="bgColor2" value="#fffef9">
+                </div>
+                <div class="control-group">
+                    <label>Couleur Pièce 1</label>
+                    <input type="color" id="pieceColor1" value="#FFD1DC">
+                </div>
+                <div class="control-group">
+                    <label>Couleur Pièce 2</label>
+                    <input type="color" id="pieceColor2" value="#FFB6C1">
+                </div>
+                <div class="control-group">
+                    <label>Couleur Bordure</label>
+                    <input type="color" id="borderColor" value="#d4af37">
+                </div>
+                <div class="control-group">
+                    <label>Couleur Texte</label>
+                    <input type="color" id="textColor" value="#4a5568">
+                </div>
+            </div>
+        </div>
+
+        <!-- Aperçu Icônes -->
+        <div class="preview-section">
+            <h2>📱 Icônes d'Application</h2>
+            <div class="icon-grid">
+                <div class="icon-item">
+                    <h3>Favicon 32×32</h3>
+                    <div class="icon-preview" style="width: 64px; height: 64px;">
+                        <canvas id="icon32" width="32" height="32"></canvas>
+                    </div>
+                    <div class="size-info">Pour onglet navigateur</div>
+                    <button onclick="downloadIcon('icon32', 'patrix-favicon-32x32.png')">Télécharger</button>
+                </div>
+                <div class="icon-item">
+                    <h3>App Icon 192×192</h3>
+                    <div class="icon-preview" style="width: 192px; height: 192px;">
+                        <canvas id="icon192" width="192" height="192"></canvas>
+                    </div>
+                    <div class="size-info">PWA & Android</div>
+                    <button onclick="downloadIcon('icon192', 'patrix-icon-192x192.png')">Télécharger</button>
+                </div>
+                <div class="icon-item">
+                    <h3>App Icon 512×512</h3>
+                    <div class="icon-preview" style="width: 192px; height: 192px;">
+                        <canvas id="icon512" width="512" height="512"></canvas>
+                    </div>
+                    <div class="size-info">PWA & Splash Screen</div>
+                    <button onclick="downloadIcon('icon512', 'patrix-icon-512x512.png')">Télécharger</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aperçu Visuels Sociaux -->
+        <div class="preview-section">
+            <h2>🌐 Visuels Réseaux Sociaux</h2>
+            <div class="social-grid">
+                <div class="social-item">
+                    <h3>Facebook Post (1200×630)</h3>
+                    <div class="social-preview">
+                        <canvas id="fb-post" width="1200" height="630"></canvas>
+                    </div>
+                    <button onclick="downloadIcon('fb-post', 'patrix-facebook-post.png')">Télécharger</button>
+                </div>
+                <div class="social-item">
+                    <h3>Instagram Post (1080×1080)</h3>
+                    <div class="social-preview">
+                        <canvas id="ig-post" width="1080" height="1080"></canvas>
+                    </div>
+                    <button onclick="downloadIcon('ig-post', 'patrix-instagram-post.png')">Télécharger</button>
+                </div>
+                <div class="social-item">
+                    <h3>Twitter Header (1500×500)</h3>
+                    <div class="social-preview">
+                        <canvas id="tw-header" width="1500" height="500"></canvas>
+                    </div>
+                    <button onclick="downloadIcon('tw-header', 'patrix-twitter-header.png')">Télécharger</button>
+                </div>
+                <div class="social-item">
+                    <h3>YouTube Thumbnail (1280×720)</h3>
+                    <div class="social-preview">
+                        <canvas id="yt-thumb" width="1280" height="720"></canvas>
+                    </div>
+                    <button onclick="downloadIcon('yt-thumb', 'patrix-youtube-thumbnail.png')">Télécharger</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let config = {
+            mainText: 'PATRIX',
+            shape: 'cross',
+            pattern: 'gradient',
+            bgColor1: '#f5f1e8',
+            bgColor2: '#fffef9',
+            pieceColor1: '#FFD1DC',
+            pieceColor2: '#FFB6C1',
+            borderColor: '#d4af37',
+            textColor: '#4a5568'
+        };
+
+        // Gestion des contrôles
+        document.getElementById('mainText').addEventListener('input', (e) => {
+            config.mainText = e.target.value;
+            generateAll();
+        });
+
+        document.querySelectorAll('.shape-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                config.shape = this.dataset.shape;
+                generateAll();
+            });
+        });
+
+        document.querySelectorAll('.pattern-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                config.pattern = this.dataset.pattern;
+                generateAll();
+            });
+        });
+
+        ['bgColor1', 'bgColor2', 'pieceColor1', 'pieceColor2', 'borderColor', 'textColor'].forEach(id => {
+            document.getElementById(id).addEventListener('input', (e) => {
+                config[id] = e.target.value;
+                generateAll();
+            });
+        });
+
+        function drawBackground(ctx, width, height) {
+            // Fond avec coins arrondis
+            const cornerRadius = width / 16;
+            
+            if (config.pattern === 'gradient') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, config.bgColor1);
+                gradient.addColorStop(0.5, config.bgColor2);
+                gradient.addColorStop(1, config.bgColor1);
+                ctx.fillStyle = gradient;
+            } else if (config.pattern === 'solid') {
+                ctx.fillStyle = config.bgColor1;
+            } else if (config.pattern === 'grid') {
+                const gradient = ctx.createLinearGradient(0, 0, width, height);
+                gradient.addColorStop(0, config.bgColor1);
+                gradient.addColorStop(1, config.bgColor2);
+                ctx.fillStyle = gradient;
+            }
+            
+            // Dessin avec coins arrondis
+            ctx.beginPath();
+            ctx.roundRect(0, 0, width, height, cornerRadius);
+            ctx.fill();
+
+            // Bordure avec coins arrondis
+            ctx.strokeStyle = config.borderColor;
+            ctx.lineWidth = width / 32;
+            ctx.beginPath();
+            ctx.roundRect(ctx.lineWidth / 2, ctx.lineWidth / 2, width - ctx.lineWidth, height - ctx.lineWidth, cornerRadius);
+            ctx.stroke();
+        }
+
+        function drawCross(ctx, centerX, centerY, blockSize) {
+            // Dégradé rose identique à l'icône SVG
+            const gradient = ctx.createLinearGradient(centerX - blockSize * 2, centerY - blockSize * 2, 
+                                                       centerX + blockSize * 2, centerY + blockSize * 2);
+            gradient.addColorStop(0, config.pieceColor1);    // #FFD1DC
+            gradient.addColorStop(0.25, '#FFC0CB');
+            gradient.addColorStop(0.5, config.pieceColor2);   // #FFB6C1
+            gradient.addColorStop(0.75, '#FFC0CB');
+            gradient.addColorStop(1, config.pieceColor1);     // #FFD1DC
+            
+            ctx.fillStyle = gradient;
+            ctx.strokeStyle = config.textColor; // #4a5568
+            ctx.lineWidth = blockSize / 8;
+
+            const cornerRadius = blockSize / 16;
+            const positions = [
+                [centerX - blockSize / 2, centerY - blockSize * 1.5],  // haut
+                [centerX - blockSize * 1.5, centerY - blockSize / 2],  // gauche
+                [centerX - blockSize / 2, centerY - blockSize / 2],    // centre
+                [centerX + blockSize / 2, centerY - blockSize / 2],    // droit
+                [centerX - blockSize / 2, centerY + blockSize / 2]     // bas
+            ];
+
+            positions.forEach(([x, y]) => {
+                // Remplissage avec coins arrondis
+                ctx.beginPath();
+                ctx.roundRect(x, y, blockSize, blockSize, cornerRadius);
+                ctx.fill();
+                ctx.stroke();
+            });
+        }
+
+        function drawHeart(ctx, centerX, centerY, size) {
+            const gradient = ctx.createLinearGradient(centerX - size, centerY - size, centerX + size, centerY + size);
+            gradient.addColorStop(0, config.pieceColor1);
+            gradient.addColorStop(1, config.pieceColor2);
+            
+            ctx.fillStyle = gradient;
+            ctx.strokeStyle = config.textColor;
+            ctx.lineWidth = size / 16;
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY + size / 2);
+            ctx.bezierCurveTo(centerX, centerY, centerX - size / 2, centerY - size / 2, centerX - size, centerY);
+            ctx.bezierCurveTo(centerX - size * 1.5, centerY, centerX - size * 1.5, centerY + size / 2, centerX - size, centerY + size);
+            ctx.bezierCurveTo(centerX - size / 2, centerY + size * 1.5, centerX, centerY + size * 2, centerX, centerY + size * 2);
+            ctx.bezierCurveTo(centerX, centerY + size * 2, centerX + size / 2, centerY + size * 1.5, centerX + size, centerY + size);
+            ctx.bezierCurveTo(centerX + size * 1.5, centerY + size / 2, centerX + size * 1.5, centerY, centerX + size, centerY);
+            ctx.bezierCurveTo(centerX + size / 2, centerY - size / 2, centerX, centerY, centerX, centerY + size / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawStar(ctx, centerX, centerY, size) {
+            const gradient = ctx.createLinearGradient(centerX - size, centerY - size, centerX + size, centerY + size);
+            gradient.addColorStop(0, config.pieceColor1);
+            gradient.addColorStop(1, config.pieceColor2);
+            
+            ctx.fillStyle = gradient;
+            ctx.strokeStyle = config.textColor;
+            ctx.lineWidth = size / 16;
+
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                const angle = (i * 4 * Math.PI / 5) - Math.PI / 2;
+                const x = centerX + size * Math.cos(angle);
+                const y = centerY + size * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawShape(ctx, centerX, centerY, size) {
+            if (config.shape === 'cross') {
+                drawCross(ctx, centerX, centerY, size);
+            } else if (config.shape === 'heart') {
+                drawHeart(ctx, centerX, centerY, size);
+            } else if (config.shape === 'star') {
+                drawStar(ctx, centerX, centerY, size);
+            }
+        }
+
+        function generateIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, size, size);
+            drawBackground(ctx, size, size);
+            
+            const shapeSize = size / 6;
+            drawShape(ctx, size / 2, size / 2, shapeSize);
+            
+            // Pas de texte sur les icônes d'application
+        }
+
+        function generateSocial(canvasId, width, height, layout = 'center') {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, width, height);
+            drawBackground(ctx, width, height);
+            
+            if (layout === 'center') {
+                const shapeSize = Math.min(width, height) / 6;
+                drawShape(ctx, width / 2, height / 2, shapeSize);
+                
+                // Titre principal
+                const titleSize = Math.min(width, height) / 8;
+                ctx.font = `bold ${titleSize}px Arial Black, sans-serif`;
+                ctx.fillStyle = config.textColor;
+                ctx.strokeStyle = config.borderColor;
+                ctx.lineWidth = titleSize / 10;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                const textY = height * 0.75;
+                ctx.strokeText(config.mainText, width / 2, textY);
+                ctx.fillText(config.mainText, width / 2, textY);
+                
+                // Sous-titre
+                const subtitleSize = titleSize / 3;
+                ctx.font = `${subtitleSize}px Arial, sans-serif`;
+                ctx.fillStyle = config.textColor;
+                ctx.fillText('Jeu de puzzle spirituel', width / 2, textY + titleSize);
+            }
+        }
+
+        function generateAll() {
+            generateIcon('icon32', 32);
+            generateIcon('icon192', 192);
+            generateIcon('icon512', 512);
+            generateSocial('fb-post', 1200, 630, 'center');
+            generateSocial('ig-post', 1080, 1080, 'center');
+            generateSocial('tw-header', 1500, 500, 'center');
+            generateSocial('yt-thumb', 1280, 720, 'center');
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Génération initiale
+        generateAll();
+    </script>
+</body>
+</html>
