@@ -338,32 +338,6 @@ class AudioManager {
         subOsc.stop(now + 0.2);
     }
 
-        // Bruit de collision (bref)
-        const bufferSize = this.audioContext.sampleRate * 0.05;
-        const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
-        const data = buffer.getChannelData(0);
-        
-        for (let i = 0; i < bufferSize; i++) {
-            data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
-        }
-        
-        const noiseSource = this.audioContext.createBufferSource();
-        const noiseFilter = this.audioContext.createBiquadFilter();
-        const noiseGain = this.audioContext.createGain();
-        
-        noiseSource.buffer = buffer;
-        noiseFilter.type = 'highpass';
-        noiseFilter.frequency.setValueAtTime(800, now);
-        
-        noiseSource.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(this.audioContext.destination);
-        
-        noiseGain.gain.setValueAtTime(this.volume * 0.25, now);
-        
-        noiseSource.start(now);
-    }
-
     /**
      * Son de game over (notes descendantes)
      */
