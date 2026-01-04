@@ -220,11 +220,18 @@ class UserInterface {
         }
         
         if (this.elements.trophyBtn) {
-            this.elements.trophyBtn.addEventListener('click', () => {
-                if (this.elements.trophiesPanel) {
-                    this.elements.trophiesPanel.classList.add('active');
-                }
+            this.elements.trophyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.toggleTrophiesPanel();
             });
+            
+            // Aussi pour le tactile
+            this.elements.trophyBtn.addEventListener('touchend', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.toggleTrophiesPanel();
+            }, { passive: false });
         }
         
         // Clic sur next pour changer la pièce
