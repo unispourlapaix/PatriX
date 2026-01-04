@@ -239,6 +239,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Bouton connexion
+    const loginBtn = document.getElementById('user-login-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            if (authManager) {
+                authManager.showAuthModal();
+            }
+        });
+    }
+    
     // Message de bienvenue
     setTimeout(() => {
         if (effects) {

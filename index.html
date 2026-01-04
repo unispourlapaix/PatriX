@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/game.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
     <!-- Conteneur principal - Grille maximisée -->
@@ -86,6 +87,7 @@
                             <span class="stat-value" id="level">00</span>
                         </div>
                         <button class="trophy-button-compact" id="trophyBtn">🏆</button>
+                        <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button>
                         <button class="game-button-mini" id="audioBtn" title="Son">🔊</button>
                         <button class="game-button-mini" id="musicBtn" title="Musique">🎵</button>
                         <button class="game-button-mini" id="pauseBtn">⏸</button>
@@ -190,6 +192,7 @@
 
     <!-- Modules JavaScript (ordre important !) -->
     <script src="js/config.js"></script>
+    <script src="js/auth-manager.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/blocks.js"></script>
     <script src="js/grid.js"></script>
