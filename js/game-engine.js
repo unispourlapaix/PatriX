@@ -210,9 +210,8 @@ class GameEngine {
             }
         }
         
-        // Émettre l'événement même si on n'a pas pu descendre (pour décrémenter le compteur)
-        this.emit('nextSwapped', { 
-            next: this.nextPiece, 
+        // Émettre l'événement de descente rapide
+        this.emit('swapDown', { 
             remaining: this.swapCount,
             moved: moved
         });

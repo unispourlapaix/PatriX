@@ -258,8 +258,22 @@ class Controls {
             
             boardElement.style.cursor = 'grab';
             
+            const absDeltaX = Math.abs(deltaX);
+            const absDeltaY = Math.abs(deltaY);
+            
+            // Swipe UP - Wind Push (même logique que tactile)
+            if (deltaY < -30 && absDeltaY > absDeltaX) {
+                if (this.engine.windPush()) {
+                    // Son de vent
+                    if (window.audioManager) {
+                        window.audioManager.playWindPush();
+                    }
+                }
+                return;
+            }
+            
             // Click simple ou double click
-            if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+            if (absDeltaX < 10 && absDeltaY < 10) {
                 const currentTime = Date.now();
                 const boardRect = boardElement.getBoundingClientRect();
                 const clickY = e.clientY - boardRect.top;

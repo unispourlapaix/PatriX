@@ -171,6 +171,13 @@ class UserInterface {
             this.updateSwapDots(data.remaining);
         });
         
+        this.engine.on('swapDown', (data) => {
+            this.updateSwapDots(data.remaining);
+            if (data.moved > 0) {
+                this.engine.grid.render(this.engine.currentPiece);
+            }
+        });
+        
         // Level Up avec trésor
         this.engine.on('levelUp', (data) => {
             // Mettre à jour l'affichage du niveau
