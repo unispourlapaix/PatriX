@@ -411,6 +411,10 @@ class AudioManager {
         if (this.musicPlayer) {
             if (this.musicPlayer.style.display === 'none') {
                 this.musicPlayer.style.display = 'block';
+                // Maximiser automatiquement sur mobile quand on ouvre
+                if (window.innerWidth <= 768) {
+                    this.maximizePlayer();
+                }
             } else {
                 this.musicPlayer.style.display = 'none';
             }
@@ -418,11 +422,13 @@ class AudioManager {
         }
 
         // Première ouverture : créer le player
+        // Sur mobile, ouvrir directement en mode maximisé
+        const isMobile = window.innerWidth <= 768;
 
-        // Créer le conteneur du player (minimisé par défaut)
+        // Créer le conteneur du player
         const playerContainer = document.createElement('div');
         playerContainer.id = 'music-player-overlay';
-        playerContainer.className = 'minimized';
+        playerContainer.className = isMobile ? 'maximized' : 'minimized';
         playerContainer.style.cssText = `
             position: fixed;
             bottom: 70px;
