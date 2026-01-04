@@ -282,7 +282,17 @@ class GameGrid {
      * @param {Object} currentPiece - Pièce en cours (optionnel)
      */
     render(currentPiece = null) {
+        if (!this.gridElement) {
+            console.error('[Grid] gridElement non défini, impossible de render');
+            return;
+        }
+        
         const cells = this.gridElement.querySelectorAll('.cell');
+        
+        if (cells.length === 0) {
+            console.error('[Grid] Aucune cellule trouvée dans gridElement');
+            return;
+        }
         
         cells.forEach(cell => {
             const row = parseInt(cell.dataset.row);
@@ -340,7 +350,7 @@ class GameGrid {
      */
     reset() {
         this.init();
-        if (this.boardElement) {
+        if (this.boardElement && this.gridElement) {
             this.render();
         }
     }

@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="css/game.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/install.css">
 </head>
 <body>
     <!-- Conteneur principal - Grille maximisée -->
@@ -87,7 +88,7 @@
                             <span class="stat-value" id="level">00</span>
                         </div>
                         <button class="trophy-button-compact" id="trophyBtn">🏆</button>
-                        <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button>
+                        <!-- <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button> -->
                         <button class="game-button-mini" id="audioBtn" title="Son">🔊</button>
                         <button class="game-button-mini" id="musicBtn" title="Musique">🎵</button>
                         <button class="game-button-mini" id="pauseBtn">⏸</button>
@@ -142,12 +143,14 @@
         <span class="trophies-count" id="trophiesCount">0/62</span>
     </button>
     <div class="trophies-panel" id="trophiesPanel">
-        <div class="trophies-header">
-            <h2>🏆 MES TROPHÉES</h2>
-            <button class="trophies-close" id="trophiesClose">✕</button>
-        </div>
-        <div class="trophies-grid" id="trophiesGrid">
-            <!-- Les trophées seront générés par JavaScript -->
+        <div class="trophies-panel-content">
+            <div class="trophies-header">
+                <h2>🏆 MES TROPHÉES</h2>
+                <button class="trophies-close" id="trophiesClose">✕</button>
+            </div>
+            <div class="trophies-grid" id="trophiesGrid">
+                <!-- Les trophées seront générés par JavaScript -->
+            </div>
         </div>
     </div>
     
@@ -171,12 +174,40 @@
                 <input 
                     type="text" 
                     id="usernameInput" 
-                    placeholder="Ton nom d'utilisateur" 
+                    placeholder="Ton pseudo" 
                     maxlength="20"
                     autocomplete="off"
                 />
-                <button class="login-btn" id="loginBtn">Se Connecter ✨</button>
-                <p class="login-note">Minimum 3 caractères</p>
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    placeholder="Ton email" 
+                    autocomplete="email"
+                />
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Ton mot de passe" 
+                    autocomplete="current-password"
+                />
+                <div class="login-buttons">
+                    <button class="login-btn" id="loginBtn">Se Connecter 🔑</button>
+                    <button class="register-btn" id="registerBtn">Créer un compte ✨</button>
+                </div>
+                <p class="login-note">Pseudo: min 3 caractères | Mot de passe: min 6 caractères</p>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Mot de passe oublié ?</a>
+            </div>
+            
+            <div class="reset-password-form" id="resetPasswordForm" style="display: none;">
+                <input 
+                    type="email" 
+                    id="resetEmailInput" 
+                    placeholder="Ton email" 
+                    autocomplete="email"
+                />
+                <button class="login-btn" id="resetPasswordBtn">Réinitialiser 🔑</button>
+                <p class="login-note">Un lien de réinitialisation sera envoyé à ton email</p>
+                <a href="#" class="back-to-login-link" id="backToLoginLink">← Retour à la connexion</a>
             </div>
             
             <button class="play-guest-btn" id="playGuestBtn">Jouer sans compte</button>
@@ -192,7 +223,7 @@
 
     <!-- Modules JavaScript (ordre important !) -->
     <script src="js/config.js"></script>
-    <script src="js/auth-manager.js"></script>
+    <script src="js/install-manager.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/blocks.js"></script>
     <script src="js/grid.js"></script>

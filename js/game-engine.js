@@ -20,6 +20,8 @@ class GameEngine {
         this.dropInterval = CONFIG.TIMING.INITIAL_DROP_SPEED;
         this.comboTimer = null;
         this.listeners = {};
+        this.GAME_ID = 'patrix';
+        this.maxLevelReached = 0; // Niveau maximum atteint par le joueur
         
         // Wall explosion mechanic
         this.lastPushDirection = 0;
@@ -41,11 +43,18 @@ class GameEngine {
      * Démarre le jeu
      */
     start() {
+        // Charger le niveau max atteint
+        this.loadMaxLevel();
+        
+        // Toujours commencer une nouvelle partie
         this.reset();
         this.isRunning = true;
         this.nextPiece = createRandomPiece();
         this.spawnPiece();
         this.emit('start');
+        
+        // Émettre le niveau initial pour l'UI
+        this.emit('level', this.level);
     }
 
     /**
@@ -56,9 +65,17 @@ class GameEngine {
         this.score = 0;
         this.lines = 0;
         this.combo = 0;
-        this.level = 0;
+        
+        // Démarrer au niveau max atteint (ou 0 si aucun)
+        this.level = this.maxLevelReached || 0;
+        
         this.dropTimer = 0;
-        this.dropInterval = CONFIG.TIMING.INITIAL_DROP_SPEED;
+        // Ajuster la vitesse en fonction du niveau de départ
+        this.dropInterval = Math.max(
+            CONFIG.TIMING.MIN_DROP_SPEED,
+            CONFIG.TIMING.INITIAL_DROP_SPEED - (this.level * 30)
+        );
+        
         this.currentPiece = null;
         this.nextPiece = null;
         
@@ -229,6 +246,7 @@ class GameEngine {
             if (dy > 0) {
                 this.score += CONFIG.SCORING.SOFT_DROP;
                 this.emit('score', this.score);
+                this.saveMaxLevel(); // Sauvegarder le niveau max
             }
             
             this.emit('move', { piece: this.currentPiece });
@@ -357,6 +375,7 @@ class GameEngine {
         // Ajouter au score principal
         const previousLevel = this.level;
         this.score += totalScore;
+        this.saveMaxLevel(); // Sauvegarder le niveau max
         
         // Recalculer le niveau en fonction du nouveau score
         for (let i = CONFIG.LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
@@ -364,6 +383,11 @@ class GameEngine {
                 this.level = i;
                 break;
             }
+        }
+        
+        // Sauvegarder le niveau max si changement
+        if (this.level > previousLevel && window.userManager) {
+            window.userManager.saveMaxLevel(this.level);
         }
         
         // Vitesse augmente avec le niveau
@@ -495,6 +519,7 @@ class GameEngine {
         }
         
         this.score += dropDistance * CONFIG.SCORING.HARD_DROP;
+        this.saveMaxLevel(); // Sauvegarder le niveau max
         this.placePiece();
         this.emit('hardDrop', { distance: dropDistance });
     }
@@ -644,6 +669,7 @@ class GameEngine {
         
         const comboBonus = this.combo > 1 ? (this.combo - 1) * CONFIG.SCORING.COMBO_MULTIPLIER : 0;
         this.score += baseScore + comboBonus;
+        this.saveMaxLevel(); // Sauvegarder le niveau max
         
         // Niveau et vitesse basés sur le score
         const previousLevel = this.level;
@@ -655,6 +681,11 @@ class GameEngine {
                 this.level = i;
                 break;
             }
+        }
+        
+        // Sauvegarder le niveau max si changement
+        if (this.level > previousLevel && window.userManager) {
+            window.userManager.saveMaxLevel(this.level);
         }
         
         // Vitesse augmente avec le niveau
@@ -761,6 +792,42 @@ class GameEngine {
         
         this.isPaused = !this.isPaused;
         this.emit('pause', this.isPaused);
+    }
+
+    /**
+     * Sauvegarde le niveau maximum atteint
+     */
+    saveMaxLevel() {
+        try {
+            const saved = localStorage.getItem(`${this.GAME_ID}_max_level`);
+            const currentMax = saved ? parseInt(saved, 10) : 0;
+            
+            if (this.level > currentMax) {
+                localStorage.setItem(`${this.GAME_ID}_max_level`, this.level.toString());
+            }
+        } catch (error) {
+            console.error('[GameEngine] Erreur sauvegarde niveau max:', error);
+        }
+    }
+
+    /**
+     * Charge le niveau maximum atteint
+     */
+    loadMaxLevel() {
+        try {
+            const saved = localStorage.getItem(`${this.GAME_ID}_max_level`);
+            this.maxLevelReached = saved ? parseInt(saved, 10) : 0;
+        } catch (error) {
+            console.error('[GameEngine] Erreur chargement niveau max:', error);
+            this.maxLevelReached = 0;
+        }
+    }
+
+    /**
+     * Récupère le niveau maximum atteint
+     */
+    getMaxLevel() {
+        return this.maxLevelReached || 0;
     }
 
     /**

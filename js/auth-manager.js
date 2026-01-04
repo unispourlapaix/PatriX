@@ -27,11 +27,18 @@ class AuthManager {
      * Vérifie si l'utilisateur est authentifié
      */
     async checkAuth() {
+        const token = localStorage.getItem('supabase.auth.token');
+        
+        // Si pas de token, ne pas faire l'appel API
+        if (!token) {
+            return;
+        }
+
         try {
             const response = await fetch(`${this.supabaseUrl}/auth/v1/user`, {
                 headers: {
                     'apikey': this.supabaseKey,
-                    'Authorization': `Bearer ${localStorage.getItem('supabase.auth.token')}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
@@ -39,9 +46,13 @@ class AuthManager {
                 const data = await response.json();
                 this.currentUser = data;
                 this.updateUIForAuth();
+            } else if (response.status === 403 || response.status === 401) {
+                // Token invalide ou expiré, nettoyer le localStorage
+                localStorage.removeItem('supabase.auth.token');
+                this.currentUser = null;
             }
         } catch (error) {
-            // Non authentifié
+            // Erreur réseau, ne rien faire
         }
     }
 

@@ -93,6 +93,11 @@ class UserInterface {
      * Lie les événements du moteur à l'UI
      */
     bindEvents() {
+        // Niveau initial ou mis à jour
+        this.engine.on('level', (level) => {
+            this.updateLevel(level);
+        });
+        
         // Score et lignes
         this.engine.on('linesCleared', (data) => {
             this.updateScore(data.score);
@@ -168,6 +173,9 @@ class UserInterface {
         
         // Level Up avec trésor
         this.engine.on('levelUp', (data) => {
+            // Mettre à jour l'affichage du niveau
+            this.updateLevel(data.level);
+            
             // Vérifier si un trésor existe pour ce niveau
             const treasureData = CONFIG.MESSAGES.TREASURES.find(t => t.level === data.level);
             
@@ -717,6 +725,7 @@ class UserInterface {
                 }
             });
         }
+        this.renderTrophiesList();
         this.updateTrophiesCount();
     }
     
@@ -782,6 +791,12 @@ class UserInterface {
     unlockTrophy(trophy) {
         trophy.unlocked = true;
         this.saveTrophies();
+        
+        // Sauvegarder dans UserManager pour sync en ligne
+        if (window.userManager) {
+            window.userManager.saveTrophy(trophy.id);
+        }
+        
         this.showTrophy(trophy);
         this.renderTrophiesList();
         this.updateTrophiesCount();

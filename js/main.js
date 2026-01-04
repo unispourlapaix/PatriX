@@ -34,25 +34,46 @@ function initUserSystem() {
     // Charger le classement
     loadLeaderboard();
     
-    // Si déjà connecté, afficher les infos
+    // Si déjà connecté, afficher les infos et démarrer le jeu
     if (userManager.isLoggedIn()) {
         showUserInfo();
+        startGame(); // Démarrer le jeu automatiquement
     } else {
         loginModal.classList.add('show');
     }
     
-    // Gestion de la connexion
-    loginBtn.addEventListener('click', async () => {
+    // Gestion de la création de compte
+    const registerBtn = document.getElementById('registerBtn');
+    registerBtn.addEventListener('click', async () => {
         const username = usernameInput.value.trim();
+        const email = document.getElementById('emailInput').value.trim();
+        const password = document.getElementById('passwordInput').value;
+        
         if (username.length < 3) {
-            alert('Le nom d\'utilisateur doit contenir au moins 3 caractères');
+            alert('Le pseudo doit contenir au moins 3 caractères');
+            return;
+        }
+        
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Email valide requis');
+            return;
+        }
+        
+        if (!password || password.length < 6) {
+            alert('Le mot de passe doit contenir au moins 6 caractères');
             return;
         }
         
         try {
-            loginBtn.textContent = 'Connexion...';
-            loginBtn.disabled = true;
-            await userManager.login(username);
+            registerBtn.textContent = 'Création...';
+            registerBtn.disabled = true;
+            await userManager.register(username, email, password);
+            
+            // Recharger les trophées synchronisés
+            if (ui) {
+                ui.loadTrophies();
+            }
+            
             showUserInfo();
             setTimeout(() => {
                 loginModal.classList.remove('show');
@@ -60,13 +81,102 @@ function initUserSystem() {
             }, 1000);
         } catch (error) {
             alert('Erreur : ' + error.message);
-            loginBtn.textContent = 'Se Connecter ✨';
+            registerBtn.textContent = 'Créer un compte ✨';
+            registerBtn.disabled = false;
+        }
+    });
+    
+    // Gestion de la connexion
+    loginBtn.addEventListener('click', async () => {
+        const username = usernameInput.value.trim();
+        const password = document.getElementById('passwordInput').value;
+        
+        if (username.length < 3) {
+            alert('Le pseudo doit contenir au moins 3 caractères');
+            return;
+        }
+        
+        if (!password || password.length < 6) {
+            alert('Le mot de passe doit contenir au moins 6 caractères');
+            return;
+        }
+        
+        try {
+            loginBtn.textContent = 'Connexion...';
+            loginBtn.disabled = true;
+            await userManager.login(username, password);
+            
+            // Recharger les trophées synchronisés
+            if (ui) {
+                ui.loadTrophies();
+            }
+            
+            showUserInfo();
+            setTimeout(() => {
+                loginModal.classList.remove('show');
+                startGame();
+            }, 1000);
+        } catch (error) {
+            alert('Erreur : ' + error.message);
+            loginBtn.textContent = 'Se Connecter 🔑';
             loginBtn.disabled = false;
+        }
+    });
+    
+    // Lien "Mot de passe oublié"
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const resetPasswordForm = document.getElementById('resetPasswordForm');
+    const backToLoginLink = document.getElementById('backToLoginLink');
+    const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+    const resetEmailInput = document.getElementById('resetEmailInput');
+    
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        resetPasswordForm.style.display = 'block';
+    });
+    
+    backToLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetPasswordForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+    
+    resetPasswordBtn.addEventListener('click', async () => {
+        const email = resetEmailInput.value.trim();
+        
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Email valide requis');
+            return;
+        }
+        
+        try {
+            resetPasswordBtn.textContent = 'Envoi...';
+            resetPasswordBtn.disabled = true;
+            
+            await userManager.requestPasswordReset(email);
+            
+            alert('Email de réinitialisation envoyé ! Vérifie ta boîte mail 📧');
+            resetEmailInput.value = '';
+            resetPasswordForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        } catch (error) {
+            alert('Erreur : ' + error.message);
+        } finally {
+            resetPasswordBtn.textContent = 'Réinitialiser 🔑';
+            resetPasswordBtn.disabled = false;
         }
     });
     
     // Entrée = connexion
     usernameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            loginBtn.click();
+        }
+    });
+    
+    // Entrée dans password = connexion aussi
+    document.getElementById('passwordInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             loginBtn.click();
         }
@@ -79,6 +189,8 @@ function initUserSystem() {
         userInfo.style.display = 'none';
         loginModal.classList.add('show');
         usernameInput.value = '';
+        document.getElementById('emailInput').value = '';
+        document.getElementById('passwordInput').value = '';
     });
     
     // Jouer sans compte
@@ -121,7 +233,13 @@ function startGame() {
     if (!game) {
         initGame();
     } else {
-        game.start();
+        // Vérifier que le DOM existe toujours
+        if (!game.grid.boardElement || !game.grid.gridElement) {
+            console.warn('[Main] DOM de la grille manquant, réinitialisation complète');
+            initGame();
+        } else {
+            game.start();
+        }
     }
 }
 
@@ -239,15 +357,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Bouton connexion
-    const loginBtn = document.getElementById('user-login-btn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', () => {
-            if (authManager) {
-                authManager.showAuthModal();
-            }
-        });
-    }
+    // Bouton connexion - désactivé (utiliser loginModal au démarrage)
+    // const loginBtn = document.getElementById('user-login-btn');
+    // if (loginBtn) {
+    //     loginBtn.addEventListener('click', () => {
+    //         if (authManager) {
+    //             authManager.showAuthModal();
+    //         }
+    //     });
+    // }
     
     // Message de bienvenue
     setTimeout(() => {
