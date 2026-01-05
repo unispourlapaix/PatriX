@@ -200,28 +200,8 @@ class WebBrowserManager {
             // Si ouvert, minimiser
             this.minimize();
         } else {
-            // Pas encore ouvert, ouvrir pour la première fois
-            const audiomackAccepted = localStorage.getItem('patrix_audiomack_accepted');
-            
-            if (audiomackAccepted === 'true') {
-                // Ouvrir directement sans confirmation
-                this.openAudiomack();
-            } else {
-                // Première ouverture manuelle : demander confirmation
-                const accept = confirm(
-                    '🎵 Ouvrir Audiomack ?\n\n' +
-                    '✅ Lecteur intégré :\n' +
-                    '• Interface complète Audiomack\n' +
-                    '• Contrôle total de la musique\n' +
-                    '• Minimisable avec le bouton −\n\n' +
-                    'Continuer ?'
-                );
-                
-                if (accept) {
-                    localStorage.setItem('patrix_audiomack_accepted', 'true');
-                    this.openAudiomack();
-                }
-            }
+            // Pas encore ouvert, ouvrir directement
+            this.openAudiomack();
         }
     }
 
@@ -365,29 +345,9 @@ class WebBrowserManager {
      * Démarre automatiquement la musique au lancement
      */
     autoStart() {
-        // Vérifier si l'utilisateur a déjà accepté
-        const audiomackAccepted = localStorage.getItem('patrix_audiomack_accepted');
-        
-        if (audiomackAccepted === 'true') {
-            // Lancer directement sans confirmation
-            this.autoStarted = true;
-            this.openAudiomack();
-        } else {
-            // Première fois : demander la permission
-            const accept = confirm(
-                '🎵 Lancer Audiomack automatiquement ?\n\n' +
-                '✅ La musique s\'ouvrira dans un nouvel onglet\n' +
-                '• Reviens sur cet onglet pour jouer\n' +
-                '• La musique continuera en arrière-plan\n\n' +
-                'Ce choix sera mémorisé. Continuer ?'
-            );
-            
-            if (accept) {
-                localStorage.setItem('patrix_audiomack_accepted', 'true');
-                this.autoStarted = true;
-                this.openAudiomack();
-            }
-        }
+        // Lancer directement sans confirmation
+        this.autoStarted = true;
+        this.openAudiomack();
     }
 
     /**
