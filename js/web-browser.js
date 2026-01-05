@@ -513,7 +513,7 @@ class WebBrowserManager {
             loader.className = 'web-browser-loading';
             loader.innerHTML = `
                 <div class="web-browser-loading-spinner"></div>
-                <div>Chargement...</div>
+                <div>Loading...</div>
             `;
             body.appendChild(loader);
         }
