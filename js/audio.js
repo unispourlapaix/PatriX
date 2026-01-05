@@ -795,7 +795,6 @@ class AudioManager {
                     height="${track.height || 400}" 
                     frameborder="0" 
                     title="${track.title}"
-                    allow="autoplay; encrypted-media"
                     style="border: none; display: block;">
                 </iframe>
             `;

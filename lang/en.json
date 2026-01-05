@@ -1,0 +1,119 @@
+{
+  "language": {
+    "name": "English",
+    "code": "en"
+  },
+  "menu": {
+    "play": "Play",
+    "login": "Login",
+    "register": "Sign Up",
+    "logout": "Logout",
+    "playGuest": "Play as Guest",
+    "backToLogin": "← Back to Login"
+  },
+  "game": {
+    "score": "SCORE",
+    "lines": "LINES",
+    "level": "LEVEL",
+    "combo": "COMBO",
+    "next": "NEXT",
+    "hold": "HOLD",
+    "pause": "PAUSE",
+    "gameOver": "GAME OVER",
+    "finalScore": "Final Score",
+    "treasureLevel": "Level",
+    "shareScore": "Share my score",
+    "supportArtist": "Support the artist"
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Sign Up",
+    "forgotTitle": "Forgot Password?",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "••••••••",
+    "pseudoPlaceholder": "Your nickname",
+    "confirmPasswordLabel": "Confirm Password",
+    "loginButton": "Sign In",
+    "registerButton": "Sign Up",
+    "resetButton": "Reset",
+    "loginHint": "Login: Email + Password",
+    "registerHint": "Sign Up: Nickname + Email + Password (min 6 chars)",
+    "bestScore": "Best Score:",
+    "errors": {
+      "fillAllFields": "Please fill in all fields",
+      "invalidEmail": "Invalid email",
+      "invalidPassword": "Invalid email or password",
+      "passwordsDontMatch": "Passwords don't match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "emailExists": "This email is already in use locally. Please log in or log out first.",
+      "pseudoExists": "This nickname is already taken. Choose another one!",
+      "noAccountFound": "No account found with this email. Create an account first!",
+      "connectionError": "Connection error. Check your internet connection.",
+      "serverError": "Cannot connect to server. Check your internet connection.",
+      "wrongPassword": "Incorrect password",
+      "cantCreateAccount": "Cannot create online account. Check your internet connection."
+    },
+    "success": {
+      "resetEmailSent": "Reset email sent"
+    }
+  },
+  "combo": {
+    "normal": "COMBO x{count}!",
+    "super": "⚡ SUPER x{count}!",
+    "mega": "🔥 MEGA COMBO x{count}!",
+    "amazing": "🌟 AMAZING x{count}!",
+    "legendary": "⚡🔥 LEGENDARY x{count}!",
+    "ultimate": "🌟💫 ULTIMATE x{count}! 💫🌟",
+    "blocks": "{count} blocks {emoji}"
+  },
+  "lines": {
+    "single": "✨ LINE CLEAR!",
+    "double": "⚡ DOUBLE! 2 LINES!",
+    "triple": "🔥 TRIPLE! 3 LINES!",
+    "patrix": "🎆 PATRIX! 4 LINES!",
+    "comboBonus": {
+      "small": "💫 COMBO x{count}!",
+      "medium": "⚡ COMBO x{count}!",
+      "large": "🔥 MASSIVE COMBO x{count}!",
+      "ultimate": "🎉 ULTIMATE COMBO x{count}!"
+    }
+  },
+  "pop": {
+    "normal": "POP x{count}!",
+    "big": "✨ BIG POP x{count}! ✨",
+    "mega": "🔥 MEGA POP x{count}! 🔥"
+  },
+  "endingAnimation": {
+    "title": "🌟 CONGRATULATIONS! 🌟",
+    "message1": "Well done!",
+    "message2": "You made it to the end 🎉",
+    "bookButton": "📖 PHOTO ALBUM"
+  },
+  "music": {
+    "title": "🎵 Gospel Music",
+    "loading": "Loading...",
+    "error": "Loading error"
+  },
+  "browser": {
+    "cookieWarning": "This site may use cookies and collect data.\nContinue?",
+    "overloadMessage": "The audio player has been disabled to preserve performance.\nReactivation in 5 minutes."
+  },
+  "profile": {
+    "welcome": "Welcome",
+    "guest": "Guest",
+    "level": "Level",
+    "maxScore": "High Score",
+    "totalLines": "Lines",
+    "playTime": "Play Time"
+  },
+  "settings": {
+    "language": "Language",
+    "sound": "Sound",
+    "music": "Music",
+    "vibration": "Vibration"
+  },
+  "trophies": {
+    "title": "🏆 MY TROPHIES",
+    "count": "{count} trophies unlocked"
+  }
+}

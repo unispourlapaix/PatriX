@@ -359,39 +359,42 @@ class VisualEffects {
             clearTimeout(this.comboTimeout);
         }
         
-        // Special messages based on combo AND size
-        let comboText, emoji, intensity;
+        // Messages spéciaux basés sur le combo ET la taille
+        let comboKey, emoji, intensity;
         
         if (combo >= 10) {
-            comboText = `🌟💫 ULTIMATE x${combo}! 💫🌟`;
+            comboKey = 'combo.ultimate';
             intensity = 'ultimate';
         } else if (combo >= 8) {
-            comboText = `⚡🔥 LEGENDARY x${combo}!`;
+            comboKey = 'combo.legendary';
             intensity = 'legendary';
         } else if (combo >= 6) {
-            comboText = `🌟 AMAZING x${combo}!`;
+            comboKey = 'combo.amazing';
             intensity = 'amazing';
         } else if (combo >= 5) {
-            comboText = `🔥 MEGA COMBO x${combo}!`;
+            comboKey = 'combo.mega';
             intensity = 'mega';
         } else if (combo >= 3) {
-            comboText = `⚡ SUPER x${combo}!`;
+            comboKey = 'combo.super';
             intensity = 'super';
         } else {
-            comboText = `COMBO x${combo}!`;
+            comboKey = 'combo.normal';
             intensity = 'normal';
         }
         
-        // Emoji based on size
+        // Emoji basé sur la taille
         if (count >= 15) emoji = '🎆';
         else if (count >= 12) emoji = '💎';
         else if (count >= 10) emoji = '🔥';
         else if (count >= 8) emoji = '⚡';
         else emoji = '💥';
         
+        const comboText = window.i18n ? window.i18n.t(comboKey, { count: combo }) : `COMBO x${combo}!`;
+        const blocksText = window.i18n ? window.i18n.t('combo.blocks', { count, emoji }) : `${count} blocs ${emoji}`;
+        
         msg.innerHTML = `
             <div class="combo-text">${comboText}</div>
-            <div class="combo-extra">${count} blocks ${emoji}</div>
+            <div class="combo-extra">${blocksText}</div>
         `;
         msg.className = `combo-message combo-${intensity}`;
         msg.style.display = 'block';
@@ -427,31 +430,37 @@ class VisualEffects {
             clearTimeout(this.lineTimeout);
         }
         
-        let lineText, intensity;
+        let lineKey, intensity;
         
         if (count === 4) {
-            lineText = '🎆 PATRIX! 4 LINES!';
+            lineKey = 'lines.patrix';
             intensity = 'patrix';
         } else if (count === 3) {
-            lineText = '🔥 TRIPLE! 3 LINES!';
+            lineKey = 'lines.triple';
             intensity = 'triple';
         } else if (count === 2) {
-            lineText = '⚡ DOUBLE! 2 LINES!';
+            lineKey = 'lines.double';
             intensity = 'double';
         } else {
-            lineText = '✨ LINE COMPLETE!';
+            lineKey = 'lines.single';
             intensity = 'single';
         }
         
+        const lineText = window.i18n ? window.i18n.t(lineKey) : 'LINE COMPLETE!';
+        
         let comboBonus = '';
         if (combo >= 10) {
-            comboBonus = `<div class="line-combo">🎉 ULTIMATE COMBO x${combo}!</div>`;
+            const bonusText = window.i18n ? window.i18n.t('lines.comboBonus.ultimate', { count: combo }) : `ULTIMATE COMBO x${combo}!`;
+            comboBonus = `<div class="line-combo">${bonusText}</div>`;
         } else if (combo >= 7) {
-            comboBonus = `<div class="line-combo">🔥 MASSIVE COMBO x${combo}!</div>`;
+            const bonusText = window.i18n ? window.i18n.t('lines.comboBonus.large', { count: combo }) : `MASSIVE COMBO x${combo}!`;
+            comboBonus = `<div class="line-combo">${bonusText}</div>`;
         } else if (combo >= 5) {
-            comboBonus = `<div class="line-combo">⚡ COMBO x${combo}!</div>`;
+            const bonusText = window.i18n ? window.i18n.t('lines.comboBonus.medium', { count: combo }) : `COMBO x${combo}!`;
+            comboBonus = `<div class="line-combo">${bonusText}</div>`;
         } else if (combo >= 3) {
-            comboBonus = `<div class="line-combo">💫 COMBO x${combo}!</div>`;
+            const bonusText = window.i18n ? window.i18n.t('lines.comboBonus.small', { count: combo }) : `COMBO x${combo}!`;
+            comboBonus = `<div class="line-combo">${bonusText}</div>`;
         }
         
         msg.innerHTML = `

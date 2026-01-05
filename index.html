@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="Patri-X - Transform despair into great dreams. An inspiring block game.">
+    <meta name="description" content="Patri-X - Transforme le désespoir en grands rêves. Un jeu de blocs inspirant.">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#4fc3f7">
@@ -20,7 +20,7 @@
     <link rel="icon" type="image/svg+xml" sizes="192x192" href="assets/images/icon-192.svg">
     <link rel="apple-touch-icon" href="assets/images/icon-192.svg">
 
-    <title>Patri-X - Transform Despair into Great Dreams</title>
+    <title>Patri-X - Transformer le Désespoir en Grands Rêves</title>
     
     <!-- Styles CSS modulaires -->
     <link rel="stylesheet" href="css/main.css">
@@ -30,8 +30,47 @@
     <link rel="stylesheet" href="css/install.css">
     <link rel="stylesheet" href="css/ending.css">
     <link rel="stylesheet" href="css/web-browser.css">
+    <link rel="stylesheet" href="css/language.css">
 </head>
 <body>
+    <!-- Modal de sélection de langue -->
+    <div class="language-selector-modal hidden" id="languageModal">
+        <div class="language-selector-content">
+            <h2 class="language-selector-title">🌍 Choose Your Language</h2>
+            <p class="language-selector-subtitle">Choisissez votre langue</p>
+            
+            <div class="language-options">
+                <div class="language-option" data-lang="fr">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇫🇷</span>
+                        <div class="language-info">
+                            <span class="language-name">Français</span>
+                            <span class="language-native">French</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="en">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇬🇧</span>
+                        <div class="language-info">
+                            <span class="language-name">English</span>
+                            <span class="language-native">Anglais</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+            </div>
+            
+            <button class="language-continue-btn" id="languageContinueBtn" disabled>Continue</button>
+        </div>
+    </div>
+
+    <!-- Bouton de changement de langue (visible après sélection initiale) -->
+    <button class="language-switcher-btn hidden" id="languageSwitcher" title="Change language">🌐</button>
+    
+
     <!-- Conteneur principal - Grille maximisée -->
     <div class="game-wrapper">
         <!-- Grille de jeu maximisée -->
@@ -107,44 +146,44 @@
         <div class="pop-combo-display" id="popCombo">POP x2!</div>
     </div>
     
-    <!-- Game Over Panel -->
+    <!-- Panel Game Over -->
     <div class="game-over-panel" id="gameOver">
-        <h2>Game Over</h2>
-        <p id="gameOverMessage">Keep dreaming!</p>
-        <p>Final Score: <span id="finalScore">0</span></p>
-        <button class="game-button" id="restartBtn">Restart</button>
+        <h2>Partie Terminée</h2>
+        <p id="gameOverMessage">Continue de rêver !</p>
+        <p>Score Final: <span id="finalScore">0</span></p>
+        <button class="game-button" id="restartBtn">Recommencer</button>
     </div>
     
-    <!-- Pause Panel -->
+    <!-- Panel Pause -->
     <div class="pause-panel" id="pausePanel">
         <div class="pause-icon" id="pauseIcon">⏸️</div>
         <div class="pause-content" id="pauseContent">
             <div class="pause-buttons">
-                <button class="pause-action-btn" id="saveGameBtn" title="Save">💾</button>
-                <button class="pause-action-btn" id="loadGameBtn" title="Load">📂</button>
-                <button class="pause-action-btn" id="resumeBtn" title="Resume">▶️</button>
+                <button class="pause-action-btn" id="saveGameBtn" title="Sauvegarder">💾</button>
+                <button class="pause-action-btn" id="loadGameBtn" title="Charger">📂</button>
+                <button class="pause-action-btn" id="resumeBtn" title="Reprendre">▶️</button>
             </div>
-            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P or Esc</p>
+            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
         </div>
         <p id="saveStatus" style="color: #66bb6a; margin-top: 3px; font-size: 10px; opacity: 0; transition: opacity 0.3s; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;"></p>
     </div>
 
-    <!-- Save/Load Menu -->
+    <!-- Menu Sauvegardes/Chargement -->
     <div class="save-load-modal" id="saveLoadModal">
         <div class="save-load-content">
-            <h2 id="saveLoadTitle">💾 Saves</h2>
+            <h2 id="saveLoadTitle">💾 Sauvegardes</h2>
             <div class="save-slots" id="saveSlots"></div>
-            <button class="save-load-close" id="saveLoadClose">Close</button>
+            <button class="save-load-close" id="saveLoadClose">Fermer</button>
         </div>
     </div>
     
-    <!-- Treasure Modal -->
+    <!-- Modal Trésor -->
     <div class="treasure-modal" id="treasureModal">
         <div class="treasure-content">
             <div class="treasure-icon">💎</div>
-            <div class="treasure-level">Level <span id="treasureLevel">1</span></div>
+            <div class="treasure-level">Niveau <span id="treasureLevel">1</span></div>
             <div class="treasure-message" id="treasureMessage"></div>
-            <button class="treasure-button" id="treasureContinue">Continue ✨</button>
+            <button class="treasure-button" id="treasureContinue">Continuer ✨</button>
         </div>
     </div>
     
@@ -167,7 +206,7 @@
     <div class="trophies-panel" id="trophiesPanel">
         <div class="trophies-panel-content">
             <div class="trophies-header">
-                <h2>🏆 MES TROPHÉES</h2>
+                <h2 data-i18n="trophies.title">🏆 MES TROPHÉES</h2>
                 <button class="trophies-close" id="trophiesClose">✕</button>
             </div>
             
@@ -193,14 +232,14 @@
                         </div>
                     </div>
                     <div class="profile-actions">
-                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Edit</button>
+                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Modifier</button>
                         <button class="profile-share-btn" id="profileShareBtn">
                             <span class="share-icon">🎮</span>
-                            <span class="share-text">Share my score<br>Support the artist</span>
+                            <span class="share-text">Partager mon score<br>Soutenir l'artiste</span>
                         </button>
                         <button class="profile-music-btn" id="profileMusicBtn">
                             <span class="music-icon">🎵</span>
-                            <span class="music-text">Audiomack Music</span>
+                            <span class="music-text">Musique Audiomack</span>
                         </button>
                     </div>
                 </div>
@@ -217,13 +256,13 @@
         <div class="web-browser-content">
             <div class="web-browser-header">
                 <div class="web-browser-controls">
-                    <button class="web-nav-btn" id="webBackBtn" title="Back">←</button>
-                    <button class="web-nav-btn" id="webForwardBtn" title="Forward">→</button>
-                    <button class="web-nav-btn" id="webRefreshBtn" title="Refresh">↻</button>
+                    <button class="web-nav-btn" id="webBackBtn" title="Précédent">←</button>
+                    <button class="web-nav-btn" id="webForwardBtn" title="Suivant">→</button>
+                    <button class="web-nav-btn" id="webRefreshBtn" title="Actualiser">↻</button>
                 </div>
                 <div class="web-browser-url" id="webBrowserUrl">Audiomack</div>
-                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimize">−</button>
-                <button class="web-browser-close" id="webBrowserClose" title="Close">✕</button>
+                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimiser">−</button>
+                <button class="web-browser-close" id="webBrowserClose" title="Fermer">✕</button>
             </div>
             <div class="web-browser-body">
                 <iframe 
@@ -236,97 +275,97 @@
                 </iframe>
                 <div class="web-privacy-info">
                     <span class="privacy-icon">🔒</span>
-                    <span class="privacy-text">Secure browsing</span>
+                    <span class="privacy-text">Navigation sécurisée</span>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Profile Edit Modal -->
+    <!-- Modal Édition Profil -->
     <div class="profile-modal" id="profileModal">
         <div class="profile-modal-content">
-            <h2>✏️ MY PROFILE</h2>
+            <h2>✏️ MON PROFIL</h2>
             <button class="profile-modal-close" id="profileModalClose">✕</button>
             
             <div class="profile-form">
-                <label>Username</label>
-                <input type="text" id="profilePseudoInput" placeholder="Your username" maxlength="20">
+                <label>Pseudo</label>
+                <input type="text" id="profilePseudoInput" placeholder="Ton pseudo" maxlength="20">
                 
-                <label>Christian Avatar</label>
+                <label>Avatar Chrétien</label>
                 <div class="avatar-grid" id="avatarGrid">
-                    <!-- Avatars generated by JS -->
+                    <!-- Avatars générés par JS -->
                 </div>
                 
-                <button class="profile-save-btn" id="profileSaveBtn">💾 Save</button>
+                <button class="profile-save-btn" id="profileSaveBtn">💾 Sauvegarder</button>
             </div>
         </div>
     </div>
     
-    <!-- Login Modal -->
+    <!-- Modal Connexion -->
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>PATRI-X</h2>
-            <p class="login-subtitle">Welcome brave little explorer</p>
+            <p class="login-subtitle">Bienvenue courageux petit explorateur</p>
             
             <div class="user-info" id="userInfo" style="display: none;">
                 <div class="user-avatar">👤</div>
-                <div class="user-name" id="userName">Guest</div>
+                <div class="user-name" id="userName">Invité</div>
                 <div class="user-max-score">
-                    <span class="label">Best Score:</span>
+                    <span class="label">Meilleur Score:</span>
                     <span class="value" id="userMaxScore">0</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <button class="logout-btn" id="logoutBtn">Déconnexion</button>
             </div>
             
             <div class="login-form" id="loginForm">
                 <input 
                     type="text" 
                     id="usernameInput" 
-                    placeholder="Your username" 
+                    placeholder="Ton pseudo" 
                     maxlength="20"
                     autocomplete="off"
                 />
                 <input 
                     type="email" 
                     id="emailInput" 
-                    placeholder="Your email" 
+                    placeholder="Ton email" 
                     autocomplete="email"
                 />
                 <input 
                     type="password" 
                     id="passwordInput" 
-                    placeholder="Your password" 
+                    placeholder="Ton mot de passe" 
                     autocomplete="current-password"
                 />
                 <div class="login-buttons">
-                    <button class="login-btn" id="loginBtn">Sign In 🔑</button>
-                    <button class="register-btn" id="registerBtn">Create Account ✨</button>
+                    <button class="login-btn" id="loginBtn">Se Connecter 🔑</button>
+                    <button class="register-btn" id="registerBtn">Créer un compte ✨</button>
                 </div>
                 <p class="login-note" id="loginNote">
-                    <span id="loginHint">Login: Email + Password</span>
-                    <span id="registerHint" style="display: none;">Registration: Username + Email + Password (min 6 chars)</span>
+                    <span id="loginHint">Connexion : Email + Mot de passe</span>
+                    <span id="registerHint" style="display: none;">Inscription : Pseudo + Email + Mot de passe (min 6 car.)</span>
                 </p>
-                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Forgot password?</a>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Mot de passe oublié ?</a>
             </div>
             
             <div class="reset-password-form" id="resetPasswordForm" style="display: none;">
                 <input 
                     type="email" 
                     id="resetEmailInput" 
-                    placeholder="Your email" 
+                    placeholder="Ton email" 
                     autocomplete="email"
                 />
-                <button class="login-btn" id="resetPasswordBtn">Reset 🔑</button>
-                <p class="login-note">Your password will be reset. Then use "Create Account" to set a new one.</p>
-                <a href="#" class="back-to-login-link" id="backToLoginLink">← Back to login</a>
+                <button class="login-btn" id="resetPasswordBtn">Réinitialiser 🔑</button>
+                <p class="login-note">Ton mot de passe sera réinitialisé. Utilise ensuite "Créer un compte" pour en définir un nouveau.</p>
+                <a href="#" class="back-to-login-link" id="backToLoginLink">← Retour à la connexion</a>
             </div>
             
-            <button class="play-guest-btn" id="playGuestBtn">Play as Guest</button>
+            <button class="play-guest-btn" id="playGuestBtn">Jouer sans compte</button>
             
             <div class="leaderboard-preview" id="leaderboardPreview">
-                <h3>🏆 TOP 5 PLAYERS</h3>
+                <h3>🏆 TOP 5 JOUEURS</h3>
                 <div class="leaderboard-list" id="leaderboardList">
-                    <div class="loading">Loading...</div>
+                    <div class="loading">Chargement...</div>
                 </div>
             </div>
         </div>
@@ -334,6 +373,8 @@
 
     <!-- Modules JavaScript (ordre important !) -->
     <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/language-manager.js"></script>
     <script src="js/install-manager.js"></script>
     <script src="js/avatars.js"></script>
     <script src="js/audio.js"></script>
@@ -355,8 +396,8 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('[PATRI-X] Service Worker enregistré'))
-                    .catch(err => console.warn('[PATRI-X] Service Worker erreur:', err));
+                    .then(reg => {/* Service Worker enregistré */})
+                    .catch(err => {/* Service Worker erreur */});
             });
         }
     </script>

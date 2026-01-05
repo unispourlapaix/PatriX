@@ -458,12 +458,14 @@ class UserInterface {
         const intensity = count >= 8 ? 'mega' : count >= 5 ? 'big' : 'normal';
         
         // Texte plus dramatique selon l'intensité
-        let text = `POP x${combo}!`;
+        let popKey = 'pop.normal';
         if (count >= 8) {
-            text = `🔥 MEGA POP x${combo}! 🔥`;
+            popKey = 'pop.mega';
         } else if (count >= 5) {
-            text = `✨ BIG POP x${combo}! ✨`;
+            popKey = 'pop.big';
         }
+        
+        const text = window.i18n ? window.i18n.t(popKey, { count: combo }) : `POP x${combo}!`;
         
         popComboDisplay.textContent = text;
         popComboDisplay.className = `pop-combo-display pop-${intensity}`;
@@ -1240,7 +1242,7 @@ class UserInterface {
         if (specialTrophies.length > 0) {
             const specialHeader = document.createElement('div');
             specialHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            specialHeader.textContent = '🏆 Special Trophies';
+            specialHeader.textContent = '🏆 Trophées Spéciaux';
             this.elements.trophiesGrid.appendChild(specialHeader);
             
             specialTrophies.forEach(trophy => {
@@ -1248,11 +1250,11 @@ class UserInterface {
             });
         }
         
-        // Level medals section
+        // Section médailles de niveau
         if (medals.length > 0) {
             const medalsHeader = document.createElement('div');
             medalsHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            medalsHeader.textContent = '🥇 Level Medals';
+            medalsHeader.textContent = '🥇 Médailles de Niveau';
             this.elements.trophiesGrid.appendChild(medalsHeader);
             
             medals.forEach(trophy => {

@@ -14,7 +14,6 @@ let lineTracer = null;
 let userManager = null;
 let profileManager = null;
 let webBrowser = null;
-let audioManager = null;
 let lastTime = 0;
 
 /**
@@ -24,11 +23,9 @@ function initUserSystem() {
     userManager = new UserManager();
     profileManager = new ProfileManager(userManager);
     webBrowser = new WebBrowserManager();
-    audioManager = new AudioManager();
     
-    // Rendre accessibles globalement
+    // Rendre webBrowser accessible globalement
     window.webBrowser = webBrowser;
-    window.audioManager = audioManager;
     
     // Lancer automatiquement la musique après un délai
     setTimeout(() => {
@@ -101,16 +98,16 @@ function initUserSystem() {
         }
         
         if (!password || password.length < 6) {
-            alert('Password must contain at least 6 characters');
+            alert('Le mot de passe doit contenir au moins 6 caractères');
             return;
         }
         
         try {
-            registerBtn.textContent = 'Creating...';
+            registerBtn.textContent = 'Création...';
             registerBtn.disabled = true;
             await userManager.register(username, email, password);
             
-            // Reload synchronized trophies
+            // Recharger les trophées synchronisés
             if (ui) {
                 ui.loadTrophies();
             }
@@ -121,8 +118,8 @@ function initUserSystem() {
                 startGame();
             }, 1000);
         } catch (error) {
-            alert('Error: ' + error.message);
-            registerBtn.textContent = 'Create Account ✨';
+            alert('Erreur : ' + error.message);
+            registerBtn.textContent = 'Créer un compte ✨';
             registerBtn.disabled = false;
         }
     });
@@ -148,17 +145,17 @@ function initUserSystem() {
         }
         
         if (!password || password.length < 6) {
-            alert('Password must contain at least 6 characters');
+            alert('Le mot de passe doit contenir au moins 6 caractères');
             return;
         }
         
         try {
-            loginBtn.textContent = 'Connecting...';
+            loginBtn.textContent = 'Connexion...';
             loginBtn.disabled = true;
-            // Login by email + password
+            // Login par email + password
             await userManager.login(email, password);
             
-            // Reload synchronized trophies
+            // Recharger les trophées synchronisés
             if (ui) {
                 ui.loadTrophies();
             }
@@ -169,8 +166,8 @@ function initUserSystem() {
                 startGame();
             }, 1000);
         } catch (error) {
-            alert('Error: ' + error.message);
-            loginBtn.textContent = 'Sign In 🔑';
+            alert('Erreur : ' + error.message);
+            loginBtn.textContent = 'Se Connecter 🔑';
             loginBtn.disabled = false;
         }
     });
@@ -198,28 +195,28 @@ function initUserSystem() {
         const email = resetEmailInput.value.trim();
         
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Valid email required');
+            alert('Email valide requis');
             return;
         }
         
         try {
-            resetPasswordBtn.textContent = 'Resetting...';
+            resetPasswordBtn.textContent = 'Réinitialisation...';
             resetPasswordBtn.disabled = true;
             
             await userManager.resetPassword(email);
             
-            alert('✅ Password reset!\n\nUse "Create Account" with this email to set a new password.');
+            alert('✅ Mot de passe réinitialisé !\n\nUtilise "Créer un compte" avec cet email pour définir un nouveau mot de passe.');
             resetEmailInput.value = '';
             resetPasswordForm.style.display = 'none';
             loginForm.style.display = 'block';
             
-            // Pre-fill email in registration form
+            // Pré-remplir l'email dans le formulaire d'inscription
             document.getElementById('emailInput').value = email;
             registerBtn.focus();
         } catch (error) {
-            alert('Error: ' + error.message);
+            alert('Erreur : ' + error.message);
         } finally {
-            resetPasswordBtn.textContent = 'Reset 🔑';
+            resetPasswordBtn.textContent = 'Réinitialiser 🔑';
             resetPasswordBtn.disabled = false;
         }
     });
@@ -274,10 +271,10 @@ function initUserSystem() {
                     </div>
                 `).join('');
             } else {
-                leaderboardList.innerHTML = '<div class="loading">No scores yet</div>';
+                leaderboardList.innerHTML = '<div class="loading">Aucun score pour le moment</div>';
             }
         } catch (error) {
-            leaderboardList.innerHTML = '<div class="loading">Loading error</div>';
+            leaderboardList.innerHTML = '<div class="loading">Erreur de chargement</div>';
         }
     }
 }
@@ -479,8 +476,8 @@ function showSaveLoadMenu(mode) {
     
     if (!modal || !title || !slotsContainer) return;
     
-    // Change title based on mode
-    title.textContent = mode === 'save' ? '💾 Save' : '📂 Load';
+    // Changer le titre selon le mode
+    title.textContent = mode === 'save' ? '💾 Sauvegarder' : '📂 Charger';
     
     // Récupérer toutes les sauvegardes
     const saves = userManager.getAllSavedGames();

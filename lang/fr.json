@@ -1,0 +1,119 @@
+{
+  "language": {
+    "name": "Français",
+    "code": "fr"
+  },
+  "menu": {
+    "play": "Jouer",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "playGuest": "Jouer sans compte",
+    "backToLogin": "← Retour à la connexion"
+  },
+  "game": {
+    "score": "SCORE",
+    "lines": "LIGNES",
+    "level": "NIVEAU",
+    "combo": "COMBO",
+    "next": "SUIVANT",
+    "hold": "RESERVE",
+    "pause": "PAUSE",
+    "gameOver": "GAME OVER",
+    "finalScore": "Score Final",
+    "treasureLevel": "Niveau",
+    "shareScore": "Partager mon score",
+    "supportArtist": "Soutenir l'artiste"
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "registerTitle": "Inscription",
+    "forgotTitle": "Mot de passe oublié ?",
+    "emailPlaceholder": "votre@email.com",
+    "passwordPlaceholder": "••••••••",
+    "pseudoPlaceholder": "Votre pseudo",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "loginButton": "Se connecter",
+    "registerButton": "S'inscrire",
+    "resetButton": "Réinitialiser",
+    "loginHint": "Connexion : Email + Mot de passe",
+    "registerHint": "Inscription : Pseudo + Email + Mot de passe (min 6 car.)",
+    "bestScore": "Meilleur Score:",
+    "errors": {
+      "fillAllFields": "Veuillez remplir tous les champs",
+      "invalidEmail": "Email invalide",
+      "invalidPassword": "Email ou mot de passe incorrect",
+      "passwordsDontMatch": "Les mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+      "emailExists": "Cet email est déjà utilisé localement. Connecte-toi ou déconnecte-toi d'abord.",
+      "pseudoExists": "Ce pseudo est déjà pris. Choisis-en un autre !",
+      "noAccountFound": "Aucun compte trouvé avec cet email. Crée d'abord un compte !",
+      "connectionError": "Erreur de connexion. Vérifiez votre connexion internet.",
+      "serverError": "Impossible de se connecter au serveur. Vérifie ta connexion Internet.",
+      "wrongPassword": "Mot de passe incorrect",
+      "cantCreateAccount": "Impossible de créer le compte en ligne. Vérifie ta connexion Internet."
+    },
+    "success": {
+      "resetEmailSent": "Email de réinitialisation envoyé"
+    }
+  },
+  "combo": {
+    "normal": "COMBO x{count}!",
+    "super": "⚡ SUPER x{count}!",
+    "mega": "🔥 MEGA COMBO x{count}!",
+    "amazing": "🌟 INCROYABLE x{count}!",
+    "legendary": "⚡🔥 LEGENDAIRE x{count}!",
+    "ultimate": "🌟💫 ULTIME x{count}! 💫🌟",
+    "blocks": "{count} blocs {emoji}"
+  },
+  "lines": {
+    "single": "✨ LIGNE COMPLÈTE!",
+    "double": "⚡ DOUBLE! 2 LIGNES!",
+    "triple": "🔥 TRIPLE! 3 LIGNES!",
+    "patrix": "🎆 PATRIX! 4 LIGNES!",
+    "comboBonus": {
+      "small": "💫 COMBO x{count}!",
+      "medium": "⚡ COMBO x{count}!",
+      "large": "🔥 COMBO MASSIF x{count}!",
+      "ultimate": "🎉 COMBO ULTIME x{count}!"
+    }
+  },
+  "pop": {
+    "normal": "POP x{count}!",
+    "big": "✨ BIG POP x{count}! ✨",
+    "mega": "🔥 MEGA POP x{count}! 🔥"
+  },
+  "endingAnimation": {
+    "title": "🌟 BRAVO ! 🌟",
+    "message1": "Bon courage !",
+    "message2": "Tu es arrivé au bout 🎉",
+    "bookButton": "📖 ALBUM PHOTO"
+  },
+  "music": {
+    "title": "🎵 Gospel Music",
+    "loading": "Chargement...",
+    "error": "Erreur de chargement"
+  },
+  "browser": {
+    "cookieWarning": "Ce site peut utiliser des cookies et collecter des données.\nContinuer ?",
+    "overloadMessage": "Le lecteur audio a été désactivé pour préserver les performances.\nRéactivation dans 5 minutes."
+  },
+  "profile": {
+    "welcome": "Bienvenue",
+    "guest": "Invité",
+    "level": "Niveau",
+    "maxScore": "Record",
+    "totalLines": "Lignes",
+    "playTime": "Temps de jeu"
+  },
+  "settings": {
+    "language": "Langue",
+    "sound": "Son",
+    "music": "Musique",
+    "vibration": "Vibration"
+  },
+  "trophies": {
+    "title": "🏆 MES TROPHÉES",
+    "count": "{count} trophées débloqués"
+  }
+}

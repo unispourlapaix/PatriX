@@ -300,9 +300,9 @@ class EndingAnimation {
         this.ctx.textAlign = 'center';
         const alpha = Math.min(1, this.progress / 1);
         this.ctx.globalAlpha = alpha;
-        this.ctx.fillText('Congratulations!', this.canvas.width / 2, 100);
+        this.ctx.fillText('Félicitations!', this.canvas.width / 2, 100);
         this.ctx.font = '20px Arial';
-        this.ctx.fillText('Maximum Level Reached', this.canvas.width / 2, 140);
+        this.ctx.fillText('Niveau Maximum Atteint', this.canvas.width / 2, 140);
         this.ctx.globalAlpha = 1;
 
         // Chat apparaît
@@ -598,10 +598,10 @@ class EndingAnimation {
         this.drawMountain(this.canvas.width - 60, this.canvas.height - 80);
         this.drawCat(this.catPos.x, this.catPos.y, 15);
 
-        // Display congratulations message with semi-transparent popup-style background
+        // Afficher message de félicitations avec fond semi-transparent style popup
         const alpha = Math.min(1, this.progress / 1.5);
         
-        // Semi-transparent background with gradient for modern popup style
+        // Fond semi-transparent avec gradient pour style popup moderne
         const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2 - 100, 0, this.canvas.height / 2 + 80);
         gradient.addColorStop(0, 'rgba(255, 107, 157, 0.95)');
         gradient.addColorStop(0.5, 'rgba(255, 179, 217, 0.95)');
@@ -617,19 +617,23 @@ class EndingAnimation {
         this.ctx.globalAlpha = alpha;
         this.ctx.textAlign = 'center';
         
-        // Title with emoji
+        // Titre avec emoji
+        const title = window.i18n ? window.i18n.t('endingAnimation.title') : '🌟 CONGRATULATIONS! 🌟';
+        const message1 = window.i18n ? window.i18n.t('endingAnimation.message1') : 'Well done!';
+        const message2 = window.i18n ? window.i18n.t('endingAnimation.message2') : 'You made it to the end 🎉';
+        
         this.ctx.fillStyle = '#ffffff';
         this.ctx.font = 'bold 48px Arial';
         this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
         this.ctx.shadowBlur = 4;
-        this.ctx.fillText('🌟 WELL DONE! 🌟', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.fillText(title, this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        // Encouraging message
+        // Message encourageant
         this.ctx.fillStyle = '#fff';
         this.ctx.font = 'bold 20px Arial';
-        this.ctx.fillText('Keep going!', this.canvas.width / 2, this.canvas.height / 2 + 15);
+        this.ctx.fillText(message1, this.canvas.width / 2, this.canvas.height / 2 + 15);
         this.ctx.font = '18px Arial';
-        this.ctx.fillText('You made it to the end 🎉', this.canvas.width / 2, this.canvas.height / 2 + 45);
+        this.ctx.fillText(message2, this.canvas.width / 2, this.canvas.height / 2 + 45);
         
         this.ctx.shadowBlur = 0;
         this.ctx.globalAlpha = 1;
@@ -661,13 +665,13 @@ class EndingAnimation {
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
         
-        // Text
+        // Texte
         this.ctx.fillStyle = '#ffffff';
         this.ctx.font = 'bold 14px Arial';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('Thanks mihao miahoo', btnX, btnY - 8);
+        this.ctx.fillText('Merci mihao miahoo', btnX, btnY - 8);
         this.ctx.font = '12px Arial';
-        this.ctx.fillText('✨ Discover your treasure ✨', btnX, btnY + 10);
+        this.ctx.fillText('✨ Découvrez votre trésor ✨', btnX, btnY + 10);
         
         // Zone cliquable (stocker pour l'event listener)
         if (!this.bookButtonBounds) {

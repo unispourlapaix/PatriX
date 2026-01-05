@@ -1,0 +1,228 @@
+/* Modal de sélection de langue */
+.language-selector-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 10, 30, 0.95), rgba(20, 20, 40, 0.98));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.language-selector-modal.hidden {
+    display: none;
+}
+
+.language-selector-content {
+    background: linear-gradient(135deg, #fff8e1, #fffaeb);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.4s ease-out;
+}
+
+.language-selector-title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #c9a66b;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.language-selector-subtitle {
+    text-align: center;
+    font-size: 1.1em;
+    color: #8b7355;
+    margin-bottom: 30px;
+}
+
+.language-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.language-option {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+    border: 3px solid #c9a66b;
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.language-option:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(201, 166, 107, 0.4);
+    border-color: #d4af37;
+}
+
+.language-option:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.language-option-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-flag {
+    font-size: 3em;
+    line-height: 1;
+}
+
+.language-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.language-name {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #5a4a3a;
+}
+
+.language-native {
+    font-size: 0.9em;
+    color: #8b7355;
+}
+
+.language-check {
+    font-size: 1.5em;
+    color: #4caf50;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.language-option.selected .language-check {
+    opacity: 1;
+}
+
+.language-continue-btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #c9a66b, #d4af37);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(201, 166, 107, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.language-continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201, 166, 107, 0.5);
+}
+
+.language-continue-btn:active {
+    transform: translateY(0);
+}
+
+.language-continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Classe helper pour cacher des éléments */
+.hidden {
+    display: none !important;
+}
+
+/* Petit bouton langue dans le coin */
+.language-switcher-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, rgba(201, 166, 107, 0.9), rgba(212, 175, 55, 0.9));
+    border: 2px solid #c9a66b;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.language-switcher-btn:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 20px rgba(201, 166, 107, 0.4);
+}
+
+.language-switcher-btn:active {
+    transform: scale(0.95);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .language-selector-content {
+        padding: 30px 20px;
+    }
+    
+    .language-selector-title {
+        font-size: 1.6em;
+    }
+    
+    .language-flag {
+        font-size: 2.5em;
+    }
+    
+    .language-name {
+        font-size: 1.2em;
+    }
+    
+    .language-switcher-btn {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+}
