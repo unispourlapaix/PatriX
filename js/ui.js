@@ -12,6 +12,7 @@ class UserInterface {
         this.elements = {};
         this.currentMessage = '';
         this.isModalOpen = false; // Suivre si un modal est ouvert
+        this.wasPausedByTrophiesPanel = false; // Flag pour la pause du panneau trophées
         this.init();
         this.bindEvents();
     }
@@ -145,20 +146,21 @@ class UserInterface {
             // Mettre à jour le score principal
             this.updateScore(data.score || this.engine.score);
             
-            if (data.combo > 1) {
-                this.showPopCombo(data.combo);
+            // Afficher tous les pops (combo >= 1)
+            if (data.combo >= 1) {
+                this.showPopCombo(data.combo, data.count);
             }
             this.updateSwapDots(data.swapCount);
             this.updateWallCharges(data.wallBreakCharges);
         });
         
         this.engine.on('swapEarned', (data) => {
-            this.showRewardMessage('SWAP EARNED! 🔄', '#ff8c00');
+            this.showSwapEffect();
             this.updateSwapDots(data.count);
         });
         
         this.engine.on('wallBreakEarned', (data) => {
-            this.showRewardMessage('WALL BREAK! 🧱', '#8b4513');
+            this.showWallBreakEffect();
             this.updateWallCharges(data.count);
         });
         
@@ -176,6 +178,11 @@ class UserInterface {
             if (data.moved > 0) {
                 this.engine.grid.render(this.engine.currentPiece);
             }
+        });
+        
+        // Wind Explosion
+        this.engine.on('windExplosion', (data) => {
+            this.effects.createWindExplosion(data.cells);
         });
         
         // Level Up avec trésor
@@ -204,6 +211,17 @@ class UserInterface {
                 }, 3000);
             }
         });
+
+        // Animation de fin quand le niveau max est atteint
+        this.engine.on('maxLevelReached', () => {
+            // Forcer la fermeture du lecteur Audiomack avant de lancer l'animation
+            if (window.webBrowser && window.webBrowser.isOpen()) {
+                window.webBrowser.close(true); // forceClose = true
+            }
+            
+            const ending = new EndingAnimation();
+            ending.start();
+        });
         
         // Vérifier les trophées sur les événements
         this.engine.on('linesCleared', () => {
@@ -231,6 +249,27 @@ class UserInterface {
         if (this.elements.pauseBtn) {
             this.elements.pauseBtn.addEventListener('click', () => {
                 this.engine.togglePause();
+            });
+        }
+        
+        // Gestion de l'icône pause expansible
+        if (this.elements.pausePanel) {
+            const pauseIcon = document.getElementById('pauseIcon');
+            if (pauseIcon) {
+                pauseIcon.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (this.elements.pausePanel.classList.contains('show')) {
+                        this.elements.pausePanel.classList.toggle('expanded');
+                    }
+                });
+            }
+            
+            // Fermer l'expansion si on clique à l'extérieur
+            document.addEventListener('click', (e) => {
+                if (this.elements.pausePanel.classList.contains('expanded') && 
+                    !this.elements.pausePanel.contains(e.target)) {
+                    this.elements.pausePanel.classList.remove('expanded');
+                }
             });
         }
         
@@ -401,20 +440,41 @@ class UserInterface {
     /**
      * Affiche le combo de pop
      */
-    showPopCombo(combo) {
+    showPopCombo(combo, count = 3) {
         const popComboDisplay = document.getElementById('popCombo');
         if (popComboDisplay) {
-            popComboDisplay.textContent = `POP x${combo}!`;
+            // Calculer l'intensité (3-4 cases = normal, 5-7 = medium, 8+ = intense)
+            const intensity = count >= 8 ? 'mega' : count >= 5 ? 'big' : 'normal';
+            
+            // Texte plus dramatique selon l'intensité
+            let text = `POP x${combo}!`;
+            if (count >= 8) {
+                text = `🔥 MEGA POP x${combo}! 🔥`;
+            } else if (count >= 5) {
+                text = `✨ BIG POP x${combo}! ✨`;
+            }
+            
+            popComboDisplay.textContent = text;
+            popComboDisplay.className = `pop-combo-display pop-${intensity}`;
             popComboDisplay.style.display = 'block';
             popComboDisplay.style.animation = 'none';
+            
+            // Animation adaptée à l'intensité
             setTimeout(() => {
-                popComboDisplay.style.animation = 'comboPulse 0.5s ease-out';
+                if (intensity === 'mega') {
+                    popComboDisplay.style.animation = 'comboPulseMega 0.8s ease-out';
+                } else if (intensity === 'big') {
+                    popComboDisplay.style.animation = 'comboPulseBig 0.6s ease-out';
+                } else {
+                    popComboDisplay.style.animation = 'comboPulse 0.5s ease-out';
+                }
             }, 10);
             
-            // Cacher après 2 secondes
+            // Cacher après un temps adapté
+            const displayTime = intensity === 'mega' ? 2500 : intensity === 'big' ? 2200 : 2000;
             setTimeout(() => {
                 popComboDisplay.style.display = 'none';
-            }, 2000);
+            }, displayTime);
         }
     }
 
@@ -494,9 +554,176 @@ class UserInterface {
         document.body.appendChild(msg);
         
         setTimeout(() => {
-            msg.style.animation = 'rewardDisappear 0.3s ease-out forwards';
-            setTimeout(() => msg.remove(), 300);
+            msg.remove();
+        }, 2000);
+    }
+
+    /**
+     * Effet dynamique pour Wall Break avec son
+     */
+    showWallBreakEffect() {
+        // Créer le conteneur principal
+        const container = document.createElement('div');
+        container.className = 'wall-break-effect';
+        container.innerHTML = `
+            <div class="wall-break-icon">🧱</div>
+            <div class="wall-break-text">WALL BREAK!</div>
+            <div class="wall-break-particles"></div>
+        `;
+        
+        document.body.appendChild(container);
+        
+        // Créer les particules de bris
+        const particlesContainer = container.querySelector('.wall-break-particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'wall-particle';
+            const angle = (Math.PI * 2 * i) / 20;
+            const distance = 50 + Math.random() * 100;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+            particle.style.setProperty('--tx', `${x}px`);
+            particle.style.setProperty('--ty', `${y}px`);
+            particle.style.animationDelay = `${Math.random() * 0.1}s`;
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Son synthétique "tine tine" (métallique)
+        this.playWallBreakSound();
+        
+        // Retirer après animation
+        setTimeout(() => {
+            container.remove();
         }, 1500);
+    }
+
+    /**
+     * Joue un son synthétique de bris métallique
+     */
+    playWallBreakSound() {
+        if (!window.audioContext) {
+            window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        const ctx = window.audioContext;
+        const now = ctx.currentTime;
+        
+        // Premier "tine" (aigu)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(1200, now);
+        osc1.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+        gain1.gain.setValueAtTime(0.3, now);
+        gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.15);
+        
+        // Deuxième "tine" (plus aigu, légèrement décalé)
+        setTimeout(() => {
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(1400, now + 0.08);
+            osc2.frequency.exponentialRampToValueAtTime(900, now + 0.18);
+            gain2.gain.setValueAtTime(0.25, now + 0.08);
+            gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.23);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.08);
+            osc2.stop(now + 0.23);
+        }, 80);
+        
+        // Bruit de bris (white noise court)
+        const bufferSize = ctx.sampleRate * 0.05;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noise = ctx.createBufferSource();
+        const noiseGain = ctx.createGain();
+        noise.buffer = buffer;
+        noiseGain.gain.setValueAtTime(0.15, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        noise.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+        noise.start(now);
+    }
+
+    /**
+     * Effet dynamique pour Swap Earned avec son
+     */
+    showSwapEffect() {
+        // Créer le conteneur principal
+        const container = document.createElement('div');
+        container.className = 'swap-effect';
+        container.innerHTML = `
+            <div class="swap-icon">🔄</div>
+            <div class="swap-text">SWAP EARNED!</div>
+            <div class="swap-rings"></div>
+        `;
+        
+        document.body.appendChild(container);
+        
+        // Créer les anneaux de rotation
+        const ringsContainer = container.querySelector('.swap-rings');
+        for (let i = 0; i < 3; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'swap-ring';
+            ring.style.animationDelay = `${i * 0.15}s`;
+            ringsContainer.appendChild(ring);
+        }
+        
+        // Son synthétique de swap (swoosh électronique)
+        this.playSwapSound();
+        
+        // Retirer après animation
+        setTimeout(() => {
+            container.remove();
+        }, 1500);
+    }
+
+    /**
+     * Joue un son synthétique de swap (swoosh électronique)
+     */
+    playSwapSound() {
+        if (!window.audioContext) {
+            window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        const ctx = window.audioContext;
+        const now = ctx.currentTime;
+        
+        // Swoosh montant (glissando rapide)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(200, now);
+        osc1.frequency.exponentialRampToValueAtTime(800, now + 0.15);
+        gain1.gain.setValueAtTime(0.2, now);
+        gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.2);
+        
+        // Swoosh descendant (complète la rotation)
+        setTimeout(() => {
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(600, now + 0.12);
+            osc2.frequency.exponentialRampToValueAtTime(300, now + 0.25);
+            gain2.gain.setValueAtTime(0.15, now + 0.12);
+            gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.12);
+            osc2.stop(now + 0.28);
+        }, 120);
     }
 
     /**
@@ -648,8 +875,10 @@ class UserInterface {
         if (this.elements.pausePanel) {
             if (isPaused) {
                 this.elements.pausePanel.classList.add('show');
+                // Ne pas auto-expand, laisser l'utilisateur cliquer
             } else {
                 this.elements.pausePanel.classList.remove('show');
+                this.elements.pausePanel.classList.remove('expanded');
             }
         }
     }
@@ -844,11 +1073,60 @@ class UserInterface {
             this.elements.trophyMessage.textContent = trophy.message;
         }
         
+        // Ajouter les liens pour le trophée ultime
+        const trophyContent = this.elements.trophyModal.querySelector('.trophy-modal-content');
+        if (trophyContent) {
+            // Supprimer les anciens liens s'ils existent
+            const oldLinks = trophyContent.querySelector('.trophy-links');
+            if (oldLinks) {
+                oldLinks.remove();
+            }
+            
+            // Ajouter les nouveaux liens si c'est le trophée ultime
+            if (trophy.hasLinks && trophy.links) {
+                const linksContainer = document.createElement('div');
+                linksContainer.className = 'trophy-links';
+                
+                trophy.links.forEach(link => {
+                    const btn = document.createElement('a');
+                    btn.href = link.url;
+                    btn.target = '_blank';
+                    btn.className = 'trophy-link-btn';
+                    btn.style.background = `linear-gradient(135deg, ${link.color} 0%, ${this.adjustColor(link.color, -20)} 100%)`;
+                    btn.textContent = link.text;
+                    linksContainer.appendChild(btn);
+                });
+                
+                // Insérer avant le bouton de fermeture
+                const closeBtn = trophyContent.querySelector('.trophy-close-btn');
+                if (closeBtn) {
+                    closeBtn.parentNode.insertBefore(linksContainer, closeBtn);
+                } else {
+                    trophyContent.appendChild(linksContainer);
+                }
+            }
+        }
+        
         // Afficher
         this.elements.trophyModal.classList.add('show');
         
         // Son et effets
         this.effects.screenFlash('#ffd700');
+    }
+    
+    /**
+     * Ajuster la couleur pour le dégradé
+     */
+    adjustColor(color, percent) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255))
+            .toString(16).slice(1);
     }
     
     /**
@@ -872,6 +1150,23 @@ class UserInterface {
      */
     toggleTrophiesPanel() {
         if (this.elements.trophiesPanel) {
+            const isOpening = !this.elements.trophiesPanel.classList.contains('show');
+            
+            if (isOpening) {
+                // Ouverture : mettre en pause si le jeu est en cours
+                if (this.engine.isRunning && !this.engine.isPaused) {
+                    this.engine.togglePause();
+                    this.wasPausedByTrophiesPanel = false;
+                } else {
+                    this.wasPausedByTrophiesPanel = true;
+                }
+            } else {
+                // Fermeture : reprendre si nécessaire
+                if (!this.wasPausedByTrophiesPanel && this.engine.isRunning && this.engine.isPaused) {
+                    this.engine.togglePause();
+                }
+            }
+            
             this.elements.trophiesPanel.classList.toggle('show');
         }
     }
@@ -881,6 +1176,15 @@ class UserInterface {
      */
     closeTrophiesPanel() {
         if (this.elements.trophiesPanel) {
+            const wasOpen = this.elements.trophiesPanel.classList.contains('show');
+            
+            if (wasOpen) {
+                // Reprendre le jeu si nécessaire
+                if (!this.wasPausedByTrophiesPanel && this.engine.isRunning && this.engine.isPaused) {
+                    this.engine.togglePause();
+                }
+            }
+            
             this.elements.trophiesPanel.classList.remove('show');
         }
     }

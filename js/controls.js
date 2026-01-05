@@ -372,6 +372,13 @@ class Controls {
                     this.engine.emit('scoreChanged', { score: this.engine.score });
                     e.preventDefault();
                     break;
+                    
+                case 'e':
+                case 'E':
+                    // Touche de test : déclencher l'animation de fin
+                    this.engine.emit('maxLevelReached');
+                    e.preventDefault();
+                    break;
             }
         });
     }

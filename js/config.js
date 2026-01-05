@@ -257,6 +257,28 @@ const CONFIG = {
             unlocked: false,
             special: true
         },
+        {
+            id: 'ultimate_trophy',
+            name: 'TROPHÉE ULTIME',
+            icon: '🏆',
+            message: 'Niveau MAXIMUM atteint ! Tu es un champion absolu ! Découvre l\'univers inclusif d\'Emmanuel.',
+            condition: { type: 'level', value: 20 },
+            unlocked: false,
+            special: true,
+            hasLinks: true,
+            links: [
+                {
+                    url: 'https://play.google.com/store/books/collection/cluster?gsr=SheCARQKEAoMVlc0MkVRQUFRQkFKEAkQBA%3D%3D:S:ANO1ljJUoCo',
+                    text: '📚 Version Numérique (Google Play)',
+                    color: '#ff6b9d'
+                },
+                {
+                    url: 'https://www.amazon.fr/stores/Emmanuel-Payet/author/B0CS613QFB/allbooks?ref=ap_rdr&shoppingPortalEnabled=true',
+                    text: '📖 Version Papier (Amazon)',
+                    color: '#ff9800'
+                }
+            ]
+        },
         
         // 50 Médailles d'or pour chaque niveau
         { id: 'level_1', name: 'Niveau 1', icon: '🥇', message: 'Premier niveau ! Tu commences fort !', condition: { type: 'level', value: 1 }, unlocked: false },

@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/install.css">
+    <link rel="stylesheet" href="css/ending.css">
+    <link rel="stylesheet" href="css/web-browser.css">
 </head>
 <body>
     <!-- Conteneur principal - Grille maximisée -->
@@ -90,7 +92,7 @@
                         <button class="trophy-button-compact" id="trophyBtn">🏆</button>
                         <!-- <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button> -->
                         <button class="game-button-mini" id="audioBtn" title="Son">🔊</button>
-                        <button class="game-button-mini" id="musicBtn" title="Musique">🎵</button>
+                        <button class="game-button-mini" id="musicBtn" title="Audiomack">🎵</button>
                         <button class="game-button-mini" id="pauseBtn">⏸</button>
                     </div>
                 </div>
@@ -100,6 +102,9 @@
             <canvas id="connectionCanvas" class="connection-canvas"></canvas>
             <!-- La grille sera générée par JavaScript -->
         </div>
+        
+        <!-- Affichage combo pop -->
+        <div class="pop-combo-display" id="popCombo">POP x2!</div>
     </div>
     
     <!-- Panel Game Over -->
@@ -112,8 +117,25 @@
     
     <!-- Panel Pause -->
     <div class="pause-panel" id="pausePanel">
-        <h2>⏸️ Pause</h2>
-        <p style="color: #ffeb3b; margin-top: 10px;">Appuyez sur P ou Échap pour continuer</p>
+        <div class="pause-icon" id="pauseIcon">⏸️</div>
+        <div class="pause-content" id="pauseContent">
+            <div class="pause-buttons">
+                <button class="pause-action-btn" id="saveGameBtn" title="Sauvegarder">💾</button>
+                <button class="pause-action-btn" id="loadGameBtn" title="Charger">📂</button>
+                <button class="pause-action-btn" id="resumeBtn" title="Reprendre">▶️</button>
+            </div>
+            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
+        </div>
+        <p id="saveStatus" style="color: #66bb6a; margin-top: 3px; font-size: 10px; opacity: 0; transition: opacity 0.3s; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;"></p>
+    </div>
+
+    <!-- Menu Sauvegardes/Chargement -->
+    <div class="save-load-modal" id="saveLoadModal">
+        <div class="save-load-content">
+            <h2 id="saveLoadTitle">💾 Sauvegardes</h2>
+            <div class="save-slots" id="saveSlots"></div>
+            <button class="save-load-close" id="saveLoadClose">Fermer</button>
+        </div>
     </div>
     
     <!-- Modal Trésor -->
@@ -148,8 +170,92 @@
                 <h2>🏆 MES TROPHÉES</h2>
                 <button class="trophies-close" id="trophiesClose">✕</button>
             </div>
+            
+            <!-- Découverte Emmanuel -->
+            <div class="emmanuel-discover">
+                <p class="discover-title">Découvrez l'univers inclusif d'Emmanuel !</p>
+                <div class="discover-links">
+                    <a href="https://emmanuelpayet.art" target="_blank" class="discover-link">emmanuelpayet.art</a>
+                    <a href="https://emmanuel.gallery" target="_blank" class="discover-link">emmanuel.gallery</a>
+                </div>
+            </div>
+            
+            <!-- Section Profil -->
+            <div class="profile-section">
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-name" id="profileName">Invité</div>
+                        <div class="profile-avatar" id="profileAvatar">
+                            <svg viewBox="0 0 100 100" width="60" height="60">
+                                <circle cx="50" cy="50" r="45" fill="#4fc3f7"/>
+                                <path d="M30,50 L50,30 L70,50 L50,70 Z" fill="#fff"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Modifier</button>
+                        <button class="profile-share-btn" id="profileShareBtn">
+                            <span class="share-icon">🎮</span>
+                            <span class="share-text">Partager mon score<br>Soutenir l'artiste</span>
+                        </button>
+                        <button class="profile-music-btn" id="profileMusicBtn">
+                            <span class="music-icon">🎵</span>
+                            <span class="music-text">Musique Audiomack</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <div class="trophies-grid" id="trophiesGrid">
                 <!-- Les trophées seront générés par JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigateur Web Intégré -->
+    <div class="web-browser-panel" id="webBrowserPanel">
+        <div class="web-browser-content">
+            <div class="web-browser-header">
+                <div class="web-browser-controls">
+                    <button class="web-nav-btn" id="webBackBtn" title="Précédent">←</button>
+                    <button class="web-nav-btn" id="webForwardBtn" title="Suivant">→</button>
+                    <button class="web-nav-btn" id="webRefreshBtn" title="Actualiser">↻</button>
+                </div>
+                <div class="web-browser-url" id="webBrowserUrl">Audiomack</div>
+                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimiser">−</button>
+                <button class="web-browser-close" id="webBrowserClose" title="Fermer">✕</button>
+            </div>
+            <div class="web-browser-body">
+                <iframe 
+                    id="webBrowserFrame" 
+                    referrerpolicy="no-referrer"
+                    frameborder="0"
+                    style="border: none;">
+                </iframe>
+                <div class="web-privacy-info">
+                    <span class="privacy-icon">🔒</span>
+                    <span class="privacy-text">Navigation sécurisée</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Édition Profil -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <h2>✏️ MON PROFIL</h2>
+            <button class="profile-modal-close" id="profileModalClose">✕</button>
+            
+            <div class="profile-form">
+                <label>Pseudo</label>
+                <input type="text" id="profilePseudoInput" placeholder="Ton pseudo" maxlength="20">
+                
+                <label>Avatar Chrétien</label>
+                <div class="avatar-grid" id="avatarGrid">
+                    <!-- Avatars générés par JS -->
+                </div>
+                
+                <button class="profile-save-btn" id="profileSaveBtn">💾 Sauvegarder</button>
             </div>
         </div>
     </div>
@@ -194,7 +300,10 @@
                     <button class="login-btn" id="loginBtn">Se Connecter 🔑</button>
                     <button class="register-btn" id="registerBtn">Créer un compte ✨</button>
                 </div>
-                <p class="login-note">Pseudo: min 3 caractères | Mot de passe: min 6 caractères</p>
+                <p class="login-note" id="loginNote">
+                    <span id="loginHint">Connexion : Email + Mot de passe</span>
+                    <span id="registerHint" style="display: none;">Inscription : Pseudo + Email + Mot de passe (min 6 car.)</span>
+                </p>
                 <a href="#" class="forgot-password-link" id="forgotPasswordLink">Mot de passe oublié ?</a>
             </div>
             
@@ -206,7 +315,7 @@
                     autocomplete="email"
                 />
                 <button class="login-btn" id="resetPasswordBtn">Réinitialiser 🔑</button>
-                <p class="login-note">Un lien de réinitialisation sera envoyé à ton email</p>
+                <p class="login-note">Ton mot de passe sera réinitialisé. Utilise ensuite "Créer un compte" pour en définir un nouveau.</p>
                 <a href="#" class="back-to-login-link" id="backToLoginLink">← Retour à la connexion</a>
             </div>
             
@@ -224,10 +333,14 @@
     <!-- Modules JavaScript (ordre important !) -->
     <script src="js/config.js"></script>
     <script src="js/install-manager.js"></script>
+    <script src="js/avatars.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/blocks.js"></script>
     <script src="js/grid.js"></script>
     <script src="js/user-manager.js"></script>
+    <script src="js/profile-manager.js"></script>
+    <script src="js/web-browser.js"></script>
+    <script src="js/ending-animation.js"></script>
     <script src="js/game-engine.js"></script>
     <script src="js/controls.js"></script>
     <script src="js/effects.js"></script>

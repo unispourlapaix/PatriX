@@ -275,6 +275,29 @@ class AudioManager {
         const now = this.audioContext.currentTime;
         const duration = 0.5;
 
+        // ===== PAF! PERCUTANT (attaque immédiate) =====
+        const pafOsc = this.audioContext.createOscillator();
+        const pafGain = this.audioContext.createGain();
+        const pafFilter = this.audioContext.createBiquadFilter();
+        
+        pafOsc.connect(pafFilter);
+        pafFilter.connect(pafGain);
+        pafGain.connect(this.audioContext.destination);
+        
+        pafOsc.type = 'triangle';
+        pafOsc.frequency.setValueAtTime(180, now); // Fréquence moyenne pour le "PAF"
+        pafOsc.frequency.exponentialRampToValueAtTime(80, now + 0.08);
+        
+        pafFilter.type = 'bandpass';
+        pafFilter.frequency.setValueAtTime(200, now);
+        pafFilter.Q.setValueAtTime(3, now);
+        
+        pafGain.gain.setValueAtTime(this.volume * 0.9, now); // Volume fort pour l'impact
+        pafGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        
+        pafOsc.start(now);
+        pafOsc.stop(now + 0.1);
+
         // ===== IMPACT GRAVE (très basse fréquence - roche) =====
         const rockOsc = this.audioContext.createOscillator();
         const rockGain = this.audioContext.createGain();
@@ -336,6 +359,68 @@ class AudioManager {
         
         subOsc.start(now);
         subOsc.stop(now + 0.2);
+    }
+
+    /**
+     * Son d'explosion des cases détruites par Wind Push
+     */
+    playWindExplosion() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const now = this.audioContext.currentTime;
+
+        // ===== EXPLOSION PERCUTANTE (multiple "PAF!") =====
+        for (let i = 0; i < 3; i++) {
+            const delay = i * 0.02; // Explosions légèrement décalées
+            
+            const expOsc = this.audioContext.createOscillator();
+            const expGain = this.audioContext.createGain();
+            const expFilter = this.audioContext.createBiquadFilter();
+            
+            expOsc.connect(expFilter);
+            expFilter.connect(expGain);
+            expGain.connect(this.audioContext.destination);
+            
+            expOsc.type = 'square';
+            expOsc.frequency.setValueAtTime(150 - i * 20, now + delay);
+            expOsc.frequency.exponentialRampToValueAtTime(60, now + delay + 0.15);
+            
+            expFilter.type = 'bandpass';
+            expFilter.frequency.setValueAtTime(300, now + delay);
+            expFilter.Q.setValueAtTime(2, now + delay);
+            
+            expGain.gain.setValueAtTime(this.volume * 0.6, now + delay);
+            expGain.gain.exponentialRampToValueAtTime(0.01, now + delay + 0.15);
+            
+            expOsc.start(now + delay);
+            expOsc.stop(now + delay + 0.15);
+        }
+
+        // ===== BRUIT D'EXPLOSION =====
+        const bufferSize = this.audioContext.sampleRate * 0.2;
+        const buffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / bufferSize * 8);
+        }
+        
+        const noiseSource = this.audioContext.createBufferSource();
+        const noiseFilter = this.audioContext.createBiquadFilter();
+        const noiseGain = this.audioContext.createGain();
+        
+        noiseSource.buffer = buffer;
+        noiseFilter.type = 'highpass';
+        noiseFilter.frequency.setValueAtTime(400, now);
+        
+        noiseSource.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.audioContext.destination);
+        
+        noiseGain.gain.setValueAtTime(this.volume * 0.4, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        
+        noiseSource.start(now);
     }
 
     /**

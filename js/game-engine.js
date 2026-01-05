@@ -162,6 +162,11 @@ class GameEngine {
                     moved: movedSteps
                 });
                 
+                // Son d'explosion des cases
+                if (audioManager) {
+                    audioManager.playWindExplosion();
+                }
+                
                 // Appliquer la gravité
                 setTimeout(() => {
                     this.applyGravity();
@@ -397,6 +402,14 @@ class GameEngine {
         
         // Effet visuel de nouveau niveau via pop
         if (this.level > previousLevel && this.level > 0) {
+            // Vérifier si niveau maximum atteint (niveau 20)
+            if (this.level >= 20) {
+                this.isPaused = true;
+                this.isLevelingUp = true;
+                this.emit('maxLevelReached');
+                return; // Arrêter le traitement
+            }
+            
             // Pause temporaire pour l'animation de niveau
             const wasPaused = this.isPaused;
             this.isPaused = true;
@@ -843,6 +856,88 @@ class GameEngine {
         if (this.listeners[event]) {
             this.listeners[event].forEach(callback => callback(data));
         }
+    }
+
+    /**
+     * Exporte l'état complet du jeu pour la sauvegarde
+     */
+    exportState() {
+        return {
+            grid: this.grid.cells.map(row => [...row]),
+            currentPiece: this.currentPiece ? {
+                shape: this.currentPiece.shape,
+                color: this.currentPiece.color,
+                x: this.currentPiece.x,
+                y: this.currentPiece.y
+            } : null,
+            nextPiece: this.nextPiece ? {
+                shape: this.nextPiece.shape,
+                color: this.nextPiece.color
+            } : null,
+            score: this.score,
+            lines: this.lines,
+            level: this.level,
+            combo: this.combo,
+            popCombo: this.popCombo,
+            popPoints: this.popPoints,
+            swapCount: this.swapCount,
+            wallBreakCharges: this.wallBreakCharges,
+            dropInterval: this.dropInterval,
+            maxLevelReached: this.maxLevelReached
+        };
+    }
+
+    /**
+     * Importe un état sauvegardé
+     */
+    importState(state) {
+        // Restaurer la grille
+        this.grid.cells = state.grid.map(row => [...row]);
+        
+        // Restaurer la pièce actuelle
+        if (state.currentPiece) {
+            this.currentPiece = {
+                shape: state.currentPiece.shape,
+                color: state.currentPiece.color,
+                x: state.currentPiece.x,
+                y: state.currentPiece.y
+            };
+        }
+        
+        // Restaurer la pièce suivante
+        if (state.nextPiece) {
+            this.nextPiece = {
+                shape: state.nextPiece.shape,
+                color: state.nextPiece.color
+            };
+        }
+        
+        // Restaurer les stats
+        this.score = state.score;
+        this.lines = state.lines;
+        this.level = state.level;
+        this.combo = state.combo || 0;
+        this.popCombo = state.popCombo || 0;
+        this.popPoints = state.popPoints || 0;
+        this.swapCount = state.swapCount || 0;
+        this.wallBreakCharges = state.wallBreakCharges || 0;
+        this.dropInterval = state.dropInterval || CONFIG.TIMING.INITIAL_DROP_SPEED;
+        this.maxLevelReached = state.maxLevelReached || 0;
+        
+        // Redessiner le jeu
+        this.grid.draw();
+        if (this.currentPiece) {
+            this.drawPiece(this.currentPiece);
+        }
+        
+        // Mettre à jour l'UI
+        this.emit('score', this.score);
+        this.emit('lines', this.lines);
+        this.emit('level', this.level);
+        this.emit('swap', this.swapCount);
+        this.emit('wallbreak', this.wallBreakCharges);
+        
+        console.log('[GameEngine] État restauré:', state);
     }
 }
 

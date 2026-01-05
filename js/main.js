@@ -12,6 +12,8 @@ let ui = null;
 let effects = null;
 let lineTracer = null;
 let userManager = null;
+let profileManager = null;
+let webBrowser = null;
 let lastTime = 0;
 
 /**
@@ -19,6 +21,18 @@ let lastTime = 0;
  */
 function initUserSystem() {
     userManager = new UserManager();
+    profileManager = new ProfileManager(userManager);
+    webBrowser = new WebBrowserManager();
+    
+    // Rendre webBrowser accessible globalement
+    window.webBrowser = webBrowser;
+    
+    // Lancer automatiquement la musique après un délai
+    setTimeout(() => {
+        if (webBrowser) {
+            webBrowser.autoStart();
+        }
+    }, 3000); // 3 secondes après le chargement
     
     const loginModal = document.getElementById('loginModal');
     const loginForm = document.getElementById('loginForm');
@@ -44,9 +58,33 @@ function initUserSystem() {
     
     // Gestion de la création de compte
     const registerBtn = document.getElementById('registerBtn');
+    const loginHint = document.getElementById('loginHint');
+    const registerHint = document.getElementById('registerHint');
+    
+    // Le pseudo est visible pour l'inscription
+    usernameInput.style.display = 'block';
+    
+    // Adapter l'interface selon le mode
+    registerBtn.addEventListener('focus', () => {
+        usernameInput.style.display = 'block';
+        usernameInput.setAttribute('required', 'required');
+        if (loginHint) loginHint.style.display = 'none';
+        if (registerHint) registerHint.style.display = 'block';
+    });
+    
+    loginBtn.addEventListener('focus', () => {
+        usernameInput.style.display = 'none';
+        usernameInput.removeAttribute('required');
+        if (loginHint) loginHint.style.display = 'block';
+        if (registerHint) registerHint.style.display = 'none';
+    });
+    
     registerBtn.addEventListener('click', async () => {
+        // S'assurer que le pseudo est visible
+        usernameInput.style.display = 'block';
+        
         const username = usernameInput.value.trim();
-        const email = document.getElementById('emailInput').value.trim();
+        const email = emailInput.value.trim();
         const password = document.getElementById('passwordInput').value;
         
         if (username.length < 3) {
@@ -86,13 +124,23 @@ function initUserSystem() {
         }
     });
     
-    // Gestion de la connexion
+    // Gestion de la connexion avec emailInput
+    const emailInput = document.getElementById('emailInput');
+    
+    // Email requis pour la connexion
+    emailInput.style.display = 'block';
+    emailInput.placeholder = 'Ton email';
+    emailInput.setAttribute('required', 'required');
+    
+    // Masquer le pseudo pour le login (uniquement pour le register)
+    usernameInput.style.display = 'none';
+    
     loginBtn.addEventListener('click', async () => {
-        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
         const password = document.getElementById('passwordInput').value;
         
-        if (username.length < 3) {
-            alert('Le pseudo doit contenir au moins 3 caractères');
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Email valide requis');
             return;
         }
         
@@ -104,7 +152,8 @@ function initUserSystem() {
         try {
             loginBtn.textContent = 'Connexion...';
             loginBtn.disabled = true;
-            await userManager.login(username, password);
+            // Login par email + password
+            await userManager.login(email, password);
             
             // Recharger les trophées synchronisés
             if (ui) {
@@ -151,15 +200,19 @@ function initUserSystem() {
         }
         
         try {
-            resetPasswordBtn.textContent = 'Envoi...';
+            resetPasswordBtn.textContent = 'Réinitialisation...';
             resetPasswordBtn.disabled = true;
             
-            await userManager.requestPasswordReset(email);
+            await userManager.resetPassword(email);
             
-            alert('Email de réinitialisation envoyé ! Vérifie ta boîte mail 📧');
+            alert('✅ Mot de passe réinitialisé !\n\nUtilise "Créer un compte" avec cet email pour définir un nouveau mot de passe.');
             resetEmailInput.value = '';
             resetPasswordForm.style.display = 'none';
             loginForm.style.display = 'block';
+            
+            // Pré-remplir l'email dans le formulaire d'inscription
+            document.getElementById('emailInput').value = email;
+            registerBtn.focus();
         } catch (error) {
             alert('Erreur : ' + error.message);
         } finally {
@@ -230,6 +283,7 @@ function initUserSystem() {
  * Démarre le jeu après connexion
  */
 function startGame() {
+    // Démarrer une nouvelle partie (les sauvegardes sont gérées via le menu pause)
     if (!game) {
         initGame();
     } else {
@@ -347,25 +401,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Bouton musique
+    // Bouton musique Audiomack
     const musicBtn = document.getElementById('musicBtn');
     if (musicBtn) {
         musicBtn.addEventListener('click', () => {
-            if (audioManager) {
-                audioManager.toggleMusicPlayer();
+            if (window.webBrowser) {
+                window.webBrowser.toggle();
             }
         });
     }
     
-    // Bouton connexion - désactivé (utiliser loginModal au démarrage)
-    // const loginBtn = document.getElementById('user-login-btn');
-    // if (loginBtn) {
-    //     loginBtn.addEventListener('click', () => {
-    //         if (authManager) {
-    //             authManager.showAuthModal();
-    //         }
-    //     });
-    // }
+    // Boutons du menu pause
+    const saveGameBtn = document.getElementById('saveGameBtn');
+    const loadGameBtn = document.getElementById('loadGameBtn');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const saveStatus = document.getElementById('saveStatus');
+    
+    if (saveGameBtn) {
+        saveGameBtn.addEventListener('click', () => {
+            if (game && userManager) {
+                showSaveLoadMenu('save');
+            }
+        });
+    }
+
+    if (loadGameBtn) {
+        loadGameBtn.addEventListener('click', () => {
+            if (userManager) {
+                showSaveLoadMenu('load');
+            }
+        });
+    }
+    
+    if (resumeBtn) {
+        resumeBtn.addEventListener('click', () => {
+            if (game) {
+                game.togglePause();
+            }
+        });
+    }
+
+    // Fermeture du menu sauvegardes
+    const saveLoadClose = document.getElementById('saveLoadClose');
+    if (saveLoadClose) {
+        saveLoadClose.addEventListener('click', () => {
+            document.getElementById('saveLoadModal').classList.remove('show');
+        });
+    }
     
     // Message de bienvenue
     setTimeout(() => {
@@ -374,3 +456,182 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1500);
 });
+
+/**
+ * Affiche le menu de gestion des sauvegardes
+ */
+function showSaveLoadMenu(mode) {
+    const modal = document.getElementById('saveLoadModal');
+    const title = document.getElementById('saveLoadTitle');
+    const slotsContainer = document.getElementById('saveSlots');
+    
+    if (!modal || !title || !slotsContainer) return;
+    
+    // Changer le titre selon le mode
+    title.textContent = mode === 'save' ? '💾 Sauvegarder' : '📂 Charger';
+    
+    // Récupérer toutes les sauvegardes
+    const saves = userManager.getAllSavedGames();
+    
+    // Générer le HTML des slots
+    slotsContainer.innerHTML = saves.map(save => {
+        if (save.empty) {
+            // Slot vide
+            return `
+                <div class="save-slot empty" data-slot="${save.slot}" data-mode="${mode}">
+                    <div class="slot-header">
+                        <span class="slot-number">Slot ${save.slot}</span>
+                    </div>
+                    <p style="color: #888; text-align: center; margin: 10px 0;">Vide</p>
+                </div>
+            `;
+        } else {
+            // Slot avec sauvegarde
+            const date = save.savedAt.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            return `
+                <div class="save-slot" data-slot="${save.slot}" data-mode="${mode}">
+                    <div class="slot-header">
+                        <span class="slot-number">Slot ${save.slot}</span>
+                        ${mode === 'load' ? `<button class="slot-delete" onclick="deleteSaveSlot(${save.slot}, event)">🗑️ Supprimer</button>` : ''}
+                    </div>
+                    <div class="slot-info">
+                        <div class="slot-info-item">
+                            <span class="slot-info-label">Niveau</span>
+                            <span class="slot-info-value">${save.level}</span>
+                        </div>
+                        <div class="slot-info-item">
+                            <span class="slot-info-label">Score</span>
+                            <span class="slot-info-value">${save.score.toLocaleString()}</span>
+                        </div>
+                        <div class="slot-info-item">
+                            <span class="slot-info-label">Lignes</span>
+                            <span class="slot-info-value">${save.lines}</span>
+                        </div>
+                        <div class="slot-info-item">
+                            <span class="slot-info-label">Joueur</span>
+                            <span class="slot-info-value">${save.data.userId}</span>
+                        </div>
+                    </div>
+                    <div class="slot-date">${date}</div>
+                </div>
+            `;
+        }
+    }).join('');
+    
+    // Ajouter les event listeners aux slots
+    document.querySelectorAll('.save-slot').forEach(slot => {
+        slot.addEventListener('click', (e) => {
+            // Ne pas déclencher si on clique sur le bouton supprimer
+            if (e.target.classList.contains('slot-delete')) return;
+            
+            const slotNumber = parseInt(slot.dataset.slot);
+            const slotMode = slot.dataset.mode;
+            
+            if (slotMode === 'save') {
+                handleSaveToSlot(slotNumber);
+            } else {
+                handleLoadFromSlot(slotNumber);
+            }
+        });
+    });
+    
+    modal.classList.add('show');
+}
+
+/**
+ * Sauvegarde dans un slot spécifique
+ */
+function handleSaveToSlot(slotNumber) {
+    if (!game || !userManager) return;
+    
+    const state = game.exportState();
+    const savedSlot = userManager.saveGameState(state, slotNumber);
+    
+    if (savedSlot) {
+        // Fermer le menu
+        document.getElementById('saveLoadModal').classList.remove('show');
+        
+        // Message de confirmation
+        if (effects) {
+            effects.showSpiritualMessage(`Partie sauvegardée dans le Slot ${savedSlot} ! 💾`, 2000);
+        }
+        
+        console.log(`[Main] Partie sauvegardée dans le slot ${savedSlot}`);
+    }
+}
+
+/**
+ * Charge depuis un slot spécifique
+ */
+function handleLoadFromSlot(slotNumber) {
+    if (!userManager) return;
+    
+    const saveData = userManager.loadGameState(slotNumber);
+    if (!saveData) {
+        if (effects) {
+            effects.showSpiritualMessage("Aucune sauvegarde dans ce slot ❌", 2000);
+        }
+        return;
+    }
+    
+    // Confirmer le chargement
+    if (!confirm(`Charger la partie du Slot ${slotNumber} ?\n\nNiveau: ${saveData.level} | Score: ${saveData.score.toLocaleString()}\n\nLa partie en cours sera perdue.`)) {
+        return;
+    }
+    
+    // Fermer le menu
+    document.getElementById('saveLoadModal').classList.remove('show');
+    
+    // Initialiser le jeu si nécessaire
+    if (!game) {
+        initGame();
+    } else {
+        if (!game.grid.boardElement || !game.grid.gridElement) {
+            initGame();
+        }
+    }
+    
+    // Importer l'état
+    game.importState(saveData);
+    game.isRunning = true;
+    game.isPaused = false;
+    
+    // Fermer le panneau de pause si ouvert
+    const pausePanel = document.getElementById('pausePanel');
+    if (pausePanel) {
+        pausePanel.classList.remove('show');
+    }
+    
+    if (effects) {
+        effects.showSpiritualMessage(`Partie chargée du Slot ${slotNumber} ! 📂`, 2000);
+    }
+    
+    console.log(`[Main] Partie chargée du slot ${slotNumber}`);
+}
+
+/**
+ * Supprime une sauvegarde
+ */
+function deleteSaveSlot(slotNumber, event) {
+    event.stopPropagation();
+    
+    if (!confirm(`Supprimer la sauvegarde du Slot ${slotNumber} ?`)) {
+        return;
+    }
+    
+    if (userManager.clearGameState(slotNumber)) {
+        // Rafraîchir l'affichage
+        showSaveLoadMenu('load');
+        
+        if (effects) {
+            effects.showSpiritualMessage(`Slot ${slotNumber} supprimé 🗑️`, 2000);
+        }
+    }
+}

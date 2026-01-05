@@ -77,21 +77,59 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-### Politiques RLS pour la table `users` (si nécessaire)
+### Table `patrxprogress` (Progression du joueur)
 
-Si votre table `users` n'a pas encore de politiques RLS pour PATRI-X :
+Créez cette table pour sauvegarder la progression (niveau max, trophées) :
 
 ```sql
--- Activer RLS sur users (si pas déjà fait)
+-- Création de la table de progression PATRI-X
+CREATE TABLE patrxprogress (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    pseudo TEXT NOT NULL,
+    max_level INTEGER NOT NULL DEFAULT 0,
+    unlocked_trophies JSONB DEFAULT '[]'::jsonb,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(pseudo)
+);
+
+-- Index pour améliorer les performances
+CREATE INDEX idx_patrxprogress_pseudo ON patrxprogress(pseudo);
+CREATE INDEX idx_patrxprogress_max_level ON patrxprogress(max_level DESC);
+
+-- Activer RLS
+ALTER TABLE patrxprogress ENABLE ROW LEVEL SECURITY;
+
+-- Politiques RLS
+CREATE POLICY "Lecture publique de la progression" ON patrxprogress
+    FOR SELECT USING (true);
+
+CREATE POLICY "Insertion de progression" ON patrxprogress
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Mise à jour de progression" ON patrxprogress
+    FOR UPDATE USING (true);
+```
+
+### Politiques RLS pour la table `users` (IMPORTANT - Sécurité)
+
+**⚠️ ACTIVER RLS SUR LA TABLE USERS :**
+
+```sql
+-- Activer RLS sur users
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
--- Permettre la lecture des pseudos
-CREATE POLICY "Lecture publique des pseudos" ON users
+-- Permettre la lecture publique des profils
+CREATE POLICY "Lecture publique des utilisateurs" ON users
     FOR SELECT USING (true);
 
 -- Permettre l'insertion de nouveaux utilisateurs
-CREATE POLICY "Insertion publique" ON users
+CREATE POLICY "Insertion publique d'utilisateurs" ON users
     FOR INSERT WITH CHECK (true);
+
+-- Permettre la mise à jour du mot de passe par email
+CREATE POLICY "Mise à jour du mot de passe" ON users
+    FOR UPDATE USING (true)
+    WITH CHECK (true);
 ```
 
 ## ⚙️ Configuration dans le Code

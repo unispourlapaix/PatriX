@@ -828,6 +828,48 @@ body {
     letter-spacing: 2px;
 }
 
+/* Section découverte Emmanuel */
+.emmanuel-discover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.discover-title {
+    font-size: 14px;
+    color: #5a5a5a;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.discover-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.discover-link {
+    font-size: 12px;
+    color: #4fc3f7;
+    text-decoration: none;
+    padding: 6px 12px;
+    background: rgba(79, 195, 247, 0.1);
+    border: 1px solid rgba(79, 195, 247, 0.3);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.discover-link:hover {
+    background: rgba(79, 195, 247, 0.2);
+    border-color: #4fc3f7;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(79, 195, 247, 0.3);
+}
+
 .trophies-close {
     background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     border: 2px solid #a03555;
@@ -1036,6 +1078,39 @@ body {
     border-radius: 10px;
     border-left: 4px solid #d4af37;
     text-align: left;
+}
+
+.trophy-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+    z-index: 10;
+    position: relative;
+}
+
+.trophy-link-btn {
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+.trophy-link-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.trophy-link-btn:active {
+    transform: translateY(-1px);
 }
 
 .trophy-button {

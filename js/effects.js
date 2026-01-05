@@ -205,6 +205,88 @@ class VisualEffects {
     }
 
     /**
+     * Crée une explosion de vent pour le Wind Push
+     * @param {Array} cells - Cellules à exploser {row, col}
+     */
+    createWindExplosion(cells) {
+        const board = document.getElementById('gameBoard');
+        if (!board || !cells || cells.length === 0) return;
+        
+        const boardRect = board.getBoundingClientRect();
+        const cellSize = CONFIG.GRID.CELL_SIZE + CONFIG.GRID.GAP;
+        
+        // Fragment pour optimisation (batch DOM operations)
+        const fragment = document.createDocumentFragment();
+        const particlesToCleanup = [];
+        
+        // Exploser chaque cellule avec effet de vent
+        cells.forEach(({ row, col }) => {
+            const x = boardRect.left + (col * cellSize) + (cellSize / 2);
+            const y = boardRect.top + (row * cellSize) + (cellSize / 2);
+            
+            // Particules de vent (moins nombreuses pour la perf)
+            for (let i = 0; i < 4; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'wind-particle';
+                particle.textContent = ['💨', '🌪️', '💨', '🌬️'][i];
+                
+                // Mouvement vers le haut et expansion
+                const angle = (Math.PI * 2 * i) / 4 - Math.PI / 2; // Biaisé vers le haut
+                const distance = 40 + Math.random() * 30;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance - 30; // Force upward
+                
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${x}px;
+                    top: ${y}px;
+                    --dx: ${dx}px;
+                    --dy: ${dy}px;
+                    pointer-events: none;
+                    font-size: ${16 + Math.random() * 8}px;
+                    z-index: 1000;
+                    opacity: 0.9;
+                    transform: translate(-50%, -50%);
+                    animation: windExplosion 0.6s ease-out forwards;
+                `;
+                
+                fragment.appendChild(particle);
+                particlesToCleanup.push(particle);
+            }
+            
+            // Onde de choc (cercle qui s'étend)
+            const shockwave = document.createElement('div');
+            shockwave.className = 'shockwave';
+            shockwave.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 4px;
+                height: 4px;
+                border: 2px solid #4fc3f7;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 999;
+                transform: translate(-50%, -50%);
+                animation: shockwaveExpand 0.5s ease-out forwards;
+            `;
+            
+            fragment.appendChild(shockwave);
+            particlesToCleanup.push(shockwave);
+        });
+        
+        // Batch append (une seule opération DOM)
+        document.body.appendChild(fragment);
+        
+        // Cleanup avec requestAnimationFrame (plus performant)
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                particlesToCleanup.forEach(el => el.remove());
+            }, 600);
+        });
+    }
+
+    /**
      * Crée une explosion pour un groupe popé
      * @param {Array} group - Groupe de cellules {row, col}
      * @param {number} combo - Niveau de combo

@@ -54,6 +54,10 @@ class UserManager {
     saveUser() {
         if (this.currentUser) {
             localStorage.setItem(`${this.GAME_ID}_user`, JSON.stringify(this.currentUser));
+            // Sauvegarder aussi l'avatar séparément pour ProfileManager
+            if (this.currentUser.avatar) {
+                localStorage.setItem('patrix_avatar', this.currentUser.avatar);
+            }
         } else {
             localStorage.removeItem(`${this.GAME_ID}_user`);
         }
@@ -129,73 +133,182 @@ class UserManager {
     }
 
     /**
-     * Vérifie si un utilisateur existe dans Supabase
+     * Vérifie si un utilisateur existe dans Supabase par email
+     * @param {string} email - Email de l'utilisateur
      */
-    async checkUserExists(username) {
+    async checkUserByEmail(email) {
         try {
-            const response = await fetch(
-                `${this.supabaseUrl}/rest/v1/users?pseudo=eq.${username.toLowerCase()}&select=pseudo,email`,
-                {
-                    headers: {
-                        'apikey': this.supabaseKey,
-                        'Authorization': `Bearer ${this.supabaseKey}`
-                    }
+            const url = `${this.supabaseUrl}/rest/v1/users?email=eq.${email.toLowerCase()}&select=pseudo,email,password_hash`;
+            
+            const response = await fetch(url, {
+                headers: {
+                    'apikey': this.supabaseKey,
+                    'Authorization': `Bearer ${this.supabaseKey}`
                 }
-            );
+            });
 
             if (response.ok) {
                 const users = await response.json();
-                return users.length > 0 ? users[0] : null;
+                if (users.length > 0) {
+                    console.log(`[UserManager] Utilisateur trouvé avec email "${email}"`);
+                    return users[0];
+                } else {
+                    console.log(`[UserManager] Aucun utilisateur avec email "${email}"`);
+                    return null;
+                }
+            } else {
+                console.error(`[UserManager] Erreur Supabase (${response.status}):`, await response.text());
+                throw new Error(`Impossible de vérifier le compte en ligne (erreur ${response.status}). Vérifie ta connexion Internet.`);
             }
-            return null;
         } catch (error) {
-            console.error('Erreur vérification utilisateur:', error);
-            return null;
+            if (error.message && error.message.includes('Impossible de vérifier')) {
+                throw error;
+            }
+            console.error('[UserManager] Erreur réseau lors de la vérification:', error);
+            throw new Error('Impossible de se connecter au serveur. Vérifie ta connexion Internet.');
+        }
+    }
+
+    /**
+     * Vérifie si un pseudo est déjà pris
+     * @param {string} username - Pseudo à vérifier
+     */
+    async checkPseudoTaken(username) {
+        try {
+            const url = `${this.supabaseUrl}/rest/v1/users?pseudo=ilike.${username.toLowerCase()}&select=pseudo`;
+            
+            const response = await fetch(url, {
+                headers: {
+                    'apikey': this.supabaseKey,
+                    'Authorization': `Bearer ${this.supabaseKey}`
+                }
+            });
+
+            if (response.ok) {
+                const users = await response.json();
+                return users.length > 0;
+            } else {
+                throw new Error(`Impossible de vérifier le pseudo en ligne (erreur ${response.status}). Vérifie ta connexion Internet.`);
+            }
+        } catch (error) {
+            if (error.message && error.message.includes('Impossible de vérifier')) {
+                throw error;
+            }
+            console.error('[UserManager] Erreur vérification pseudo:', error);
+            throw new Error('Impossible de se connecter au serveur. Vérifie ta connexion Internet.');
         }
     }
 
     /**
      * Connexion utilisateur existant
+     * @param {string} email - Email de l'utilisateur (identifiant principal)
+     * @param {string} password - Mot de passe
      */
-    async login(username, password) {
-        if (!username || username.trim().length < 3) {
-            throw new Error('Le nom d\'utilisateur doit contenir au moins 3 caractères');
+    async login(email, password) {
+        if (!email || !email.trim()) {
+            throw new Error('L\'email est requis');
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new Error('Email invalide');
         }
 
         if (!password || password.length < 6) {
             throw new Error('Le mot de passe doit contenir au moins 6 caractères');
         }
 
-        username = username.trim().toLowerCase();
+        email = email.trim().toLowerCase();
 
-        // Vérifier si l'utilisateur existe dans Supabase
-        const existingUser = await this.checkUserExists(username);
-        
-        if (!existingUser) {
-            throw new Error('Utilisateur non trouvé. Crée d\'abord un compte !');
+        // Hash le mot de passe pour comparaison
+        const passwordHash = await this.hashPassword(password);
+        console.log('[UserManager] Hash calculé:', passwordHash);
+
+        // Vérifier d'abord si l'utilisateur existe localement
+        const savedUser = localStorage.getItem(`${this.GAME_ID}_user`);
+        if (savedUser) {
+            try {
+                const localUser = JSON.parse(savedUser);
+                if (localUser.email === email) {
+                    // Utilisateur trouvé localement, vérifier le mot de passe
+                    if (localUser.passwordHash === passwordHash) {
+                        // Mot de passe correct, connexion réussie
+                        this.currentUser = {
+                            ...localUser,
+                            loginDate: new Date().toISOString()
+                        };
+                        this.saveUser();
+                        
+                        // Charger la progression depuis Supabase
+                        await this.loadProgressFromSupabase();
+                        return this.currentUser;
+                    } else {
+                        throw new Error('Mot de passe incorrect');
+                    }
+                }
+            } catch (e) {
+                if (e.message === 'Mot de passe incorrect') throw e;
+                console.error('Erreur lecture utilisateur local:', e);
+            }
         }
 
-        // Hash le mot de passe (stocké localement)
-        const passwordHash = await this.hashPassword(password);
+        // Vérifier dans Supabase par email (lance une erreur si connexion impossible)
+        const existingUser = await this.checkUserByEmail(email);
         
-        // TODO: Vérifier le mot de passe avec Supabase quand la colonne password_hash sera ajoutée
-        // if (passwordHash !== existingUser.password_hash) {
-        //     throw new Error('Mot de passe incorrect');
-        // }
+        if (!existingUser) {
+            throw new Error('Aucun compte trouvé avec cet email. Crée d\'abord un compte !');
+        }
 
-        // Créer la session locale
+        // Vérifier le mot de passe avec Supabase
+        if (existingUser.password_hash) {
+            console.log('[UserManager] Hash dans Supabase:', existingUser.password_hash);
+            console.log('[UserManager] Hash calculé:', passwordHash);
+            console.log('[UserManager] Correspondent:', existingUser.password_hash === passwordHash);
+            
+            // Supabase a un mot de passe enregistré, le vérifier
+            if (existingUser.password_hash !== passwordHash) {
+                throw new Error('Mot de passe incorrect');
+            }
+            console.log('[UserManager] Connexion depuis Supabase par email - mot de passe vérifié');
+        } else {
+            // Aucun mot de passe dans Supabase = compte incomplet
+            console.warn('[UserManager] Compte trouvé sans mot de passe');
+            throw new Error('Ce compte existe mais n\'a pas de mot de passe. Utilise l\'inscription pour définir ton mot de passe.');
+        }
+        
+        // Créer/restaurer la session locale
         this.currentUser = {
-            pseudo: username,
+            pseudo: existingUser.pseudo,
             email: existingUser.email,
             passwordHash: passwordHash,
+            avatar: existingUser.avatar || 'cross1', // Avatar depuis DB ou par défaut
             loginDate: new Date().toISOString(),
             gamesPlayed: 0
         };
 
         this.saveUser();
         
+        // Sauvegarder l'avatar localement
+        if (existingUser.avatar) {
+            localStorage.setItem('patrix_avatar', existingUser.avatar);
+        }
+        
         // Charger la progression depuis Supabase
         await this.loadProgressFromSupabase();
+        
+        // Vérifier si l'utilisateur a un pseudo
+        if (!existingUser.pseudo || existingUser.pseudo.trim() === '') {
+            // Inviter à créer un profil
+            if (window.effects) {
+                window.effects.showSpiritualMessage('👋 Bienvenue ! Crée ton profil pour personnaliser ton expérience', 4000);
+            }
+            // Ouvrir automatiquement le modal de profil après un court délai
+            setTimeout(() => {
+                if (window.profileManager) {
+                    window.profileManager.openProfileModal();
+                }
+            }, 2000);
+        }
 
         return this.currentUser;
     }
@@ -205,14 +318,14 @@ class UserManager {
      */
     async register(username, email, password) {
         if (!username || username.trim().length < 3) {
-            throw new Error('Le nom d\'utilisateur doit contenir au moins 3 caractères');
+            throw new Error('Le pseudo doit contenir au moins 3 caractères');
         }
 
         if (!password || password.length < 6) {
             throw new Error('Le mot de passe doit contenir au moins 6 caractères');
         }
 
-        username = username.trim().toLowerCase();
+        username = username.trim();
         
         // Valider l'email
         if (!email || !email.trim()) {
@@ -225,16 +338,74 @@ class UserManager {
             throw new Error('Email invalide');
         }
 
-        // Vérifier que l'utilisateur n'existe pas déjà
-        const existingUser = await this.checkUserExists(username);
+        // Vérifier si un utilisateur local existe déjà avec cet email
+        const savedUser = localStorage.getItem(`${this.GAME_ID}_user`);
+        if (savedUser) {
+            try {
+                const localUser = JSON.parse(savedUser);
+                if (localUser.email === email) {
+                    throw new Error('Cet email est déjà utilisé localement. Connecte-toi ou déconnecte-toi d\'abord.');
+                }
+            } catch (e) {
+                if (e.message.includes('email')) throw e;
+            }
+        }
+
+        // Vérifier si l'email existe dans Supabase (lance une erreur si connexion impossible)
+        const existingUser = await this.checkUserByEmail(email);
+        
         if (existingUser) {
-            throw new Error('Ce pseudo est déjà pris. Connecte-toi ou choisis un autre pseudo.');
+            // Le compte existe déjà en ligne, vérifier le mot de passe
+            console.log('[UserManager] Compte existant trouvé dans Supabase');
+            
+            // Hash le mot de passe
+            const passwordHash = await this.hashPassword(password);
+            
+            // Vérifier le mot de passe
+            if (existingUser.password_hash && existingUser.password_hash !== passwordHash) {
+                throw new Error('Ce compte existe déjà avec un autre mot de passe. Utilise la connexion.');
+            }
+            
+            // Si pas de mot de passe enregistré ou mot de passe correct, récupérer le compte
+            if (!existingUser.password_hash) {
+                // Mettre à jour le mot de passe dans Supabase
+                await this.updatePasswordInSupabase(email, passwordHash);
+            }
+            
+            // Créer la session locale avec les données Supabase
+            this.currentUser = {
+                pseudo: existingUser.pseudo, // Utiliser le pseudo existant
+                email: email,
+                passwordHash: passwordHash,
+                loginDate: new Date().toISOString(),
+                gamesPlayed: 0
+            };
+            
+            this.saveUser();
+            
+            // Charger la progression depuis Supabase
+            await this.loadProgressFromSupabase();
+            
+            return this.currentUser;
+        }
+
+        // Vérifier que le pseudo n'est pas déjà pris (lance une erreur si connexion impossible)
+        const pseudoTaken = await this.checkPseudoTaken(username);
+        if (pseudoTaken) {
+            throw new Error('Ce pseudo est déjà pris. Choisis-en un autre.');
         }
 
         // Hash le mot de passe
         const passwordHash = await this.hashPassword(password);
 
-        // Créer l'utilisateur local
+        // Synchroniser avec Supabase AVANT de créer localement
+        const syncResult = await this.syncUserToSupabase(passwordHash, username, email);
+        
+        if (!syncResult.success) {
+            throw new Error('Impossible de créer le compte en ligne. Vérifie ta connexion Internet.');
+        }
+
+        // Créer l'utilisateur local seulement après succès de la sync
         this.currentUser = {
             pseudo: username,
             email: email,
@@ -244,13 +415,11 @@ class UserManager {
         };
 
         this.saveUser();
-
-        // Synchroniser avec Supabase (création du compte)
-        try {
-            await this.syncUserToSupabase(passwordHash);
-        } catch (error) {
-            // Si l'utilisateur existe déjà (409), continuer quand même
-            console.log('[UserManager] Compte créé localement, sync Supabase ignorée (utilisateur existe)');
+        
+        if (syncResult.alreadyExists) {
+            console.log('[UserManager] Compte créé localement (déjà existant en ligne)');
+        } else {
+            console.log('[UserManager] Compte créé et synchronisé avec Supabase');
         }
 
         return this.currentUser;
@@ -276,7 +445,37 @@ class UserManager {
     }
 
     /**
-     * Demande de réinitialisation du mot de passe via Supabase Auth
+     * Réinitialise le mot de passe (met password_hash à NULL)
+     */
+    async resetPassword(email) {
+        if (!email || !email.trim()) {
+            throw new Error('Email requis');
+        }
+
+        email = email.trim().toLowerCase();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            throw new Error('Email invalide');
+        }
+
+        // Vérifier que le compte existe
+        const existingUser = await this.checkUserByEmail(email);
+        if (!existingUser) {
+            throw new Error('Aucun compte trouvé avec cet email');
+        }
+
+        // Mettre password_hash à NULL pour forcer la redéfinition
+        const success = await this.updatePasswordInSupabase(email, null);
+        
+        if (!success) {
+            throw new Error('Erreur lors de la réinitialisation. Réessaie.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Demande de réinitialisation du mot de passe via Supabase Auth (OBSOLÈTE)
      */
     async requestPasswordReset(email) {
         if (!email || !email.trim()) {
@@ -334,30 +533,48 @@ class UserManager {
 
     /**
      * Synchronise l'utilisateur avec Supabase
+     * @param {string} passwordHash - Hash du mot de passe
+     * @param {string} pseudo - Pseudo de l'utilisateur (optionnel si currentUser existe)
+     * @param {string} email - Email de l'utilisateur (optionnel si currentUser existe)
+     * @returns {Promise<{success: boolean, alreadyExists: boolean}>}
      */
-    async syncUserToSupabase(passwordHash = null) {
-        if (!this.currentUser) return;
+    async syncUserToSupabase(passwordHash = null, pseudo = null, email = null) {
+        // Utiliser les paramètres ou les données de currentUser
+        const userPseudo = pseudo || (this.currentUser ? this.currentUser.pseudo : null);
+        const userEmail = email || (this.currentUser ? this.currentUser.email : null);
+        
+        if (!userPseudo) return { success: false, alreadyExists: false };
 
-        const pseudoKey = this.currentUser.pseudo.toLowerCase();
+        const pseudoKey = userPseudo.toLowerCase();
 
         // Ne pas resynchroniser si déjà fait pour ce pseudo
         if (this.syncedUsers.has(pseudoKey)) {
-            return; // Déjà synchronisé, skip
+            return { success: true, alreadyExists: true }; // Déjà synchronisé
         }
 
         // Empêcher les appels simultanés pour le même pseudo
         if (this.pendingSyncs.has(pseudoKey)) {
-            return; // Sync en cours, skip
+            return { success: false, alreadyExists: false }; // Sync en cours
         }
 
         this.pendingSyncs.add(pseudoKey);
 
         try {
-            // Utiliser UPSERT avec Prefer: resolution=merge-duplicates
-            // Si le pseudo existe, on met à jour l'email, sinon on crée
+            // Vérifier d'abord si l'utilisateur existe
+            const existingUser = await this.checkUserExists(userPseudo);
+            
+            if (existingUser) {
+                // L'utilisateur existe déjà, marquer comme synchronisé
+                this.syncedUsers.add(pseudoKey);
+                localStorage.setItem(`${this.GAME_ID}_synced_users`, JSON.stringify([...this.syncedUsers]));
+                return { success: true, alreadyExists: true };
+            }
+            
+            // Créer le nouvel utilisateur
             const body = {
-                pseudo: this.currentUser.pseudo,
-                email: this.currentUser.email || null,
+                pseudo: userPseudo,
+                email: userEmail || null,
+                password_hash: passwordHash || null,
                 avatar: null,
                 ville: null,
                 pays: null,
@@ -365,29 +582,34 @@ class UserManager {
                 genre: null
             };
             
-            // TODO: Ajouter le hash du mot de passe quand la colonne sera créée dans Supabase
-            // if (passwordHash) {
-            //     body.password_hash = passwordHash;
-            // }
-            
             const response = await fetch(`${this.supabaseUrl}/rest/v1/users`, {
                 method: 'POST',
                 headers: {
                     'apikey': this.supabaseKey,
                     'Authorization': `Bearer ${this.supabaseKey}`,
                     'Content-Type': 'application/json',
-                    'Prefer': 'resolution=merge-duplicates,return=minimal'
+                    'Prefer': 'return=minimal'
                 },
                 body: JSON.stringify(body)
             });
 
-            // Marquer comme synchronisé si succès ou 409 (existe déjà)
-            if (response.ok || response.status === 409) {
+            // Marquer comme synchronisé si succès
+            if (response.ok) {
                 this.syncedUsers.add(pseudoKey);
                 localStorage.setItem(`${this.GAME_ID}_synced_users`, JSON.stringify([...this.syncedUsers]));
+                return { success: true, alreadyExists: false };
+            } else if (response.status === 409) {
+                // Doublon détecté (race condition), marquer quand même
+                this.syncedUsers.add(pseudoKey);
+                localStorage.setItem(`${this.GAME_ID}_synced_users`, JSON.stringify([...this.syncedUsers]));
+                return { success: true, alreadyExists: true };
+            } else {
+                console.error('[UserManager] Erreur sync Supabase:', response.status);
+                return { success: false, alreadyExists: false };
             }
         } catch (error) {
-            // Erreur réseau, ignorer silencieusement
+            console.error('[UserManager] Erreur réseau sync:', error);
+            return { success: false, alreadyExists: false };
         } finally {
             this.pendingSyncs.delete(pseudoKey);
         }
@@ -543,6 +765,40 @@ class UserManager {
     }
 
     /**
+     * Met à jour le mot de passe dans Supabase
+     */
+    async updatePasswordInSupabase(email, passwordHash) {
+        try {
+            const response = await fetch(
+                `${this.supabaseUrl}/rest/v1/users?email=eq.${email.toLowerCase()}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'apikey': this.supabaseKey,
+                        'Authorization': `Bearer ${this.supabaseKey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        password_hash: passwordHash
+                    })
+                }
+            );
+
+            if (response.ok) {
+                console.log('[UserManager] Mot de passe mis à jour dans Supabase');
+                return true;
+            } else {
+                console.error('[UserManager] Erreur mise à jour mot de passe:', response.statusText);
+                return false;
+            }
+        } catch (error) {
+            console.error('[UserManager] Erreur réseau mise à jour mot de passe:', error);
+            return false;
+        }
+    }
+
+    /**
      * Charge la progression (niveau max et trophées) depuis Supabase
      */
     async loadProgressFromSupabase() {
@@ -666,6 +922,174 @@ class UserManager {
      */
     getMaxScore() {
         return this.maxScore;
+    }
+
+    /**
+     * Met à jour le profil utilisateur (pseudo et/ou avatar)
+     */
+    async updateProfile({ pseudo, avatar }) {
+        if (!this.currentUser) {
+            throw new Error('Aucun utilisateur connecté');
+        }
+
+        try {
+            const updates = {};
+            
+            if (pseudo && pseudo !== this.currentUser.pseudo) {
+                // Vérifier que le pseudo n'est pas déjà pris
+                const pseudoTaken = await this.checkPseudoTaken(pseudo);
+                if (pseudoTaken) {
+                    throw new Error('Ce pseudo est déjà pris');
+                }
+                updates.pseudo = pseudo;
+                this.currentUser.pseudo = pseudo;
+            }
+
+            if (avatar) {
+                updates.avatar = avatar;
+                this.currentUser.avatar = avatar;
+            }
+
+            // Mettre à jour dans Supabase
+            if (Object.keys(updates).length > 0) {
+                const response = await fetch(
+                    `${this.supabaseUrl}/rest/v1/users?email=eq.${this.currentUser.email.toLowerCase()}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': this.supabaseKey,
+                            'Authorization': `Bearer ${this.supabaseKey}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify(updates)
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour du profil');
+                }
+
+                // Sauvegarder localement
+                this.saveUser();
+                console.log('[UserManager] Profil mis à jour');
+            }
+
+            return true;
+        } catch (error) {
+            console.error('[UserManager] Erreur mise à jour profil:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Sauvegarde l'état complet de la partie dans un slot (1, 2 ou 3)
+     */
+    saveGameState(gameState, slotNumber = null) {
+        // Si pas de slot spécifié, trouver le prochain slot vide ou utiliser le slot 1
+        if (slotNumber === null) {
+            slotNumber = this.findNextEmptySlot() || 1;
+        }
+        
+        // Valider le numéro de slot
+        if (slotNumber < 1 || slotNumber > 3) {
+            console.error('[UserManager] Numéro de slot invalide:', slotNumber);
+            return false;
+        }
+        
+        const saveData = {
+            ...gameState,
+            savedAt: new Date().toISOString(),
+            userId: this.currentUser ? this.currentUser.pseudo : 'guest',
+            slotNumber: slotNumber
+        };
+        
+        localStorage.setItem(`${this.GAME_ID}_saved_game_${slotNumber}`, JSON.stringify(saveData));
+        console.log(`[UserManager] Partie sauvegardée dans le slot ${slotNumber}`);
+        return slotNumber;
+    }
+
+    /**
+     * Trouve le prochain slot vide (retourne 1, 2, 3 ou null si tous pleins)
+     */
+    findNextEmptySlot() {
+        for (let i = 1; i <= 3; i++) {
+            if (!localStorage.getItem(`${this.GAME_ID}_saved_game_${i}`)) {
+                return i;
+            }
+        }
+        return null; // Tous les slots sont pleins
+    }
+
+    /**
+     * Charge l'état sauvegardé d'un slot spécifique
+     */
+    loadGameState(slotNumber) {
+        const saved = localStorage.getItem(`${this.GAME_ID}_saved_game_${slotNumber}`);
+        if (saved) {
+            try {
+                const saveData = JSON.parse(saved);
+                console.log(`[UserManager] Slot ${slotNumber} chargé:`, new Date(saveData.savedAt).toLocaleString());
+                return saveData;
+            } catch (e) {
+                console.error('Erreur chargement partie:', e);
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Récupère toutes les sauvegardes disponibles
+     */
+    getAllSavedGames() {
+        const saves = [];
+        for (let i = 1; i <= 3; i++) {
+            const saved = localStorage.getItem(`${this.GAME_ID}_saved_game_${i}`);
+            if (saved) {
+                try {
+                    const saveData = JSON.parse(saved);
+                    saves.push({
+                        slot: i,
+                        data: saveData,
+                        savedAt: new Date(saveData.savedAt),
+                        level: saveData.level,
+                        score: saveData.score,
+                        lines: saveData.lines
+                    });
+                } catch (e) {
+                    console.error(`Erreur lecture slot ${i}:`, e);
+                }
+            } else {
+                saves.push({ slot: i, empty: true });
+            }
+        }
+        return saves;
+    }
+
+    /**
+     * Supprime la sauvegarde d'un slot spécifique
+     */
+    clearGameState(slotNumber) {
+        if (slotNumber < 1 || slotNumber > 3) {
+            console.error('[UserManager] Numéro de slot invalide:', slotNumber);
+            return false;
+        }
+        localStorage.removeItem(`${this.GAME_ID}_saved_game_${slotNumber}`);
+        console.log(`[UserManager] Slot ${slotNumber} supprimé`);
+        return true;
+    }
+
+    /**
+     * Vérifie si au moins une partie sauvegardée existe
+     */
+    hasSavedGame() {
+        for (let i = 1; i <= 3; i++) {
+            if (localStorage.getItem(`${this.GAME_ID}_saved_game_${i}`)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

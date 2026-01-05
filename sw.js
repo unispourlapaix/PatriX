@@ -1,5 +1,5 @@
 // PATRI-X Service Worker - Cache et fonctionnement hors ligne
-const CACHE_NAME = 'patrix-v1.0.0';
+const CACHE_NAME = 'patrix-v1.1.0';
 const GAME_ID = 'patrix'; // ID unique pour ce jeu
 
 const urlsToCache = [
