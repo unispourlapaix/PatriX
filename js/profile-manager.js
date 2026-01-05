@@ -303,15 +303,15 @@ class ProfileManager {
             // Slogan
             ctx.fillStyle = '#666666';
             ctx.font = '36px Arial, sans-serif';
-            ctx.fillText('Transforme le désespoir en grands rêves', size / 2, size - 180);
+            ctx.fillText('Transform despair into great dreams', size / 2, size - 180);
 
-            // Sites web en bas - GROS et LISIBLE
+            // Websites at bottom - BIG and READABLE
             ctx.fillStyle = '#4fc3f7';
             ctx.font = 'bold 48px Arial, sans-serif';
             ctx.fillText('emmanuelpayet.art', size / 2, size - 110);
             ctx.fillText('emmanuel.gallery', size / 2, size - 50);
 
-            // Convertir en blob JPG
+            // Convert to JPG blob
             canvas.toBlob(resolve, 'image/jpeg', 0.95);
         });
     }

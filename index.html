@@ -107,44 +107,44 @@
         <div class="pop-combo-display" id="popCombo">POP x2!</div>
     </div>
     
-    <!-- Panel Game Over -->
+    <!-- Game Over Panel -->
     <div class="game-over-panel" id="gameOver">
-        <h2>Partie Terminée</h2>
-        <p id="gameOverMessage">Continue de rêver !</p>
-        <p>Score Final: <span id="finalScore">0</span></p>
-        <button class="game-button" id="restartBtn">Recommencer</button>
+        <h2>Game Over</h2>
+        <p id="gameOverMessage">Keep dreaming!</p>
+        <p>Final Score: <span id="finalScore">0</span></p>
+        <button class="game-button" id="restartBtn">Restart</button>
     </div>
     
-    <!-- Panel Pause -->
+    <!-- Pause Panel -->
     <div class="pause-panel" id="pausePanel">
         <div class="pause-icon" id="pauseIcon">⏸️</div>
         <div class="pause-content" id="pauseContent">
             <div class="pause-buttons">
-                <button class="pause-action-btn" id="saveGameBtn" title="Sauvegarder">💾</button>
-                <button class="pause-action-btn" id="loadGameBtn" title="Charger">📂</button>
-                <button class="pause-action-btn" id="resumeBtn" title="Reprendre">▶️</button>
+                <button class="pause-action-btn" id="saveGameBtn" title="Save">💾</button>
+                <button class="pause-action-btn" id="loadGameBtn" title="Load">📂</button>
+                <button class="pause-action-btn" id="resumeBtn" title="Resume">▶️</button>
             </div>
-            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
+            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P or Esc</p>
         </div>
         <p id="saveStatus" style="color: #66bb6a; margin-top: 3px; font-size: 10px; opacity: 0; transition: opacity 0.3s; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;"></p>
     </div>
 
-    <!-- Menu Sauvegardes/Chargement -->
+    <!-- Save/Load Menu -->
     <div class="save-load-modal" id="saveLoadModal">
         <div class="save-load-content">
-            <h2 id="saveLoadTitle">💾 Sauvegardes</h2>
+            <h2 id="saveLoadTitle">💾 Saves</h2>
             <div class="save-slots" id="saveSlots"></div>
-            <button class="save-load-close" id="saveLoadClose">Fermer</button>
+            <button class="save-load-close" id="saveLoadClose">Close</button>
         </div>
     </div>
     
-    <!-- Modal Trésor -->
+    <!-- Treasure Modal -->
     <div class="treasure-modal" id="treasureModal">
         <div class="treasure-content">
             <div class="treasure-icon">💎</div>
-            <div class="treasure-level">Niveau <span id="treasureLevel">1</span></div>
+            <div class="treasure-level">Level <span id="treasureLevel">1</span></div>
             <div class="treasure-message" id="treasureMessage"></div>
-            <button class="treasure-button" id="treasureContinue">Continuer ✨</button>
+            <button class="treasure-button" id="treasureContinue">Continue ✨</button>
         </div>
     </div>
     
@@ -193,14 +193,14 @@
                         </div>
                     </div>
                     <div class="profile-actions">
-                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Modifier</button>
+                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Edit</button>
                         <button class="profile-share-btn" id="profileShareBtn">
                             <span class="share-icon">🎮</span>
-                            <span class="share-text">Partager mon score<br>Soutenir l'artiste</span>
+                            <span class="share-text">Share my score<br>Support the artist</span>
                         </button>
                         <button class="profile-music-btn" id="profileMusicBtn">
                             <span class="music-icon">🎵</span>
-                            <span class="music-text">Musique Audiomack</span>
+                            <span class="music-text">Audiomack Music</span>
                         </button>
                     </div>
                 </div>
@@ -217,13 +217,13 @@
         <div class="web-browser-content">
             <div class="web-browser-header">
                 <div class="web-browser-controls">
-                    <button class="web-nav-btn" id="webBackBtn" title="Précédent">←</button>
-                    <button class="web-nav-btn" id="webForwardBtn" title="Suivant">→</button>
-                    <button class="web-nav-btn" id="webRefreshBtn" title="Actualiser">↻</button>
+                    <button class="web-nav-btn" id="webBackBtn" title="Back">←</button>
+                    <button class="web-nav-btn" id="webForwardBtn" title="Forward">→</button>
+                    <button class="web-nav-btn" id="webRefreshBtn" title="Refresh">↻</button>
                 </div>
                 <div class="web-browser-url" id="webBrowserUrl">Audiomack</div>
-                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimiser">−</button>
-                <button class="web-browser-close" id="webBrowserClose" title="Fermer">✕</button>
+                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimize">−</button>
+                <button class="web-browser-close" id="webBrowserClose" title="Close">✕</button>
             </div>
             <div class="web-browser-body">
                 <iframe 
@@ -237,77 +237,77 @@
                 </iframe>
                 <div class="web-privacy-info">
                     <span class="privacy-icon">🔒</span>
-                    <span class="privacy-text">Navigation sécurisée</span>
+                    <span class="privacy-text">Secure browsing</span>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Modal Édition Profil -->
+    <!-- Profile Edit Modal -->
     <div class="profile-modal" id="profileModal">
         <div class="profile-modal-content">
-            <h2>✏️ MON PROFIL</h2>
+            <h2>✏️ MY PROFILE</h2>
             <button class="profile-modal-close" id="profileModalClose">✕</button>
             
             <div class="profile-form">
-                <label>Pseudo</label>
-                <input type="text" id="profilePseudoInput" placeholder="Ton pseudo" maxlength="20">
+                <label>Username</label>
+                <input type="text" id="profilePseudoInput" placeholder="Your username" maxlength="20">
                 
-                <label>Avatar Chrétien</label>
+                <label>Christian Avatar</label>
                 <div class="avatar-grid" id="avatarGrid">
-                    <!-- Avatars générés par JS -->
+                    <!-- Avatars generated by JS -->
                 </div>
                 
-                <button class="profile-save-btn" id="profileSaveBtn">💾 Sauvegarder</button>
+                <button class="profile-save-btn" id="profileSaveBtn">💾 Save</button>
             </div>
         </div>
     </div>
     
-    <!-- Modal Connexion -->
+    <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>PATRI-X</h2>
-            <p class="login-subtitle">Bienvenue courageux petit explorateur</p>
+            <p class="login-subtitle">Welcome brave little explorer</p>
             
             <div class="user-info" id="userInfo" style="display: none;">
                 <div class="user-avatar">👤</div>
-                <div class="user-name" id="userName">Invité</div>
+                <div class="user-name" id="userName">Guest</div>
                 <div class="user-max-score">
-                    <span class="label">Meilleur Score:</span>
+                    <span class="label">Best Score:</span>
                     <span class="value" id="userMaxScore">0</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
             
             <div class="login-form" id="loginForm">
                 <input 
                     type="text" 
                     id="usernameInput" 
-                    placeholder="Ton pseudo" 
+                    placeholder="Your username" 
                     maxlength="20"
                     autocomplete="off"
                 />
                 <input 
                     type="email" 
                     id="emailInput" 
-                    placeholder="Ton email" 
+                    placeholder="Your email" 
                     autocomplete="email"
                 />
                 <input 
                     type="password" 
                     id="passwordInput" 
-                    placeholder="Ton mot de passe" 
+                    placeholder="Your password" 
                     autocomplete="current-password"
                 />
                 <div class="login-buttons">
-                    <button class="login-btn" id="loginBtn">Se Connecter 🔑</button>
-                    <button class="register-btn" id="registerBtn">Créer un compte ✨</button>
+                    <button class="login-btn" id="loginBtn">Sign In 🔑</button>
+                    <button class="register-btn" id="registerBtn">Create Account ✨</button>
                 </div>
                 <p class="login-note" id="loginNote">
-                    <span id="loginHint">Connexion : Email + Mot de passe</span>
-                    <span id="registerHint" style="display: none;">Inscription : Pseudo + Email + Mot de passe (min 6 car.)</span>
+                    <span id="loginHint">Login: Email + Password</span>
+                    <span id="registerHint" style="display: none;">Registration: Username + Email + Password (min 6 chars)</span>
                 </p>
-                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Mot de passe oublié ?</a>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Forgot password?</a>
             </div>
             
             <div class="reset-password-form" id="resetPasswordForm" style="display: none;">

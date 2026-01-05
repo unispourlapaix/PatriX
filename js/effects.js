@@ -359,17 +359,17 @@ class VisualEffects {
             clearTimeout(this.comboTimeout);
         }
         
-        // Messages spéciaux basés sur le combo ET la taille
+        // Special messages based on combo AND size
         let comboText, emoji, intensity;
         
         if (combo >= 10) {
-            comboText = `🌟💫 ULTIME x${combo}! 💫🌟`;
+            comboText = `🌟💫 ULTIMATE x${combo}! 💫🌟`;
             intensity = 'ultimate';
         } else if (combo >= 8) {
-            comboText = `⚡🔥 LEGENDAIRE x${combo}!`;
+            comboText = `⚡🔥 LEGENDARY x${combo}!`;
             intensity = 'legendary';
         } else if (combo >= 6) {
-            comboText = `🌟 INCROYABLE x${combo}!`;
+            comboText = `🌟 AMAZING x${combo}!`;
             intensity = 'amazing';
         } else if (combo >= 5) {
             comboText = `🔥 MEGA COMBO x${combo}!`;
@@ -382,7 +382,7 @@ class VisualEffects {
             intensity = 'normal';
         }
         
-        // Emoji basé sur la taille
+        // Emoji based on size
         if (count >= 15) emoji = '🎆';
         else if (count >= 12) emoji = '💎';
         else if (count >= 10) emoji = '🔥';
@@ -391,7 +391,7 @@ class VisualEffects {
         
         msg.innerHTML = `
             <div class="combo-text">${comboText}</div>
-            <div class="combo-extra">${count} blocs ${emoji}</div>
+            <div class="combo-extra">${count} blocks ${emoji}</div>
         `;
         msg.className = `combo-message combo-${intensity}`;
         msg.style.display = 'block';
@@ -430,24 +430,24 @@ class VisualEffects {
         let lineText, intensity;
         
         if (count === 4) {
-            lineText = '🎆 PATRIX! 4 LIGNES!';
+            lineText = '🎆 PATRIX! 4 LINES!';
             intensity = 'patrix';
         } else if (count === 3) {
-            lineText = '🔥 TRIPLE! 3 LIGNES!';
+            lineText = '🔥 TRIPLE! 3 LINES!';
             intensity = 'triple';
         } else if (count === 2) {
-            lineText = '⚡ DOUBLE! 2 LIGNES!';
+            lineText = '⚡ DOUBLE! 2 LINES!';
             intensity = 'double';
         } else {
-            lineText = '✨ LIGNE COMPLÈTE!';
+            lineText = '✨ LINE COMPLETE!';
             intensity = 'single';
         }
         
         let comboBonus = '';
         if (combo >= 10) {
-            comboBonus = `<div class="line-combo">🎉 COMBO ULTIME x${combo}!</div>`;
+            comboBonus = `<div class="line-combo">🎉 ULTIMATE COMBO x${combo}!</div>`;
         } else if (combo >= 7) {
-            comboBonus = `<div class="line-combo">🔥 COMBO MASSIF x${combo}!</div>`;
+            comboBonus = `<div class="line-combo">🔥 MASSIVE COMBO x${combo}!</div>`;
         } else if (combo >= 5) {
             comboBonus = `<div class="line-combo">⚡ COMBO x${combo}!</div>`;
         } else if (combo >= 3) {

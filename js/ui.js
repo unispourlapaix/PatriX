@@ -1240,7 +1240,7 @@ class UserInterface {
         if (specialTrophies.length > 0) {
             const specialHeader = document.createElement('div');
             specialHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            specialHeader.textContent = '🏆 Trophées Spéciaux';
+            specialHeader.textContent = '🏆 Special Trophies';
             this.elements.trophiesGrid.appendChild(specialHeader);
             
             specialTrophies.forEach(trophy => {
@@ -1248,11 +1248,11 @@ class UserInterface {
             });
         }
         
-        // Section médailles de niveau
+        // Level medals section
         if (medals.length > 0) {
             const medalsHeader = document.createElement('div');
             medalsHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            medalsHeader.textContent = '🥇 Médailles de Niveau';
+            medalsHeader.textContent = '🥇 Level Medals';
             this.elements.trophiesGrid.appendChild(medalsHeader);
             
             medals.forEach(trophy => {

@@ -300,9 +300,9 @@ class EndingAnimation {
         this.ctx.textAlign = 'center';
         const alpha = Math.min(1, this.progress / 1);
         this.ctx.globalAlpha = alpha;
-        this.ctx.fillText('Félicitations!', this.canvas.width / 2, 100);
+        this.ctx.fillText('Congratulations!', this.canvas.width / 2, 100);
         this.ctx.font = '20px Arial';
-        this.ctx.fillText('Niveau Maximum Atteint', this.canvas.width / 2, 140);
+        this.ctx.fillText('Maximum Level Reached', this.canvas.width / 2, 140);
         this.ctx.globalAlpha = 1;
 
         // Chat apparaît
@@ -598,10 +598,10 @@ class EndingAnimation {
         this.drawMountain(this.canvas.width - 60, this.canvas.height - 80);
         this.drawCat(this.catPos.x, this.catPos.y, 15);
 
-        // Afficher message de félicitations avec fond semi-transparent style popup
+        // Display congratulations message with semi-transparent popup-style background
         const alpha = Math.min(1, this.progress / 1.5);
         
-        // Fond semi-transparent avec gradient pour style popup moderne
+        // Semi-transparent background with gradient for modern popup style
         const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2 - 100, 0, this.canvas.height / 2 + 80);
         gradient.addColorStop(0, 'rgba(255, 107, 157, 0.95)');
         gradient.addColorStop(0.5, 'rgba(255, 179, 217, 0.95)');
@@ -617,19 +617,19 @@ class EndingAnimation {
         this.ctx.globalAlpha = alpha;
         this.ctx.textAlign = 'center';
         
-        // Titre avec emoji
+        // Title with emoji
         this.ctx.fillStyle = '#ffffff';
         this.ctx.font = 'bold 48px Arial';
         this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
         this.ctx.shadowBlur = 4;
-        this.ctx.fillText('🌟 BRAVO ! 🌟', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.fillText('🌟 WELL DONE! 🌟', this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        // Message encourageant
+        // Encouraging message
         this.ctx.fillStyle = '#fff';
         this.ctx.font = 'bold 20px Arial';
-        this.ctx.fillText('Bon courage !', this.canvas.width / 2, this.canvas.height / 2 + 15);
+        this.ctx.fillText('Keep going!', this.canvas.width / 2, this.canvas.height / 2 + 15);
         this.ctx.font = '18px Arial';
-        this.ctx.fillText('Tu es arrivé au bout 🎉', this.canvas.width / 2, this.canvas.height / 2 + 45);
+        this.ctx.fillText('You made it to the end 🎉', this.canvas.width / 2, this.canvas.height / 2 + 45);
         
         this.ctx.shadowBlur = 0;
         this.ctx.globalAlpha = 1;
@@ -661,13 +661,13 @@ class EndingAnimation {
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
         
-        // Texte
+        // Text
         this.ctx.fillStyle = '#ffffff';
         this.ctx.font = 'bold 14px Arial';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('Merci mihao miahoo', btnX, btnY - 8);
+        this.ctx.fillText('Thanks mihao miahoo', btnX, btnY - 8);
         this.ctx.font = '12px Arial';
-        this.ctx.fillText('✨ Découvrez votre trésor ✨', btnX, btnY + 10);
+        this.ctx.fillText('✨ Discover your treasure ✨', btnX, btnY + 10);
         
         // Zone cliquable (stocker pour l'event listener)
         if (!this.bookButtonBounds) {
