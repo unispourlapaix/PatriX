@@ -278,9 +278,11 @@ const CONFIG = {
                     color: '#ff9800'
                 }
             ]
-        },
-        
-        // 50 Gold medals for each level
+        }
+    ],
+    
+    // 50 Gold medals for each level (in TROPHIES array)
+    LEVEL_MEDALS: [
         { id: 'level_1', name: 'Level 1', icon: '🥇', message: 'First level! Strong start!', condition: { type: 'level', value: 1 }, unlocked: false },
         { id: 'level_2', name: 'Level 2', icon: '🥇', message: 'Level 2! Keep it up!', condition: { type: 'level', value: 2 }, unlocked: false },
         { id: 'level_3', name: 'Level 3', icon: '🥇', message: 'Level 3! Good progress!', condition: { type: 'level', value: 3 }, unlocked: false },
@@ -412,6 +414,9 @@ const CONFIG = {
         DOUBLE_TAP_DELAY: 500
     }
 };
+
+// Fusionner les trophées spéciaux et les médailles de niveau dans un seul array TROPHIES
+CONFIG.TROPHIES = [...CONFIG.TROPHIES, ...CONFIG.LEVEL_MEDALS];
 
 // Rendre CONFIG disponible globalement
 window.CONFIG = CONFIG;

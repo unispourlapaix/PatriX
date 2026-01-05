@@ -14,6 +14,7 @@ let lineTracer = null;
 let userManager = null;
 let profileManager = null;
 let webBrowser = null;
+let audioManager = null;
 let lastTime = 0;
 
 /**
@@ -23,9 +24,11 @@ function initUserSystem() {
     userManager = new UserManager();
     profileManager = new ProfileManager(userManager);
     webBrowser = new WebBrowserManager();
+    audioManager = new AudioManager();
     
-    // Rendre webBrowser accessible globalement
+    // Rendre accessibles globalement
     window.webBrowser = webBrowser;
+    window.audioManager = audioManager;
     
     // Lancer automatiquement la musique après un délai
     setTimeout(() => {
