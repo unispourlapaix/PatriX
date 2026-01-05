@@ -7,7 +7,8 @@ class LanguageManager {
     constructor() {
         this.modal = null;
         this.continueBtn = null;
-        this.switcherBtn = null;
+        this.langBtnFr = null;
+        this.langBtnEn = null;
         this.selectedLang = null;
     }
     
@@ -15,13 +16,15 @@ class LanguageManager {
         // Attendre que le DOM soit prêt
         this.modal = document.getElementById('languageModal');
         this.continueBtn = document.getElementById('languageContinueBtn');
-        this.switcherBtn = document.getElementById('languageSwitcher');
+        this.langBtnFr = document.getElementById('langBtnFr');
+        this.langBtnEn = document.getElementById('langBtnEn');
         
-        if (!this.modal || !this.continueBtn || !this.switcherBtn) {
+        if (!this.modal || !this.continueBtn || !this.langBtnFr || !this.langBtnEn) {
             console.error('[LanguageManager] Éléments DOM manquants', {
                 modal: !!this.modal,
                 continueBtn: !!this.continueBtn,
-                switcherBtn: !!this.switcherBtn
+                langBtnFr: !!this.langBtnFr,
+                langBtnEn: !!this.langBtnEn
             });
             return;
         }
@@ -38,7 +41,7 @@ class LanguageManager {
             // Langue déjà sauvegardée, charger directement
             await this.loadLanguage(savedLang);
             this.hideModal();
-            this.showSwitcher();
+            this.updateCompactButtons();
         } else {
             // Première visite, charger français par défaut et afficher le sélecteur
             await this.loadLanguage('fr');
@@ -65,9 +68,13 @@ class LanguageManager {
             }
         });
 
-        // Bouton switcher (coin de l'écran)
-        this.switcherBtn.addEventListener('click', () => {
-            this.showModal();
+        // Boutons de langue compacts dans le panneau des trophées
+        this.langBtnFr.addEventListener('click', () => {
+            this.loadLanguage('fr');
+        });
+        
+        this.langBtnEn.addEventListener('click', () => {
+            this.loadLanguage('en');
         });
 
         // Observer les changements de langue pour mettre à jour le DOM
@@ -100,7 +107,7 @@ class LanguageManager {
         
         if (success) {
             this.hideModal();
-            this.showSwitcher();
+            this.updateCompactButtons();
         }
     }
 
@@ -170,12 +177,18 @@ class LanguageManager {
         }
     }
 
-    showSwitcher() {
-        if (this.switcherBtn) {
-            this.switcherBtn.classList.remove('hidden');
-            // Mettre à jour l'emoji du drapeau selon la langue
-            const lang = window.i18n.getLanguage();
-            this.switcherBtn.textContent = lang === 'fr' ? '🇫🇷' : '🇬🇧';
+    updateCompactButtons() {
+        const currentLang = window.i18n.getLanguage();
+        
+        if (this.langBtnFr && this.langBtnEn) {
+            // Mettre en surbrillance le bouton de la langue active
+            if (currentLang === 'fr') {
+                this.langBtnFr.classList.add('active');
+                this.langBtnEn.classList.remove('active');
+            } else {
+                this.langBtnEn.classList.add('active');
+                this.langBtnFr.classList.remove('active');
+            }
         }
     }
 }

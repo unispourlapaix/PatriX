@@ -149,36 +149,6 @@
     display: none !important;
 }
 
-/* Petit bouton langue dans le coin */
-.language-switcher-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, rgba(201, 166, 107, 0.9), rgba(212, 175, 55, 0.9));
-    border: 2px solid #c9a66b;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    cursor: pointer;
-    z-index: 9999;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.language-switcher-btn:hover {
-    transform: scale(1.1) rotate(10deg);
-    box-shadow: 0 6px 20px rgba(201, 166, 107, 0.4);
-}
-
-.language-switcher-btn:active {
-    transform: scale(0.95);
-}
-
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -200,6 +170,45 @@
     }
 }
 
+/* Sélecteur de langue compact dans le header des trophées */
+.trophies-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.language-switcher-compact {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.lang-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.lang-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.lang-btn.active {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .language-selector-content {
@@ -218,11 +227,9 @@
         font-size: 1.2em;
     }
     
-    .language-switcher-btn {
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        font-size: 1.2em;
+    .lang-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
     }
 }

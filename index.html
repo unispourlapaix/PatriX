@@ -67,10 +67,6 @@
         </div>
     </div>
 
-    <!-- Bouton de changement de langue (visible après sélection initiale) -->
-    <button class="language-switcher-btn hidden" id="languageSwitcher" title="Change language">🌐</button>
-    
-
     <!-- Conteneur principal - Grille maximisée -->
     <div class="game-wrapper">
         <!-- Grille de jeu maximisée -->
@@ -207,7 +203,13 @@
         <div class="trophies-panel-content">
             <div class="trophies-header">
                 <h2 data-i18n="trophies.title">🏆 MES TROPHÉES</h2>
-                <button class="trophies-close" id="trophiesClose">✕</button>
+                <div class="trophies-header-actions">
+                    <div class="language-switcher-compact">
+                        <button class="lang-btn" data-lang="fr" id="langBtnFr">🇫🇷</button>
+                        <button class="lang-btn" data-lang="en" id="langBtnEn">🇬🇧</button>
+                    </div>
+                    <button class="trophies-close" id="trophiesClose">✕</button>
+                </div>
             </div>
             
             <!-- Découverte Emmanuel -->
