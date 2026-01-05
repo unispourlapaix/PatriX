@@ -168,7 +168,7 @@ class UserManager {
                 }
             } else {
                 console.error(`[UserManager] Erreur Supabase (${response.status}):`, await response.text());
-                throw new Error(`Impossible de vérifier le compte en ligne (erreur ${response.status}). Vérifie ta connexion Internet.`);
+                throw new Error(`Unable to verify account online (error ${response.status}). Check your internet connection.`);
             }
         } catch (error) {
             if (error.message && error.message.includes('Impossible de vérifier')) {
@@ -198,7 +198,7 @@ class UserManager {
                 const users = await response.json();
                 return users.length > 0;
             } else {
-                throw new Error(`Impossible de vérifier le pseudo en ligne (erreur ${response.status}). Vérifie ta connexion Internet.`);
+                throw new Error(`Unable to verify username online (error ${response.status}). Check your internet connection.`);
             }
         } catch (error) {
             if (error.message && error.message.includes('Impossible de vérifier')) {
@@ -266,7 +266,7 @@ class UserManager {
         const existingUser = await this.checkUserByEmail(email);
         
         if (!existingUser) {
-            throw new Error('Aucun compte trouvé avec cet email. Crée d\'abord un compte !');
+            throw new Error('No account found with this email. Create an account first!');
         }
 
         // Vérifier le mot de passe avec Supabase
@@ -310,7 +310,7 @@ class UserManager {
         if (!existingUser.pseudo || existingUser.pseudo.trim() === '') {
             // Inviter à créer un profil
             if (window.effects) {
-                window.effects.showSpiritualMessage('👋 Bienvenue ! Crée ton profil pour personnaliser ton expérience', 4000);
+                window.effects.showSpiritualMessage('👋 Welcome! Create your profile to personalize your experience', 4000);
             }
             // Ouvrir automatiquement le modal de profil après un court délai
             setTimeout(() => {
@@ -328,7 +328,7 @@ class UserManager {
      */
     async register(username, email, password) {
         if (!username || username.trim().length < 3) {
-            throw new Error('Le pseudo doit contenir au moins 3 caractères');
+            throw new Error('Username must contain at least 3 characters');
         }
 
         if (!password || password.length < 6) {

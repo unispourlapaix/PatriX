@@ -251,15 +251,15 @@ class WebBrowserManager {
             return;
         }
 
-        // Afficher un avertissement de confidentialité (sauf si déjà confirmé)
+        // Display privacy warning (unless already confirmed)
         if (!skipConfirm && !this.autoStarted) {
             const acceptCookies = confirm(
-                '🎵 Ouvrir Audiomack ?\n\n' +
-                '✅ Lecteur intégré dans le jeu :\n' +
-                '• Contrôle lecture/pause/volume\n' +
-                '• Minimisable d\'un clic sur 🎵\n' +
-                '• Le jeu continue en arrière-plan\n\n' +
-                'Continuer ?'
+                '🎵 Open Audiomack?\n\n' +
+                '✅ Built-in player in the game:\n' +
+                '• Control play/pause/volume\n' +
+                '• Minimizable with one click on 🎵\n' +
+                '• Game continues in background\n\n' +
+                'Continue?'
             );
 
             if (!acceptCookies) {
@@ -555,18 +555,18 @@ class WebBrowserManager {
     }
 
     /**
-     * Ouvre une URL personnalisée avec confirmation
+     * Opens a custom URL with confirmation
      */
     openCustomUrl(url, title) {
-        // Demander confirmation avec info cookies
+        // Request confirmation with cookie info
         const acceptCookies = confirm(
-            `🌐 Ouvrir ${title || 'ce site'} ?\n\n` +
-            '⚠️ Ce site externe peut utiliser des cookies.\n\n' +
-            '✅ Tu auras le contrôle total :\n' +
-            '• Navigation libre\n' +
-            '• Fermeture à tout moment (Échap)\n\n' +
-            '❌ Les cookies tiers sont désactivés pour ta protection.\n\n' +
-            'Continuer ?'
+            `🌐 Open ${title || 'this site'}?\n\n` +
+            '⚠️ This external site may use cookies.\n\n' +
+            '✅ You\'ll have full control:\n' +
+            '• Free navigation\n' +
+            '• Close anytime (Esc)\n\n' +
+            '❌ Third-party cookies are disabled for your protection.\n\n' +
+            'Continue?'
         );
 
         if (!acceptCookies) {
