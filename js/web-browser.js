@@ -1,6 +1,12 @@
 /**
  * PATRIX - Gestionnaire Navigateur Web
  * Permet d'ouvrir des sites externes (Audiomack, etc.) dans un panneau sécurisé
+ * 
+ * LOGS ISOLÉS:
+ * - Tous les logs de l'iframe sont préfixés avec "🎵 [AUDIOMACK]"
+ * - Activer/désactiver les logs via this.enableLogging (false par défaut)
+ * - Les erreurs sont toujours affichées pour le débogage
+ * - Filtrer dans la console: "🎵 [AUDIOMACK]" ou "AUDIOMACK"
  */
 
 class WebBrowserManager {
@@ -25,7 +31,32 @@ class WebBrowserManager {
         this.performanceCheckInterval = null;
         this.lastPerformanceCheck = 0;
         
+        // Logging isolé pour l'iframe Audiomack
+        this.enableLogging = false; // Mettre à true pour déboguer
+        this.logPrefix = '🎵 [AUDIOMACK]';
+        
         this.init();
+    }
+    
+    /**
+     * Méthode de logging isolée pour l'iframe
+     * Les logs peuvent être facilement désactivés en définissant enableLogging = false
+     */
+    log(...args) {
+        if (this.enableLogging) {
+            console.log(this.logPrefix, ...args);
+        }
+    }
+    
+    warn(...args) {
+        if (this.enableLogging) {
+            console.warn(this.logPrefix, ...args);
+        }
+    }
+    
+    error(...args) {
+        // Les erreurs sont toujours loguées
+        console.error(this.logPrefix, ...args);
     }
 
     init() {
@@ -112,7 +143,7 @@ class WebBrowserManager {
      */
     canLoad() {
         if (this.isDisabled) {
-            console.warn('[WebBrowser] Lecteur désactivé pour sécurité');
+            this.warn('Lecteur désactivé pour sécurité');
             return false;
         }
         
@@ -141,7 +172,7 @@ class WebBrowserManager {
      */
     handleIframeError() {
         this.errorCount++;
-        console.error(`[WebBrowser] Erreur iframe (${this.errorCount}/${this.maxErrors})`);
+        this.error(`Erreur iframe (${this.errorCount}/${this.maxErrors})`);
         
         if (this.errorCount >= this.maxErrors) {
             this.handleOverload('Trop d\'erreurs de chargement');
@@ -152,7 +183,7 @@ class WebBrowserManager {
      * Gestion surcharge détectée
      */
     handleOverload(reason) {
-        console.error('[WebBrowser] Surcharge détectée:', reason);
+        this.error('Surcharge détectée:', reason);
         
         // Désactiver le lecteur
         this.isDisabled = true;
@@ -176,7 +207,7 @@ class WebBrowserManager {
             this.isDisabled = false;
             this.loadAttempts = 0;
             this.errorCount = 0;
-            console.log('[WebBrowser] Lecteur réactivé');
+            this.log('Lecteur réactivé');
         }, 300000); // 5 minutes
     }
     
@@ -215,7 +246,7 @@ class WebBrowserManager {
             
             // Si > 90% mémoire utilisée
             if (memPercent > 90) {
-                console.warn('[WebBrowser] Mémoire critique:', memPercent.toFixed(1) + '%');
+                this.warn('Mémoire critique:', memPercent.toFixed(1) + '%');
                 this.handleOverload('Mémoire saturée');
             }
         }
@@ -226,7 +257,7 @@ class WebBrowserManager {
                 // Ping iframe
                 this.iframe.contentWindow.postMessage('ping', '*');
             } catch (e) {
-                console.warn('[WebBrowser] Iframe non responsive');
+                this.warn('Iframe non responsive');
             }
         }
     }
@@ -244,7 +275,7 @@ class WebBrowserManager {
 
         // Valider l'URL
         if (!this.isValidUrl(url)) {
-            console.error('[WebBrowser] URL invalide:', url);
+            this.error('URL invalide:', url);
             if (window.effects) {
                 window.effects.showSpiritualMessage('❌ URL invalide', 2000);
             }
@@ -306,7 +337,7 @@ class WebBrowserManager {
             this.hideLoading();
         }, 2000);
 
-        console.log('[WebBrowser] Ouverture:', url);
+        this.log('Ouverture:', url);
     }
 
     /**
@@ -353,7 +384,7 @@ class WebBrowserManager {
         
         this.updateMusicButton();
         
-        console.log('[WebBrowser] Fermé');
+        this.log('Fermé');
     }
 
     /**
@@ -374,7 +405,7 @@ class WebBrowserManager {
             window.effects.showSpiritualMessage('🎵 Musique en arrière-plan', 1500);
         }
         
-        console.log('[WebBrowser] Minimisé - Musique continue');
+        this.log('Minimisé - Musique continue');
     }
 
     /**
@@ -390,7 +421,7 @@ class WebBrowserManager {
         // Mettre à jour l'icône musique
         this.updateMusicButton();
         
-        console.log('[WebBrowser] Restauré');
+        this.log('Restauré');
     }
 
     /**
@@ -575,7 +606,7 @@ class WebBrowserManager {
 
         // Valider l'URL
         if (!this.isValidUrl(url)) {
-            console.error('[WebBrowser] URL invalide:', url);
+            this.error('URL invalide:', url);
             if (window.effects) {
                 window.effects.showSpiritualMessage('❌ URL invalide', 2000);
             }
@@ -606,7 +637,7 @@ class WebBrowserManager {
         this.showLoading();
         setTimeout(() => this.hideLoading(), 2000);
 
-        console.log('[WebBrowser] Ouverture:', url);
+        this.log('Ouverture:', url);
     }
     /**
      * Arrête complètement et nettoie
