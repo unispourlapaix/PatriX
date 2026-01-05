@@ -13,6 +13,9 @@ class UserInterface {
         this.currentMessage = '';
         this.isModalOpen = false; // Suivre si un modal est ouvert
         this.wasPausedByTrophiesPanel = false; // Flag pour la pause du panneau trophées
+        this.swapTimeout = null;
+        this.wallBreakTimeout = null;
+        this.popComboTimeout = null;
         this.init();
         this.bindEvents();
     }
@@ -401,10 +404,12 @@ class UserInterface {
             this.elements.combo.textContent = this.formatNumber(combo, 2);
         }
         
-        // Croix de combo
+        // Croix de combo (avec cache)
         if (this.elements.comboCrosses) {
-            const crosses = this.elements.comboCrosses.querySelectorAll('.combo-cross');
-            crosses.forEach((cross, index) => {
+            if (!this.comboCrossesCache) {
+                this.comboCrossesCache = this.elements.comboCrosses.querySelectorAll('.combo-cross');
+            }
+            this.comboCrossesCache.forEach((cross, index) => {
                 if (index < combo) {
                     cross.classList.add('active');
                 } else {
@@ -442,40 +447,42 @@ class UserInterface {
      */
     showPopCombo(combo, count = 3) {
         const popComboDisplay = document.getElementById('popCombo');
-        if (popComboDisplay) {
-            // Calculer l'intensité (3-4 cases = normal, 5-7 = medium, 8+ = intense)
-            const intensity = count >= 8 ? 'mega' : count >= 5 ? 'big' : 'normal';
-            
-            // Texte plus dramatique selon l'intensité
-            let text = `POP x${combo}!`;
-            if (count >= 8) {
-                text = `🔥 MEGA POP x${combo}! 🔥`;
-            } else if (count >= 5) {
-                text = `✨ BIG POP x${combo}! ✨`;
-            }
-            
-            popComboDisplay.textContent = text;
-            popComboDisplay.className = `pop-combo-display pop-${intensity}`;
-            popComboDisplay.style.display = 'block';
-            popComboDisplay.style.animation = 'none';
-            
-            // Animation adaptée à l'intensité
-            setTimeout(() => {
-                if (intensity === 'mega') {
-                    popComboDisplay.style.animation = 'comboPulseMega 0.8s ease-out';
-                } else if (intensity === 'big') {
-                    popComboDisplay.style.animation = 'comboPulseBig 0.6s ease-out';
-                } else {
-                    popComboDisplay.style.animation = 'comboPulse 0.5s ease-out';
-                }
-            }, 10);
-            
-            // Cacher après un temps adapté
-            const displayTime = intensity === 'mega' ? 2500 : intensity === 'big' ? 2200 : 2000;
-            setTimeout(() => {
-                popComboDisplay.style.display = 'none';
-            }, displayTime);
+        if (!popComboDisplay) return;
+        
+        // Annuler l'animation précédente
+        if (this.popComboTimeout) {
+            clearTimeout(this.popComboTimeout);
         }
+        
+        // Calculer l'intensité (3-4 cases = normal, 5-7 = medium, 8+ = intense)
+        const intensity = count >= 8 ? 'mega' : count >= 5 ? 'big' : 'normal';
+        
+        // Texte plus dramatique selon l'intensité
+        let text = `POP x${combo}!`;
+        if (count >= 8) {
+            text = `🔥 MEGA POP x${combo}! 🔥`;
+        } else if (count >= 5) {
+            text = `✨ BIG POP x${combo}! ✨`;
+        }
+        
+        popComboDisplay.textContent = text;
+        popComboDisplay.className = `pop-combo-display pop-${intensity}`;
+        popComboDisplay.style.display = 'block';
+        
+        // Animation adaptée à l'intensité (direct, pas de setTimeout inutile)
+        if (intensity === 'mega') {
+            popComboDisplay.style.animation = 'comboPulseMega 0.8s ease-out';
+        } else if (intensity === 'big') {
+            popComboDisplay.style.animation = 'comboPulseBig 0.6s ease-out';
+        } else {
+            popComboDisplay.style.animation = 'comboPulse 0.5s ease-out';
+        }
+        
+        // Cacher après un temps adapté
+        const displayTime = intensity === 'mega' ? 2500 : intensity === 'big' ? 2200 : 2000;
+        this.popComboTimeout = setTimeout(() => {
+            popComboDisplay.style.display = 'none';
+        }, displayTime);
     }
 
     /**
@@ -483,8 +490,11 @@ class UserInterface {
      */
     updateSwapDots(count) {
         if (!this.elements.swapDots) return;
-        const dots = this.elements.swapDots.querySelectorAll('.swap-dot');
-        dots.forEach((dot, index) => {
+        // Cache la liste des dots
+        if (!this.swapDotsCache) {
+            this.swapDotsCache = this.elements.swapDots.querySelectorAll('.swap-dot');
+        }
+        this.swapDotsCache.forEach((dot, index) => {
             if (index < count) {
                 dot.classList.add('active');
             } else {
@@ -507,8 +517,11 @@ class UserInterface {
      */
     updateWallCharges(count) {
         if (!this.elements.wallCharges) return;
-        const charges = this.elements.wallCharges.querySelectorAll('.wall-charge');
-        charges.forEach((charge, index) => {
+        // Cache la liste des charges
+        if (!this.wallChargesCache) {
+            this.wallChargesCache = this.elements.wallCharges.querySelectorAll('.wall-charge');
+        }
+        this.wallChargesCache.forEach((charge, index) => {
             if (index < count) {
                 charge.classList.add('active');
             } else {
@@ -562,38 +575,49 @@ class UserInterface {
      * Effet dynamique pour Wall Break avec son
      */
     showWallBreakEffect() {
-        // Créer le conteneur principal
-        const container = document.createElement('div');
-        container.className = 'wall-break-effect';
-        container.innerHTML = `
-            <div class="wall-break-icon">🧱</div>
-            <div class="wall-break-text">WALL BREAK!</div>
-            <div class="wall-break-particles"></div>
-        `;
-        
-        document.body.appendChild(container);
-        
-        // Créer les particules de bris
-        const particlesContainer = container.querySelector('.wall-break-particles');
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'wall-particle';
-            const angle = (Math.PI * 2 * i) / 20;
-            const distance = 50 + Math.random() * 100;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
-            particle.style.setProperty('--tx', `${x}px`);
-            particle.style.setProperty('--ty', `${y}px`);
-            particle.style.animationDelay = `${Math.random() * 0.1}s`;
-            particlesContainer.appendChild(particle);
+        // Réutiliser l'élément existant ou le créer une seule fois
+        let container = document.getElementById('wall-break-effect-display');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'wall-break-effect-display';
+            container.className = 'wall-break-effect';
+            container.innerHTML = `
+                <div class="wall-break-icon">🧱</div>
+                <div class="wall-break-text">WALL BREAK!</div>
+                <div class="wall-break-particles"></div>
+            `;
+            document.body.appendChild(container);
+            
+            // Créer les particules une seule fois
+            const particlesContainer = container.querySelector('.wall-break-particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'wall-particle';
+                const angle = (Math.PI * 2 * i) / 20;
+                const distance = 50 + Math.random() * 100;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                particle.style.setProperty('--tx', `${x}px`);
+                particle.style.setProperty('--ty', `${y}px`);
+                particle.style.animationDelay = `${Math.random() * 0.1}s`;
+                particlesContainer.appendChild(particle);
+            }
         }
         
-        // Son synthétique "tine tine" (métallique)
+        // Annuler l'animation précédente
+        if (this.wallBreakTimeout) {
+            clearTimeout(this.wallBreakTimeout);
+        }
+        
+        container.style.display = 'block';
+        container.style.animation = 'comboAppear 0.3s ease-out';
+        
+        // Son synthétique
         this.playWallBreakSound();
         
-        // Retirer après animation
-        setTimeout(() => {
-            container.remove();
+        this.wallBreakTimeout = setTimeout(() => {
+            container.style.animation = 'comboDisappear 0.3s ease-out forwards';
+            setTimeout(() => container.style.display = 'none', 300);
         }, 1500);
     }
 
@@ -657,32 +681,43 @@ class UserInterface {
      * Effet dynamique pour Swap Earned avec son
      */
     showSwapEffect() {
-        // Créer le conteneur principal
-        const container = document.createElement('div');
-        container.className = 'swap-effect';
-        container.innerHTML = `
-            <div class="swap-icon">🔄</div>
-            <div class="swap-text">SWAP EARNED!</div>
-            <div class="swap-rings"></div>
-        `;
-        
-        document.body.appendChild(container);
-        
-        // Créer les anneaux de rotation
-        const ringsContainer = container.querySelector('.swap-rings');
-        for (let i = 0; i < 3; i++) {
-            const ring = document.createElement('div');
-            ring.className = 'swap-ring';
-            ring.style.animationDelay = `${i * 0.15}s`;
-            ringsContainer.appendChild(ring);
+        // Réutiliser l'élément existant ou le créer une seule fois
+        let container = document.getElementById('swap-effect-display');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'swap-effect-display';
+            container.className = 'swap-effect';
+            container.innerHTML = `
+                <div class="swap-icon">🔄</div>
+                <div class="swap-text">SWAP EARNED!</div>
+                <div class="swap-rings"></div>
+            `;
+            document.body.appendChild(container);
+            
+            // Créer les anneaux de rotation une seule fois
+            const ringsContainer = container.querySelector('.swap-rings');
+            for (let i = 0; i < 3; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'swap-ring';
+                ring.style.animationDelay = `${i * 0.15}s`;
+                ringsContainer.appendChild(ring);
+            }
         }
         
-        // Son synthétique de swap (swoosh électronique)
+        // Annuler l'animation précédente
+        if (this.swapTimeout) {
+            clearTimeout(this.swapTimeout);
+        }
+        
+        container.style.display = 'block';
+        container.style.animation = 'comboAppear 0.3s ease-out';
+        
+        // Son synthétique
         this.playSwapSound();
         
-        // Retirer après animation
-        setTimeout(() => {
-            container.remove();
+        this.swapTimeout = setTimeout(() => {
+            container.style.animation = 'comboDisappear 0.3s ease-out forwards';
+            setTimeout(() => container.style.display = 'none', 300);
         }, 1500);
     }
 

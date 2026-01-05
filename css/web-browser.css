@@ -164,6 +164,12 @@
     height: 100%;
     border: none;
     background: white;
+    /* GPU acceleration */
+    will-change: transform;
+    transform: translateZ(0);
+    /* Optimiser rendu */
+    contain: strict;
+    content-visibility: auto;
 }
 
 /* Info confidentialité */

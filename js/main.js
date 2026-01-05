@@ -360,16 +360,25 @@ function initGame() {
 }
 
 /**
- * Boucle de jeu principale
+ * Boucle de jeu principale (optimisée)
  */
+let renderAccumulator = 0;
+const RENDER_INTERVAL = 1000 / 30; // 30 FPS pour render visuel
+
 function gameLoop(currentTime) {
     const deltaTime = currentTime - lastTime;
     lastTime = currentTime;
+    renderAccumulator += deltaTime;
     
-    // Mettre à jour le jeu
+    // Mettre à jour le jeu (logique toujours 60 FPS)
     if (game) {
         game.update(deltaTime);
-        game.grid.render(game.currentPiece);
+        
+        // Render visuel seulement à 30 FPS pour économiser
+        if (renderAccumulator >= RENDER_INTERVAL) {
+            game.grid.render(game.currentPiece);
+            renderAccumulator = 0;
+        }
     }
     
     // Continuer la boucle

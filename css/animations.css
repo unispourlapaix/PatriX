@@ -159,6 +159,119 @@
     }
 }
 
+/* Styles des messages combo optimisés avec GPU acceleration */
+.combo-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 250, 235, 0.98));
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 10000;
+    display: none;
+    max-width: 90%;
+    
+    /* Optimisations GPU */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    transform-style: preserve-3d;
+}
+
+.combo-text {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #c9a66b;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.combo-extra {
+    font-size: 1em;
+    color: #d4af37;
+    margin-top: 5px;
+}
+
+/* Animations combo optimisées avec GPU */
+@keyframes comboAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateZ(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) translateZ(0);
+    }
+}
+
+@keyframes comboDisappear {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) translateZ(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) translateZ(0);
+    }
+}
+
+/* Variantes d'intensité */
+.combo-normal { border: 3px solid #d4af37; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4); }
+.combo-super { border: 3px solid #c9a66b; box-shadow: 0 4px 25px rgba(201, 166, 107, 0.5); }
+.combo-mega { border: 3px solid #ffb86c; box-shadow: 0 6px 30px rgba(255, 184, 108, 0.6); }
+.combo-amazing { border: 3px solid #ff9a76; box-shadow: 0 6px 35px rgba(255, 154, 118, 0.6); }
+.combo-legendary { border: 3px solid #ff7e67; box-shadow: 0 8px 40px rgba(255, 126, 103, 0.7); }
+.combo-ultimate { border: 3px solid #ff6b9d; box-shadow: 0 10px 50px rgba(255, 107, 157, 0.8); }
+
+/* Styles des messages de ligne */
+.line-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 250, 235, 0.98));
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 9999;
+    display: none;
+    max-width: 90%;
+    
+    /* Optimisations GPU */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    transform-style: preserve-3d;
+}
+
+.line-text {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.line-combo {
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+/* Variantes d'intensité pour les lignes */
+.line-single { border: 3px solid #4fc3f7; box-shadow: 0 4px 20px rgba(79, 195, 247, 0.4); }
+.line-single .line-text { color: #4fc3f7; }
+.line-single .line-combo { color: #29b6f6; }
+
+.line-double { border: 3px solid #ffa500; box-shadow: 0 6px 25px rgba(255, 165, 0, 0.5); }
+.line-double .line-text { color: #ffa500; }
+.line-double .line-combo { color: #ff8c00; }
+
+.line-triple { border: 3px solid #ff8c00; box-shadow: 0 6px 30px rgba(255, 140, 0, 0.6); }
+.line-triple .line-text { color: #ff8c00; }
+.line-triple .line-combo { color: #ff7f50; }
+
+.line-patrix { border: 3px solid #ff6b9d; box-shadow: 0 8px 40px rgba(255, 107, 157, 0.8); }
+.line-patrix .line-text { color: #ff6b9d; }
+.line-patrix .line-combo { color: #ff1493; }
+
 /* Effet de pulse sur cellule cliquable */
 .cell.poppable {
     cursor: pointer;
@@ -274,29 +387,30 @@
 /* Affichage combo pop */
 .pop-combo-display {
     position: fixed;
-    top: 15%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, 0);
-    font-size: 3em;
+    font-size: 1.8em;
     font-weight: 700;
     color: #ff8c00;
     text-shadow: 
-        0 0 20px rgba(255, 140, 0, 0.8),
-        0 0 40px rgba(255, 215, 0, 0.6),
-        0 4px 8px rgba(0, 0, 0, 0.3);
+        0 0 10px rgba(255, 140, 0, 0.6),
+        0 2px 4px rgba(0, 0, 0, 0.3);
     z-index: 9998;
     display: none;
     pointer-events: none;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     animation: comboPulse 0.5s ease-out;
+    max-width: 90%;
+    text-align: center;
 }
 
 .pop-combo-display.pop-big {
-    font-size: 3.5em;
+    font-size: 2.2em;
 }
 
 .pop-combo-display.pop-mega {
-    font-size: 4.5em;
+    font-size: 2.8em;
     font-weight: 900;
 }
 

@@ -16,6 +16,16 @@ class UserManager {
         this.unlockedTrophies = [];
         this.syncedUsers = new Set(JSON.parse(localStorage.getItem(`${this.GAME_ID}_synced_users`) || '[]'));
         this.pendingSyncs = new Set(); // Empêcher les syncs simultanés
+        
+        // Cache et optimisations API
+        this.syncDebounceTimer = null;
+        this.scoreDebounceTimer = null;
+        this.leaderboardCache = null;
+        this.leaderboardCacheTime = 0;
+        this.CACHE_DURATION = 60000; // 1 minute
+        this.pendingScoreUpdate = null;
+        this.pendingProgressUpdate = null;
+        
         this.init();
     }
 
@@ -517,8 +527,20 @@ class UserManager {
      * Déconnexion
      */
     logout() {
+        // Flush pending updates avant déconnexion
+        if (this.pendingScoreUpdate) {
+            this.flushScoreUpdate();
+        }
+        if (this.pendingProgressUpdate) {
+            this.flushProgressUpdate();
+        }
+        
         this.currentUser = null;
         this.saveUser();
+        
+        // Invalider les caches
+        this.leaderboardCache = null;
+        this.leaderboardCacheTime = 0;
     }
 
     /**
@@ -616,10 +638,31 @@ class UserManager {
     }
 
     /**
-     * Synchronise le score avec Supabase
+     * Synchronise le score avec Supabase (avec debouncing)
      */
     async syncScoreToSupabase(score) {
         if (!this.currentUser) return;
+        
+        // Debouncing : attendre 2s avant sync
+        if (this.scoreDebounceTimer) {
+            clearTimeout(this.scoreDebounceTimer);
+        }
+        
+        this.pendingScoreUpdate = score;
+        
+        this.scoreDebounceTimer = setTimeout(async () => {
+            await this.flushScoreUpdate();
+        }, 2000);
+    }
+    
+    /**
+     * Exécute la synchronisation du score
+     */
+    async flushScoreUpdate() {
+        if (!this.currentUser || !this.pendingScoreUpdate) return;
+        
+        const score = this.pendingScoreUpdate;
+        this.pendingScoreUpdate = null;
 
         try {
             // Vérifier si un score existe déjà pour cet utilisateur
@@ -692,10 +735,34 @@ class UserManager {
     }
 
     /**
-     * Synchronise la progression (niveau max et trophées) avec Supabase
+     * Synchronise la progression (niveau max et trophées) avec Supabase (avec debouncing)
      */
     async syncProgressToSupabase() {
         if (!this.currentUser) return;
+        
+        // Debouncing : attendre 3s avant sync
+        if (this.syncDebounceTimer) {
+            clearTimeout(this.syncDebounceTimer);
+        }
+        
+        this.pendingProgressUpdate = {
+            maxLevel: this.maxLevel,
+            trophies: [...this.unlockedTrophies]
+        };
+        
+        this.syncDebounceTimer = setTimeout(async () => {
+            await this.flushProgressUpdate();
+        }, 3000);
+    }
+    
+    /**
+     * Exécute la synchronisation de la progression
+     */
+    async flushProgressUpdate() {
+        if (!this.currentUser || !this.pendingProgressUpdate) return;
+        
+        const { maxLevel, trophies } = this.pendingProgressUpdate;
+        this.pendingProgressUpdate = null;
 
         try {
             // Vérifier si une entrée existe déjà
@@ -845,9 +912,15 @@ class UserManager {
     }
 
     /**
-     * Récupère le classement depuis Supabase
+     * Récupère le classement depuis Supabase (avec cache)
      */
     async getLeaderboard(limit = 10) {
+        // Utiliser le cache si valide
+        const now = Date.now();
+        if (this.leaderboardCache && (now - this.leaderboardCacheTime) < this.CACHE_DURATION) {
+            return this.leaderboardCache;
+        }
+        
         try {
             const response = await fetch(
                 `${this.supabaseUrl}/rest/v1/patrxscore?select=pseudo,max_score&order=max_score.desc&limit=${limit}`,
@@ -860,10 +933,14 @@ class UserManager {
             );
 
             if (response.ok) {
-                return await response.json();
+                const data = await response.json();
+                // Mettre en cache
+                this.leaderboardCache = data;
+                this.leaderboardCacheTime = Date.now();
+                return data;
             } else {
                 console.error('Erreur récupération classement:', response.statusText);
-                return [];
+                return this.leaderboardCache || [];
             }
         } catch (error) {
             console.error('Erreur classement Supabase:', error);

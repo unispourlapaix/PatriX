@@ -15,6 +15,8 @@ class EndingAnimation {
         this.catPos = { x: 100, y: 300 };
         this.cucumbers = [];
         this.particles = [];
+        this.particlePool = []; // Pool pour réutiliser particules
+        this.maxParticles = 100; // Limite pour éviter surcharge
         this.music = null;
         this.popupOpened = false;
         this.bgGradient = null;
@@ -22,6 +24,7 @@ class EndingAnimation {
         this.lastStepTime = 0;
         this.battleSoundPlayed = false;
         this.victorySoundPlayed = false;
+        this.lastFrameTime = 0; // Pour throttle FPS
     }
 
     /**
@@ -212,9 +215,22 @@ class EndingAnimation {
     }
 
     animate() {
+        // Throttle: render à 45 FPS pour animation fluide
+        if (!this.lastFrameTime) this.lastFrameTime = 0;
+        const now = performance.now();
+        const elapsed = now - this.lastFrameTime;
+        
+        // Skip frame si < 22ms (45 FPS)
+        if (elapsed < 22) {
+            this.animationFrame = requestAnimationFrame(() => this.animate());
+            return;
+        }
+        
+        this.lastFrameTime = now;
+        
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Fond dégradé pastel (créé une seule fois)
+        // Fond dégradé pastel (créé une seule fois - déjà optimisé)
         if (!this.bgGradient) {
             this.bgGradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
             this.bgGradient.addColorStop(0, '#e8f5e9');
@@ -224,12 +240,12 @@ class EndingAnimation {
         this.ctx.fillStyle = this.bgGradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.progress += 0.01;
+        this.progress += 0.02; // Doublé de 0.01 à 0.02
 
         switch(this.scene) {
             case 'intro':
                 this.drawIntro();
-                if (this.progress > 2) {
+                if (this.progress > 1.5) { // Réduit de 2 à 1.5s
                     this.scene = 'battle';
                     this.progress = 0;
                 }
@@ -243,22 +259,22 @@ class EndingAnimation {
                 break;
             case 'journey':
                 this.drawJourney();
-                if (this.progress > 7) {
+                if (this.progress > 5) { // Réduit de 7 à 5s
                     this.scene = 'lighthouse';
                     this.progress = 0;
                 }
                 break;
             case 'lighthouse':
                 this.drawLighthouse();
-                if (this.progress > 7) {
+                if (this.progress > 5) { // Réduit de 7 à 5s
                     this.scene = 'end';
                     this.progress = 0;
                 }
                 break;
             case 'end':
                 this.drawEnd();
-                // Ouvrir le popup après 6s (une seule fois)
-                if (this.progress > 6 && !this.popupOpened) {
+                // Ouvrir le popup après 4s (réduit de 6s)
+                if (this.progress > 4 && !this.popupOpened) {
                     this.popupOpened = true;
                     // Arrêter l'animation et ouvrir le popup du livre automatiquement
                     if (this.animationFrame) {
@@ -416,7 +432,8 @@ class EndingAnimation {
             this.ctx.restore();
         }
 
-        // Concombres
+        // Concombres (batch drawing pour performance)
+        this.ctx.save();
         this.cucumbers.forEach((cucumber, index) => {
             if (!cucumber.defeated) {
                 this.drawCucumber(cucumber);
@@ -451,6 +468,7 @@ class EndingAnimation {
                 }
             }
         });
+        this.ctx.restore();
 
         // Particules
         this.updateParticles();
@@ -580,25 +598,40 @@ class EndingAnimation {
         this.drawMountain(this.canvas.width - 60, this.canvas.height - 80);
         this.drawCat(this.catPos.x, this.catPos.y, 15);
 
-        // Afficher FIN et sous-titre fixes avec fond semi-transparent
+        // Afficher message de félicitations avec fond semi-transparent style popup
         const alpha = Math.min(1, this.progress / 1.5);
         
-        // Fond semi-transparent pour améliorer la lisibilité
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-        this.ctx.fillRect(0, this.canvas.height / 2 - 100, this.canvas.width, 180);
+        // Fond semi-transparent avec gradient pour style popup moderne
+        const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2 - 100, 0, this.canvas.height / 2 + 80);
+        gradient.addColorStop(0, 'rgba(255, 107, 157, 0.95)');
+        gradient.addColorStop(0.5, 'rgba(255, 179, 217, 0.95)');
+        gradient.addColorStop(1, 'rgba(255, 107, 157, 0.95)');
+        this.ctx.fillStyle = gradient;
+        this.ctx.shadowColor = 'rgba(255, 107, 157, 0.5)';
+        this.ctx.shadowBlur = 20;
+        this.ctx.beginPath();
+        this.ctx.roundRect(20, this.canvas.height / 2 - 100, this.canvas.width - 40, 180, 15);
+        this.ctx.fill();
+        this.ctx.shadowBlur = 0;
         
         this.ctx.globalAlpha = alpha;
         this.ctx.textAlign = 'center';
         
-        this.ctx.fillStyle = '#ff6b9d';
-        this.ctx.font = 'bold 42px Arial';
-        this.ctx.fillText('FIN', this.canvas.width / 2, this.canvas.height / 2 - 40);
+        // Titre avec emoji
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = 'bold 48px Arial';
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.ctx.shadowBlur = 4;
+        this.ctx.fillText('🌟 BRAVO ! 🌟', this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        this.ctx.fillStyle = '#333';
-        this.ctx.font = 'bold 18px Arial';
-        this.ctx.fillText('Tu as transformé le désespoir', this.canvas.width / 2, this.canvas.height / 2 + 10);
-        this.ctx.fillText('en rêves', this.canvas.width / 2, this.canvas.height / 2 + 35);
+        // Message encourageant
+        this.ctx.fillStyle = '#fff';
+        this.ctx.font = 'bold 20px Arial';
+        this.ctx.fillText('Bon courage !', this.canvas.width / 2, this.canvas.height / 2 + 15);
+        this.ctx.font = '18px Arial';
+        this.ctx.fillText('Tu es arrivé au bout 🎉', this.canvas.width / 2, this.canvas.height / 2 + 45);
         
+        this.ctx.shadowBlur = 0;
         this.ctx.globalAlpha = 1;
     }
     
@@ -1242,33 +1275,59 @@ class EndingAnimation {
     }
 
     createDefeatParticles(x, y) {
+        // Limiter nombre total de particules
+        if (this.particles.length >= this.maxParticles) return;
+        
         for (let i = 0; i < 10; i++) {
-            this.particles.push({
-                x: x,
-                y: y,
-                vx: (Math.random() - 0.5) * 5,
-                vy: (Math.random() - 0.5) * 5,
-                life: 1,
-                color: '#81c784'
-            });
+            // Réutiliser depuis le pool ou créer nouveau
+            let particle = this.particlePool.pop();
+            
+            if (!particle) {
+                particle = {
+                    x: 0, y: 0, vx: 0, vy: 0, life: 0, color: '#81c784'
+                };
+            }
+            
+            // Réinitialiser
+            particle.x = x;
+            particle.y = y;
+            particle.vx = (Math.random() - 0.5) * 5;
+            particle.vy = (Math.random() - 0.5) * 5;
+            particle.life = 1;
+            particle.color = '#81c784';
+            
+            this.particles.push(particle);
         }
     }
 
     updateParticles() {
-        this.particles = this.particles.filter(p => p.life > 0);
+        // Filtrer et recycler dans le pool
+        const alive = [];
+        
         this.particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.life -= 0.02;
-            p.vy += 0.2; // Gravité
+            if (p.life > 0) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.02;
+                p.vy += 0.2; // Gravité
 
-            this.ctx.globalAlpha = p.life;
-            this.ctx.fillStyle = p.color;
-            this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-            this.ctx.fill();
-            this.ctx.globalAlpha = 1;
+                this.ctx.globalAlpha = p.life;
+                this.ctx.fillStyle = p.color;
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                alive.push(p);
+            } else {
+                // Recycler dans le pool au lieu de garbage collect
+                if (this.particlePool.length < 50) {
+                    this.particlePool.push(p);
+                }
+            }
         });
+        
+        this.particles = alive;
+        this.ctx.globalAlpha = 1;
     }
 
     /**

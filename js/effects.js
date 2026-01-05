@@ -7,6 +7,8 @@
 class VisualEffects {
     constructor(containerElement) {
         this.container = containerElement;
+        this.comboTimeout = null;
+        this.lineTimeout = null;
     }
 
     /**
@@ -343,85 +345,65 @@ class VisualEffects {
      * @param {number} count - Nombre de cases
      */
     showComboMessage(combo, count) {
-        const msg = document.createElement('div');
-        msg.className = 'combo-message';
+        // Réutiliser l'élément existant ou le créer une seule fois
+        let msg = document.getElementById('combo-message-display');
+        if (!msg) {
+            msg = document.createElement('div');
+            msg.id = 'combo-message-display';
+            msg.className = 'combo-message';
+            document.body.appendChild(msg);
+        }
+        
+        // Annuler l'animation précédente si elle existe
+        if (this.comboTimeout) {
+            clearTimeout(this.comboTimeout);
+        }
         
         // Messages spéciaux basés sur le combo ET la taille
-        let comboText = `COMBO x${combo}!`;
-        let extraText = `${count} blocs 💥`;
-        let borderColor = '#ff8c00';
-        let glowIntensity = 30;
-        let emoji = '💥';
+        let comboText, emoji, intensity;
         
-        // Mega combos basés sur le niveau
         if (combo >= 10) {
-            comboText = `🌟💫 ULTIME COMBO x${combo}! 💫🌟`;
-            emoji = '🎆';
-            borderColor = '#ff1493';
-            glowIntensity = 60;
+            comboText = `🌟💫 ULTIME x${combo}! 💫🌟`;
+            intensity = 'ultimate';
         } else if (combo >= 8) {
-            comboText = `⚡🔥 LEGENDAIRE x${combo}! 🔥⚡`;
-            emoji = '💎';
-            borderColor = '#ff4500';
-            glowIntensity = 55;
+            comboText = `⚡🔥 LEGENDAIRE x${combo}!`;
+            intensity = 'legendary';
         } else if (combo >= 6) {
-            comboText = `🌟 INCROYABLE x${combo}! 🌟`;
-            emoji = '🔥';
-            borderColor = '#ff6347';
-            glowIntensity = 50;
+            comboText = `🌟 INCROYABLE x${combo}!`;
+            intensity = 'amazing';
         } else if (combo >= 5) {
-            comboText = `🔥 MEGA COMBO x${combo}! 🔥`;
-            emoji = '⚡';
-            borderColor = '#ff8c00';
-            glowIntensity = 45;
+            comboText = `🔥 MEGA COMBO x${combo}!`;
+            intensity = 'mega';
         } else if (combo >= 3) {
-            comboText = `⚡ SUPER COMBO x${combo}! ⚡`;
-            emoji = '✨';
-            borderColor = '#ffa500';
-            glowIntensity = 40;
+            comboText = `⚡ SUPER x${combo}!`;
+            intensity = 'super';
+        } else {
+            comboText = `COMBO x${combo}!`;
+            intensity = 'normal';
         }
         
-        // Bonus pour grandes connexions
-        if (count >= 15) {
-            extraText = `${count} blocs! ÉNORME! 🎆`;
-        } else if (count >= 12) {
-            extraText = `${count} blocs! MASSIF! 💎`;
-        } else if (count >= 10) {
-            extraText = `${count} blocs! IMMENSE! ${emoji}`;
-        } else if (count >= 8) {
-            extraText = `${count} blocs! GÉANT! ${emoji}`;
-        } else if (count >= 6) {
-            extraText = `${count} blocs ${emoji}`;
-        }
+        // Emoji basé sur la taille
+        if (count >= 15) emoji = '🎆';
+        else if (count >= 12) emoji = '💎';
+        else if (count >= 10) emoji = '🔥';
+        else if (count >= 8) emoji = '⚡';
+        else emoji = '💥';
         
         msg.innerHTML = `
-            <div style="font-size: 2em; font-weight: bold; color: #ff8c00;">
-                ${comboText}
-            </div>
-            <div style="font-size: 1.2em; color: #ffd700;">
-                ${extraText}
-            </div>
+            <div class="combo-text">${comboText}</div>
+            <div class="combo-extra">${count} blocs ${emoji}</div>
         `;
-        msg.style.cssText = `
-            position: fixed;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(26, 26, 46, 0.9));
-            border: 3px solid ${borderColor};
-            padding: 20px 40px;
-            border-radius: 15px;
-            text-align: center;
-            z-index: 10000;
-            animation: comboAppear 0.3s ease-out;
-            box-shadow: 0 0 ${glowIntensity}px ${borderColor === '#ff1493' ? 'rgba(255, 20, 147, 0.9)' : (combo >= 5 ? 'rgba(255, 69, 0, 0.9)' : 'rgba(255, 140, 0, 0.8)')};
-        `;
+        msg.className = `combo-message combo-${intensity}`;
+        msg.style.display = 'block';
         
-        document.body.appendChild(msg);
+        // Reset et trigger reflow pour animation fluide
+        msg.style.animation = 'none';
+        void msg.offsetHeight; // Force reflow
+        msg.style.animation = 'comboAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
         
-        setTimeout(() => {
-            msg.style.animation = 'comboDisappear 0.3s ease-out forwards';
-            setTimeout(() => msg.remove(), 300);
+        this.comboTimeout = setTimeout(() => {
+            msg.style.animation = 'comboDisappear 0.2s cubic-bezier(0.4, 0, 1, 1) forwards';
+            setTimeout(() => msg.style.display = 'none', 200);
         }, 1500);
     }
 
@@ -431,81 +413,62 @@ class VisualEffects {
      * @param {number} combo - Niveau de combo
      */
     showLineMessage(count, combo) {
-        const msg = document.createElement('div');
-        msg.className = 'line-message';
-        
-        let lineText = '';
-        let emoji = '✨';
-        let borderColor = '#4fc3f7';
-        let glowIntensity = 25;
-        
-        // Messages basés sur le nombre de lignes
-        if (count === 4) {
-            lineText = '🎆 PATRIX! 4 LIGNES! 🎆';
-            emoji = '🏆';
-            borderColor = '#ff1493';
-            glowIntensity = 50;
-        } else if (count === 3) {
-            lineText = '🔥 TRIPLE! 3 LIGNES! 🔥';
-            emoji = '⭐';
-            borderColor = '#ff8c00';
-            glowIntensity = 40;
-        } else if (count === 2) {
-            lineText = '⚡ DOUBLE! 2 LIGNES! ⚡';
-            emoji = '💫';
-            borderColor = '#ffa500';
-            glowIntensity = 35;
-        } else if (count === 1) {
-            lineText = '✨ LIGNE COMPLÈTE! ✨';
-            emoji = '✅';
-            borderColor = '#4fc3f7';
-            glowIntensity = 30;
+        // Réutiliser l'élément existant ou le créer une seule fois
+        let msg = document.getElementById('line-message-display');
+        if (!msg) {
+            msg = document.createElement('div');
+            msg.id = 'line-message-display';
+            msg.className = 'line-message';
+            document.body.appendChild(msg);
         }
         
-        // Bonus combo
+        // Annuler l'animation précédente
+        if (this.lineTimeout) {
+            clearTimeout(this.lineTimeout);
+        }
+        
+        let lineText, intensity;
+        
+        if (count === 4) {
+            lineText = '🎆 PATRIX! 4 LIGNES!';
+            intensity = 'patrix';
+        } else if (count === 3) {
+            lineText = '🔥 TRIPLE! 3 LIGNES!';
+            intensity = 'triple';
+        } else if (count === 2) {
+            lineText = '⚡ DOUBLE! 2 LIGNES!';
+            intensity = 'double';
+        } else {
+            lineText = '✨ LIGNE COMPLÈTE!';
+            intensity = 'single';
+        }
+        
         let comboBonus = '';
         if (combo >= 10) {
-            comboBonus = `<div style="font-size: 1.3em; color: #ff1493; margin-top: 8px;">🎉 COMBO ULTIME x${combo}! 🎉</div>`;
-            glowIntensity += 20;
+            comboBonus = `<div class="line-combo">🎉 COMBO ULTIME x${combo}!</div>`;
         } else if (combo >= 7) {
-            comboBonus = `<div style="font-size: 1.2em; color: #ff4500; margin-top: 8px;">🔥 COMBO MASSIF x${combo}! 🔥</div>`;
-            glowIntensity += 15;
+            comboBonus = `<div class="line-combo">🔥 COMBO MASSIF x${combo}!</div>`;
         } else if (combo >= 5) {
-            comboBonus = `<div style="font-size: 1.1em; color: #ff8c00; margin-top: 8px;">⚡ COMBO GÉANT x${combo}! ⚡</div>`;
-            glowIntensity += 10;
+            comboBonus = `<div class="line-combo">⚡ COMBO x${combo}!</div>`;
         } else if (combo >= 3) {
-            comboBonus = `<div style="font-size: 1em; color: #ffa500; margin-top: 8px;">💫 COMBO x${combo}! 💫</div>`;
-            glowIntensity += 5;
+            comboBonus = `<div class="line-combo">💫 COMBO x${combo}!</div>`;
         }
         
         msg.innerHTML = `
-            <div style="font-size: 1.8em; font-weight: bold; color: ${borderColor};">
-                ${lineText}
-            </div>
+            <div class="line-text">${lineText}</div>
             ${comboBonus}
         `;
-        msg.style.cssText = `
-            position: fixed;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 241, 232, 0.95));
-            border: 3px solid #d4af37;
-            padding: 18px 35px;
-            border-radius: 12px;
-            text-align: center;
-            z-index: 9999;
-            animation: comboAppear 0.3s ease-out;
-            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4), 
-                        inset 0 0 30px rgba(255, 255, 255, 0.5),
-                        0 0 ${glowIntensity}px rgba(212, 175, 55, 0.6);
-        `;
+        msg.className = `line-message line-${intensity}`;
+        msg.style.display = 'block';
         
-        document.body.appendChild(msg);
+        // Reset et trigger reflow pour animation fluide
+        msg.style.animation = 'none';
+        void msg.offsetHeight; // Force reflow
+        msg.style.animation = 'comboAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
         
-        setTimeout(() => {
-            msg.style.animation = 'comboDisappear 0.3s ease-out forwards';
-            setTimeout(() => msg.remove(), 300);
+        this.lineTimeout = setTimeout(() => {
+            msg.style.animation = 'comboDisappear 0.2s cubic-bezier(0.4, 0, 1, 1) forwards';
+            setTimeout(() => msg.style.display = 'none', 200);
         }, 1200);
     }
 

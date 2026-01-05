@@ -10,6 +10,11 @@ class GameGrid {
         this.rows = CONFIG.GRID.ROWS;
         this.cells = [];
         this.boardElement = null;
+        
+        // Cache pour performance
+        this.cellElementsCache = null;
+        this.lastRenderState = null; // Pour éviter re-render inutile
+        
         this.init();
     }
 
@@ -63,6 +68,9 @@ class GameGrid {
         // Ajouter le board au container
         container.appendChild(this.boardElement);
         
+        // Construire le cache de cellules
+        this.buildCellCache();
+        
         // Initialiser le canvas après que tout soit rendu
         setTimeout(() => this.resizeCanvas(), 100);
         window.addEventListener('resize', () => {
@@ -83,6 +91,14 @@ class GameGrid {
         this.connectionCanvas.height = rect.height;
         this.connectionCanvas.style.width = '100%';
         this.connectionCanvas.style.height = '100%';
+    }
+    
+    /**
+     * Construit le cache des cellules DOM
+     */
+    buildCellCache() {
+        if (!this.gridElement) return;
+        this.cellElementsCache = this.gridElement.querySelectorAll('.cell');
     }
 
     /**
@@ -272,13 +288,12 @@ class GameGrid {
                 this.cells.unshift(new Array(this.cols).fill(null));
             }
             
-            // Mise à jour visuelle après effacement
             this.render();
-        }, CONFIG.TIMING.ANIMATION_DURATION);
+        }, 300);
     }
 
     /**
-     * Rend la grille dans le DOM
+     * Rend la grille dans le DOM (optimisé avec cache)
      * @param {Object} currentPiece - Pièce en cours (optionnel)
      */
     render(currentPiece = null) {
@@ -287,12 +302,20 @@ class GameGrid {
             return;
         }
         
-        const cells = this.gridElement.querySelectorAll('.cell');
+        // Utiliser le cache ou construire si nécessaire
+        if (!this.cellElementsCache || this.cellElementsCache.length === 0) {
+            this.buildCellCache();
+        }
         
-        if (cells.length === 0) {
+        const cells = this.cellElementsCache;
+        
+        if (!cells || cells.length === 0) {
             console.error('[Grid] Aucune cellule trouvée dans gridElement');
             return;
         }
+        
+        // Cache pour groupes poppables (calculer une seule fois)
+        const poppableCache = new Map();
         
         cells.forEach(cell => {
             const row = parseInt(cell.dataset.row);
@@ -316,9 +339,13 @@ class GameGrid {
                     cell.style.boxShadow = `0 0 20px ${CONFIG.COLORS.GLOW}`;
                 }
                 
-                // Vérifier si cette cellule fait partie d'un groupe poppable
-                const group = this.findConnectedGroup(row, col);
-                if (group.length >= 4) {
+                // Vérifier si cette cellule fait partie d'un groupe poppable (avec cache)
+                const cacheKey = `${row}-${col}`;
+                if (!poppableCache.has(cacheKey)) {
+                    const group = this.findConnectedGroup(row, col);
+                    poppableCache.set(cacheKey, group.length >= 4);
+                }
+                if (poppableCache.get(cacheKey)) {
                     cell.classList.add('poppable');
                 }
             }

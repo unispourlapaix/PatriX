@@ -16,6 +16,10 @@ class LineTracer {
         this.currentPos = null;
         this.onPathComplete = null;
         
+        // Cache pour performance
+        this.cellElementCache = new Map(); // row-col -> element
+        this.cellPositionCache = new Map(); // row-col -> {x, y, rect}
+        
         this.init();
     }
 
@@ -25,10 +29,16 @@ class LineTracer {
     init() {
         if (!this.boardElement) return;
 
+        // Construire le cache de cellules
+        this.buildCellCache();
+
         // Initialiser les dimensions du canvas
         if (this.canvas) {
             this.resizeCanvas();
-            window.addEventListener('resize', () => this.resizeCanvas());
+            window.addEventListener('resize', () => {
+                this.resizeCanvas();
+                this.updateCellPositions(); // Recalculer positions
+            });
         }
 
         // Événements souris
@@ -40,6 +50,68 @@ class LineTracer {
         this.boardElement.addEventListener('touchstart', (e) => this.handleStart(e), { passive: false });
         document.addEventListener('touchmove', (e) => this.handleMove(e), { passive: false });
         document.addEventListener('touchend', (e) => this.handleEnd(e));
+    }
+
+    /**
+     * Construit le cache de cellules DOM
+     */
+    buildCellCache() {
+        if (!this.boardElement) return;
+        
+        const gridElement = this.boardElement.querySelector('.board-grid');
+        if (!gridElement) return;
+        
+        this.cellElementCache.clear();
+        const cells = gridElement.querySelectorAll('.cell');
+        
+        cells.forEach(cell => {
+            const row = cell.dataset.row;
+            const col = cell.dataset.col;
+            if (row !== undefined && col !== undefined) {
+                const key = `${row}-${col}`;
+                this.cellElementCache.set(key, cell);
+            }
+        });
+        
+        this.updateCellPositions();
+    }
+    
+    /**
+     * Met à jour le cache des positions
+     */
+    updateCellPositions() {
+        if (!this.canvas) return;
+        
+        const canvasRect = this.canvas.getBoundingClientRect();
+        this.cellPositionCache.clear();
+        
+        this.cellElementCache.forEach((element, key) => {
+            const cellRect = element.getBoundingClientRect();
+            const posX = cellRect.left + cellRect.width / 2 - canvasRect.left;
+            const posY = cellRect.top + cellRect.height / 2 - canvasRect.top;
+            
+            this.cellPositionCache.set(key, {
+                x: posX,
+                y: posY,
+                rect: cellRect
+            });
+        });
+    }
+    
+    /**
+     * Récupère un élément cellule depuis le cache
+     */
+    getCellElement(row, col) {
+        const key = `${row}-${col}`;
+        return this.cellElementCache.get(key);
+    }
+    
+    /**
+     * Récupère la position d'une cellule depuis le cache
+     */
+    getCellPosition(row, col) {
+        const key = `${row}-${col}`;
+        return this.cellPositionCache.get(key);
     }
 
     /**
@@ -221,21 +293,16 @@ class LineTracer {
 
         this.ctx.beginPath();
         
-        // Dessiner les segments entre les cellules
+        // Dessiner les segments entre les cellules (utilise le cache)
         for (let i = 0; i < this.path.length; i++) {
             const cell = this.path[i];
-            const cellElement = gridElement.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
-            if (!cellElement) continue;
-            
-            const cellRect = cellElement.getBoundingClientRect();
-            // Position du centre de la cellule relative au canvas
-            const posX = cellRect.left + cellRect.width / 2 - canvasRect.left;
-            const posY = cellRect.top + cellRect.height / 2 - canvasRect.top;
+            const pos = this.getCellPosition(cell.row, cell.col);
+            if (!pos) continue;
             
             if (i === 0) {
-                this.ctx.moveTo(posX, posY);
+                this.ctx.moveTo(pos.x, pos.y);
             } else {
-                this.ctx.lineTo(posX, posY);
+                this.ctx.lineTo(pos.x, pos.y);
             }
         }
 
