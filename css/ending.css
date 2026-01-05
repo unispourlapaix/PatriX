@@ -3,8 +3,10 @@
 .ending-modal {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 600px; /* Contrainte PC */
     height: 100%;
     background: rgba(0, 0, 0, 0.95);
     display: flex;
@@ -20,12 +22,17 @@
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 95%; /* Contrainte contenu */
+    width: 100%;
 }
 
 #endingCanvas {
     display: block;
     border-radius: 15px;
     box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 100%; /* Canvas adaptatif */
+    height: auto;
+    width: 100%;
 }
 
 .ending-skip {

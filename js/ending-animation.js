@@ -167,11 +167,13 @@ class EndingAnimation {
     }
 
     resizeCanvas() {
-        // Format mobile portrait : largeur fixe, hauteur adaptée
-        const mobileWidth = Math.min(400, window.innerWidth);
-        const mobileHeight = window.innerHeight - 60;
-        this.canvas.width = mobileWidth;
-        this.canvas.height = mobileHeight;
+        // Contrainte de largeur maximale pour PC (600px comme le jeu)
+        const maxWidth = 600;
+        const canvasWidth = Math.min(maxWidth, window.innerWidth);
+        const canvasHeight = window.innerHeight - 60;
+        
+        this.canvas.width = canvasWidth;
+        this.canvas.height = canvasHeight;
     }
 
     initCucumbers() {
@@ -358,11 +360,12 @@ class EndingAnimation {
 
         this.drawCat(this.catPos.x, this.catPos.y);
         
-        // Boss est expulsé vers le haut en phase 4 (seulement s'il n'est pas déjà vaincu)
+        // Boss est expulsé à 45 degrés en phase 4 (seulement s'il n'est pas déjà vaincu)
         if (boss && !boss.defeated && this.progress > 6.5 && this.progress < 8) {
             const expulseProgress = (this.progress - 6.5) / 1.5;
-            boss.y = centerY + 100 - expulseProgress * 350;
-            boss.rotation = expulseProgress * Math.PI * 4; // Rotation rapide
+            // Mouvement à 45° : diagonal vers le haut-droit
+            boss.x = centerX + expulseProgress * 250; // Mouvement horizontal
+            boss.y = centerY + 100 - expulseProgress * 350; // Mouvement vertical
             
             // Son de victoire quand le boss est vaincu
             if (expulseProgress >= 0.9 && !this.victorySoundPlayed) {
@@ -370,13 +373,54 @@ class EndingAnimation {
                 this.victorySoundPlayed = true;
             }
             
-            // Marquer le boss comme vaincu à la fin de l'expulsion
-            if (expulseProgress >= 0.9) {
+            // Marquer le boss comme vaincu à la fin de l'expulsion avec explosion coordonnée
+            if (expulseProgress >= 0.9 && !boss.defeated) {
                 boss.defeated = true;
-                this.createDefeatParticles(boss.x, boss.y);
+                this.createDefeatParticles(boss.x, boss.y, true); // true pour boss = plus de particules
             }
         }
 
+        // Concombres (batch drawing pour performance)
+        this.ctx.save();
+        this.cucumbers.forEach((cucumber, index) => {
+            if (!cucumber.defeated) {
+                this.drawCucumber(cucumber);
+                
+                // Ne pas attaquer le boss pendant la phase d'expulsion
+                if (cucumber.isBoss && this.progress > 6.5) {
+                    return;
+                }
+                
+                // Combat: concombres d'en haut vaincus pendant le saut (Phase 1)
+                if (this.progress > 4 && this.progress < 6 && !cucumber.isBoss) {
+                    // Chat attaque ceux au-dessus pendant le saut
+                    if (cucumber.y < centerY && Math.random() < 0.03) {
+                        cucumber.hp--;
+                        if (cucumber.hp <= 0) {
+                            cucumber.defeated = true;
+                            this.createDefeatParticles(cucumber.x, cucumber.y);
+                        }
+                        // Pas de rotation - juste shake pour performances
+                    }
+                }
+                // Combat: autres concombres AVANT l'expulsion du boss (Phase 2)
+                else if (this.progress > 6 && this.progress < 6.5 && !cucumber.isBoss) {
+                    // Attaque rapide pour finir tous les concombres avant le boss
+                    cucumber.hp -= 10; // Défaite instantanée
+                    if (cucumber.hp <= 0) {
+                        cucumber.defeated = true;
+                        this.createDefeatParticles(cucumber.x, cucumber.y);
+                    }
+                }
+            }
+        });
+        this.ctx.restore();
+
+        // Particules
+        this.updateParticles();
+        
+        // === TEXTES EN PREMIER PLAN ===
+        
         // Dialogue des concombres (prolongé jusqu'à 5s)
         if (this.progress < 5 && !this.cucumbers.every(c => c.defeated)) {
             this.ctx.fillStyle = '#2c2c2c';
@@ -431,47 +475,6 @@ class EndingAnimation {
             this.ctx.fillText(catCry, 0, 0);
             this.ctx.restore();
         }
-
-        // Concombres (batch drawing pour performance)
-        this.ctx.save();
-        this.cucumbers.forEach((cucumber, index) => {
-            if (!cucumber.defeated) {
-                this.drawCucumber(cucumber);
-                
-                // Ne pas attaquer le boss pendant la phase d'expulsion
-                if (cucumber.isBoss && this.progress > 6.5) {
-                    return;
-                }
-                
-                // Combat: concombres d'en haut vaincus pendant le saut
-                if (this.progress > 4 && this.progress < 6.5 && !cucumber.isBoss) {
-                    // Chat attaque ceux au-dessus pendant le saut
-                    if (cucumber.y < centerY && Math.random() < 0.02) {
-                        cucumber.hp--;
-                        if (cucumber.hp <= 0) {
-                            cucumber.defeated = true;
-                            this.createDefeatParticles(cucumber.x, cucumber.y);
-                        } else {
-                            cucumber.rotation += 0.3;
-                        }
-                    }
-                }
-                // Combat: autres concombres après le saut (mais pas le boss)
-                else if (this.progress > 6.5 && !cucumber.isBoss && Math.random() < 0.015) {
-                    cucumber.hp--;
-                    if (cucumber.hp <= 0) {
-                        cucumber.defeated = true;
-                        this.createDefeatParticles(cucumber.x, cucumber.y);
-                    } else {
-                        cucumber.rotation += 0.3;
-                    }
-                }
-            }
-        });
-        this.ctx.restore();
-
-        // Particules
-        this.updateParticles();
     }
 
     drawJourney() {
@@ -517,11 +520,8 @@ class EndingAnimation {
                 facingRight = false; // Regarde à gauche à nouveau
             }
         }
-        
-        // Chat orienté selon la direction du regard - taille réduite mobile
-        this.drawCat(this.catPos.x, this.catPos.y, 30, facingRight);
 
-        // Montagne ÉNORME apparaît - un obstacle imposant qui prend tout l'écran
+        // Montagne ÉNORME apparaît - un obstacle imposant qui prend tout l'écran (DESSINER EN ARRIÈRE-PLAN D'ABORD)
         const mountainAlpha = Math.min(1, this.progress / 2);
         this.ctx.globalAlpha = mountainAlpha;
         
@@ -534,6 +534,9 @@ class EndingAnimation {
         this.ctx.restore();
         
         this.ctx.globalAlpha = 1;
+        
+        // Chat orienté selon la direction du regard - taille réduite mobile (DESSINER AU PREMIER PLAN)
+        this.drawCat(this.catPos.x, this.catPos.y, 30, facingRight);
         
         // Chat s'interroge quand il voit la montagne (pendant la pause)
         if (this.progress > 1 && this.progress < 1.8) {
@@ -557,86 +560,203 @@ class EndingAnimation {
             this.ctx.fillText('!', this.catPos.x, this.catPos.y - 55 + bounce);
         }
         
-        // Chat réagit à la montagne (pause de 4s sur le texte)
+        // Chat réagit à la montagne (pause de 4s sur le texte) - Style combat
         if (this.progress > 2.8 && this.progress < 6.8) {
             this.ctx.fillStyle = '#2c2c2c';
-            this.ctx.font = 'bold 42px Arial';
+            this.ctx.font = 'bold 26px Arial';
             this.ctx.textAlign = 'center';
             this.ctx.strokeStyle = '#ffffff';
-            this.ctx.lineWidth = 6;
+            this.ctx.lineWidth = 4;
+            
             const text = "Qu'est-ce que c'est";
             const text2 = "cette merde...";
-            this.ctx.strokeText(text, this.catPos.x, this.catPos.y - 80);
-            this.ctx.fillText(text, this.catPos.x, this.catPos.y - 80);
-            this.ctx.strokeText(text2, this.catPos.x, this.catPos.y - 30);
-            this.ctx.fillText(text2, this.catPos.x, this.catPos.y - 38);
+            
+            // Animation pulse comme pour le combat
+            const scale = 1 + Math.sin((this.progress - 2.8) * 5) * 0.08;
+            this.ctx.save();
+            this.ctx.translate(this.catPos.x, this.catPos.y - 60);
+            this.ctx.scale(scale, scale);
+            
+            this.ctx.strokeText(text, 0, -15);
+            this.ctx.fillText(text, 0, -15);
+            this.ctx.strokeText(text2, 0, 15);
+            this.ctx.fillText(text2, 0, 15);
+            
+            this.ctx.restore();
         }
     }
 
     drawLighthouse() {
-        // Chat arrive au milieu devant la montagne et le phare, au sol
+        // Chat arrive de la GAUCHE et s'arrête au milieu
         const targetX = this.canvas.width / 2;
-        this.catPos.x += (targetX - this.catPos.x) * 0.02;
-        this.catPos.y = this.canvas.height - 15; // Plus bas, touche le sol
-
-        this.drawLighthouseBuilding(this.canvas.width - 60, this.canvas.height - 250);
         
-        // Lumière du phare
-        if (this.progress > 1) {
-            this.drawLighthouseLight();
+        // Initialiser la position du chat à gauche au début de cette scène
+        if (this.progress < 0.1) {
+            this.catPos.x = -50; // Hors écran à gauche
         }
         
-        // Montagne dessinée après le phare pour être devant, plus grande et plus proche
-        this.drawMountain(this.canvas.width - 60, this.canvas.height - 80);
-        this.drawCat(this.catPos.x, this.catPos.y, 15);
+        // Chat se déplace vers le centre
+        this.catPos.x += (targetX - this.catPos.x) * 0.05;
+        this.catPos.y = this.canvas.height - 15; // Plus bas, touche le sol
+
+        // Positionner le phare à droite avec ajustement proportionnel
+        const lighthouseX = this.canvas.width * 0.85; // 85% de la largeur
+        const lighthouseY = this.canvas.height - 250;
+        this.drawLighthouseBuilding(lighthouseX, lighthouseY);
+        
+        // Lumière du phare avec position coordonnée
+        if (this.progress > 1) {
+            this.drawLighthouseLight(lighthouseX, lighthouseY);
+        }
+        
+        // Montagne à droite aussi, adaptée
+        const mountainX = this.canvas.width * 0.85;
+        const mountainY = this.canvas.height - 80;
+        this.drawMountain(mountainX, mountainY);
+        
+        // Chat orienté vers la droite (regarde le phare)
+        this.drawCat(this.catPos.x, this.catPos.y, 15, true);
+        
+        // Texte du chat - Style combat
+        if (this.progress > 2 && this.progress < 6) {
+            this.ctx.fillStyle = '#ff6b9d';
+            this.ctx.font = 'bold 24px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.strokeStyle = '#ffffff';
+            this.ctx.lineWidth = 4;
+            
+            const text1 = "Il y avait autre chose";
+            const text2 = "derrière tout ça...";
+            
+            // Animation pulse
+            const scale = 1 + Math.sin((this.progress - 2) * 5) * 0.08;
+            this.ctx.save();
+            this.ctx.translate(this.catPos.x, this.catPos.y - 60);
+            this.ctx.scale(scale, scale);
+            
+            this.ctx.strokeText(text1, 0, -15);
+            this.ctx.fillText(text1, 0, -15);
+            this.ctx.strokeText(text2, 0, 15);
+            this.ctx.fillText(text2, 0, 15);
+            
+            this.ctx.restore();
+        }
     }
 
     drawEnd() {
-        this.drawLighthouseBuilding(this.canvas.width - 60, this.canvas.height - 250);
-        this.drawLighthouseLight();
-        // Montagne dessinée après le phare pour être devant, plus grande et plus proche
-        this.drawMountain(this.canvas.width - 60, this.canvas.height - 80);
+        // Positionner le phare à droite avec ajustement proportionnel
+        const lighthouseX = this.canvas.width * 0.85;
+        const lighthouseY = this.canvas.height - 250;
+        this.drawLighthouseBuilding(lighthouseX, lighthouseY);
+        this.drawLighthouseLight(lighthouseX, lighthouseY);
+        
+        // Montagne à droite aussi, adaptée
+        const mountainX = this.canvas.width * 0.85;
+        const mountainY = this.canvas.height - 80;
+        this.drawMountain(mountainX, mountainY);
         this.drawCat(this.catPos.x, this.catPos.y, 15);
 
-        // Afficher message de félicitations avec fond semi-transparent style popup
+        // Afficher message avec fond style ciel
         const alpha = Math.min(1, this.progress / 1.5);
         
-        // Fond semi-transparent avec gradient pour style popup moderne
-        const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2 - 100, 0, this.canvas.height / 2 + 80);
-        gradient.addColorStop(0, 'rgba(255, 107, 157, 0.95)');
-        gradient.addColorStop(0.5, 'rgba(255, 179, 217, 0.95)');
-        gradient.addColorStop(1, 'rgba(255, 107, 157, 0.95)');
-        this.ctx.fillStyle = gradient;
-        this.ctx.shadowColor = 'rgba(255, 107, 157, 0.5)';
-        this.ctx.shadowBlur = 20;
+        // Fond dégradé ciel (bleu vers orange/jaune comme lever/coucher de soleil)
+        const skyGradient = this.ctx.createLinearGradient(0, this.canvas.height / 2 - 120, 0, this.canvas.height / 2 + 100);
+        skyGradient.addColorStop(0, 'rgba(135, 206, 250, 0.95)'); // Bleu ciel
+        skyGradient.addColorStop(0.3, 'rgba(173, 216, 230, 0.95)'); // Bleu clair
+        skyGradient.addColorStop(0.6, 'rgba(255, 223, 186, 0.95)'); // Orange clair
+        skyGradient.addColorStop(1, 'rgba(255, 200, 124, 0.95)'); // Orange/jaune
+        this.ctx.fillStyle = skyGradient;
+        this.ctx.shadowColor = 'rgba(255, 200, 124, 0.4)';
+        this.ctx.shadowBlur = 25;
         this.ctx.beginPath();
-        this.ctx.roundRect(20, this.canvas.height / 2 - 100, this.canvas.width - 40, 180, 15);
+        this.ctx.roundRect(20, this.canvas.height / 2 - 120, this.canvas.width - 40, 220, 20);
         this.ctx.fill();
         this.ctx.shadowBlur = 0;
+        
+        // Dessiner des nuages stylisés
+        this.ctx.save();
+        this.ctx.globalAlpha = alpha * 0.6;
+        this.drawCloud(this.canvas.width * 0.25, this.canvas.height / 2 - 80, 30);
+        this.drawCloud(this.canvas.width * 0.7, this.canvas.height / 2 - 90, 25);
+        this.drawCloud(this.canvas.width * 0.5, this.canvas.height / 2 + 60, 20);
+        this.ctx.restore();
+        
+        // Dessiner un soleil
+        this.ctx.save();
+        this.ctx.globalAlpha = alpha * 0.8;
+        const sunX = this.canvas.width - 60;
+        const sunY = this.canvas.height / 2 - 80;
+        const sunGradient = this.ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 25);
+        sunGradient.addColorStop(0, 'rgba(255, 220, 100, 1)');
+        sunGradient.addColorStop(0.7, 'rgba(255, 180, 80, 0.9)');
+        sunGradient.addColorStop(1, 'rgba(255, 180, 80, 0)');
+        this.ctx.fillStyle = sunGradient;
+        this.ctx.beginPath();
+        this.ctx.arc(sunX, sunY, 25, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        // Rayons du soleil
+        this.ctx.strokeStyle = 'rgba(255, 220, 100, 0.6)';
+        this.ctx.lineWidth = 3;
+        for (let i = 0; i < 8; i++) {
+            const angle = (Math.PI * 2 * i) / 8;
+            this.ctx.beginPath();
+            this.ctx.moveTo(sunX + Math.cos(angle) * 30, sunY + Math.sin(angle) * 30);
+            this.ctx.lineTo(sunX + Math.cos(angle) * 45, sunY + Math.sin(angle) * 45);
+            this.ctx.stroke();
+        }
+        this.ctx.restore();
         
         this.ctx.globalAlpha = alpha;
         this.ctx.textAlign = 'center';
         
-        // Titre avec emoji
-        const title = window.i18n ? window.i18n.t('endingAnimation.title') : '🌟 CONGRATULATIONS! 🌟';
-        const message1 = window.i18n ? window.i18n.t('endingAnimation.message1') : 'Well done!';
-        const message2 = window.i18n ? window.i18n.t('endingAnimation.message2') : 'You made it to the end 🎉';
+        // Messages philosophiques inspirants
+        const title = '✨ FAIS DE L\'IMPOSSIBLE POSSIBLE ✨';
+        const message1 = 'Profite autrement de la vie';
+        const message2 = 'Sagement, tu rachèteras le temps';
         
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.font = 'bold 48px Arial';
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.ctx.fillStyle = '#1a1a1a';
+        this.ctx.font = 'bold 24px Arial';
+        this.ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+        this.ctx.shadowBlur = 8;
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeText(title, this.canvas.width / 2, this.canvas.height / 2 - 50);
+        this.ctx.fillText(title, this.canvas.width / 2, this.canvas.height / 2 - 50);
+        
+        // Messages avec style élégant
+        this.ctx.fillStyle = '#2c2c2c';
+        this.ctx.font = 'italic 20px Arial';
         this.ctx.shadowBlur = 4;
-        this.ctx.fillText(title, this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeText(message1, this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.fillText(message1, this.canvas.width / 2, this.canvas.height / 2);
         
-        // Message encourageant
-        this.ctx.fillStyle = '#fff';
-        this.ctx.font = 'bold 20px Arial';
-        this.ctx.fillText(message1, this.canvas.width / 2, this.canvas.height / 2 + 15);
-        this.ctx.font = '18px Arial';
-        this.ctx.fillText(message2, this.canvas.width / 2, this.canvas.height / 2 + 45);
+        this.ctx.font = 'bold italic 18px Arial';
+        this.ctx.strokeText(message2, this.canvas.width / 2, this.canvas.height / 2 + 35);
+        this.ctx.fillText(message2, this.canvas.width / 2, this.canvas.height / 2 + 35);
+        
+        // Citation finale
+        this.ctx.font = 'italic 15px Arial';
+        this.ctx.fillStyle = 'rgba(50, 50, 50, 0.9)';
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeText('"Chaque instant est une opportunité"', this.canvas.width / 2, this.canvas.height / 2 + 70);
+        this.ctx.fillText('"Chaque instant est une opportunité"', this.canvas.width / 2, this.canvas.height / 2 + 70);
         
         this.ctx.shadowBlur = 0;
         this.ctx.globalAlpha = 1;
+    }
+    
+    // Dessiner un nuage stylisé
+    drawCloud(x, y, size) {
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, size, 0, Math.PI * 2);
+        this.ctx.arc(x + size * 0.7, y - size * 0.3, size * 0.8, 0, Math.PI * 2);
+        this.ctx.arc(x + size * 1.4, y, size * 0.9, 0, Math.PI * 2);
+        this.ctx.arc(x + size * 2, y - size * 0.2, size * 0.7, 0, Math.PI * 2);
+        this.ctx.fill();
     }
     
     drawBookButton() {
@@ -708,9 +828,11 @@ class EndingAnimation {
         modal.style.cssText = `
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
             background: linear-gradient(135deg, rgba(232, 245, 233, 0.98) 0%, rgba(255, 249, 230, 0.98) 50%, rgba(255, 232, 232, 0.98) 100%);
             z-index: 10003;
             display: flex;
@@ -727,7 +849,8 @@ class EndingAnimation {
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
             text-align: center;
-            max-width: 500px;
+            max-width: 90%;
+            width: 100%;
             border: 3px solid rgba(255, 182, 217, 0.5);
         `;
         
@@ -815,21 +938,38 @@ class EndingAnimation {
         modal.appendChild(content);
         document.body.appendChild(modal);
         
-        // Chat fixe dans le coin gauche avec animation subtile
-        const catDiv = document.createElement('div');
+        // Chat fixe dans le coin gauche - LIEN CLIQUABLE vers YouTube
+        const catDiv = document.createElement('a');
+        catDiv.href = 'https://www.youtube.com/watch?v=Zv9AV4s5Jx0&list=PLm1lb4Wcj5PDCngETjxmXs3IgQ0NphYFz&index=36';
+        catDiv.target = '_blank';
         catDiv.style.cssText = `
-            position: fixed;
+            position: absolute;
             bottom: 20px;
             left: 20px;
             width: 80px;
             height: 80px;
             z-index: 10004;
-            pointer-events: none;
             font-size: 60px;
             animation: catBounce 1s ease-in-out infinite;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
         `;
         catDiv.textContent = '🐱';
-        document.body.appendChild(catDiv);
+        catDiv.title = 'Voir la vidéo YouTube';
+        
+        // Effet hover
+        catDiv.addEventListener('mouseenter', () => {
+            catDiv.style.transform = 'scale(1.2)';
+        });
+        catDiv.addEventListener('mouseleave', () => {
+            catDiv.style.transform = 'scale(1)';
+        });
+        
+        modal.appendChild(catDiv);
         
         // Ajouter l'animation CSS
         const style = document.createElement('style');
@@ -1264,9 +1404,10 @@ class EndingAnimation {
         this.ctx.fill();
     }
 
-    drawLighthouseLight() {
-        const x = this.canvas.width - 150;
-        const y = this.canvas.height - 210;
+    drawLighthouseLight(lighthouseX, lighthouseY) {
+        // Position de la lumière relative au phare (en haut de la tour)
+        const x = lighthouseX;
+        const y = lighthouseY + 40; // Légèrement au-dessus du sommet
         
         const gradient = this.ctx.createRadialGradient(x, y, 10, x, y, 150);
         gradient.addColorStop(0, 'rgba(255, 235, 59, 0.6)');
@@ -1278,11 +1419,17 @@ class EndingAnimation {
         this.ctx.fill();
     }
 
-    createDefeatParticles(x, y) {
+    createDefeatParticles(x, y, isBoss = false) {
+        // Plus de particules pour le boss
+        const particleCount = isBoss ? 20 : 10;
+        
         // Limiter nombre total de particules
         if (this.particles.length >= this.maxParticles) return;
         
-        for (let i = 0; i < 10; i++) {
+        // Créer toutes les particules en une seule fois pour coordination
+        const newParticles = [];
+        
+        for (let i = 0; i < particleCount; i++) {
             // Réutiliser depuis le pool ou créer nouveau
             let particle = this.particlePool.pop();
             
@@ -1292,16 +1439,22 @@ class EndingAnimation {
                 };
             }
             
-            // Réinitialiser
+            // Réinitialiser avec explosion circulaire coordonnée
+            const angle = (Math.PI * 2 * i) / particleCount; // Distribution uniforme en cercle
+            const speed = isBoss ? 6 : 4; // Boss explose plus fort
+            
             particle.x = x;
             particle.y = y;
-            particle.vx = (Math.random() - 0.5) * 5;
-            particle.vy = (Math.random() - 0.5) * 5;
+            particle.vx = Math.cos(angle) * speed;
+            particle.vy = Math.sin(angle) * speed;
             particle.life = 1;
-            particle.color = '#81c784';
+            particle.color = isBoss ? '#ff6b9d' : '#81c784'; // Boss en rose
             
-            this.particles.push(particle);
+            newParticles.push(particle);
         }
+        
+        // Ajouter toutes les particules en même temps
+        this.particles.push(...newParticles);
     }
 
     updateParticles() {
