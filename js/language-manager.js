@@ -137,6 +137,7 @@ class LanguageManager {
                 setTimeout(() => {
                     this.updateDOM();
                     this.updateDynamicElements();
+                    this.updateLanguageButtonIcon(lang);
                 }, 100);
                 return true;
             }
@@ -179,10 +180,10 @@ class LanguageManager {
         
         if (titleEl && subtitleEl) {
             if (window.i18n.getLanguage() === 'fr') {
-                titleEl.textContent = '🌍 Choisissez votre langue';
+                titleEl.textContent = '�️ Choisissez votre langue';
                 subtitleEl.textContent = 'Choose your language';
             } else {
-                titleEl.textContent = '🌍 Choose Your Language';
+                titleEl.textContent = '�️ Choose Your Language';
                 subtitleEl.textContent = 'Choisissez votre langue';
             }
         }
@@ -219,6 +220,31 @@ class LanguageManager {
                 }
             }
         });
+        
+        // Mettre à jour l'icône du bouton d'ouverture du modal
+        this.updateLanguageButtonIcon(currentLang);
+    }
+    
+    updateLanguageButtonIcon(lang) {
+        const openLanguageModalBtn = document.getElementById('openLanguageModalBtn');
+        if (!openLanguageModalBtn) return;
+        
+        const flagSpan = openLanguageModalBtn.querySelector('span:first-child');
+        if (!flagSpan) return;
+        
+        const flags = {
+            'fr': '🇫🇷',
+            'en': '🇬🇧',
+            'es': '🇪🇸',
+            'zh': '🇨🇳',
+            'ar': '🇸🇦',
+            'pt': '🇵🇹',
+            'ja': '🇯🇵',
+            'uk': '🇺🇦',
+            'ln': '🇨🇩'
+        };
+        
+        flagSpan.textContent = flags[lang] || '🏳️';
     }
 }
 

@@ -57,6 +57,11 @@ class ProfileManager {
             profileShareBtn.addEventListener('click', async () => {
                 await this.shareScore();
             });
+            // Support tactile explicite
+            profileShareBtn.addEventListener('touchend', async (e) => {
+                e.preventDefault();
+                await this.shareScore();
+            }, { passive: false });
         }
 
         if (profileMusicBtn) {

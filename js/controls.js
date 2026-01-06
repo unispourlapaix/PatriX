@@ -58,6 +58,7 @@ class Controls {
                  e.target.closest('.web-browser-panel') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
+                 e.target.closest('.game-footer') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -85,6 +86,7 @@ class Controls {
                  e.target.closest('.web-browser-panel') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
+                 e.target.closest('.game-footer') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -110,6 +112,7 @@ class Controls {
                  e.target.closest('.web-browser-panel') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
+                 e.target.closest('.game-footer') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;

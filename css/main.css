@@ -1621,6 +1621,9 @@ body {
     text-decoration: none;
     transition: color 0.3s ease;
     font-weight: bold;
+    touch-action: manipulation;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
 .game-footer a:hover {
