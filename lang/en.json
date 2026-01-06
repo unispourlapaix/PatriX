@@ -10,8 +10,16 @@
     "logout": "Logout",
     "playGuest": "Play as Guest",
     "backToLogin": "← Back to Login"
-  },
-  "game": {
+  },  "tooltips": {
+    "sound": "Sound",
+    "music": "Audiomack",
+    "back": "Back",
+    "forward": "Forward",
+    "refresh": "Refresh",
+    "minimize": "Minimize",
+    "close": "Close",
+    "videoLink": "Watch YouTube video"
+  },  "game": {
     "score": "SCORE",
     "lines": "LINES",
     "level": "LEVEL",
@@ -20,25 +28,49 @@
     "hold": "HOLD",
     "pause": "PAUSE",
     "gameOver": "GAME OVER",
+    "gameOverTitle": "Game Over",
+    "gameOverMessage": "Keep dreaming!",
     "finalScore": "Final Score",
+    "restart": "Restart",
+    "save": "Save",
+    "load": "Load",
+    "resume": "Resume",
     "treasureLevel": "Level",
+    "treasureContinue": "Continue ✨",
     "shareScore": "Share my score",
-    "supportArtist": "Support the artist"
+    "supportArtist": "Support the artist",
+    "creating": "Creating...",
+    "connecting": "Connecting...",
+    "resetting": "Resetting...",
+    "loading": "Loading...",
+    "loadingError": "Loading error",
+    "saveTitle": "💾 Save",
+    "loadTitle": "📂 Load",
+    "savesTitle": "💾 Saves",
+    "close": "Close",
+    "slot": "Slot",
+    "empty": "Empty",
+    "delete": "🗑️ Delete",
+    "player": "Player"
   },
   "auth": {
     "loginTitle": "Login",
     "registerTitle": "Sign Up",
     "forgotTitle": "Forgot Password?",
-    "emailPlaceholder": "your@email.com",
-    "passwordPlaceholder": "••••••••",
+    "emailPlaceholder": "Your email",
+    "passwordPlaceholder": "Your password",
     "pseudoPlaceholder": "Your nickname",
     "confirmPasswordLabel": "Confirm Password",
-    "loginButton": "Sign In",
-    "registerButton": "Sign Up",
-    "resetButton": "Reset",
+    "loginButton": "Sign In 🔑",
+    "registerButton": "Create Account ✨",
+    "resetButton": "Reset 🔑",
     "loginHint": "Login: Email + Password",
     "registerHint": "Sign Up: Nickname + Email + Password (min 6 chars)",
     "bestScore": "Best Score:",
+    "logout": "Logout",
+    "welcome": "Welcome brave little explorer",
+    "forgotPasswordLink": "Forgot password?",
+    "resetNote": "Your password will be reset. Then use \"Create Account\" to set a new one.",
     "errors": {
       "fillAllFields": "Please fill in all fields",
       "invalidEmail": "Invalid email",
@@ -58,12 +90,12 @@
     }
   },
   "combo": {
-    "normal": "COMBO x{count}!",
-    "super": "⚡ SUPER x{count}!",
-    "mega": "🔥 MEGA COMBO x{count}!",
-    "amazing": "🌟 AMAZING x{count}!",
-    "legendary": "⚡🔥 LEGENDARY x{count}!",
-    "ultimate": "🌟💫 ULTIMATE x{count}! 💫🌟",
+    "normal": "BAM! x{count}",
+    "super": "⚡ YOH! x{count}",
+    "mega": "🔥 WOW! x{count}",
+    "amazing": "🌟 YEAH! x{count}",
+    "legendary": "⚡🔥 KING! x{count}",
+    "ultimate": "🌟💫 BOOM! x{count}! 💫🌟",
     "blocks": "{count} blocks {emoji}"
   },
   "lines": {
@@ -87,7 +119,30 @@
     "title": "🌟 CONGRATULATIONS! 🌟",
     "message1": "Well done!",
     "message2": "You made it to the end 🎉",
-    "bookButton": "📖 PHOTO ALBUM"
+    "bookButton": "📖 PHOTO ALBUM",
+    "thankYou": "Thank you mihao miahoo",
+    "discoverTreasure": "✨ Discover your treasure ✨",
+    "musicTitle": "Music from the book Catascrotte",
+    "quote1": "Face challenges,",
+    "quote2": "refuse to stay isolated!",
+    "quote3": "Fight for your path,",
+    "quote4": "turn obstacles into stepping stones,",
+    "quote5": "and live the impossible!",
+    "discoverUniverse": "🌟 Discover Emmanuel's<br/>inclusive universe! 🌟",
+    "digitalVersion": "📚 Digital Version (Google Play)",
+    "paperVersion": "📖 Paper Version (Amazon)",
+    "catCry": "MIHAHOU!",
+    "catReaction1": "What the hell is",
+    "catReaction2": "this crap...",
+    "catThought1": "There was something else",
+    "catThought2": "behind all this...",
+    "finalTitle": "✨ MAKE THE IMPOSSIBLE POSSIBLE ✨",
+    "finalMessage1": "Enjoy life differently",
+    "finalMessage2": "Wisely, you will redeem the time",
+    "finalQuote": "\"Every moment is an opportunity\"",
+    "congratulations": "Congratulations!",
+    "maxLevelReached": "Maximum Level Reached",
+    "bossWarning": "YOU SHALL NOT PASS!"
   },
   "music": {
     "title": "🎵 Gospel Music",
@@ -99,12 +154,41 @@
     "overloadMessage": "The audio player has been disabled to preserve performance.\nReactivation in 5 minutes."
   },
   "profile": {
+    "title": "✏️ MY PROFILE",
+    "pseudoLabel": "Nickname",
+    "pseudoPlaceholder": "Your nickname",
+    "avatarLabel": "Christian Avatar",
+    "saveButton": "💾 Save",
+    "bestScore": "Best Score:",
+    "logout": "Logout",
     "welcome": "Welcome",
     "guest": "Guest",
     "level": "Level",
     "maxScore": "High Score",
     "totalLines": "Lines",
-    "playTime": "Play Time"
+    "playTime": "Play Time",
+    "edit": "✏️ Edit",
+    "shareScore": "Share my score",
+    "slogan": "Can't beat me! 😂",
+    "supportArtist": "Support the artist",
+    "audiomackMusic": "Audiomack Music"
+  },
+  "footer": {
+    "support": "Support the Artist",
+    "tiktok": "TikTok",
+    "contact": "Contact",
+    "email": "Email",
+    "contactTitle": "📧 Contact Me",
+    "subject": "Subject:",
+    "subjectPlaceholder": "Enter the subject of your message",
+    "message": "Message:",
+    "messagePlaceholder": "Write your message here...",
+    "emoticon": "Emoticon:",
+    "send": "Send",
+    "cancel": "Cancel",
+    "sending": "Sending...",
+    "success": "Message sent successfully! ✅",
+    "error": "Error sending. Please try again."
   },
   "settings": {
     "language": "Language",
@@ -114,6 +198,167 @@
   },
   "trophies": {
     "title": "🏆 MY TROPHIES",
-    "count": "{count} trophies unlocked"
+    "language": "Language",
+    "count": "{count} trophies unlocked",
+    "discover": "Discover Emmanuel's inclusive universe!",
+    "specialTitle": "🏆 Special Trophies",
+    "medalsTitle": "🥇 Level Medals",
+    "unlocked": "🏆 TROPHY UNLOCKED 🏆",
+    "thanks": "Thanks! 🙏"
+  },
+  "leaderboard": {
+    "title": "🏆 TOP PLAYERS",
+    "loading": "Loading...",
+    "noData": "No players yet",
+    "rank": "#{rank}",
+    "you": "(you)"
+  },
+  "trophyData": {
+    "first_steps": {
+      "name": "LIFT YOUR HEAD",
+      "message": "You are a wonderful creature! The first step is always the most important."
+    },
+    "move_now": {
+      "name": "MOVE NOW!",
+      "message": "Action creates momentum. Keep moving forward, don't stop!"
+    },
+    "break_silence": {
+      "name": "BREAK THE SILENCE",
+      "message": "Your voice matters. Express yourself, make yourself heard. The world awaits you!"
+    },
+    "persevere": {
+      "name": "PERSEVERE",
+      "message": "Perseverance beats talent. Keep going, you're on the right path!"
+    },
+    "release": {
+      "name": "RELEASE",
+      "message": "Free yourself from your chains. Let go of what holds you back."
+    },
+    "stand_up": {
+      "name": "STAND UP!",
+      "message": "Get up! You are a warrior, a champion. Don't stay down!"
+    },
+    "jesus_loves": {
+      "name": "YOU ARE LOVED",
+      "message": "Jesus loves you as you are. His love is unconditional and eternal."
+    },
+    "halfway": {
+      "name": "HALFWAY THERE",
+      "message": "You've come halfway! Keep going, the best is yet to come!"
+    },
+    "combo_master": {
+      "name": "COMBO MASTER",
+      "message": "Extraordinary combo! You've mastered the art of connection!"
+    },
+    "warrior": {
+      "name": "WARRIOR OF LIGHT",
+      "message": "You are a warrior! Your courage inspires the world around you."
+    },
+    "unstoppable": {
+      "name": "UNSTOPPABLE",
+      "message": "Nothing can stop you! You are a force of nature!"
+    },
+    "master": {
+      "name": "ABSOLUTE MASTER",
+      "message": "You've reached supreme mastery! You are extraordinary!"
+    },
+    "ultimate_trophy": {
+      "name": "ULTIMATE TROPHY",
+      "message": "MAXIMUM level reached! You are an absolute champion! Discover Emmanuel's inclusive universe."
+    }
+  },
+  "medals": {
+    "levelName": "Level {level}",
+    "messages": {
+      "1": "First level! You're starting strong!",
+      "2": "Level 2! Keep it up!",
+      "3": "Level 3! You're progressing well!",
+      "4": "Level 4! You're on fire!",
+      "5": "Level 5! Excellent work!",
+      "6": "Level 6! You're gaining power!",
+      "7": "Level 7! Magnificent progress!",
+      "8": "Level 8! You're unstoppable!",
+      "9": "Level 9! Almost at 10!",
+      "10": "Level 10! You've hit the 10 mark!",
+      "11": "Level 11! You continue climbing!",
+      "12": "Level 12! Impressive!",
+      "13": "Level 13! No bad luck for you!",
+      "14": "Level 14! You're on the right track!",
+      "15": "Level 15! A quarter of the way!",
+      "16": "Level 16! You're shining!",
+      "17": "Level 17! Superb performance!",
+      "18": "Level 18! You're on fire!",
+      "19": "Level 19! Almost at 20!",
+      "20": "Level 20! Hit the 20 mark! Incredible!",
+      "21": "Level 21! You're entering the elite!",
+      "22": "Level 22! Formidable!",
+      "23": "Level 23! Keep it up!",
+      "24": "Level 24! Almost halfway!",
+      "25": "Level 25! Halfway there!",
+      "26": "Level 26! Second half begins!",
+      "27": "Level 27! You're invincible!",
+      "28": "Level 28! Such mastery!",
+      "29": "Level 29! Almost at 30!",
+      "30": "Level 30! You're legendary!",
+      "31": "Level 31! You're exceptional!",
+      "32": "Level 32! Incredible progression!",
+      "33": "Level 33! You're a master!",
+      "34": "Level 34! What talent!",
+      "35": "Level 35! You're remarkable!",
+      "36": "Level 36! Fantastic!",
+      "37": "Level 37! You're dominating!",
+      "38": "Level 38! Almost at 40!",
+      "39": "Level 39! One more level!",
+      "40": "Level 40! You're approaching the summit!",
+      "41": "Level 41! You're superhuman!",
+      "42": "Level 42! The ultimate answer!",
+      "43": "Level 43! You're grandiose!",
+      "44": "Level 44! Soon 45!",
+      "45": "Level 45! Only 5 more!",
+      "46": "Level 46! Almost at the top!",
+      "47": "Level 47! Only 3 more!",
+      "48": "Level 48! Final stretch!",
+      "49": "Level 49! One level remaining!",
+      "50": "Level 50! MAXIMUM reached! You are a MASTER!",
+      "default": "Level {level}! Keep going!"
+    }
+  },
+  "conditions": {
+    "level": "Reach level {value}",
+    "score": "Reach {value} points",
+    "lines": "Complete {value} lines",
+    "combo": "Make a x{value} combo"
+  },
+  "errors": {
+    "fillAllFields": "Please fill in all fields",
+    "wrongCredentials": "Incorrect email or password",
+    "connectionError": "Connection error. Check your internet connection.",
+    "passwordMismatch": "Passwords do not match",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "accountCreationError": "Error creating account",
+    "enterEmail": "Please enter your email",
+    "emailSendError": "Error sending email",
+    "pseudoTooShort": "Nickname must be at least 3 characters",
+    "validEmailRequired": "Valid email required",
+    "alreadyInstalled": "App is already installed!"
+  },
+  "notifications": {
+    "gameSaved": "Game saved in Slot {slot}! 💾",
+    "noSaveInSlot": "No save in this slot ❌",
+    "loadSlotConfirm": "Load game from Slot {slot}?\n\nLevel: {level} | Score: {score}\n\nCurrent game will be lost.",
+    "deleteSlotConfirm": "Delete save from Slot {slot}?",
+    "logoutConfirm": "Log out?",
+    "passwordReset": "✅ Password reset!\n\nUse \"Create Account\" with this email to set a new password.",
+    "welcome": "Welcome to PATRIX! ✝️",
+    "welcomeGuest": "👋 Welcome! Create your profile to customize your experience",
+    "profileUpdated": "✅ Profile updated!",
+    "sharedSuccess": "✅ Shared successfully!",
+    "imageDownloaded": "📸 Image downloaded and text copied!",
+    "shareError": "❌ Share error",
+    "invalidUrl": "❌ Invalid URL",
+    "musicBackground": "🎵 Music in background",
+    "appInstalled": "✅ PATRIX installed successfully! Thank you! 🎉",
+    "slotDeleted": "Slot {slot} deleted 🗑️",
+    "gameLoaded": "Game loaded from Slot {slot}! 📂"
   }
 }

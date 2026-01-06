@@ -1,0 +1,277 @@
+{
+  "language": {"name": "Português", "code": "pt"},
+  "menu": {"play": "Jogar", "login": "Entrar", "register": "Registrar", "logout": "Sair", "playGuest": "Jogar sem conta", "backToLogin": "← Voltar ao login"},
+  "tooltips": {"sound": "Som", "music": "Audiomack", "back": "Anterior", "forward": "Próximo", "refresh": "Atualizar", "minimize": "Minimizar", "close": "Fechar", "videoLink": "Ver vídeo no YouTube"},
+  "game": {"score": "PONTOS", "lines": "LINHAS", "level": "NÍVEL", "combo": "COMBO", "next": "PRÓXIMO", "hold": "RESERVA", "pause": "PAUSA", "gameOver": "FIM DE JOGO", "gameOverTitle": "Jogo Terminado", "gameOverMessage": "Continue sonhando!", "finalScore": "Pontuação Final", "restart": "Recomeçar", "save": "Salvar", "load": "Carregar", "resume": "Continuar", "treasureLevel": "Nível", "treasureContinue": "Continuar ✨", "shareScore": "Compartilhar pontuação", "supportArtist": "Apoiar o artista", "creating": "Criando...", "connecting": "Conectando...", "resetting": "Resetando...", "loading": "Carregando...", "loadingError": "Erro ao carregar", "saveTitle": "💾 Salvar", "loadTitle": "📂 Carregar", "savesTitle": "💾 JOGOS SALVOS", "close": "Fechar", "slot": "Slot {slot}", "empty": "Vazio", "delete": "🗑️ Excluir", "player": "Jogador"},
+  "auth": {
+    "loginTitle": "Entrar",
+    "registerTitle": "Cadastro",
+    "forgotTitle": "Esqueceu a senha?",
+    "emailPlaceholder": "Seu email",
+    "passwordPlaceholder": "Sua senha",
+    "pseudoPlaceholder": "Seu apelido",
+    "confirmPasswordLabel": "Confirmar senha",
+    "loginButton": "Entrar 🔑",
+    "registerButton": "Criar conta ✨",
+    "resetButton": "Resetar 🔑",
+    "loginHint": "Login: Email + Senha",
+    "registerHint": "Cadastro: Apelido + Email + Senha (mín. 6 car.)",
+    "bestScore": "Melhor Pontuação:",
+    "logout": "Sair",
+    "welcome": "Bem-vindo corajoso explorador",
+    "forgotPasswordLink": "Esqueceu a senha?",
+    "resetNote": "Sua senha será resetada. Use \"Criar conta\" para definir uma nova.",
+    "errors": {
+      "fillAllFields": "Preencha todos os campos",
+      "invalidEmail": "Email inválido",
+      "invalidPassword": "Email ou senha incorretos",
+      "passwordsDontMatch": "As senhas não coincidem",
+      "passwordTooShort": "A senha deve ter pelo menos 6 caracteres",
+      "emailExists": "Este email já está em uso localmente. Faça login ou saia primeiro.",
+      "emailInUse": "Este email já está registrado online. Faça login.",
+      "pseudoInUse": "Este apelido já está em uso...",
+      "pseudoExists": "Este apelido já está em uso...",
+      "noAccountFound": "Nenhuma conta encontrada com este email...",
+      "connectionError": "Erro de conexão...",
+      "serverError": "Não foi possível conectar ao servidor...",
+      "wrongPassword": "Senha incorreta",
+      "cantCreateAccount": "Não foi possível criar conta online..."
+    },
+    "success": {
+      "resetEmailSent": "Email de reset enviado"
+    }
+  },
+  "errors": {"fillAllFields": "Preencha todos os campos", "wrongCredentials": "Email ou senha incorretos", "connectionError": "Erro de conexão. Tente novamente.", "passwordMismatch": "As senhas não coincidem", "passwordTooShort": "A senha deve ter pelo menos 6 caracteres", "accountCreationError": "Erro ao criar conta", "enterEmail": "Digite seu email", "emailSendError": "Erro ao enviar email", "pseudoTooShort": "O apelido deve ter pelo menos 3 caracteres", "validEmailRequired": "Digite um email válido", "alreadyInstalled": "App já instalado"},
+  "notifications": {
+    "welcomeGuest": "Bem-vindo!",
+    "accountCreated": "Conta criada com sucesso!",
+    "loginSuccess": "Login bem-sucedido!",
+    "logoutConfirm": "Tem certeza que deseja sair?",
+    "passwordReset": "Email de reset enviado (se a conta existir).",
+    "scoreSaved": "Pontuação salva!",
+    "gameLoaded": "Jogo carregado",
+    "gameSaved": "Jogo salvo no slot {slot} ! 💾",
+    "deleteSlotConfirm": "Excluir slot {slot}?",
+    "slotDeleted": "Slot excluído",
+    "noSaveFound": "Nenhum jogo salvo encontrado",
+    "noSaveInSlot": "Não há salvamento neste local ❌",
+    "loadSlotConfirm": "Carregar jogo do Slot {slot}?\n\nNível: {level} | Pontos: {score}\n\nO jogo atual será perdido.",
+    "saveOverwrite": "Já existe um jogo no slot {slot}. Sobrescrever?",
+    "invalidUrl": "URL inválida",
+    "trophy": "🏆 Troféu desbloqueado! 🏆",
+    "newTrophy": "Novo troféu: {name}!",
+    "trophyProgress": "Progresso do troféu: {name}",
+    "offline": "Offline",
+    "welcome": "Bem-vindo ao PATRIX! ✝️",
+    "profileUpdated": "✅ Perfil atualizado!",
+    "sharedSuccess": "✅ Compartilhado com sucesso!",
+    "imageGenerated": "Imagem gerada! 📸",
+    "imageDownloaded": "📸 Imagem baixada e texto copiado!",
+    "shareError": "❌ Erro ao compartilhar",
+    "musicBackground": "🎵 Música de fundo",
+    "appInstalled": "✅ PATRIX instalado com sucesso! Obrigado! 🎉"
+  },
+  "combo": {
+    "normal": "PAF! x{count}",
+    "super": "⚡ YOH! x{count}",
+    "mega": "🔥 UAU! x{count}",
+    "amazing": "🌟 SIM! x{count}",
+    "legendary": "⚡🔥 REI! x{count}",
+    "ultimate": "🌟💫 BUM! x{count}! 💫🌟",
+    "blocks": "{count} blocos {emoji}"
+  },
+  "lines": {
+    "single": "✨ Uma linha!",
+    "double": "⚡ Duplo! 🔥 2 linhas!",
+    "triple": "🔥 Triplo! ⚡ 3 linhas!",
+    "patrix": "🎆 PATRIX! 🌟 4 linhas!",
+    "comboBonus": {
+      "small": "💫 Bônus Combo! +{bonus}",
+      "medium": "⚡ Bônus Combo! +{bonus}",
+      "large": "🔥 Bônus Combo Massivo! +{bonus}",
+      "ultimate": "🎉 Bônus Combo Definitivo! +{bonus}"
+    }
+  },
+  "pop": {"normal": "POP x{count}!", "big": "✨ BIG POP x{count}! ✨", "mega": "🔥 MEGA POP x{count}! 🔥"},
+  "endingAnimation": {"title": "🌟 PARABÉNS! 🌟", "message1": "Boa coragem!", "message2": "Você chegou ao fim! 🎉", "bookButton": "📖 ÁLBUM DE FOTOS", "thankYou": "Obrigado mihao miahoo", "discoverTreasure": "✨ Descubra seu tesouro ✨", "musicTitle": "Música do livro Catascrotte", "quote1": "Diante dos desafios,", "quote2": "recuse ficar isolado!", "quote3": "Lute pelo seu caminho,", "quote4": "transforme obstáculos em trampolins,", "quote5": "e viva o impossível!", "discoverUniverse": "🌟 Descubra o universo inclusivo<br/>de Emmanuel! 🌟", "digitalVersion": "📚 Versão Digital (Google Play)", "paperVersion": "📖 Versão Impressa (Amazon)", "catCry": "MIHAHOU!", "catReaction1": "Que diabos é", "catReaction2": "essa merda...", "catThought1": "Havia algo mais", "catThought2": "por trás de tudo isso...", "finalTitle": "✨ TORNE O IMPOSSÍVEL POSSÍVEL ✨", "finalMessage1": "Aproveite a vida diferentemente", "finalMessage2": "Sabiamente, você redimirá o tempo", "finalQuote": "\"Cada instante é uma oportunidade\"", "congratulations": "Parabéns!", "maxLevelReached": "Nível Máximo Alcançado", "bossWarning": "VOCÊ NÃO PASSARÁ!"},
+  "music": {"title": "🎵 Gospel Music", "loading": "Carregando...", "error": "Erro ao carregar"},
+  "browser": {"cookieWarning": "Este site pode usar cookies e coletar dados.\nContinuar?", "overloadMessage": "O player de áudio foi desativado para preservar o desempenho.\nReativação em 5 minutos."},
+  "profile": {
+    "title": "✏️ MEU PERFIL",
+    "pseudoLabel": "Apelido",
+    "pseudoPlaceholder": "Seu apelido",
+    "avatarLabel": "Avatar Cristão",
+    "saveButton": "💾 Salvar",
+    "bestScore": "Melhor Pontuação:",
+    "logout": "Sair",
+    "welcome": "Bem-vindo",
+    "guest": "Convidado",
+    "level": "Nível",
+    "maxScore": "Recorde",
+    "totalLines": "Linhas",
+    "playTime": "Tempo de jogo",
+    "edit": "✏️ Editar",
+    "shareScore": "Compartilhar pontuação",
+    "slogan": "Impossível me vencer! 😂",
+    "supportArtist": "Apoiar o artista",
+    "audiomackMusic": "Música Audiomack"
+  },
+  "footer": {
+    "support": "Apoiar o Artista",
+    "tiktok": "TikTok",
+    "contact": "Contato",
+    "email": "Email",
+    "contactTitle": "📧 Entre em Contato",
+    "subject": "Assunto:",
+    "subjectPlaceholder": "Digite o assunto da sua mensagem",
+    "message": "Mensagem:",
+    "messagePlaceholder": "Escreva sua mensagem aqui...",
+    "emoticon": "Emoticon:",
+    "send": "Enviar",
+    "cancel": "Cancelar",
+    "sending": "Enviando...",
+    "success": "Mensagem enviada com sucesso! ✅",
+    "error": "Erro ao enviar. Tente novamente."
+  },
+  "settings": {
+    "language": "Idioma",
+    "sound": "Som",
+    "music": "Música",
+    "vibration": "Vibração"
+  },
+  "trophies": {
+    "title": "🏆 MEUS TROFÉUS",
+    "language": "Idioma",
+    "count": "{count} troféus desbloqueados",
+    "discover": "Jogue para descobrir mais troféus!",
+    "specialTitle": "🏆 Troféus Especiais",
+    "medalsTitle": "🥇 Medalhas de Nível",
+    "unlocked": "🏆 Troféu desbloqueado! 🏆",
+    "thanks": "Obrigado por jogar! 💖"
+  },
+  "leaderboard": {
+    "title": "🏆 TOP JOGADORES",
+    "loading": "Carregando...",
+    "noData": "Não há jogadores no momento",
+    "rank": "#{rank}",
+    "you": "(você)"
+  },
+  "trophyData": {
+    "first_steps": {
+      "name": "LEVANTE A CABEÇA",
+      "message": "Você é uma criatura maravilhosa! O primeiro passo é sempre o mais importante."
+    },
+    "move_now": {
+      "name": "MOVA-SE AGORA!",
+      "message": "A ação cria impulso. Continue avançando, não pare!"
+    },
+    "break_silence": {
+      "name": "QUEBRE O SILÊNCIO",
+      "message": "Sua voz importa. Expresse-se, faça-se ouvir!"
+    },
+    "persevere": {
+      "name": "PERSEVERE",
+      "message": "A perseverança vence o talento. Continue, você está no caminho certo!"
+    },
+    "release": {
+      "name": "LIBERTE-SE",
+      "message": "Liberte-se de suas correntes. Solte o que está te segurando."
+    },
+    "stand_up": {
+      "name": "LEVANTE-SE!",
+      "message": "Levante-se! Você é um guerreiro, um campeão. Não fique no chão!"
+    },
+    "jesus_loves": {
+      "name": "VOCÊ É AMADO",
+      "message": "Jesus te ama como você é. Seu amor é incondicional e eterno."
+    },
+    "halfway": {
+      "name": "NO MEIO DO CAMINHO",
+      "message": "Você percorreu metade do caminho! Continue, o melhor está por vir!"
+    },
+    "combo_master": {
+      "name": "MESTRE DOS COMBOS",
+      "message": "Combo extraordinário! Você domina a arte da conexão!"
+    },
+    "warrior": {
+      "name": "GUERREIRO DA LUZ",
+      "message": "Você é um guerreiro! Sua coragem inspira o mundo ao seu redor."
+    },
+    "unstoppable": {
+      "name": "IMPARÁVEL",
+      "message": "Nada pode te parar! Você é uma força da natureza!"
+    },
+    "master": {
+      "name": "MESTRE ABSOLUTO",
+      "message": "Você alcançou a maestria suprema! Você é extraordinário!"
+    },
+    "ultimate_trophy": {
+      "name": "TROFÉU DEFINITIVO",
+      "message": "Nível MÁXIMO alcançado! Você é um campeão absoluto! Descubra o universo inclusivo de Emmanuel."
+    }
+  },
+  "medals": {
+    "levelName": "Nível {level}",
+    "messages": {
+      "1": "Primeiro nível! Começando forte!",
+      "2": "Nível 2! Continue assim!",
+      "3": "Nível 3! Progredindo bem!",
+      "4": "Nível 4! Você está pegando fogo!",
+      "5": "Nível 5! Excelente trabalho!",
+      "6": "Nível 6! Você está ganhando poder!",
+      "7": "Nível 7! Progressão magnífica!",
+      "8": "Nível 8! Você é imparável!",
+      "9": "Nível 9! Quase no 10!",
+      "10": "Nível 10! Marca de 10 alcançada!",
+      "11": "Nível 11! Continue sua escalada!",
+      "12": "Nível 12! Impressionante!",
+      "13": "Nível 13! Sem azar para você!",
+      "14": "Nível 14! Você está no caminho certo!",
+      "15": "Nível 15! Um quarto do caminho!",
+      "16": "Nível 16! Você está brilhando!",
+      "17": "Nível 17! Desempenho magnífico!",
+      "18": "Nível 18! Você está pegando fogo!",
+      "19": "Nível 19! Quase no 20!",
+      "20": "Nível 20! Marca de 20! Incrível!",
+      "21": "Nível 21! Entrando na elite!",
+      "22": "Nível 22! Formidável!",
+      "23": "Nível 23! Continue assim!",
+      "24": "Nível 24! Quase na metade!",
+      "25": "Nível 25! Metade completa!",
+      "26": "Nível 26! Começa a segunda metade!",
+      "27": "Nível 27! Você é invencível!",
+      "28": "Nível 28! Que maestria!",
+      "29": "Nível 29! Quase no 30!",
+      "30": "Nível 30! Você é lendário!",
+      "31": "Nível 31! Você é excepcional!",
+      "32": "Nível 32! Progresso incrível!",
+      "33": "Nível 33! Você é um mestre!",
+      "34": "Nível 34! Que talento!",
+      "35": "Nível 35! Você é notável!",
+      "36": "Nível 36! Fantástico!",
+      "37": "Nível 37! Você domina!",
+      "38": "Nível 38! Quase no 40!",
+      "39": "Nível 39! Mais um nível!",
+      "40": "Nível 40! Você está perto do topo!",
+      "41": "Nível 41! Você é sobre-humano!",
+      "42": "Nível 42! A resposta definitiva!",
+      "43": "Nível 43! Você é grandioso!",
+      "44": "Nível 44! Logo 45!",
+      "45": "Nível 45! Apenas 5 mais!",
+      "46": "Nível 46! Quase no topo!",
+      "47": "Nível 47! Apenas 3 mais!",
+      "48": "Nível 48! Reta final!",
+      "49": "Nível 49! Apenas mais um nível!",
+      "50": "Nível 50! MÁXIMO alcançado! Você é um MESTRE!",
+      "default": "Nível {level}! Continue assim!"
+    }
+  },
+  "conditions": {
+    "level": "Alcançar o nível {value}",
+    "score": "Alcançar {value} pontos",
+    "lines": "Completar {value} linhas",
+    "combo": "Fazer um combo x{value}",
+    "play": "Jogar o jogo"
+  }
+}
+

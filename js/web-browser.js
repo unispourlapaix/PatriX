@@ -12,6 +12,7 @@ class WebBrowserManager {
         this.historyIndex = -1;
         this.isMinimized = false;
         this.autoStarted = false;
+        this.userClosedAudio = false; // Flag pour empêcher relance après fermeture manuelle
         this.loadThrottle = null;
         
         // Sécurités contre surcharge
@@ -246,7 +247,7 @@ class WebBrowserManager {
         if (!this.isValidUrl(url)) {
             // console.error('[WebBrowser] URL invalide:', url);
             if (window.effects) {
-                window.effects.showSpiritualMessage('❌ URL invalide', 2000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.invalidUrl'), 2000);
             }
             return;
         }
@@ -315,12 +316,7 @@ class WebBrowserManager {
     close(forceClose = false) {
         if (!this.panel) return;
 
-        // Minimiser au lieu de fermer si c'est le lecteur audio (sauf si forceClose)
-        if (this.currentUrl.includes('audiomack.com') && !forceClose) {
-            this.minimize();
-            return;
-        }
-
+        // Toujours fermer complètement, ne plus minimiser
         // Vider l'iframe pour libérer les ressources
         if (this.iframe) {
             // Stopper tous les médias avant de vider
@@ -330,21 +326,32 @@ class WebBrowserManager {
                 // Ignore erreurs cross-origin
             }
             
-            // Vider le src et forcer garbage collection
-            this.iframe.src = 'about:blank';
-            
-            // Attendre un frame avant de vraiment nettoyer
-            requestAnimationFrame(() => {
-                if (this.iframe) {
-                    this.iframe.removeAttribute('src');
-                }
-            });
+            // Retirer complètement l'iframe du DOM pour stopper tout
+            const parent = this.iframe.parentNode;
+            if (parent) {
+                parent.removeChild(this.iframe);
+                
+                // Recréer une iframe vide pour les futurs usages
+                const newIframe = document.createElement('iframe');
+                newIframe.id = 'webBrowserFrame';
+                newIframe.referrerpolicy = 'no-referrer';
+                newIframe.loading = 'lazy';
+                newIframe.sandbox = 'allow-scripts allow-same-origin allow-popups allow-forms';
+                newIframe.frameBorder = '0';
+                newIframe.style.border = 'none';
+                parent.appendChild(newIframe);
+                
+                this.iframe = newIframe;
+            }
         }
 
         this.panel.classList.remove('show');
         this.panel.classList.remove('minimized');
         this.isMinimized = false;
         this.currentUrl = '';
+        
+        // Marquer que l'utilisateur a fermé manuellement (empêche relance auto)
+        this.userClosedAudio = true;
         
         // Reset compteurs d'erreurs si fermeture normale
         if (!forceClose) {
@@ -371,7 +378,7 @@ class WebBrowserManager {
         
         // Message de confirmation
         if (window.effects) {
-            window.effects.showSpiritualMessage('🎵 Musique en arrière-plan', 1500);
+            window.effects.showSpiritualMessage(window.i18n.t('notifications.musicBackground'), 1500);
         }
         
         // console.log('[WebBrowser] Minimisé - Musique continue');
@@ -513,7 +520,7 @@ class WebBrowserManager {
             loader.className = 'web-browser-loading';
             loader.innerHTML = `
                 <div class="web-browser-loading-spinner"></div>
-                <div>Chargement...</div>
+                <div>${window.i18n?.t('game.loading') || 'Chargement...'}</div>
             `;
             body.appendChild(loader);
         }
@@ -549,6 +556,11 @@ class WebBrowserManager {
      * Démarre automatiquement la musique au lancement
      */
     autoStart() {
+        // Ne pas lancer si l'utilisateur a fermé manuellement
+        if (this.userClosedAudio) {
+            return;
+        }
+        
         // Lancer directement sans confirmation
         this.autoStarted = true;
         this.openAudiomack();
@@ -577,7 +589,7 @@ class WebBrowserManager {
         if (!this.isValidUrl(url)) {
             // console.error('[WebBrowser] URL invalide:', url);
             if (window.effects) {
-                window.effects.showSpiritualMessage('❌ URL invalide', 2000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.invalidUrl'), 2000);
             }
             return;
         }

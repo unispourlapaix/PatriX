@@ -310,7 +310,7 @@ class UserManager {
         if (!existingUser.pseudo || existingUser.pseudo.trim() === '') {
             // Inviter à créer un profil
             if (window.effects) {
-                window.effects.showSpiritualMessage('👋 Bienvenue ! Crée ton profil pour personnaliser ton expérience', 4000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.welcomeGuest'), 4000);
             }
             // Ouvrir automatiquement le modal de profil après un court délai
             setTimeout(() => {

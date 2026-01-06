@@ -1,0 +1,376 @@
+{
+  "language": {
+    "name": "Lingala",
+    "code": "ln"
+  },
+  "menu": {
+    "play": "Kobanga",
+    "login": "Kokɔta",
+    "register": "Komikoma",
+    "logout": "Kobima",
+    "playGuest": "Kobanga na kozanga compte",
+    "backToLogin": "← Kozonga na connexion"
+  },
+  "tooltips": {
+    "sound": "Mongongo",
+    "music": "Audiomack",
+    "back": "Nsima",
+    "forward": "Liboso",
+    "refresh": "Kosikola",
+    "minimize": "Kokitisa",
+    "close": "Kokanga",
+    "videoLink": "Kotala vidéo na YouTube"
+  },
+  "game": {
+    "score": "SCORE",
+    "lines": "MILƆNGƆ",
+    "level": "ETANDA",
+    "combo": "COMBO",
+    "next": "OYO ELANDI",
+    "hold": "KOBOMBA",
+    "pause": "KOPEMA",
+    "gameOver": "LISANO ESILAKI",
+    "gameOverTitle": "Lisano Esilaki",
+    "gameOverMessage": "Lekisa ndoto!",
+    "finalScore": "Score ya Suka",
+    "restart": "Kobanda Lisusu",
+    "save": "Kobomba",
+    "load": "Kofungola",
+    "resume": "Koleka Liboso",
+    "treasureLevel": "Etanda",
+    "treasureContinue": "Kolekela Liboso ✨",
+    "shareScore": "Kokabola score na ngai",
+    "supportArtist": "Kosunga mosala-bonzomi",
+    "creating": "Bokeli...",
+    "connecting": "Kokangama...",
+    "resetting": "Kozongisa...",
+    "loading": "Kofungola...",
+    "loadingError": "Libunga na kofungola",
+    "saveTitle": "💾 Kobomba",
+    "loadTitle": "📂 Kofungola",
+    "savesTitle": "💾 MASANO EBOMBAMI",
+    "close": "Kokanga",
+    "slot": "Esika {slot}",
+    "empty": "Ezali mpamba",
+    "delete": "🗑️ Kolongola",
+    "player": "Mosani"
+  },
+  "auth": {
+    "loginTitle": "Kokɔta",
+    "registerTitle": "Komikoma",
+    "forgotTitle": "Obosani mot de passe?",
+    "emailPlaceholder": "Email na yo",
+    "passwordPlaceholder": "Mot de passe na yo",
+    "pseudoPlaceholder": "Nkombo na yo",
+    "confirmPasswordLabel": "Kondima mot de passe",
+    "loginButton": "Kokɔta 🔑",
+    "registerButton": "Kosala Compte ✨",
+    "resetButton": "Kozongisa 🔑",
+    "loginHint": "Connexion: Email + Mot de passe",
+    "registerHint": "Inscription: Nkombo + Email + Mot de passe (6 caractères minimum)",
+    "bestScore": "Score Kitoko:",
+    "logout": "Kobima",
+    "welcome": "Boyei malamu explorateur ya mpiko",
+    "forgotPasswordLink": "Obosani mot de passe?",
+    "resetNote": "Mot de passe na yo ekozongisama. Na nsima salá \"Kosala Compte\" mpo na kotya mosusu.",
+    "errors": {
+      "fillAllFields": "Tondisa biloko nyonso",
+      "invalidEmail": "Email ebongi te",
+      "invalidPassword": "Email to mot de passe ezali malamu te",
+      "passwordsDontMatch": "Bapassword ekokani te",
+      "passwordTooShort": "Mot de passe esengeli kozala na ba caractères 6 mingimingi",
+      "emailExists": "Email oyo esalemaki na esika ya liboso. Kota to bima liboso.",
+      "pseudoExists": "Nkombo oyo esalelamaka. Pona mosusu!",
+      "noAccountFound": "Compte ezwami te na email oyo. Sala liboso compte!",
+      "connectionError": "Libunga ya connexion. Tala connexion internet na yo.",
+      "serverError": "Kokangama na serveur ekoki te. Tala connexion Internet na yo.",
+      "wrongPassword": "Mot de passe ezali malamu te",
+      "cantCreateAccount": "Kosala compte na internet ekoki te. Tala connexion Internet na yo."
+    },
+    "success": {
+      "resetEmailSent": "Email ya kozongisa etindami"
+    }
+  },
+  "combo": {
+    "normal": "PAF! x{count}",
+    "super": "⚡ YOH! x{count}",
+    "mega": "🔥 WAHOU! x{count}",
+    "amazing": "🌟 EYO! x{count}",
+    "legendary": "⚡🔥 MOKONZI! x{count}",
+    "ultimate": "🌟💫 BOOM! x{count}! 💫🌟",
+    "blocks": "{count} ba blocs {emoji}"
+  },
+  "lines": {
+    "single": "✨ MOLƆNGƆ EZWAMI!",
+    "double": "⚡ DOUBLE! 2 MILƆNGƆ!",
+    "triple": "🔥 TRIPLE! 3 MILƆNGƆ!",
+    "patrix": "🎆 PATRIX! 4 MILƆNGƆ!",
+    "comboBonus": {
+      "small": "💫 COMBO x{count}!",
+      "medium": "⚡ COMBO x{count}!",
+      "large": "🔥 COMBO MONENE x{count}!",
+      "ultimate": "🎉 COMBO YA SUKA x{count}!"
+    }
+  },
+  "pop": {
+    "normal": "POP x{count}!",
+    "big": "✨ POP MONENE x{count}! ✨",
+    "mega": "🔥 MEGA POP x{count}! 🔥"
+  },
+  "endingAnimation": {
+    "title": "🌟 KITOKO! 🌟",
+    "message1": "Mpiko kitoko!",
+    "message2": "Okomi na nsuka! 🎉",
+    "bookButton": "📖 ALBUM YA BAFOTO",
+    "thankYou": "Matondo mihao miahoo",
+    "discoverTreasure": "✨ Komona bomengo na yo ✨",
+    "musicTitle": "Muziki ya buku Catascrotte",
+    "quote1": "Liboso ya mikakatano,",
+    "quote2": "kobwaka kozala na bobele te!",
+    "quote3": "Bunda mpo na nzela na yo,",
+    "quote4": "kobongola mokakatano ezala trampoline,",
+    "quote5": "mpe zala na oyo ezali impossible!",
+    "discoverUniverse": "🌟 Komona mokili inclusif<br/>ya Emmanuel! 🌟",
+    "digitalVersion": "📚 Version Numérique (Google Play)",
+    "paperVersion": "📖 Version Papier (Amazon)",
+    "catCry": "MIHAHOU!",
+    "catReaction1": "Oyo ezali nini",
+    "catReaction2": "oyo mabe...",
+    "catThought1": "Ezalaki na likambo mosusu",
+    "catThought2": "nsima ya nyonso oyo...",
+    "finalTitle": "✨ SALA OYO EZALI IMPOSSIBLE EZALA POSSIBLE ✨",
+    "finalMessage1": "Sepela na bomoi na ndenge mosusu",
+    "finalMessage2": "Na bwanya, okosikola ntango",
+    "finalQuote": "\"Ntango nyonso ezali libaku\"",
+    "congratulations": "Mbote!",
+    "maxLevelReached": "Etanda ya Likolo Ekómi",
+    "bossWarning": "OKOLEKA TE!"
+  },
+  "music": {
+    "title": "🎵 Muziki Gospel",
+    "loading": "Kofungola...",
+    "error": "Libunga ya kofungola"
+  },
+  "browser": {
+    "cookieWarning": "Site oyo ekoki kosalela cookies mpe kosangisa ba données.\nKolekela liboso?",
+    "overloadMessage": "Player ya audio efungwami mpo na kobatela performance.\nKozongisa na ba minutes 5."
+  },
+  "profile": {
+    "title": "✏️ PROFIL NA NGAI",
+    "pseudoLabel": "Nkombo",
+    "pseudoPlaceholder": "Nkombo na yo",
+    "avatarLabel": "Avatar Chrétien",
+    "saveButton": "💾 Kobomba",
+    "bestScore": "Score Kitoko:",
+    "logout": "Kobima",
+    "welcome": "Boyei malamu",
+    "guest": "Mopaya",
+    "level": "Etanda",
+    "maxScore": "Record",
+    "totalLines": "Milɔngɔ",
+    "playTime": "Ntango ya lisano",
+    "edit": "✏️ Kobongola",
+    "shareScore": "Kokabola score na ngai",
+    "slogan": "Impossible kolonga ngai! 😂",
+    "supportArtist": "Kosunga mosala-bonzomi",
+    "audiomackMusic": "Muziki Audiomack"
+  },
+  "footer": {
+    "support": "Kosunga Mosala-bonzomi",
+    "tiktok": "TikTok",
+    "contact": "Kokutana",
+    "email": "Email",
+    "contactTitle": "📧 Tinda ngai nsango",
+    "subject": "Likambo:",
+    "subjectPlaceholder": "Kótia likambo ya nsango na yo",
+    "message": "Nsango:",
+    "messagePlaceholder": "Koma nsango na yo awa...",
+    "emoticon": "Emoticone:",
+    "send": "Tinda",
+    "cancel": "Tika",
+    "sending": "Ezali kotinda...",
+    "success": "Nsango etindami malamu! ✅",
+    "error": "Libunga na kotinda. Meka lisusu."
+  },
+  "settings": {
+    "language": "Lokótá",
+    "sound": "Mongongo",
+    "music": "Muziki",
+    "vibration": "Koningana"
+  },
+  "trophies": {
+    "title": "🏆 BA TROPHÉES NA NGAI",
+    "language": "Lokótá",
+    "count": "Ba trophées {count} ezwami",
+    "discover": "Komona mokili inclusif ya Emmanuel!",
+    "specialTitle": "🏆 Ba Trophées Spéciaux",
+    "medalsTitle": "🥇 Ba Médailles ya Etanda",
+    "unlocked": "🏆 TROPHÉE EZWAMI 🏆",
+    "thanks": "Matondo! 🙏"
+  },
+  "leaderboard": {
+    "title": "🏆 BA BASANI YA LIKOLO",
+    "loading": "Kofungola...",
+    "noData": "Mosani te naino",
+    "rank": "#{rank}",
+    "you": "(yo)"
+  },
+  "trophyData": {
+    "first_steps": {
+      "name": "TOMBOLÁ MOTÓ",
+      "message": "Ozali ekelamu kitoko! Litamboli ya liboso ezali ntango nyonso ya ntina!"
+    },
+    "move_now": {
+      "name": "NINGANA LELO!",
+      "message": "Mosala ekobimisa nguya. Lekela liboso, koteleme te!"
+    },
+    "break_silence": {
+      "name": "BUKA KIMIA",
+      "message": "Mongongo na yo ezali na ntina. Loba, banda koyokana. Mokili ezali kozela yo!"
+    },
+    "persevere": {
+      "name": "KOTELEMA",
+      "message": "Kotelema elongi talent. Lekela, ozali na nzela malamu!"
+    },
+    "release": {
+      "name": "KOMIPESA",
+      "message": "Longola minyololo na yo. Tika oyo ezali kokanga yo."
+    },
+    "stand_up": {
+      "name": "TELEMA!",
+      "message": "Telema! Ozali mobundi, champion. Kotikala na nse te!"
+    },
+    "jesus_loves": {
+      "name": "OLINGAMI",
+      "message": "Yesu alingi yo ndenge ozali. Bolingo na ye ezali na condition te mpe ezali ya libela."
+    },
+    "halfway": {
+      "name": "NA KATI-KATI",
+      "message": "Otamboli ndambo ya nzela! Lekela, oyo malamu ezali kolanda!"
+    },
+    "combo_master": {
+      "name": "MOKONZI YA BA COMBOS",
+      "message": "Combo ya kokamwa! Oyekosolá mayele ya kokangisa!"
+    },
+    "warrior": {
+      "name": "MOBUNDI YA POLE",
+      "message": "Ozali mobundi! Mpiko na yo ezali kopesa molimo na mokili!"
+    },
+    "unstoppable": {
+      "name": "MOKOKI KOTELEMA TE",
+      "message": "Eloko moko te ekoki kotelema yo! Ozali nguya ya nature!"
+    },
+    "master": {
+      "name": "MOKONZI YA NYONSO",
+      "message": "Okómi na likolo! Ozali makasi mingi!"
+    },
+    "ultimate_trophy": {
+      "name": "TROPHÉE YA SUKA",
+      "message": "Etanda ya MAXIMUM ekómi! Ozali champion ya solo! Komona mokili inclusif ya Emmanuel."
+    }
+  },
+  "medals": {
+    "levelName": "Etanda {level}",
+    "messages": {
+      "1": "Etanda ya liboso! Obandi makasi!",
+      "2": "Etanda 2! Lekela bongo!",
+      "3": "Etanda 3! Ozali kokende malamu!",
+      "4": "Etanda 4! Ozali na mɔtɔ!",
+      "5": "Etanda 5! Mosala kitoko!",
+      "6": "Etanda 6! Ozali komata!",
+      "7": "Etanda 7! Kokende kitoko!",
+      "8": "Etanda 8! Mokoki kotelema yo te!",
+      "9": "Etanda 9! Pene na 10!",
+      "10": "Etanda 10! Okómi na 10!",
+      "11": "Etanda 11! Ozali kokoba komata!",
+      "12": "Etanda 12! Makasi!",
+      "13": "Etanda 13! Mabe ezali te mpo na yo!",
+      "14": "Etanda 14! Ozali na nzela malamu!",
+      "15": "Etanda 15! Ndambo ya yambo!",
+      "16": "Etanda 16! Ozali kongenga!",
+      "17": "Etanda 17! Performance kitoko!",
+      "18": "Etanda 18! Ozali na mɔtɔ!",
+      "19": "Etanda 19! Pene na 20!",
+      "20": "Etanda 20! Okómi na 20! Makambo!",
+      "21": "Etanda 21! Ozali kokɔta na élite!",
+      "22": "Etanda 22! Makasi mingi!",
+      "23": "Etanda 23! Lekela bongo!",
+      "24": "Etanda 24! Pene na kati-kati!",
+      "25": "Etanda 25! Kati-kati esilami!",
+      "26": "Etanda 26! Ndambo ya mibale ebandi!",
+      "27": "Etanda 27! Mokoki kolonga yo te!",
+      "28": "Etanda 28! Mayele mingi!",
+      "29": "Etanda 29! Pene na 30!",
+      "30": "Etanda 30! Ozali légendaire!",
+      "31": "Etanda 31! Ozali exceptionnel!",
+      "32": "Etanda 32! Kokende ya kokamwa!",
+      "33": "Etanda 33! Ozali mokonzi!",
+      "34": "Etanda 34! Talent mingi!",
+      "35": "Etanda 35! Ozali ya kokamwa!",
+      "36": "Etanda 36! Fantastique!",
+      "37": "Etanda 37! Ozali kolonga!",
+      "38": "Etanda 38! Pene na 40!",
+      "39": "Etanda 39! Etanda moko mosusu!",
+      "40": "Etanda 40! Ozali pene na likolo!",
+      "41": "Etanda 41! Ozali surhumain!",
+      "42": "Etanda 42! Eyano ya suka!",
+      "43": "Etanda 43! Ozali monene!",
+      "44": "Etanda 44! Moke 45!",
+      "45": "Etanda 45! Kaka 5 etikali!",
+      "46": "Etanda 46! Pene na likolo!",
+      "47": "Etanda 47! Kaka 3 etikali!",
+      "48": "Etanda 48! Ligne ya suka!",
+      "49": "Etanda 49! Etanda moko etikali!",
+      "50": "Etanda 50! MAXIMUM ekómi! Ozali MOKONZI!",
+      "default": "Etanda {level}! Lekela bongo!"
+    }
+  },
+  "conditions": {
+    "level": "Kokóma na etanda {value}",
+    "score": "Kokóma na {value} ba points",
+    "lines": "Kosilisa {value} milɔngɔ",
+    "combo": "Kosala combo x{value}"
+  },
+  "errors": {
+    "fillAllFields": "Tondisa biloko nyonso",
+    "wrongCredentials": "Email to mot de passe ezali malamu te",
+    "connectionError": "Libunga ya connexion. Tala connexion internet na yo.",
+    "passwordMismatch": "Bapassword ekokani te",
+    "passwordTooShort": "Mot de passe esengeli kozala na ba caractères 6 mingimingi",
+    "accountCreationError": "Libunga na kosala compte",
+    "enterEmail": "Kota email na yo",
+    "emailSendError": "Libunga ya kotinda email",
+    "pseudoTooShort": "Nkombo esengeli kozala na ba caractères 3 mingimingi",
+    "validEmailRequired": "Kota email oyo ebongi",
+    "alreadyInstalled": "Application esili kokota!"
+  },
+  "notifications": {
+    "gameSaved": "Lisano ebombami na Esika {slot}! 💾",
+    "noSaveInSlot": "Lisano ezali te na esika oyo ❌",
+    "loadSlotConfirm": "Kofungola lisano ya Esika {slot}?\n\nEtanda: {level} | Score: {score}\n\nLisano oyo ezali ekobungana.",
+    "deleteSlotConfirm": "Kolongola lisano ya Esika {slot}?",
+    "logoutConfirm": "Kobima?",
+    "passwordReset": "✅ Mot de passe ezongisami!\n\nSalela \"Kosala Compte\" na email oyo mpo na kotya mot de passe ya sika.",
+    "welcome": "Boyei malamu na PATRIX! ✝️",
+    "welcomeGuest": "👋 Boyei malamu! Sala profil na yo mpo na kobongola expérience na yo",
+    "profileUpdated": "✅ Profil ebongwani!",
+    "sharedSuccess": "✅ Ekabolami malamu!",
+    "imageDownloaded": "📸 Image ekitisami mpe texte ekopami!",
+    "shareError": "❌ Libunga ya kokabola",
+    "invalidUrl": "❌ URL ebongi te",
+    "musicBackground": "🎵 Muziki na nsima",
+    "appInstalled": "✅ PATRIX ekotami malamu! Matondo! 🎉",
+    "slotDeleted": "Esika {slot} elongolami 🗑️",
+    "gameLoaded": "Lisano efungulamaki na Esika {slot}! 📂",
+    "welcomeGuest": "Boyei malamu!",
+    "accountCreated": "Compte esalemi malamu!",
+    "loginSuccess": "Bokɔti malamu!",
+    "scoreSaved": "Score ebombami!",
+    "noSaveFound": "Lisano ebombami ezwami te",
+    "saveOverwrite": "Lisano ezali na esika {slot}. Kozongisa?",
+    "trophy": "🏆 Trophée ezwami!",
+    "newTrophy": "Trophée ya sika: {name}!",
+    "trophyProgress": "Progression ya trophée: {name}",
+    "offline": "Na Internet te"
+  }
+}

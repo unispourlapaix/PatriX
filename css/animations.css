@@ -1233,6 +1233,10 @@
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 2px 8px rgba(245, 222, 179, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .profile-edit-btn:hover {

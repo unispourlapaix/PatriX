@@ -7,25 +7,24 @@ class LanguageManager {
     constructor() {
         this.modal = null;
         this.continueBtn = null;
-        this.langBtnFr = null;
-        this.langBtnEn = null;
+        this.langButtons = {}; // Stockera tous les boutons de langue
         this.selectedLang = null;
+        this.availableLanguages = ['fr', 'en', 'es', 'zh', 'ar', 'pt', 'ja', 'uk', 'ln'];
     }
     
     async initialize() {
         // Attendre que le DOM soit prêt
         this.modal = document.getElementById('languageModal');
         this.continueBtn = document.getElementById('languageContinueBtn');
-        this.langBtnFr = document.getElementById('langBtnFr');
-        this.langBtnEn = document.getElementById('langBtnEn');
         
-        if (!this.modal || !this.continueBtn || !this.langBtnFr || !this.langBtnEn) {
-            console.error('[LanguageManager] Éléments DOM manquants', {
-                modal: !!this.modal,
-                continueBtn: !!this.continueBtn,
-                langBtnFr: !!this.langBtnFr,
-                langBtnEn: !!this.langBtnEn
-            });
+        // Charger tous les boutons de langue
+        this.availableLanguages.forEach(lang => {
+            const btnId = `langBtn${lang.charAt(0).toUpperCase()}${lang.slice(1)}`;
+            this.langButtons[lang] = document.getElementById(btnId);
+        });
+        
+        if (!this.modal || !this.continueBtn) {
+            console.error('[LanguageManager] Éléments DOM manquants');
             return;
         }
         
@@ -53,15 +52,15 @@ class LanguageManager {
     }
 
     setupEventListeners() {
-        // Options de langue
+        // Options de langue - changement immédiat au clic
         document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', (e) => {
+            option.addEventListener('click', async (e) => {
                 const lang = option.getAttribute('data-lang');
-                this.selectLanguage(lang);
+                await this.selectAndConfirmLanguage(lang);
             });
         });
 
-        // Bouton continuer
+        // Bouton continuer (optionnel maintenant)
         this.continueBtn.addEventListener('click', () => {
             if (this.selectedLang) {
                 this.confirmLanguage();
@@ -69,13 +68,21 @@ class LanguageManager {
         });
 
         // Boutons de langue compacts dans le panneau des trophées
-        this.langBtnFr.addEventListener('click', () => {
-            this.loadLanguage('fr');
+        this.availableLanguages.forEach(lang => {
+            if (this.langButtons[lang]) {
+                this.langButtons[lang].addEventListener('click', () => {
+                    this.loadLanguage(lang);
+                });
+            }
         });
-        
-        this.langBtnEn.addEventListener('click', () => {
-            this.loadLanguage('en');
-        });
+
+        // Bouton pour ouvrir le modal de langue depuis le panneau trophée
+        const openLanguageModalBtn = document.getElementById('openLanguageModalBtn');
+        if (openLanguageModalBtn) {
+            openLanguageModalBtn.addEventListener('click', () => {
+                this.showModal();
+            });
+        }
 
         // Observer les changements de langue pour mettre à jour le DOM
         window.i18n.addObserver((lang) => {
@@ -99,6 +106,11 @@ class LanguageManager {
         this.continueBtn.disabled = false;
     }
 
+    async selectAndConfirmLanguage(lang) {
+        this.selectLanguage(lang);
+        await this.confirmLanguage();
+    }
+
     async confirmLanguage() {
         if (!this.selectedLang) return;
 
@@ -108,6 +120,11 @@ class LanguageManager {
         if (success) {
             this.hideModal();
             this.updateCompactButtons();
+            
+            // Recharger complètement la page pour appliquer toutes les traductions
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
         }
     }
 
@@ -142,7 +159,18 @@ class LanguageManager {
         // Mettre à jour le texte du bouton continue
         if (this.continueBtn) {
             const currentLang = window.i18n.getLanguage();
-            this.continueBtn.textContent = currentLang === 'fr' ? 'Continuer' : 'Continue';
+            const continueTexts = {
+                'fr': 'Continuer',
+                'en': 'Continue',
+                'es': 'Continuar',
+                'zh': '继续',
+                'ar': 'متابعة',
+                'pt': 'Continuar',
+                'ja': '続ける',
+                'uk': 'Продовжити',
+                'ln': 'Kolekela Liboso'
+            };
+            this.continueBtn.textContent = continueTexts[currentLang] || 'Continue';
         }
 
         // Mettre à jour les placeholders du modal de langue
@@ -180,16 +208,17 @@ class LanguageManager {
     updateCompactButtons() {
         const currentLang = window.i18n.getLanguage();
         
-        if (this.langBtnFr && this.langBtnEn) {
-            // Mettre en surbrillance le bouton de la langue active
-            if (currentLang === 'fr') {
-                this.langBtnFr.classList.add('active');
-                this.langBtnEn.classList.remove('active');
-            } else {
-                this.langBtnEn.classList.add('active');
-                this.langBtnFr.classList.remove('active');
+        // Mettre à jour tous les boutons de langue
+        this.availableLanguages.forEach(lang => {
+            const btn = this.langButtons[lang];
+            if (btn) {
+                if (currentLang === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             }
-        }
+        });
     }
 }
 

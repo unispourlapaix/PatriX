@@ -61,9 +61,86 @@
                     </div>
                     <span class="language-check">✓</span>
                 </div>
+                
+                <div class="language-option" data-lang="es">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇪🇸</span>
+                        <div class="language-info">
+                            <span class="language-name">Español</span>
+                            <span class="language-native">Spanish</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="zh">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇨🇳</span>
+                        <div class="language-info">
+                            <span class="language-name">中文</span>
+                            <span class="language-native">Chinese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ar">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇸🇦</span>
+                        <div class="language-info">
+                            <span class="language-name">العربية</span>
+                            <span class="language-native">Arabic</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="pt">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇵🇹</span>
+                        <div class="language-info">
+                            <span class="language-name">Português</span>
+                            <span class="language-native">Portuguese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ja">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇯🇵</span>
+                        <div class="language-info">
+                            <span class="language-name">日本語</span>
+                            <span class="language-native">Japanese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="uk">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇺🇦</span>
+                        <div class="language-info">
+                            <span class="language-name">Українська</span>
+                            <span class="language-native">Ukrainian</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ln">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇨🇩</span>
+                        <div class="language-info">
+                            <span class="language-name">Lingala</span>
+                            <span class="language-native">Congo</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
             </div>
             
-            <button class="language-continue-btn" id="languageContinueBtn" disabled>Continue</button>
+            <button class="language-continue-btn" id="languageContinueBtn" disabled style="display: none;">Continue</button>
         </div>
     </div>
 
@@ -81,8 +158,7 @@
                     <div class="next-content">
                         <div class="next-grid" id="nextGrid"></div>
                         
-                        <div class="stats-container">
-                            <div class="stat-line">
+                        <div class="stats-container">                            <!-- NOTE: LINES, COMBO, SCORE labels restent en anglais (design) - pas de data-i18n -->                            <div class="stat-line">
                                 <span class="stat-label">LINES</span>
                                 <span class="stat-value" id="lines">000</span>
                             </div>
@@ -105,6 +181,7 @@
                     </div>
                     
                     <div class="next-header">
+                        <!-- NOTE: NEXT et LEVEL labels restent en anglais (design) - pas de data-i18n -->
                         <span class="display-label">NEXT</span>
                         <div class="swap-indicator">
                             <div class="swap-dots" id="swapDots">
@@ -126,8 +203,8 @@
                         </div>
                         <button class="trophy-button-compact" id="trophyBtn">🏆</button>
                         <!-- <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button> -->
-                        <button class="game-button-mini" id="audioBtn" title="Son">🔊</button>
-                        <button class="game-button-mini" id="musicBtn" title="Audiomack">🎵</button>
+                        <button class="game-button-mini" id="audioBtn" data-i18n-title="tooltips.sound" title="Son">🔊</button>
+                        <button class="game-button-mini" id="musicBtn" data-i18n-title="tooltips.music" title="Audiomack">🎵</button>
                         <button class="game-button-mini" id="pauseBtn">⏸</button>
                     </div>
                 </div>
@@ -140,14 +217,54 @@
         
         <!-- Affichage combo pop -->
         <div class="pop-combo-display" id="popCombo">POP x2!</div>
+        
+        <!-- Footer Links -->
+        <div class="game-footer">
+            <a href="https://www.redbubble.com/fr/people/H777plx" target="_blank" rel="noopener noreferrer" data-i18n="footer.support">Soutenir l'artiste</a>
+        </div>
+    </div>
+    
+    <!-- Contact Form Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-form-container">
+            <div class="contact-form-title" data-i18n="footer.contactTitle">📧 Contactez-moi</div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="contactSubject" data-i18n="footer.subject">Objet :</label>
+                    <input type="text" id="contactSubject" required data-i18n-placeholder="footer.subjectPlaceholder" tabindex="1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="contactMessageText" data-i18n="footer.message">Message :</label>
+                    <textarea id="contactMessageText" required data-i18n-placeholder="footer.messagePlaceholder" tabindex="2" rows="5" autocomplete="off"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="footer.emoticon">Émoticône :</label>
+                    <div class="emoticon-selector">
+                        <button type="button" class="emoticon-btn" data-emoticon="😊">😊</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="😂">😂</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🤔">🤔</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="👍">👍</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="❤️">❤️</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🎮">🎮</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="✨">✨</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🔥">🔥</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="form-btn submit" data-i18n="footer.send">Envoyer</button>
+                    <button type="button" class="form-btn cancel" id="cancelContactBtn" data-i18n="footer.cancel">Annuler</button>
+                </div>
+                <div class="form-message" id="contactFormStatus" style="display: none;"></div>
+            </form>
+        </div>
     </div>
     
     <!-- Panel Game Over -->
     <div class="game-over-panel" id="gameOver">
-        <h2>Partie Terminée</h2>
-        <p id="gameOverMessage">Continue de rêver !</p>
-        <p>Score Final: <span id="finalScore">0</span></p>
-        <button class="game-button" id="restartBtn">Recommencer</button>
+        <h2 data-i18n="game.gameOverTitle">Partie Terminée</h2>
+        <p id="gameOverMessage" data-i18n="game.gameOverMessage">Continue de rêver !</p>
+        <p><span data-i18n="game.finalScore">Score Final</span>: <span id="finalScore">0</span></p>
+        <button class="game-button" id="restartBtn" data-i18n="game.restart">Recommencer</button>
     </div>
     
     <!-- Panel Pause -->
@@ -155,9 +272,9 @@
         <div class="pause-icon" id="pauseIcon">⏸️</div>
         <div class="pause-content" id="pauseContent">
             <div class="pause-buttons">
-                <button class="pause-action-btn" id="saveGameBtn" title="Sauvegarder">💾</button>
-                <button class="pause-action-btn" id="loadGameBtn" title="Charger">📂</button>
-                <button class="pause-action-btn" id="resumeBtn" title="Reprendre">▶️</button>
+                <button class="pause-action-btn" id="saveGameBtn" data-i18n-title="game.save" title="Sauvegarder">💾</button>
+                <button class="pause-action-btn" id="loadGameBtn" data-i18n-title="game.load" title="Charger">📂</button>
+                <button class="pause-action-btn" id="resumeBtn" data-i18n-title="game.resume" title="Reprendre">▶️</button>
             </div>
             <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
         </div>
@@ -167,9 +284,9 @@
     <!-- Menu Sauvegardes/Chargement -->
     <div class="save-load-modal" id="saveLoadModal">
         <div class="save-load-content">
-            <h2 id="saveLoadTitle">💾 Sauvegardes</h2>
+            <h2 id="saveLoadTitle" data-i18n="game.savesTitle">💾 Sauvegardes</h2>
             <div class="save-slots" id="saveSlots"></div>
-            <button class="save-load-close" id="saveLoadClose">Fermer</button>
+            <button class="save-load-close" id="saveLoadClose" data-i18n="game.close">Fermer</button>
         </div>
     </div>
     
@@ -177,20 +294,20 @@
     <div class="treasure-modal" id="treasureModal">
         <div class="treasure-content">
             <div class="treasure-icon">💎</div>
-            <div class="treasure-level">Niveau <span id="treasureLevel">1</span></div>
+            <div class="treasure-level"><span data-i18n="game.treasureLevel">Niveau</span> <span id="treasureLevel">1</span></div>
             <div class="treasure-message" id="treasureMessage"></div>
-            <button class="treasure-button" id="treasureContinue">Continuer ✨</button>
+            <button class="treasure-button" id="treasureContinue" data-i18n="game.treasureContinue">Continuer ✨</button>
         </div>
     </div>
     
     <!-- Modal Trophée -->
     <div class="trophy-modal" id="trophyModal">
         <div class="trophy-content">
-            <div class="trophy-banner">🏆 TROPHÉE DÉBLOQUÉ 🏆</div>
+            <div class="trophy-banner" data-i18n="trophies.unlocked">🏆 TROPHÉE DÉBLOQUÉ 🏆</div>
             <div class="trophy-icon" id="trophyIcon">⭐</div>
             <div class="trophy-name" id="trophyName">CHAMPION</div>
             <div class="trophy-message" id="trophyMessage"></div>
-            <button class="trophy-button" id="trophyContinue">Merci ! 🙏</button>
+            <button class="trophy-button" id="trophyContinue" data-i18n="trophies.thanks">Merci ! 🙏</button>
         </div>
     </div>
     
@@ -200,21 +317,31 @@
         <span class="trophies-count" id="trophiesCount">0/62</span>
     </button>
     <div class="trophies-panel" id="trophiesPanel">
-        <div class="trophies-panel-content">
+        <div class="trophies-panel-content" id="trophiesPanelContent">
             <div class="trophies-header">
                 <h2 data-i18n="trophies.title">🏆 MES TROPHÉES</h2>
                 <div class="trophies-header-actions">
-                    <div class="language-switcher-compact">
+                    <div class="language-switcher-compact" style="display: none;">
                         <button class="lang-btn" data-lang="fr" id="langBtnFr">🇫🇷</button>
                         <button class="lang-btn" data-lang="en" id="langBtnEn">🇬🇧</button>
+                        <button class="lang-btn" data-lang="es" id="langBtnEs">🇪🇸</button>
+                        <button class="lang-btn" data-lang="zh" id="langBtnZh">🇨🇳</button>
+                        <button class="lang-btn" data-lang="ar" id="langBtnAr">🇸🇦</button>
+                        <button class="lang-btn" data-lang="pt" id="langBtnPt">🇵🇹</button>
+                        <button class="lang-btn" data-lang="ja" id="langBtnJa">🇯🇵</button>
+                        <button class="lang-btn" data-lang="uk" id="langBtnUk">🇺🇦</button>
+                        <button class="lang-btn" data-lang="ln" id="langBtnLn">🇨🇩</button>
                     </div>
                     <button class="trophies-close" id="trophiesClose">✕</button>
                 </div>
             </div>
             
+            <button class="scroll-to-top" id="scrollToTop" style="display: none;">↑</button>
+            
+            <div class="trophies-scrollable">
             <!-- Découverte Emmanuel -->
             <div class="emmanuel-discover">
-                <p class="discover-title">Découvrez l'univers inclusif d'Emmanuel !</p>
+                <p class="discover-title" data-i18n="trophies.discover">Découvrez l'univers inclusif d'Emmanuel !</p>
                 <div class="discover-links">
                     <a href="https://emmanuelpayet.art" target="_blank" class="discover-link">emmanuelpayet.art</a>
                     <a href="https://emmanuel.gallery" target="_blank" class="discover-link">emmanuel.gallery</a>
@@ -225,7 +352,7 @@
             <div class="profile-section">
                 <div class="profile-content">
                     <div class="profile-info">
-                        <div class="profile-name" id="profileName">Invité</div>
+                        <div class="profile-name" id="profileName" data-i18n="profile.guest">Invité</div>
                         <div class="profile-avatar" id="profileAvatar">
                             <svg viewBox="0 0 100 100" width="60" height="60">
                                 <circle cx="50" cy="50" r="45" fill="#4fc3f7"/>
@@ -234,14 +361,29 @@
                         </div>
                     </div>
                     <div class="profile-actions">
-                        <button class="profile-edit-btn" id="profileEditBtn">✏️ Modifier</button>
+                        <button class="profile-edit-btn" id="profileEditBtn" data-i18n="profile.edit">✏️ Modifier</button>
+                        <button class="profile-edit-btn" id="openLanguageModalBtn">
+                            <span>🌍</span>
+                            <span data-i18n="trophies.language">Langue</span>
+                        </button>
+                        <a href="https://www.tiktok.com/@unispourlapaix" target="_blank" rel="noopener noreferrer" class="profile-edit-btn" style="text-decoration: none;">
+                            <span>🎥</span>
+                            <span data-i18n="footer.tiktok">TikTok</span>
+                        </a>
+                        <button class="profile-edit-btn contact-btn" id="contactBtn">
+                            <span>✉️</span>
+                            <span data-i18n="footer.contact">Contact</span>
+                        </button>
                         <button class="profile-share-btn" id="profileShareBtn">
                             <span class="share-icon">🎮</span>
-                            <span class="share-text">Partager mon score<br>Soutenir l'artiste</span>
+                            <span class="share-text">
+                                <span data-i18n="profile.shareScore">Partager mon score</span><br>
+                                <span data-i18n="profile.supportArtist">Soutenir l'artiste</span>
+                            </span>
                         </button>
                         <button class="profile-music-btn" id="profileMusicBtn">
                             <span class="music-icon">🎵</span>
-                            <span class="music-text">Musique Audiomack</span>
+                            <span class="music-text" data-i18n="profile.audiomackMusic">Musique Audiomack</span>
                         </button>
                     </div>
                 </div>
@@ -250,6 +392,7 @@
             <div class="trophies-grid" id="trophiesGrid">
                 <!-- Les trophées seront générés par JavaScript -->
             </div>
+            </div>
         </div>
     </div>
     
@@ -257,14 +400,14 @@
     <div class="web-browser-panel" id="webBrowserPanel">
         <div class="web-browser-content">
             <div class="web-browser-header">
+                <button class="web-browser-close" id="webBrowserClose" data-i18n-title="tooltips.close" title="Fermer">🔇</button>
                 <div class="web-browser-controls">
-                    <button class="web-nav-btn" id="webBackBtn" title="Précédent">←</button>
-                    <button class="web-nav-btn" id="webForwardBtn" title="Suivant">→</button>
-                    <button class="web-nav-btn" id="webRefreshBtn" title="Actualiser">↻</button>
+                    <button class="web-nav-btn" id="webBackBtn" data-i18n-title="tooltips.back" title="Précédent">←</button>
+                    <button class="web-nav-btn" id="webForwardBtn" data-i18n-title="tooltips.forward" title="Suivant">→</button>
+                    <button class="web-nav-btn" id="webRefreshBtn" data-i18n-title="tooltips.refresh" title="Actualiser">↻</button>
                 </div>
                 <div class="web-browser-url" id="webBrowserUrl">Audiomack</div>
-                <button class="web-browser-minimize" id="webBrowserMinimize" title="Minimiser">−</button>
-                <button class="web-browser-close" id="webBrowserClose" title="Fermer">✕</button>
+                <button class="web-browser-minimize" id="webBrowserMinimize" data-i18n-title="tooltips.minimize" title="Minimiser">−</button>
             </div>
             <div class="web-browser-body">
                 <iframe 
@@ -286,19 +429,19 @@
     <!-- Modal Édition Profil -->
     <div class="profile-modal" id="profileModal">
         <div class="profile-modal-content">
-            <h2>✏️ MON PROFIL</h2>
+            <h2 data-i18n="profile.title">✏️ MON PROFIL</h2>
             <button class="profile-modal-close" id="profileModalClose">✕</button>
             
             <div class="profile-form">
-                <label>Pseudo</label>
-                <input type="text" id="profilePseudoInput" placeholder="Ton pseudo" maxlength="20">
+                <label data-i18n="profile.pseudoLabel">Pseudo</label>
+                <input type="text" id="profilePseudoInput" data-i18n-placeholder="profile.pseudoPlaceholder" placeholder="Ton pseudo" maxlength="20">
                 
-                <label>Avatar Chrétien</label>
+                <label data-i18n="profile.avatarLabel">Avatar Chrétien</label>
                 <div class="avatar-grid" id="avatarGrid">
                     <!-- Avatars générés par JS -->
                 </div>
                 
-                <button class="profile-save-btn" id="profileSaveBtn">💾 Sauvegarder</button>
+                <button class="profile-save-btn" id="profileSaveBtn" data-i18n="profile.saveButton">💾 Sauvegarder</button>
             </div>
         </div>
     </div>
@@ -307,22 +450,23 @@
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>PATRI-X</h2>
-            <p class="login-subtitle">Bienvenue courageux petit explorateur</p>
+            <p class="login-subtitle" data-i18n="auth.welcome">Bienvenue courageux petit explorateur</p>
             
             <div class="user-info" id="userInfo" style="display: none;">
                 <div class="user-avatar">👤</div>
                 <div class="user-name" id="userName">Invité</div>
                 <div class="user-max-score">
-                    <span class="label">Meilleur Score:</span>
+                    <span class="label" data-i18n="profile.bestScore">Meilleur Score:</span>
                     <span class="value" id="userMaxScore">0</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+                <button class="logout-btn" id="logoutBtn" data-i18n="profile.logout">Déconnexion</button>
             </div>
             
             <div class="login-form" id="loginForm">
                 <input 
-                    type="text" 
+                    type="text"
                     id="usernameInput" 
+                    data-i18n-placeholder="auth.pseudoPlaceholder"
                     placeholder="Ton pseudo" 
                     maxlength="20"
                     autocomplete="off"
@@ -330,24 +474,22 @@
                 <input 
                     type="email" 
                     id="emailInput" 
+                    data-i18n-placeholder="auth.emailPlaceholder"
                     placeholder="Ton email" 
                     autocomplete="email"
                 />
                 <input 
                     type="password" 
                     id="passwordInput" 
+                    data-i18n-placeholder="auth.passwordPlaceholder"
                     placeholder="Ton mot de passe" 
                     autocomplete="current-password"
                 />
                 <div class="login-buttons">
-                    <button class="login-btn" id="loginBtn">Se Connecter 🔑</button>
-                    <button class="register-btn" id="registerBtn">Créer un compte ✨</button>
+                    <button class="login-btn" id="loginBtn" data-i18n="auth.loginButton">Se Connecter 🔑</button>
+                    <button class="register-btn" id="registerBtn" data-i18n="auth.registerButton">Créer un compte ✨</button>
                 </div>
-                <p class="login-note" id="loginNote">
-                    <span id="loginHint">Connexion : Email + Mot de passe</span>
-                    <span id="registerHint" style="display: none;">Inscription : Pseudo + Email + Mot de passe (min 6 car.)</span>
-                </p>
-                <a href="#" class="forgot-password-link" id="forgotPasswordLink">Mot de passe oublié ?</a>
+                <a href="#" class="forgot-password-link" id="forgotPasswordLink" data-i18n="auth.forgotPasswordLink">Mot de passe oublié ?</a>
             </div>
             
             <div class="reset-password-form" id="resetPasswordForm" style="display: none;">
@@ -357,17 +499,17 @@
                     placeholder="Ton email" 
                     autocomplete="email"
                 />
-                <button class="login-btn" id="resetPasswordBtn">Réinitialiser 🔑</button>
-                <p class="login-note">Ton mot de passe sera réinitialisé. Utilise ensuite "Créer un compte" pour en définir un nouveau.</p>
-                <a href="#" class="back-to-login-link" id="backToLoginLink">← Retour à la connexion</a>
+                <button class="login-btn" id="resetPasswordBtn" data-i18n="auth.resetButton">Réinitialiser 🔑</button>
+                <p class="login-note" data-i18n="auth.resetNote">Ton mot de passe sera réinitialisé. Utilise ensuite "Créer un compte" pour en définir un nouveau.</p>
+                <a href="#" class="back-to-login-link" id="backToLoginLink" data-i18n="menu.backToLogin">← Retour à la connexion</a>
             </div>
             
-            <button class="play-guest-btn" id="playGuestBtn">Jouer sans compte</button>
+            <button class="play-guest-btn" id="playGuestBtn" data-i18n="menu.playGuest">Jouer sans compte</button>
             
             <div class="leaderboard-preview" id="leaderboardPreview">
-                <h3>🏆 TOP 5 JOUEURS</h3>
+                <h3 data-i18n="leaderboard.title">🏆 TOP JOUEURS</h3>
                 <div class="leaderboard-list" id="leaderboardList">
-                    <div class="loading">Chargement...</div>
+                    <div class="loading" data-i18n="leaderboard.loading">Chargement...</div>
                 </div>
             </div>
         </div>
@@ -390,6 +532,7 @@
     <script src="js/controls.js"></script>
     <script src="js/effects.js"></script>
     <script src="js/line-tracer.js"></script>
+    <script src="js/contact-form.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/main.js"></script>
     

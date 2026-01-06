@@ -216,7 +216,7 @@ class InstallManager {
 
         // Afficher un message de succès
         if (window.visualEffects) {
-            window.visualEffects.showSpiritualMessage('✅ PATRIX installé avec succès ! Merci ! 🎉', 3000);
+            window.visualEffects.showSpiritualMessage(window.i18n.t('notifications.appInstalled'), 3000);
         }
     }
 
@@ -232,7 +232,7 @@ class InstallManager {
      */
     showInstallPrompt() {
         if (this.isInstalled) {
-            alert('L\'application est déjà installée !');
+            alert(window.i18n.t('errors.alreadyInstalled'));
             return;
         }
 

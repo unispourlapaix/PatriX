@@ -134,7 +134,7 @@ class ProfileManager {
 
         // Validation
         if (newPseudo && newPseudo.length < 3) {
-            alert('Le pseudo doit contenir au moins 3 caractères');
+            alert(window.i18n.t('errors.pseudoTooShort'));
             return;
         }
 
@@ -163,12 +163,12 @@ class ProfileManager {
 
             // Message de confirmation
             if (window.effects) {
-                window.effects.showSpiritualMessage('✅ Profil mis à jour !', 2000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.profileUpdated'), 2000);
             }
 
         } catch (error) {
             console.error('[ProfileManager] Erreur sauvegarde profil:', error);
-            alert('Erreur : ' + error.message);
+            alert(window.i18n.t('errors.connectionError') + ' : ' + error.message);
         }
     }
 
@@ -233,7 +233,7 @@ class ProfileManager {
                 if (navigator.canShare(shareData)) {
                     await navigator.share(shareData);
                     if (window.effects) {
-                        window.effects.showSpiritualMessage('✅ Partagé avec succès !', 2000);
+                        window.effects.showSpiritualMessage(window.i18n.t('notifications.sharedSuccess'), 2000);
                     }
                     return;
                 }
@@ -244,13 +244,13 @@ class ProfileManager {
             await navigator.clipboard.writeText(shareText);
             
             if (window.effects) {
-                window.effects.showSpiritualMessage('📸 Image téléchargée et texte copié !', 3000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.imageDownloaded'), 3000);
             }
 
         } catch (error) {
             console.error('[ProfileManager] Erreur partage:', error);
             if (window.effects) {
-                window.effects.showSpiritualMessage('❌ Erreur de partage', 2000);
+                window.effects.showSpiritualMessage(window.i18n.t('notifications.shareError'), 2000);
             }
         }
     }
@@ -303,7 +303,7 @@ class ProfileManager {
             // Slogan
             ctx.fillStyle = '#666666';
             ctx.font = '36px Arial, sans-serif';
-            ctx.fillText('Transforme le désespoir en grands rêves', size / 2, size - 180);
+            ctx.fillText(window.i18n?.t('profile.slogan') || 'Transforme le désespoir en grands rêves', size / 2, size - 180);
 
             // Sites web en bas - GROS et LISIBLE
             ctx.fillStyle = '#4fc3f7';

@@ -260,7 +260,7 @@ class AuthManager {
         const password = document.getElementById('login-password').value;
 
         if (!email || !password) {
-            alert('Veuillez remplir tous les champs');
+            alert(window.i18n.t('errors.fillAllFields'));
             return;
         }
 
@@ -286,10 +286,10 @@ class AuthManager {
                     this.hideAuthModal();
                 }, 2000);
             } else {
-                alert('Email ou mot de passe incorrect');
+                alert(window.i18n.t('errors.wrongCredentials'));
             }
         } catch (error) {
-            alert('Erreur de connexion. Vérifiez votre connexion internet.');
+            alert(window.i18n.t('errors.connectionError'));
         }
     }
 
@@ -303,17 +303,17 @@ class AuthManager {
         const passwordConfirm = document.getElementById('register-password-confirm').value;
 
         if (!pseudo || !email || !password || !passwordConfirm) {
-            alert('Veuillez remplir tous les champs');
+            alert(window.i18n.t('errors.fillAllFields'));
             return;
         }
 
         if (password !== passwordConfirm) {
-            alert('Les mots de passe ne correspondent pas');
+            alert(window.i18n.t('errors.passwordMismatch'));
             return;
         }
 
         if (password.length < 6) {
-            alert('Le mot de passe doit contenir au moins 6 caractères');
+            alert(window.i18n.t('errors.passwordTooShort'));
             return;
         }
 
@@ -340,10 +340,10 @@ class AuthManager {
                     this.showForm('login');
                 }, 3000);
             } else {
-                alert(data.msg || 'Erreur lors de la création du compte');
+                alert(data.msg || window.i18n.t('errors.accountCreationError'));
             }
         } catch (error) {
-            alert('Erreur lors de la création du compte');
+            alert(window.i18n.t('errors.accountCreationError'));
         }
     }
 
@@ -354,7 +354,7 @@ class AuthManager {
         const email = document.getElementById('forgot-email').value.trim();
 
         if (!email) {
-            alert('Veuillez entrer votre email');
+            alert(window.i18n.t('errors.enterEmail'));
             return;
         }
 
@@ -371,10 +371,10 @@ class AuthManager {
             if (response.ok) {
                 this.showMessage('✅ Email de réinitialisation envoyé ! Vérifiez votre boîte mail.', 'success');
             } else {
-                alert('Erreur lors de l\'envoi de l\'email');
+                alert(window.i18n.t('errors.emailSendError'));
             }
         } catch (error) {
-            alert('Erreur lors de l\'envoi de l\'email');
+            alert(window.i18n.t('errors.emailSendError'));
         }
     }
 
@@ -394,7 +394,7 @@ class AuthManager {
      * Déconnexion
      */
     async logout() {
-        if (confirm('Se déconnecter ?')) {
+        if (confirm(window.i18n.t('notifications.logoutConfirm'))) {
             localStorage.removeItem('supabase.auth.token');
             this.currentUser = null;
             location.reload();

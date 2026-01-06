@@ -55,7 +55,9 @@ class UserInterface {
             trophiesPanel: document.getElementById('trophiesPanel'),
             trophiesClose: document.getElementById('trophiesClose'),
             trophiesGrid: document.getElementById('trophiesGrid'),
-            trophiesCount: document.getElementById('trophiesCount')
+            trophiesCount: document.getElementById('trophiesCount'),
+            trophiesPanelContent: document.getElementById('trophiesPanelContent'),
+            scrollToTop: document.getElementById('scrollToTop')
         };
         
         // Charger les trophées sauvegardés
@@ -90,6 +92,29 @@ class UserInterface {
             this.elements.trophiesClose.addEventListener('click', () => {
                 this.closeTrophiesPanel();
             });
+        }
+        
+        // Scroll to top button
+        if (this.elements.scrollToTop && this.elements.trophiesPanelContent) {
+            const scrollContainer = this.elements.trophiesPanelContent.querySelector('.trophies-scrollable');
+            
+            if (scrollContainer) {
+                this.elements.scrollToTop.addEventListener('click', () => {
+                    scrollContainer.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+                
+                // Show/hide scroll button based on scroll position
+                scrollContainer.addEventListener('scroll', () => {
+                    if (scrollContainer.scrollTop > 300) {
+                        this.elements.scrollToTop.style.display = 'flex';
+                    } else {
+                        this.elements.scrollToTop.style.display = 'none';
+                    }
+                });
+            }
         }
     }
 
@@ -1242,7 +1267,8 @@ class UserInterface {
         if (specialTrophies.length > 0) {
             const specialHeader = document.createElement('div');
             specialHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            specialHeader.textContent = '🏆 Trophées Spéciaux';
+            specialHeader.setAttribute('data-i18n', 'trophies.specialTitle');
+            specialHeader.textContent = window.i18n?.t('trophies.specialTitle') || '🏆 Trophées Spéciaux';
             this.elements.trophiesGrid.appendChild(specialHeader);
             
             specialTrophies.forEach(trophy => {
@@ -1254,7 +1280,8 @@ class UserInterface {
         if (medals.length > 0) {
             const medalsHeader = document.createElement('div');
             medalsHeader.style.cssText = 'grid-column: 1; margin: 20px 0 10px; color: #ffd700; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;';
-            medalsHeader.textContent = '🥇 Médailles de Niveau';
+            medalsHeader.setAttribute('data-i18n', 'trophies.medalsTitle');
+            medalsHeader.textContent = window.i18n?.t('trophies.medalsTitle') || '🥇 Médailles de Niveau';
             this.elements.trophiesGrid.appendChild(medalsHeader);
             
             medals.forEach(trophy => {
@@ -1270,31 +1297,61 @@ class UserInterface {
         const card = document.createElement('div');
         card.className = `trophy-card ${trophy.unlocked ? 'unlocked' : 'locked'}`;
         
+        // Obtenir les traductions si disponibles
+        const translations = window.i18n?.translations;
+        
         let conditionText = '';
-        switch(trophy.condition.type) {
-            case 'level':
-                conditionText = `Atteindre le niveau ${trophy.condition.value}`;
-                break;
-            case 'score':
-                conditionText = `Atteindre ${trophy.condition.value.toLocaleString()} points`;
-                break;
-            case 'lines':
-                conditionText = `Compléter ${trophy.condition.value} lignes`;
-                break;
-            case 'combo':
-                conditionText = `Faire un combo x${trophy.condition.value}`;
-                break;
+        if (translations?.conditions) {
+            const template = translations.conditions[trophy.condition.type];
+            if (template) {
+                conditionText = template.replace('{value}', trophy.condition.value.toLocaleString());
+            }
+        }
+        
+        // Fallback si pas de traduction
+        if (!conditionText) {
+            switch(trophy.condition.type) {
+                case 'level':
+                    conditionText = `Atteindre le niveau ${trophy.condition.value}`;
+                    break;
+                case 'score':
+                    conditionText = `Atteindre ${trophy.condition.value.toLocaleString()} points`;
+                    break;
+                case 'lines':
+                    conditionText = `Compléter ${trophy.condition.value} lignes`;
+                    break;
+                case 'combo':
+                    conditionText = `Faire un combo x${trophy.condition.value}`;
+                    break;
+            }
+        }
+        
+        let displayName = trophy.name;
+        let displayMessage = trophy.message;
+        
+        // Vérifier si c'est un trophée spécial avec traduction
+        if (trophy.special && translations?.trophyData?.[trophy.id]) {
+            const trophyData = translations.trophyData[trophy.id];
+            displayName = trophyData.name;
+            displayMessage = trophyData.message;
+        }
+        // Pour les médailles de niveau, utiliser les traductions génériques
+        else if (trophy.id?.startsWith('level_') && translations?.medals) {
+            const level = trophy.condition.value;
+            displayName = translations.medals.levelName.replace('{level}', level);
+            displayMessage = translations.medals.messages[level] || 
+                            translations.medals.messages.default.replace('{level}', level);
         }
         
         card.innerHTML = `
             <div class="trophy-card-header">
                 <div class="trophy-card-icon">${trophy.icon}</div>
                 <div class="trophy-card-info">
-                    <div class="trophy-card-name">${trophy.name}</div>
+                    <div class="trophy-card-name">${displayName}</div>
                     <div class="trophy-card-condition">${conditionText}</div>
                 </div>
             </div>
-            <div class="trophy-card-message">${trophy.unlocked ? trophy.message : '???'}</div>
+            <div class="trophy-card-message">${trophy.unlocked ? displayMessage : '🔒'}</div>
         `;
         
         return card;

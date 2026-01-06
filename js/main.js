@@ -88,22 +88,22 @@ function initUserSystem() {
         const password = document.getElementById('passwordInput').value;
         
         if (username.length < 3) {
-            alert('Le pseudo doit contenir au moins 3 caractères');
+            alert(window.i18n.t('errors.pseudoTooShort'));
             return;
         }
         
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Email valide requis');
+            alert(window.i18n.t('errors.validEmailRequired'));
             return;
         }
         
         if (!password || password.length < 6) {
-            alert('Le mot de passe doit contenir au moins 6 caractères');
+            alert(window.i18n.t('errors.passwordTooShort'));
             return;
         }
         
         try {
-            registerBtn.textContent = 'Création...';
+            registerBtn.textContent = window.i18n.t('game.creating');
             registerBtn.disabled = true;
             await userManager.register(username, email, password);
             
@@ -118,8 +118,8 @@ function initUserSystem() {
                 startGame();
             }, 1000);
         } catch (error) {
-            alert('Erreur : ' + error.message);
-            registerBtn.textContent = 'Créer un compte ✨';
+            alert(window.i18n.t('errors.accountCreationError') + ' : ' + error.message);
+            registerBtn.textContent = window.i18n.t('auth.registerButton');
             registerBtn.disabled = false;
         }
     });
@@ -140,17 +140,17 @@ function initUserSystem() {
         const password = document.getElementById('passwordInput').value;
         
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Email valide requis');
+            alert(window.i18n.t('errors.validEmailRequired'));
             return;
         }
         
         if (!password || password.length < 6) {
-            alert('Le mot de passe doit contenir au moins 6 caractères');
+            alert(window.i18n.t('errors.passwordTooShort'));
             return;
         }
         
         try {
-            loginBtn.textContent = 'Connexion...';
+            loginBtn.textContent = window.i18n.t('game.connecting');
             loginBtn.disabled = true;
             // Login par email + password
             await userManager.login(email, password);
@@ -166,8 +166,8 @@ function initUserSystem() {
                 startGame();
             }, 1000);
         } catch (error) {
-            alert('Erreur : ' + error.message);
-            loginBtn.textContent = 'Se Connecter 🔑';
+            alert(window.i18n.t('errors.connectionError') + ' : ' + error.message);
+            loginBtn.textContent = window.i18n.t('auth.loginButton');
             loginBtn.disabled = false;
         }
     });
@@ -195,17 +195,17 @@ function initUserSystem() {
         const email = resetEmailInput.value.trim();
         
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert('Email valide requis');
+            alert(window.i18n.t('errors.validEmailRequired'));
             return;
         }
         
         try {
-            resetPasswordBtn.textContent = 'Réinitialisation...';
+            resetPasswordBtn.textContent = window.i18n.t('game.resetting');
             resetPasswordBtn.disabled = true;
             
             await userManager.resetPassword(email);
             
-            alert('✅ Mot de passe réinitialisé !\n\nUtilise "Créer un compte" avec cet email pour définir un nouveau mot de passe.');
+            alert(window.i18n.t('notifications.passwordReset'));
             resetEmailInput.value = '';
             resetPasswordForm.style.display = 'none';
             loginForm.style.display = 'block';
@@ -214,9 +214,9 @@ function initUserSystem() {
             document.getElementById('emailInput').value = email;
             registerBtn.focus();
         } catch (error) {
-            alert('Erreur : ' + error.message);
+            alert(window.i18n.t('errors.emailSendError') + ' : ' + error.message);
         } finally {
-            resetPasswordBtn.textContent = 'Réinitialiser 🔑';
+            resetPasswordBtn.textContent = window.i18n.t('auth.resetButton');
             resetPasswordBtn.disabled = false;
         }
     });
@@ -261,7 +261,7 @@ function initUserSystem() {
     
     async function loadLeaderboard() {
         try {
-            const leaders = await userManager.getLeaderboard(5);
+            const leaders = await userManager.getLeaderboard(3);
             if (leaders && leaders.length > 0) {
                 leaderboardList.innerHTML = leaders.map((leader, index) => `
                     <div class="leaderboard-item">
@@ -274,7 +274,7 @@ function initUserSystem() {
                 leaderboardList.innerHTML = '<div class="loading">Aucun score pour le moment</div>';
             }
         } catch (error) {
-            leaderboardList.innerHTML = '<div class="loading">Erreur de chargement</div>';
+            leaderboardList.innerHTML = '<div class="loading">' + window.i18n.t('game.loadingError') + '</div>';
         }
     }
 }
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Message de bienvenue
     setTimeout(() => {
         if (effects) {
-            effects.showSpiritualMessage("Bienvenue dans PATRIX ! ✝️", 3000);
+            effects.showSpiritualMessage(window.i18n.t('notifications.welcome'), 3000);
         }
     }, 1500);
 });
@@ -489,9 +489,9 @@ function showSaveLoadMenu(mode) {
             return `
                 <div class="save-slot empty" data-slot="${save.slot}" data-mode="${mode}">
                     <div class="slot-header">
-                        <span class="slot-number">Slot ${save.slot}</span>
+                        <span class="slot-number">${window.i18n.t('game.slot')} ${save.slot}</span>
                     </div>
-                    <p style="color: #888; text-align: center; margin: 10px 0;">Vide</p>
+                    <p style="color: #888; text-align: center; margin: 10px 0;">${window.i18n.t('game.empty')}</p>
                 </div>
             `;
         } else {
@@ -507,24 +507,24 @@ function showSaveLoadMenu(mode) {
             return `
                 <div class="save-slot" data-slot="${save.slot}" data-mode="${mode}">
                     <div class="slot-header">
-                        <span class="slot-number">Slot ${save.slot}</span>
-                        ${mode === 'load' ? `<button class="slot-delete" onclick="deleteSaveSlot(${save.slot}, event)">🗑️ Supprimer</button>` : ''}
+                        <span class="slot-number">${window.i18n.t('game.slot')} ${save.slot}</span>
+                        ${mode === 'load' ? `<button class="slot-delete" onclick="deleteSaveSlot(${save.slot}, event)">${window.i18n.t('game.delete')}</button>` : ''}
                     </div>
                     <div class="slot-info">
                         <div class="slot-info-item">
-                            <span class="slot-info-label">Niveau</span>
+                            <span class="slot-info-label">${window.i18n.t('game.level')}</span>
                             <span class="slot-info-value">${save.level}</span>
                         </div>
                         <div class="slot-info-item">
-                            <span class="slot-info-label">Score</span>
+                            <span class="slot-info-label">${window.i18n.t('game.score')}</span>
                             <span class="slot-info-value">${save.score.toLocaleString()}</span>
                         </div>
                         <div class="slot-info-item">
-                            <span class="slot-info-label">Lignes</span>
+                            <span class="slot-info-label">${window.i18n.t('game.lines')}</span>
                             <span class="slot-info-value">${save.lines}</span>
                         </div>
                         <div class="slot-info-item">
-                            <span class="slot-info-label">Joueur</span>
+                            <span class="slot-info-label">${window.i18n.t('game.player')}</span>
                             <span class="slot-info-value">${save.data.userId}</span>
                         </div>
                     </div>
@@ -569,7 +569,7 @@ function handleSaveToSlot(slotNumber) {
         
         // Message de confirmation
         if (effects) {
-            effects.showSpiritualMessage(`Partie sauvegardée dans le Slot ${savedSlot} ! 💾`, 2000);
+            effects.showSpiritualMessage(window.i18n.t('notifications.gameSaved', { slot: savedSlot }), 2000);
         }
         
         console.log(`[Main] Partie sauvegardée dans le slot ${savedSlot}`);
@@ -585,13 +585,18 @@ function handleLoadFromSlot(slotNumber) {
     const saveData = userManager.loadGameState(slotNumber);
     if (!saveData) {
         if (effects) {
-            effects.showSpiritualMessage("Aucune sauvegarde dans ce slot ❌", 2000);
+            effects.showSpiritualMessage(window.i18n.t('notifications.noSaveInSlot'), 2000);
         }
         return;
     }
     
     // Confirmer le chargement
-    if (!confirm(`Charger la partie du Slot ${slotNumber} ?\n\nNiveau: ${saveData.level} | Score: ${saveData.score.toLocaleString()}\n\nLa partie en cours sera perdue.`)) {
+    const confirmMessage = window.i18n.t('notifications.loadSlotConfirm', { 
+        slot: slotNumber, 
+        level: saveData.level, 
+        score: saveData.score.toLocaleString() 
+    });
+    if (!confirm(confirmMessage)) {
         return;
     }
     
@@ -619,7 +624,7 @@ function handleLoadFromSlot(slotNumber) {
     }
     
     if (effects) {
-        effects.showSpiritualMessage(`Partie chargée du Slot ${slotNumber} ! 📂`, 2000);
+        effects.showSpiritualMessage(window.i18n.t('notifications.gameLoaded', { slot: slotNumber }), 2000);
     }
     
     console.log(`[Main] Partie chargée du slot ${slotNumber}`);
@@ -631,7 +636,7 @@ function handleLoadFromSlot(slotNumber) {
 function deleteSaveSlot(slotNumber, event) {
     event.stopPropagation();
     
-    if (!confirm(`Supprimer la sauvegarde du Slot ${slotNumber} ?`)) {
+    if (!confirm(window.i18n.t('notifications.deleteSlotConfirm', { slot: slotNumber }))) {
         return;
     }
     
@@ -640,7 +645,7 @@ function deleteSaveSlot(slotNumber, event) {
         showSaveLoadMenu('load');
         
         if (effects) {
-            effects.showSpiritualMessage(`Slot ${slotNumber} supprimé 🗑️`, 2000);
+            effects.showSpiritualMessage(window.i18n.t('notifications.slotDeleted', { slot: slotNumber }), 2000);
         }
     }
 }

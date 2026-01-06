@@ -548,7 +548,7 @@ class AudioManager {
         };
 
         const title = document.createElement('h3');
-        title.textContent = '🎵 Gospel Music';
+        title.textContent = window.i18n?.t('music.title') || '🎵 Gospel Music';
         title.style.cssText = `
             color: white;
             font-size: 16px;

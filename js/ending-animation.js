@@ -302,9 +302,9 @@ class EndingAnimation {
         this.ctx.textAlign = 'center';
         const alpha = Math.min(1, this.progress / 1);
         this.ctx.globalAlpha = alpha;
-        this.ctx.fillText('Félicitations!', this.canvas.width / 2, 100);
+        this.ctx.fillText(window.i18n?.t('endingAnimation.congratulations') || 'Félicitations!', this.canvas.width / 2, 100);
         this.ctx.font = '20px Arial';
-        this.ctx.fillText('Niveau Maximum Atteint', this.canvas.width / 2, 140);
+        this.ctx.fillText(window.i18n?.t('endingAnimation.maxLevelReached') || 'Niveau Maximum Atteint', this.canvas.width / 2, 140);
         this.ctx.globalAlpha = 1;
 
         // Chat apparaît
@@ -434,8 +434,9 @@ class EndingAnimation {
             this.ctx.save();
             this.ctx.translate(this.canvas.width / 2, 80);
             this.ctx.scale(scale, scale);
-            this.ctx.strokeText('TU PASSERAS PAS !', 0, 0);
-            this.ctx.fillText('TU PASSERAS PAS !', 0, 0);
+            const bossWarning = window.i18n?.t('endingAnimation.bossWarning') || 'TU PASSERAS PAS !';
+            this.ctx.strokeText(bossWarning, 0, 0);
+            this.ctx.fillText(bossWarning, 0, 0);
             this.ctx.restore();
         }
 
@@ -446,7 +447,7 @@ class EndingAnimation {
             this.ctx.textAlign = 'center';
             this.ctx.strokeStyle = '#ffffff';
             this.ctx.lineWidth = 4;
-            const catCry = 'MIHAHOU !';
+            const catCry = window.i18n?.t('endingAnimation.catCry') || 'MIHAHOU !';
             
             // Animation du texte
             const scale = 1 + Math.sin((this.progress - 3) * 6) * 0.15;
@@ -568,8 +569,8 @@ class EndingAnimation {
             this.ctx.strokeStyle = '#ffffff';
             this.ctx.lineWidth = 4;
             
-            const text = "Qu'est-ce que c'est";
-            const text2 = "cette merde...";
+            const text = window.i18n?.t('endingAnimation.catReaction1') || "Qu'est-ce que c'est";
+            const text2 = window.i18n?.t('endingAnimation.catReaction2') || "cette merde...";
             
             // Animation pulse comme pour le combat
             const scale = 1 + Math.sin((this.progress - 2.8) * 5) * 0.08;
@@ -625,8 +626,8 @@ class EndingAnimation {
             this.ctx.strokeStyle = '#ffffff';
             this.ctx.lineWidth = 4;
             
-            const text1 = "Il y avait autre chose";
-            const text2 = "derrière tout ça...";
+            const text1 = window.i18n?.t('endingAnimation.catThought1') || "Il y avait autre chose";
+            const text2 = window.i18n?.t('endingAnimation.catThought2') || "derrière tout ça...";
             
             // Animation pulse
             const scale = 1 + Math.sin((this.progress - 2) * 5) * 0.08;
@@ -711,9 +712,9 @@ class EndingAnimation {
         this.ctx.textAlign = 'center';
         
         // Messages philosophiques inspirants
-        const title = '✨ FAIS DE L\'IMPOSSIBLE POSSIBLE ✨';
-        const message1 = 'Profite autrement de la vie';
-        const message2 = 'Sagement, tu rachèteras le temps';
+        const title = window.i18n?.t('endingAnimation.finalTitle') || '✨ FAIS DE L\'IMPOSSIBLE POSSIBLE ✨';
+        const message1 = window.i18n?.t('endingAnimation.finalMessage1') || 'Profite autrement de la vie';
+        const message2 = window.i18n?.t('endingAnimation.finalMessage2') || 'Sagement, tu rachèteras le temps';
         
         this.ctx.fillStyle = '#1a1a1a';
         this.ctx.font = 'bold 24px Arial';
@@ -741,8 +742,9 @@ class EndingAnimation {
         this.ctx.fillStyle = 'rgba(50, 50, 50, 0.9)';
         this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
         this.ctx.lineWidth = 2;
-        this.ctx.strokeText('"Chaque instant est une opportunité"', this.canvas.width / 2, this.canvas.height / 2 + 70);
-        this.ctx.fillText('"Chaque instant est une opportunité"', this.canvas.width / 2, this.canvas.height / 2 + 70);
+        const finalQuote = window.i18n?.t('endingAnimation.finalQuote') || '"Chaque instant est une opportunité"';
+        this.ctx.strokeText(finalQuote, this.canvas.width / 2, this.canvas.height / 2 + 70);
+        this.ctx.fillText(finalQuote, this.canvas.width / 2, this.canvas.height / 2 + 70);
         
         this.ctx.shadowBlur = 0;
         this.ctx.globalAlpha = 1;
@@ -789,9 +791,9 @@ class EndingAnimation {
         this.ctx.fillStyle = '#ffffff';
         this.ctx.font = 'bold 14px Arial';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('Merci mihao miahoo', btnX, btnY - 8);
+        this.ctx.fillText(window.i18n?.t('endingAnimation.thankYou') || 'Merci mihao miahoo', btnX, btnY - 8);
         this.ctx.font = '12px Arial';
-        this.ctx.fillText('✨ Découvrez votre trésor ✨', btnX, btnY + 10);
+        this.ctx.fillText(window.i18n?.t('endingAnimation.discoverTreasure') || '✨ Découvrez votre trésor ✨', btnX, btnY + 10);
         
         // Zone cliquable (stocker pour l'event listener)
         if (!this.bookButtonBounds) {
@@ -855,21 +857,21 @@ class EndingAnimation {
         `;
         
         content.innerHTML = `
-            <h2 style="color: #ff6b9d; margin: 0 0 20px 0; font-size: 18px; text-shadow: 2px 2px 4px rgba(255, 107, 157, 0.2);">Musique du livre Catascrotte</h2>
+            <h2 style="color: #ff6b9d; margin: 0 0 20px 0; font-size: 18px; text-shadow: 2px 2px 4px rgba(255, 107, 157, 0.2);">${window.i18n?.t('endingAnimation.musicTitle') || 'Musique du livre Catascrotte'}</h2>
             
             <div style="background: rgba(255, 235, 245, 0.6); padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid rgba(255, 107, 157, 0.2);">
                 <p style="color: #ff6b9d; font-size: 20px; font-weight: bold; margin: 0 0 15px 0; line-height: 1.5;">
-                    Face aux défis,<br/>refuse de rester isolé !
+                    ${window.i18n?.t('endingAnimation.quote1') || 'Face aux défis,'}<br/>${window.i18n?.t('endingAnimation.quote2') || 'refuse de rester isolé !'}
                 </p>
                 <p style="color: #555; font-size: 16px; margin: 0; line-height: 1.6;">
-                    Bats-toi pour ton chemin,<br/>
-                    transforme l'obstacle en tremplin,<br/>
-                    et vis l'impossible !
+                    ${window.i18n?.t('endingAnimation.quote3') || 'Bats-toi pour ton chemin,'}<br/>
+                    ${window.i18n?.t('endingAnimation.quote4') || 'transforme l\'obstacle en tremplin,'}<br/>
+                    ${window.i18n?.t('endingAnimation.quote5') || 'et vis l\'impossible !'}
                 </p>
             </div>
             
             <p style="color: #666; font-size: 18px; margin: 0 0 35px 0; line-height: 1.6;">
-                🌟 Découvrez l'univers inclusif<br/>d'Emmanuel ! 🌟
+                ${window.i18n?.t('endingAnimation.discoverUniverse') || '🌟 Découvrez l\'univers inclusif<br/>d\'Emmanuel ! 🌟'}
             </p>
             
             <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
@@ -890,7 +892,7 @@ class EndingAnimation {
                    "
                    onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 10px 30px rgba(255, 107, 157, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.3) inset'"
                    onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 157, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.3) inset'">
-                    📚 Version Numérique (Google Play)
+                    ${window.i18n?.t('endingAnimation.digitalVersion') || '📚 Version Numérique (Google Play)'}
                 </a>
                 
                 <a href="https://www.amazon.fr/stores/Emmanuel-Payet/author/B0CS613QFB/allbooks?ref=ap_rdr&shoppingPortalEnabled=true" 
@@ -910,7 +912,7 @@ class EndingAnimation {
                    "
                    onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 10px 30px rgba(255, 152, 0, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.3) inset'"
                    onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 20px rgba(255, 152, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.3) inset'">
-                    📖 Version Papier (Amazon)
+                    ${window.i18n?.t('endingAnimation.paperVersion') || '📖 Version Papier (Amazon)'}
                 </a>
             </div>
             <div style="margin-top: 35px; display: flex; gap: 15px; justify-content: center;">
@@ -930,7 +932,7 @@ class EndingAnimation {
                         "
                         onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(129, 199, 132, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.3) inset'"
                         onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 15px rgba(129, 199, 132, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.3) inset'">
-                    🔄 Recommencer
+                    🔄 ${window.i18n?.t('game.restart') || 'Recommencer'}
                 </button>
             </div>
         `;
@@ -959,7 +961,7 @@ class EndingAnimation {
             transition: transform 0.3s ease;
         `;
         catDiv.textContent = '🐱';
-        catDiv.title = 'Voir la vidéo YouTube';
+        catDiv.title = window.i18n?.t('tooltips.videoLink') || 'Voir la vidéo YouTube';
         
         // Effet hover
         catDiv.addEventListener('mouseenter', () => {
