@@ -541,14 +541,23 @@ class WebBrowserManager {
      * Ouvre Audiomack (URL par défaut)
      */
     openAudiomack() {
-        // URL embed Audiomack
-        let audiomackUrl = 'https://audiomack.com/embed/emmanuelpayet888/album/amour-amour';
+        // Playlist intégrée directement (audio.js player désactivé pour performance)
+        const playlist = [
+            { 
+                title: "Il nous a demandé d'Aimer", 
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/amour-amour"
+            },
+            { 
+                title: "No War Eng", 
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/no-war-eng"
+            },
+            { 
+                title: "The Pulse of Ambition", 
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/the-pulse-of-ambition"
+            }
+        ];
         
-        if (window.audioManager && window.audioManager.playlist && window.audioManager.playlist.length > 0) {
-            // Utiliser l'URL embed de la première piste
-            audiomackUrl = window.audioManager.playlist[0].embedUrl;
-        }
-        
+        const audiomackUrl = playlist[0].embedUrl;
         this.open(audiomackUrl, 'Audiomack - Emmanuel Payet', this.autoStarted);
     }
 
