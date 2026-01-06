@@ -80,16 +80,24 @@ class UserInterface {
             });
         }
         
-        // Toggle panel trophées
+        // Toggle panel trophées (avec support tactile)
         if (this.elements.trophiesToggle) {
             this.elements.trophiesToggle.addEventListener('click', () => {
                 this.toggleTrophiesPanel();
             });
+            this.elements.trophiesToggle.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.toggleTrophiesPanel();
+            });
         }
         
-        // Fermer panel trophées
+        // Fermer panel trophées (avec support tactile)
         if (this.elements.trophiesClose) {
             this.elements.trophiesClose.addEventListener('click', () => {
+                this.closeTrophiesPanel();
+            });
+            this.elements.trophiesClose.addEventListener('touchend', (e) => {
+                e.preventDefault();
                 this.closeTrophiesPanel();
             });
         }

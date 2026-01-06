@@ -742,6 +742,9 @@ body {
     align-items: center;
     justify-content: center;
     padding: 5px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .trophies-count {
@@ -902,6 +905,9 @@ body {
     font-weight: normal;
     cursor: pointer;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .trophies-close:hover {
