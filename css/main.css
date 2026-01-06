@@ -788,6 +788,7 @@ body {
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease;
+    touch-action: none;
 }
 
 .trophies-panel.show {
@@ -810,6 +811,7 @@ body {
     animation: popupSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     flex-direction: column;
+    touch-action: auto;
 }
 
 @keyframes popupSlide {
@@ -922,6 +924,9 @@ body {
     flex: 1;
     padding: 20px 30px 30px 30px;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
 }
 
 /* Smooth scrollbar */
