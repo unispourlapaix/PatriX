@@ -6,17 +6,19 @@
 .web-browser-panel {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 600px; /* Contrainte PC */
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 15000;
     display: none;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 10px;
     animation: fadeIn 0.3s ease;
 }
 
@@ -30,10 +32,12 @@
 
 .web-browser-content {
     width: 100%;
-    height: 100%;
+    max-width: 100%; /* Respecte le parent (600px max) */
+    height: 90vh;
+    max-height: 800px;
     background: white;
-    border-radius: 0;
-    box-shadow: none;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     overflow: hidden;

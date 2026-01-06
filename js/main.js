@@ -295,6 +295,30 @@ function startGame() {
             game.start();
         }
     }
+    
+    // Activer le plein écran automatiquement sur mobile
+    if (window.innerWidth <= 768) {
+        setTimeout(() => {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(err => {
+                    console.log('Plein écran non disponible:', err);
+                });
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen().catch(err => {
+                    console.log('Plein écran non disponible:', err);
+                });
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen().catch(err => {
+                    console.log('Plein écran non disponible:', err);
+                });
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen().catch(err => {
+                    console.log('Plein écran non disponible:', err);
+                });
+            }
+        }, 100);
+    }
 }
 
 /**
