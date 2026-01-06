@@ -94,6 +94,16 @@ class UserInterface {
             });
         }
         
+        // Fermer panel trophées en cliquant sur le fond
+        if (this.elements.trophiesPanel) {
+            this.elements.trophiesPanel.addEventListener('click', (e) => {
+                // Fermer seulement si on clique sur le fond (pas sur le contenu)
+                if (e.target === this.elements.trophiesPanel) {
+                    this.closeTrophiesPanel();
+                }
+            });
+        }
+        
         // Scroll to top button
         if (this.elements.scrollToTop && this.elements.trophiesPanelContent) {
             const scrollContainer = this.elements.trophiesPanelContent.querySelector('.trophies-scrollable');

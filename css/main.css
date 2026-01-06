@@ -785,14 +785,10 @@ body {
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease;
-    pointer-events: none;
-    touch-action: none;
 }
 
 .trophies-panel.show {
     display: flex;
-    pointer-events: auto;
-    touch-action: auto;
 }
 
 .trophies-panel-content {
