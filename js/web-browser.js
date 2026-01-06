@@ -14,6 +14,10 @@ class WebBrowserManager {
         this.autoStarted = false;
         this.userClosedAudio = false; // Flag pour empêcher relance après fermeture manuelle
         this.loadThrottle = null;
+        this.iframeLoadTimeout = null;
+        this.maxIframeLoadTime = 30000; // Timeout 30s pour chargement iframe
+        this.cpuCheckInterval = null;
+        this.highCpuCount = 0;
         
         // Sécurités contre surcharge
         this.loadAttempts = 0;
@@ -25,6 +29,8 @@ class WebBrowserManager {
         this.isDisabled = false;
         this.performanceCheckInterval = null;
         this.lastPerformanceCheck = 0;
+        this.consecutiveHighMemory = 0;
+        this.maxConsecutiveHighMemory = 3;
         
         this.init();
     }
@@ -82,10 +88,19 @@ class WebBrowserManager {
         // Monitoring erreurs iframe
         if (this.iframe) {
             this.iframe.addEventListener('error', () => this.handleIframeError());
+            
+            // Timeout de chargement
+            this.iframe.addEventListener('load', () => {
+                this.clearIframeLoadTimeout();
+                this.errorCount = 0; // Reset sur succès
+            });
         }
         
         // Performance check périodique
         this.startPerformanceMonitoring();
+        
+        // CPU monitoring (si disponible)
+        this.startCPUMonitoring();
     }    
     /**
      * Configure le lazy loading de l'iframe
@@ -192,6 +207,62 @@ class WebBrowserManager {
     }
     
     /**
+     * Monitoring CPU (détection scripts lourds)
+     */
+    startCPUMonitoring() {
+        // Check toutes les 5 secondes
+        this.cpuCheckInterval = setInterval(() => {
+            this.checkCPUUsage();
+        }, 5000);
+    }
+    
+    /**
+     * Vérifie l'utilisation CPU (via requestIdleCallback)
+     */
+    checkCPUUsage() {
+        if (!this.isOpen() || this.isMinimized) return;
+        
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback((deadline) => {
+                // Si temps idle < 5ms, CPU surchargé
+                if (deadline.timeRemaining() < 5) {
+                    this.highCpuCount++;
+                    
+                    // 3 checks consécutifs de CPU élevé = boucle infinie probable
+                    if (this.highCpuCount >= 3) {
+                        console.warn('[WebBrowser] CPU surchargé détecté');
+                        this.handleOverload('CPU saturé - boucle infinie probable');
+                    }
+                } else {
+                    this.highCpuCount = 0; // Reset si CPU OK
+                }
+            });
+        }
+    }
+    
+    /**
+     * Timeout de chargement iframe
+     */
+    setIframeLoadTimeout() {
+        this.clearIframeLoadTimeout();
+        
+        this.iframeLoadTimeout = setTimeout(() => {
+            console.warn('[WebBrowser] Timeout de chargement iframe');
+            this.handleOverload('Timeout de chargement (>30s)');
+        }, this.maxIframeLoadTime);
+    }
+    
+    /**
+     * Clear timeout iframe
+     */
+    clearIframeLoadTimeout() {
+        if (this.iframeLoadTimeout) {
+            clearTimeout(this.iframeLoadTimeout);
+            this.iframeLoadTimeout = null;
+        }
+    }
+    
+    /**
      * Arrêt monitoring
      */
     stopPerformanceMonitoring() {
@@ -199,6 +270,13 @@ class WebBrowserManager {
             clearInterval(this.performanceCheckInterval);
             this.performanceCheckInterval = null;
         }
+        
+        if (this.cpuCheckInterval) {
+            clearInterval(this.cpuCheckInterval);
+            this.cpuCheckInterval = null;
+        }
+        
+        this.clearIframeLoadTimeout();
     }
     
     /**
@@ -214,10 +292,17 @@ class WebBrowserManager {
             const memLimit = performance.memory.jsHeapSizeLimit;
             const memPercent = (memUsed / memLimit) * 100;
             
-            // Si > 90% mémoire utilisée
-            if (memPercent > 90) {
-                // console.warn('[WebBrowser] Mémoire critique:', memPercent.toFixed(1) + '%');
-                this.handleOverload('Mémoire saturée');
+            // Si > 85% mémoire utilisée
+            if (memPercent > 85) {
+                this.consecutiveHighMemory++;
+                console.warn('[WebBrowser] Mémoire élevée:', memPercent.toFixed(1) + '%', `(${this.consecutiveHighMemory}/${this.maxConsecutiveHighMemory})`);
+                
+                // 3 checks consécutifs = saturation confirmée
+                if (this.consecutiveHighMemory >= this.maxConsecutiveHighMemory) {
+                    this.handleOverload('Mémoire saturée >' + memPercent.toFixed(1) + '%');
+                }
+            } else {
+                this.consecutiveHighMemory = 0; // Reset si mémoire OK
             }
         }
         
@@ -227,7 +312,12 @@ class WebBrowserManager {
                 // Ping iframe
                 this.iframe.contentWindow.postMessage('ping', '*');
             } catch (e) {
-                // console.warn('[WebBrowser] Iframe non responsive');
+                console.warn('[WebBrowser] Iframe non responsive');
+                this.errorCount++;
+                
+                if (this.errorCount >= this.maxErrors) {
+                    this.handleOverload('Iframe gelée/non responsive');
+                }
             }
         }
     }
@@ -279,6 +369,8 @@ class WebBrowserManager {
         this.loadThrottle = setTimeout(() => {
             if (this.iframe) {
                 this.iframe.src = url;
+                // Démarrer timeout de chargement
+                this.setIframeLoadTimeout();
             }
         }, 100);
         
