@@ -210,10 +210,10 @@ class WebBrowserManager {
      * Monitoring CPU (détection scripts lourds)
      */
     startCPUMonitoring() {
-        // Check toutes les 5 secondes
+        // Check toutes les 15 secondes (réduit pour moins de faux positifs)
         this.cpuCheckInterval = setInterval(() => {
             this.checkCPUUsage();
-        }, 5000);
+        }, 15000);
     }
     
     /**
@@ -224,17 +224,20 @@ class WebBrowserManager {
         
         if ('requestIdleCallback' in window) {
             requestIdleCallback((deadline) => {
-                // Si temps idle < 5ms, CPU surchargé
-                if (deadline.timeRemaining() < 5) {
+                // Si temps idle < 3ms (très strict), CPU potentiellement surchargé
+                if (deadline.timeRemaining() < 3) {
                     this.highCpuCount++;
                     
-                    // 3 checks consécutifs de CPU élevé = boucle infinie probable
-                    if (this.highCpuCount >= 3) {
-                        console.warn('[WebBrowser] CPU surchargé détecté');
+                    // 5 checks consécutifs de CPU élevé = boucle infinie confirmée
+                    if (this.highCpuCount >= 5) {
+                        console.warn('[WebBrowser] CPU surchargé détecté (' + this.highCpuCount + ' checks)');
                         this.handleOverload('CPU saturé - boucle infinie probable');
                     }
                 } else {
-                    this.highCpuCount = 0; // Reset si CPU OK
+                    // Reset progressif au lieu de brutal
+                    if (this.highCpuCount > 0) {
+                        this.highCpuCount--;
+                    }
                 }
             });
         }
