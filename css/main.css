@@ -1652,6 +1652,50 @@ body {
     text-decoration: underline;
 }
 
+/* Bouton sortie plein écran */
+.exit-fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 30px 30px 0;
+    border-color: transparent rgba(255, 255, 255, 0.3) transparent transparent;
+    background: transparent;
+    cursor: pointer;
+    z-index: 999999;
+    padding: 0;
+    transition: border-color 0.3s ease;
+    display: none;
+    touch-action: manipulation;
+    pointer-events: auto;
+}
+
+.exit-fullscreen-btn svg {
+    position: absolute;
+    top: 2px;
+    right: -28px;
+    color: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
+
+.exit-fullscreen-btn:hover {
+    border-color: transparent rgba(255, 255, 255, 0.5) transparent transparent;
+}
+
+.exit-fullscreen-btn:hover svg {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+/* Afficher uniquement en plein écran */
+:fullscreen .exit-fullscreen-btn,
+:-webkit-full-screen .exit-fullscreen-btn,
+:-moz-full-screen .exit-fullscreen-btn,
+:-ms-fullscreen .exit-fullscreen-btn {
+    display: block;
+}
+
 /* Contact Form Modal */
 .contact-modal {
     display: none;

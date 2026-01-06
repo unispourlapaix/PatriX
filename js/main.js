@@ -56,6 +56,16 @@ function initUserSystem() {
         loginModal.classList.add('show');
     }
     
+    // Bouton sortie plein écran
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
+    if (exitFullscreenBtn) {
+        exitFullscreenBtn.addEventListener('click', exitFullscreen);
+        exitFullscreenBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            exitFullscreen();
+        }, { passive: false });
+    }
+    
     // Gestion de la création de compte
     const registerBtn = document.getElementById('registerBtn');
     const loginHint = document.getElementById('loginHint');
@@ -296,8 +306,10 @@ function startGame() {
         }
     }
     
-    // Activer le plein écran automatiquement sur mobile
-    if (window.innerWidth <= 768) {
+    // Activer le plein écran automatiquement sur mobile UNIQUEMENT si non installé
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    
+    if (window.innerWidth <= 768 && !isStandalone) {
         setTimeout(() => {
             const elem = document.documentElement;
             if (elem.requestFullscreen) {
@@ -318,6 +330,21 @@ function startGame() {
                 });
             }
         }, 100);
+    }
+}
+
+/**
+ * Sortir du plein écran
+ */
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
     }
 }
 
