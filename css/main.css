@@ -1652,7 +1652,7 @@ body {
     text-decoration: underline;
 }
 
-/* Bouton sortie plein écran */
+/* Bouton bascule plein écran */
 .exit-fullscreen-btn {
     position: fixed;
     top: 10px;
@@ -1661,13 +1661,13 @@ body {
     height: 0;
     border-style: solid;
     border-width: 0 30px 30px 0;
-    border-color: transparent rgba(255, 255, 255, 0.3) transparent transparent;
+    border-color: transparent rgba(212, 175, 55, 0.4) transparent transparent;
     background: transparent;
     cursor: pointer;
     z-index: 999999;
     padding: 0;
     transition: border-color 0.3s ease;
-    display: none;
+    display: block;
     touch-action: manipulation;
     pointer-events: auto;
 }
@@ -1676,24 +1676,32 @@ body {
     position: absolute;
     top: 2px;
     right: -28px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.5);
     pointer-events: none;
+    transition: color 0.3s ease;
 }
 
 .exit-fullscreen-btn:hover {
-    border-color: transparent rgba(255, 255, 255, 0.5) transparent transparent;
+    border-color: transparent rgba(212, 175, 55, 0.6) transparent transparent;
 }
 
 .exit-fullscreen-btn:hover svg {
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(0, 0, 0, 0.8);
 }
 
-/* Afficher uniquement en plein écran */
+/* En plein écran, couleur plus visible */
 :fullscreen .exit-fullscreen-btn,
 :-webkit-full-screen .exit-fullscreen-btn,
 :-moz-full-screen .exit-fullscreen-btn,
 :-ms-fullscreen .exit-fullscreen-btn {
-    display: block;
+    border-color: transparent rgba(255, 255, 255, 0.5) transparent transparent;
+}
+
+:fullscreen .exit-fullscreen-btn svg,
+:-webkit-full-screen .exit-fullscreen-btn svg,
+:-moz-full-screen .exit-fullscreen-btn svg,
+:-ms-fullscreen .exit-fullscreen-btn svg {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Contact Form Modal */

@@ -56,13 +56,13 @@ function initUserSystem() {
         loginModal.classList.add('show');
     }
     
-    // Bouton sortie plein écran
+    // Bouton bascule plein écran
     const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
     if (exitFullscreenBtn) {
-        exitFullscreenBtn.addEventListener('click', exitFullscreen);
+        exitFullscreenBtn.addEventListener('click', toggleFullscreen);
         exitFullscreenBtn.addEventListener('touchend', (e) => {
             e.preventDefault();
-            exitFullscreen();
+            toggleFullscreen();
         }, { passive: false });
     }
     
@@ -334,17 +334,45 @@ function startGame() {
 }
 
 /**
- * Sortir du plein écran
+ * Basculer entre plein écran et mode normal
  */
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+function toggleFullscreen() {
+    const isFullscreen = document.fullscreenElement || 
+                        document.webkitFullscreenElement || 
+                        document.mozFullScreenElement || 
+                        document.msFullscreenElement;
+    
+    if (isFullscreen) {
+        // Sortir du plein écran
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    } else {
+        // Entrer en plein écran
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.log('Plein écran non disponible:', err);
+            });
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen().catch(err => {
+                console.log('Plein écran non disponible:', err);
+            });
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen().catch(err => {
+                console.log('Plein écran non disponible:', err);
+            });
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen().catch(err => {
+                console.log('Plein écran non disponible:', err);
+            });
+        }
     }
 }
 
