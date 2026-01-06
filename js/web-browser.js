@@ -493,17 +493,20 @@ class WebBrowserManager {
     }
 
     /**
-     * Toggle entre minimisé et restauré
+     * Toggle entre minimisé et restauré, ou relance si fermé
      */
     toggle() {
-        if (this.isMinimized) {
-            // Si minimisé, restaurer
+        // Si le panneau est affiché et minimisé, restaurer
+        if (this.panel.classList.contains('show') && this.isMinimized) {
             this.restore();
-        } else if (this.isOpen()) {
-            // Si ouvert, minimiser
+        } 
+        // Si le panneau est affiché et maximisé, minimiser
+        else if (this.panel.classList.contains('show') && !this.isMinimized) {
             this.minimize();
-        } else {
-            // Pas encore ouvert, ouvrir directement
+        } 
+        // Si fermé (pas de currentUrl ou pas visible), relancer Audiomack
+        else {
+            this.userClosedAudio = false; // Permettre relance
             this.openAudiomack();
         }
     }
