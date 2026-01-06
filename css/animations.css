@@ -1182,6 +1182,7 @@
     margin-bottom: 20px;
     border: 2px solid rgba(245, 222, 179, 0.5);
     box-shadow: 0 2px 12px rgba(245, 222, 179, 0.15);
+    pointer-events: auto;
 }
 
 .profile-content {
@@ -1220,6 +1221,7 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
+    pointer-events: auto;
 }
 
 .profile-edit-btn {

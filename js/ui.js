@@ -80,6 +80,15 @@ class UserInterface {
             });
         }
         
+        // Fermer trophy modal en cliquant sur le fond
+        if (this.elements.trophyModal) {
+            this.elements.trophyModal.addEventListener('click', (e) => {
+                if (e.target === this.elements.trophyModal) {
+                    this.hideTrophy();
+                }
+            });
+        }
+        
         // Toggle panel trophées
         if (this.elements.trophiesToggle) {
             this.elements.trophiesToggle.addEventListener('click', () => {

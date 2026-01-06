@@ -835,6 +835,7 @@ body {
     z-index: 10;
     flex-shrink: 0;
     gap: 10px;
+    pointer-events: auto;
 }
 
 .trophies-header h2 {
@@ -843,6 +844,7 @@ body {
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     letter-spacing: 2px;
+    pointer-events: auto;
 }
 
 /* Section découverte Emmanuel */
@@ -853,6 +855,7 @@ body {
     padding: 15px;
     margin-bottom: 20px;
     text-align: center;
+    pointer-events: auto;
 }
 
 .discover-title {
@@ -893,6 +896,7 @@ body {
     position: absolute;
     top: 5px;
     right: 10px;
+    pointer-events: auto;
 }
 
 .trophies-close {
@@ -980,6 +984,7 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
+    pointer-events: auto;
 }
 
 .trophy-card {
@@ -991,6 +996,8 @@ body {
     position: relative;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+    touch-action: manipulation;
 }
 
 .trophy-card.unlocked {
@@ -1051,7 +1058,7 @@ body {
 
 /* Modal de trophée débloqué - Style cristal blanc épuré */
 .trophy-modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -1062,7 +1069,7 @@ body {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 10500;
+    z-index: 9000;
     animation: fadeIn 0.3s ease;
 }
 
