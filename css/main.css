@@ -1654,14 +1654,10 @@ body {
     z-index: 10000;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
-    touch-action: none;
 }
 
 .contact-modal.active {
-    pointer-events: all;
     display: flex;
-    touch-action: auto;
 }
 
 .contact-form-container {
@@ -1672,10 +1668,7 @@ body {
     max-width: 400px;
     width: 90%;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    pointer-events: all;
-    z-index: 10001;
     position: relative;
-    touch-action: auto;
 }
 
 .contact-form-title {
