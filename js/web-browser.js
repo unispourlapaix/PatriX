@@ -13,6 +13,7 @@ class WebBrowserManager {
         this.isMinimized = false;
         this.autoStarted = false;
         this.userClosedAudio = false; // Flag pour empêcher relance après fermeture manuelle
+        this.wasPausedByPlaylist = false; // Flag pour reprendre le jeu après fermeture du sélecteur
         this.loadThrottle = null;
         this.iframeLoadTimeout = null;
         this.maxIframeLoadTime = 30000; // Timeout 30s pour chargement iframe
@@ -160,7 +161,7 @@ class WebBrowserManager {
         // console.error(`[WebBrowser] Erreur iframe (${this.errorCount}/${this.maxErrors})`);
         
         if (this.errorCount >= this.maxErrors) {
-            this.handleOverload('Trop d\'erreurs de chargement');
+            this.handleOverload(window.i18n?.t('errors.tooManyLoadErrors') || 'Trop d\'erreurs de chargement');
         }
     }
     
@@ -182,18 +183,18 @@ class WebBrowserManager {
         // Alerter utilisateur
         if (window.effects) {
             window.effects.showSpiritualMessage(
-                '⚠️ Lecteur audio désactivé (surcharge détectée)',
-                4000
+                '🌐❌ Erreur de chargement',
+                3000
             );
         }
         
-        // Réactiver après 5 minutes
+        // Réactiver après 30 secondes (au lieu de 5 minutes)
         setTimeout(() => {
             this.isDisabled = false;
             this.loadAttempts = 0;
             this.errorCount = 0;
             // console.log('[WebBrowser] Lecteur réactivé');
-        }, 300000); // 5 minutes
+        }, 30000); // 30 secondes
     }
     
     /**
@@ -251,7 +252,16 @@ class WebBrowserManager {
         
         this.iframeLoadTimeout = setTimeout(() => {
             console.warn('[WebBrowser] Timeout de chargement iframe');
-            this.handleOverload('Timeout de chargement (>30s)');
+            // Ne pas arrêter la musique, juste effacer le timeout
+            this.clearIframeLoadTimeout();
+            
+            // Afficher message d'erreur sans fermer
+            if (window.effects) {
+                window.effects.showSpiritualMessage(
+                    '🌐❌ Chargement lent',
+                    2000
+                );
+            }
         }, this.maxIframeLoadTime);
     }
     
@@ -330,6 +340,13 @@ class WebBrowserManager {
      */
     open(url, title = 'Navigation', skipConfirm = false) {
         if (!this.panel || !this.iframe) return;
+        
+        // Réinitialiser si désactivé (permettre nouvelle tentative manuelle)
+        if (this.isDisabled) {
+            this.isDisabled = false;
+            this.loadAttempts = 0;
+            this.errorCount = 0;
+        }
         
         // Vérifier sécurité anti-boucle
         if (!this.canLoad()) {
@@ -639,24 +656,105 @@ class WebBrowserManager {
      * Ouvre Audiomack (URL par défaut)
      */
     openAudiomack() {
-        // Playlist intégrée directement (audio.js player désactivé pour performance)
+        // Réinitialiser le statut si désactivé (permettre nouvelle tentative)
+        if (this.isDisabled) {
+            this.isDisabled = false;
+            this.loadAttempts = 0;
+            this.errorCount = 0;
+        }
+        
+        // Afficher le sélecteur de playlist
+        this.showPlaylistSelector();
+    }
+
+    /**
+     * Affiche un sélecteur de playlist Audiomack
+     */
+    showPlaylistSelector() {
+        // Mettre en pause si le jeu est en cours
+        if (window.engine && window.engine.isRunning && !window.engine.isPaused) {
+            window.engine.togglePause();
+            this.wasPausedByPlaylist = true;
+        } else {
+            this.wasPausedByPlaylist = false;
+        }
+        
         const playlist = [
             { 
                 title: "Il nous a demandé d'Aimer", 
-                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/amour-amour"
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/amour-amour",
+                cover: "🎵"
             },
             { 
                 title: "No War Eng", 
-                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/no-war-eng"
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/song/no-war-eng",
+                cover: "☮️"
             },
             { 
-                title: "The Pulse of Ambition", 
-                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/the-pulse-of-ambition"
+                title: "You're Late", 
+                embedUrl: "https://audiomack.com/embed/emmanuelpayet888/album/youre-late",
+                cover: "⏰"
             }
         ];
+
+        // Créer le sélecteur HTML
+        const selectorHTML = `
+            <div id="playlistSelector" class="playlist-selector">
+                <div class="playlist-selector-content">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--text-color);">
+                        🎵 ${window.i18n?.t('music.selectPlaylist') || 'Sélectionnez une Playlist'}
+                    </h3>
+                    <div class="playlist-grid">
+                        ${playlist.map((item, index) => `
+                            <button class="playlist-item" data-index="${index}">
+                                <span class="playlist-cover">${item.cover}</span>
+                                <span class="playlist-title">${item.title}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <button class="playlist-close-btn">${window.i18n?.t('game.close') || 'Fermer'}</button>
+                </div>
+            </div>
+        `;
+
+        // Ajouter au DOM
+        document.body.insertAdjacentHTML('beforeend', selectorHTML);
+
+        const selector = document.getElementById('playlistSelector');
+        const items = selector.querySelectorAll('.playlist-item');
+        const closeBtn = selector.querySelector('.playlist-close-btn');
+
+        // Gestionnaires d'événements
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const selected = playlist[index];
+                this.open(selected.embedUrl, `Audiomack - ${selected.title}`, this.autoStarted);
+                this.closePlaylistSelector(selector);
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            this.closePlaylistSelector(selector);
+        });
         
-        const audiomackUrl = playlist[0].embedUrl;
-        this.open(audiomackUrl, 'Audiomack - Emmanuel Payet', this.autoStarted);
+        selector.addEventListener('click', (e) => {
+            if (e.target === selector) {
+                this.closePlaylistSelector(selector);
+            }
+        });
+    }
+    
+    /**
+     * Ferme le sélecteur et reprend le jeu si nécessaire
+     */
+    closePlaylistSelector(selector) {
+        selector.remove();
+        
+        // Reprendre le jeu si on l'avait mis en pause
+        if (this.wasPausedByPlaylist && window.engine && window.engine.isPaused) {
+            window.engine.togglePause();
+            this.wasPausedByPlaylist = false;
+        }
     }
 
     /**

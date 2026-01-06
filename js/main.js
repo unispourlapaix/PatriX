@@ -281,7 +281,7 @@ function initUserSystem() {
                     </div>
                 `).join('');
             } else {
-                leaderboardList.innerHTML = '<div class="loading">Aucun score pour le moment</div>';
+                leaderboardList.innerHTML = '<div class="loading">' + (window.i18n?.t('game.noScores') || 'Aucun score pour le moment') + '</div>';
             }
         } catch (error) {
             leaderboardList.innerHTML = '<div class="loading">' + window.i18n.t('game.loadingError') + '</div>';

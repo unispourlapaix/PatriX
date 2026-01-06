@@ -56,6 +56,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.playlist-selector') ||
+                 e.target.closest('.save-load-modal') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-footer') ||
@@ -84,6 +86,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.playlist-selector') ||
+                 e.target.closest('.save-load-modal') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-footer') ||
@@ -110,6 +114,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.playlist-selector') ||
+                 e.target.closest('.save-load-modal') ||
                  e.target.closest('.install-banner') ||
                  e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-footer') ||
@@ -232,8 +238,11 @@ class Controls {
         const boardElement = document.getElementById('gameBoard');
         
         document.addEventListener('mousedown', (e) => {
-            // Ignorer les clics sur la zone mécanique
-            if (e.target && e.target.closest && e.target.closest('.mechanical-display')) {
+            // Ignorer les clics sur la zone mécanique et les modals
+            if (e.target && e.target.closest && 
+                (e.target.closest('.mechanical-display') ||
+                 e.target.closest('.playlist-selector') ||
+                 e.target.closest('.save-load-modal'))) {
                 return;
             }
             

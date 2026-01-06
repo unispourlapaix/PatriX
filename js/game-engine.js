@@ -361,8 +361,8 @@ class GameEngine {
         const currentTime = Date.now();
         const timeSinceLastPop = currentTime - this.lastPopTime;
         
-        // Incrémenter combo si pop rapide (< 2 secondes)
-        if (timeSinceLastPop < 2000 && this.lastPopTime > 0) {
+        // Incrémenter combo si pop rapide (< 6 secondes pour faciliter accumulation)
+        if (timeSinceLastPop < 6000 && this.lastPopTime > 0) {
             this.popCombo++;
         } else {
             this.popCombo = 1;
@@ -472,12 +472,12 @@ class GameEngine {
             }
         }
         
-        // Reset timer combo
+        // Reset timer combo (doit correspondre au délai de maintien)
         if (this.popComboTimer) clearTimeout(this.popComboTimer);
         this.popComboTimer = setTimeout(() => {
             this.popCombo = 0;
             this.emit('popComboEnd');
-        }, 2000);
+        }, 6000); // Même délai que le check de combo
         
         // Émettre événement avant de supprimer
         this.emit('groupPopped', { 

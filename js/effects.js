@@ -569,7 +569,8 @@ class VisualEffects {
      */
     createRisingWords(level) {
         const boardRect = document.getElementById('gameBoard').getBoundingClientRect();
-        const words = CONFIG.MESSAGES.ENCOURAGEMENTS;
+        // Utiliser les mots traduits depuis i18n, fallback sur CONFIG si nécessaire
+        const words = window.i18n?.encouragements || CONFIG.MESSAGES.ENCOURAGEMENTS;
         const wordCount = 8 + Math.floor(level / 5); // Plus de mots pour les niveaux élevés
         
         for (let i = 0; i < Math.min(wordCount, 15); i++) {

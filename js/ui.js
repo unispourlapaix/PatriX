@@ -237,10 +237,10 @@ class UserInterface {
             // Mettre à jour l'affichage du niveau
             this.updateLevel(data.level);
             
-            // Vérifier si un trésor existe pour ce niveau
-            const treasureData = CONFIG.MESSAGES.TREASURES.find(t => t.level === data.level);
+            // Vérifier si un message de trésor existe pour ce niveau dans les traductions
+            const hasTreasure = window.i18n?.treasures?.[data.level];
             
-            if (treasureData) {
+            if (hasTreasure) {
                 // Marquer immédiatement le modal comme ouvert pour bloquer les trophées
                 this.isModalOpen = true;
                 
@@ -467,11 +467,12 @@ class UserInterface {
      * Vérifie et affiche le message de niveau
      */
     checkLevelMessage(level) {
-        const messageData = CONFIG.MESSAGES.LEVELS.find(m => m.level === level);
+        // Récupérer le message traduit depuis i18n
+        const message = window.i18n?.levelMessages?.[level];
         
-        if (messageData && messageData.message !== this.currentMessage) {
-            this.currentMessage = messageData.message;
-            this.showSpiritualMessage(messageData.message);
+        if (message && message !== this.currentMessage) {
+            this.currentMessage = message;
+            this.showSpiritualMessage(message);
         }
     }
 
@@ -480,9 +481,11 @@ class UserInterface {
      */
     showComboMessage(combo) {
         if (combo > 1) {
-            const messages = CONFIG.MESSAGES.COMBOS;
-            const message = messages[Math.min(combo - 2, messages.length - 1)];
-            this.effects.showSpiritualMessage(message, 2000);
+            const messages = window.i18n?.comboMessages || [];
+            if (messages.length > 0) {
+                const message = messages[Math.min(combo - 2, messages.length - 1)];
+                this.effects.showSpiritualMessage(message, 2000);
+            }
         }
     }
 
@@ -986,9 +989,10 @@ class UserInterface {
      * Affiche le trésor avec message philosophique
      */
     showTreasure(level) {
-        const treasureData = CONFIG.MESSAGES.TREASURES.find(t => t.level === level);
+        // Récupérer le message traduit depuis i18n
+        const treasureMessage = window.i18n?.treasures?.[level];
         
-        if (treasureData && this.elements.treasureModal) {
+        if (treasureMessage && this.elements.treasureModal) {
             // isModalOpen déjà à true depuis levelUp
             
             // Mettre en pause le jeu si pas déjà en pause
@@ -1001,7 +1005,7 @@ class UserInterface {
                 this.elements.treasureLevel.textContent = level;
             }
             if (this.elements.treasureMessage) {
-                this.elements.treasureMessage.textContent = treasureData.message;
+                this.elements.treasureMessage.textContent = treasureMessage;
             }
             
             // Afficher le modal

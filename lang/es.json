@@ -46,6 +46,7 @@
     "resetting": "Restableciendo...",
     "loading": "Cargando...",
     "loadingError": "Error de carga",
+    "noScores": "No hay puntuaciones aún",
     "saveTitle": "💾 Guardar",
     "loadTitle": "📂 Cargar",
     "savesTitle": "💾 PARTIDAS GUARDADAS",
@@ -87,7 +88,8 @@
       "connectionError": "Error de conexión. Verifica tu conexión a internet.",
       "serverError": "No se puede conectar al servidor. Verifica tu conexión a internet.",
       "wrongPassword": "Contraseña incorrecta",
-      "cantCreateAccount": "No se puede crear cuenta en línea. Verifica tu conexión a internet."
+      "cantCreateAccount": "No se puede crear cuenta en línea. Verifica tu conexión a internet.",
+      "tooManyLoadErrors": "Demasiados errores de carga"
     },
     "success": {
       "resetEmailSent": "Correo de restablecimiento enviado"
@@ -192,7 +194,8 @@
   "music": {
     "title": "🎵 Gospel Music",
     "loading": "Cargando...",
-    "error": "Error de carga"
+    "error": "Error de carga",
+    "selectPlaylist": "Selecciona una Lista de Reproducción"
   },
   "browser": {
     "cookieWarning": "Este sitio puede usar cookies y recopilar datos.\n¿Continuar?",
@@ -373,5 +376,86 @@
     "score": "Alcanzar {value} puntos",
     "lines": "Completar {value} líneas",
     "combo": "Hacer un combo x{value}"
-  }
+  },
+  "treasures": {
+    "1": "La alegría es una elección que haces cada día. ¡Elige ahora! ✨",
+    "2": "La satisfacción viene de dentro. Ya tienes todo lo que necesitas. 💫",
+    "3": "Suelta lo que no puedes controlar. ¡La libertad te espera! 🕊️",
+    "4": "Perdónate. Hiciste lo mejor con lo que sabías en ese momento. 💚",
+    "5": "¡Sal de tu caja! El mundo es más grande que tus miedos. 🌍",
+    "6": "¡Muévete, baila, vive! Tu cuerpo es el templo de tu espíritu. 💃",
+    "7": "Nada es imposible para quien cree. ¡Puedes hacer cualquier cosa! ⭐",
+    "8": "El coraje no es la ausencia de miedo, es avanzar a pesar de él. 🦁",
+    "9": "¡Ríe y canta! La música de tu corazón transforma el mundo. 🎵",
+    "10": "¡Baila bajo la lluvia con una sonrisa! Las tormentas siempre pasan. ☔",
+    "11": "Tu luz interior brilla más que cualquier oscuridad. ✝️",
+    "12": "Cada pequeño paso cuenta. ¡Sigue avanzando, estás progresando! 👣",
+    "13": "La gratitud transforma lo que tienes en suficiente. ¡Gracias por hoy! 🙏",
+    "14": "Eres una creación única y magnífica. ¡Celebra quién eres! 🌟",
+    "15": "El amor comienza contigo mismo. Ámate como eres amado. ❤️",
+    "16": "Los fracasos son lecciones disfrazadas. ¡Sigue aprendiendo! 📚",
+    "17": "Tu voz importa. Exprésate con autenticidad y coraje. 🗣️",
+    "18": "La paciencia es una forma de sabiduría. Todo llega a su tiempo. ⏳",
+    "19": "Respira profundamente. ¡Estás vivo y eso es un regalo! 🌬️",
+    "20": "Tus sueños son válidos. ¡Persíguelos con pasión y fe! 🎯",
+    "21": "Eres más resistente de lo que imaginas. ¡Mira todo lo que has superado! 💪",
+    "22": "Comparte tu sonrisa. Puede iluminar el día de alguien. 😊",
+    "23": "La esperanza es un ancla para el alma. ¡Mantén la esperanza, siempre! ⚓",
+    "24": "Cambia tu perspectiva, cambia tu vida. ¡Todo es cuestión de visión! 👁️",
+    "25": "Eres una fuerza de la naturaleza. ¡Abraza tu poder! 🌊",
+    "26": "La amabilidad es una fortaleza, no una debilidad. Sé bueno contigo mismo. 🤗",
+    "27": "Cada día es una nueva oportunidad para empezar de nuevo. ¡Hoy importa! 🌅",
+    "28": "Mereces la felicidad. ¡No dejes que nadie te diga lo contrario! 🎁",
+    "29": "La fe mueve montañas. ¡Sigue creyendo! ⛰️",
+    "30": "Estás exactamente donde necesitas estar. Confía en el proceso. 🧭",
+    "31": "Tu historia aún no ha terminado. ¡Lo mejor está por venir! 📖",
+    "32": "Celebra cada victoria, incluso las pequeñas. ¡Eres un campeón! 🏆",
+    "33": "La paz interior es tu derecho de nacimiento. ¡Reclámala! ☮️",
+    "34": "Atrévete a soñar más grande. ¡El cielo es solo el comienzo! ☁️",
+    "35": "Inspiras a más personas de las que crees. ¡Brilla! ✨",
+    "36": "La vida es un regalo. ¡Desenvuélvelo con asombro! 🎀",
+    "37": "Tienes el poder de crear la vida que deseas. ¡Comienza ahora! 🎨",
+    "38": "Suelta lo que te pesa. ¡Viaja ligero, vuela alto! 🦅",
+    "39": "Tu potencial es ilimitado. ¡Nunca te subestimes! 🚀",
+    "40": "Eres un milagro viviente. ¡Nunca lo olvides! 🌈",
+    "41": "La confianza en uno mismo se aprende. ¡Practícala cada día! 💎",
+    "42": "Eres el arquitecto de tu destino. ¡Construye con amor! 🏗️",
+    "43": "Canta tu propia canción. ¡El mundo necesita tu melodía! 🎼",
+    "44": "Eres bendecido y eres una bendición. ¡Comparte tu luz! 🕯️",
+    "45": "La mejor inversión eres tú mismo. ¡Vales el esfuerzo! 💰",
+    "46": "Maravíllate con las pequeñas cosas. ¡La magia está en todas partes! ✨",
+    "47": "Has sobrevivido al 100% de tus peores días. ¡Eres invencible! 🛡️",
+    "48": "Vive plenamente. Ama profundamente. Ríe a menudo. ¡Eso es la vida! 🎭",
+    "49": "Eres una obra de arte en progreso. ¡Sé paciente contigo mismo! 🖼️",
+    "50": "¡Has alcanzado las alturas! Sigue escalando. ¡Eres extraordinario! 🏔️"
+  },
+  "levelMessages": {
+    "0": "Abandona la tristeza...",
+    "5": "¡Revístete de fuerza!",
+    "10": "¡Cultiva el coraje!",
+    "15": "Transforma la desesperación...",
+    "20": "...en grandes sueños!",
+    "25": "La luz brilla en la oscuridad",
+    "30": "Eres más fuerte de lo que crees",
+    "40": "Cada bloque colocado es una victoria",
+    "50": "Estás construyendo algo hermoso"
+  },
+  "comboMessages": [
+    "¡Hermosa construcción! ✨",
+    "¡La luz está creciendo! 🌟",
+    "¡Sigue así! 💪",
+    "¡Magnífico! ⭐",
+    "¡Estás brillando! ✝️",
+    "¡Fuerza y coraje! 💫",
+    "¡Increíble! 🎯",
+    "¡Campeón! 👑"
+  ],
+  "encouragements": [
+    "CORAJE", "FUERZA", "ESPERANZA", "FE", "AMOR",
+    "PAZ", "LUZ", "VIDA", "ALEGRÍA", "GRACIA",
+    "VICTORIA", "GLORIA", "HONOR", "BELLEZA", "BONDAD",
+    "VERDAD", "LIBERTAD", "SABIDURÍA", "PODER", "SUEÑO",
+    "PERSEVERA", "AVANZA", "BRILLA", "TRIUNFA", "CREA",
+    "CONSTRUYE", "CRECE", "IRRADIA", "VENCE", "CONFIANZA"
+  ]
 }

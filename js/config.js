@@ -19,7 +19,7 @@ const CONFIG = {
         INITIAL_DROP_SPEED: 1000,  // ms
         MIN_DROP_SPEED: 150,        // ms
         SPEED_INCREASE: 40,         // ms par ligne
-        COMBO_TIMEOUT: 2000,        // ms
+        COMBO_TIMEOUT: 8000,        // ms - Délai pour maintenir un combo de lignes complètes
         ANIMATION_DURATION: 600     // ms
     },
 

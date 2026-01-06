@@ -2,7 +2,7 @@
   "language": {"name": "Português", "code": "pt"},
   "menu": {"play": "Jogar", "login": "Entrar", "register": "Registrar", "logout": "Sair", "playGuest": "Jogar sem conta", "backToLogin": "← Voltar ao login"},
   "tooltips": {"sound": "Som", "music": "Audiomack", "back": "Anterior", "forward": "Próximo", "refresh": "Atualizar", "minimize": "Minimizar", "close": "Fechar", "videoLink": "Ver vídeo no YouTube"},
-  "game": {"score": "PONTOS", "lines": "LINHAS", "level": "NÍVEL", "combo": "COMBO", "next": "PRÓXIMO", "hold": "RESERVA", "pause": "PAUSA", "gameOver": "FIM DE JOGO", "gameOverTitle": "Jogo Terminado", "gameOverMessage": "Continue sonhando!", "finalScore": "Pontuação Final", "restart": "Recomeçar", "save": "Salvar", "load": "Carregar", "resume": "Continuar", "treasureLevel": "Nível", "treasureContinue": "Continuar ✨", "shareScore": "Compartilhar pontuação", "supportArtist": "Apoiar o artista", "creating": "Criando...", "connecting": "Conectando...", "resetting": "Resetando...", "loading": "Carregando...", "loadingError": "Erro ao carregar", "saveTitle": "💾 Salvar", "loadTitle": "📂 Carregar", "savesTitle": "💾 JOGOS SALVOS", "close": "Fechar", "slot": "Slot {slot}", "empty": "Vazio", "delete": "🗑️ Excluir", "player": "Jogador"},
+  "game": {"score": "PONTOS", "lines": "LINHAS", "level": "NÍVEL", "combo": "COMBO", "next": "PRÓXIMO", "hold": "RESERVA", "pause": "PAUSA", "gameOver": "FIM DE JOGO", "gameOverTitle": "Jogo Terminado", "gameOverMessage": "Continue sonhando!", "finalScore": "Pontuação Final", "restart": "Recomeçar", "save": "Salvar", "load": "Carregar", "resume": "Continuar", "treasureLevel": "Nível", "treasureContinue": "Continuar ✨", "shareScore": "Compartilhar pontuação", "supportArtist": "Apoiar o artista", "creating": "Criando...", "connecting": "Conectando...", "resetting": "Resetando...", "loading": "Carregando...", "loadingError": "Erro ao carregar", "noScores": "Nenhuma pontuação ainda", "saveTitle": "💾 Salvar", "loadTitle": "📂 Carregar", "savesTitle": "💾 JOGOS SALVOS", "close": "Fechar", "slot": "Slot {slot}", "empty": "Vazio", "delete": "🗑️ Excluir", "player": "Jogador"},
   "auth": {
     "loginTitle": "Entrar",
     "registerTitle": "Cadastro",
@@ -35,7 +35,8 @@
       "connectionError": "Erro de conexão...",
       "serverError": "Não foi possível conectar ao servidor...",
       "wrongPassword": "Senha incorreta",
-      "cantCreateAccount": "Não foi possível criar conta online..."
+      "cantCreateAccount": "Não foi possível criar conta online...",
+      "tooManyLoadErrors": "Muitos erros de carregamento"
     },
     "success": {
       "resetEmailSent": "Email de reset enviado"
@@ -94,7 +95,7 @@
   },
   "pop": {"normal": "POP x{count}!", "big": "✨ BIG POP x{count}! ✨", "mega": "🔥 MEGA POP x{count}! 🔥"},
   "endingAnimation": {"title": "🌟 PARABÉNS! 🌟", "message1": "Boa coragem!", "message2": "Você chegou ao fim! 🎉", "bookButton": "📖 ÁLBUM DE FOTOS", "thankYou": "Obrigado mihao miahoo", "discoverTreasure": "✨ Descubra seu tesouro ✨", "musicTitle": "Música do livro Catascrotte", "quote1": "Diante dos desafios,", "quote2": "recuse ficar isolado!", "quote3": "Lute pelo seu caminho,", "quote4": "transforme obstáculos em trampolins,", "quote5": "e viva o impossível!", "discoverUniverse": "🌟 Descubra o universo inclusivo<br/>de Emmanuel! 🌟", "digitalVersion": "📚 Versão Digital (Google Play)", "paperVersion": "📖 Versão Impressa (Amazon)", "catCry": "MIHAHOU!", "catReaction1": "Que diabos é", "catReaction2": "essa merda...", "catThought1": "Havia algo mais", "catThought2": "por trás de tudo isso...", "finalTitle": "✨ TORNE O IMPOSSÍVEL POSSÍVEL ✨", "finalMessage1": "Aproveite a vida diferentemente", "finalMessage2": "Sabiamente, você redimirá o tempo", "finalQuote": "\"Cada instante é uma oportunidade\"", "congratulations": "Parabéns!", "maxLevelReached": "Nível Máximo Alcançado", "bossWarning": "VOCÊ NÃO PASSARÁ!"},
-  "music": {"title": "🎵 Gospel Music", "loading": "Carregando...", "error": "Erro ao carregar"},
+  "music": {"title": "🎵 Gospel Music", "loading": "Carregando...", "error": "Erro ao carregar", "selectPlaylist": "Selecione uma Playlist"},
   "browser": {"cookieWarning": "Este site pode usar cookies e coletar dados.\nContinuar?", "overloadMessage": "O player de áudio foi desativado para preservar o desempenho.\nReativação em 5 minutos."},
   "profile": {
     "title": "✏️ MEU PERFIL",
@@ -272,6 +273,87 @@
     "lines": "Completar {value} linhas",
     "combo": "Fazer um combo x{value}",
     "play": "Jogar o jogo"
-  }
+  },
+  "treasures": {
+    "1": "A alegria é uma escolha que você faz todos os dias. Escolha agora! ✨",
+    "2": "O contentamento vem de dentro. Você já tem tudo o que precisa. 💫",
+    "3": "Deixe ir o que você não pode controlar. A liberdade te espera! 🕊️",
+    "4": "Perdoe-se. Você fez o seu melhor com o que sabia naquele momento. 💚",
+    "5": "Saia da sua caixa! O mundo é maior que seus medos. 🌍",
+    "6": "Mova-se, dance, viva! Seu corpo é o templo do seu espírito. 💃",
+    "7": "Nada é impossível para quem acredita. Você pode fazer qualquer coisa! ⭐",
+    "8": "Coragem não é a ausência de medo, é avançar apesar dele. 🦁",
+    "9": "Ria e cante! A música do seu coração transforma o mundo. 🎵",
+    "10": "Dance na chuva com um sorriso! As tempestades sempre passam. ☔",
+    "11": "Sua luz interior brilha mais forte que qualquer escuridão. ✝️",
+    "12": "Cada pequeno passo conta. Continue avançando, você está progredindo! 👣",
+    "13": "A gratidão transforma o que você tem em suficiente. Obrigado pelo hoje! 🙏",
+    "14": "Você é uma criação única e magnífica. Celebre quem você é! 🌟",
+    "15": "O amor começa com você mesmo. Ame-se como você é amado. ❤️",
+    "16": "Fracassos são lições disfarçadas. Continue aprendendo! 📚",
+    "17": "Sua voz importa. Expresse-se com autenticidade e coragem. 🗣️",
+    "18": "A paciência é uma forma de sabedoria. Tudo vem no seu tempo. ⏳",
+    "19": "Respire profundamente. Você está vivo e isso é um presente! 🌬️",
+    "20": "Seus sonhos são válidos. Persiga-os com paixão e fé! 🎯",
+    "21": "Você é mais resiliente do que imagina. Veja tudo o que você superou! 💪",
+    "22": "Compartilhe seu sorriso. Ele pode iluminar o dia de alguém. 😊",
+    "23": "A esperança é uma âncora para a alma. Mantenha a esperança, sempre! ⚓",
+    "24": "Mude sua perspectiva, mude sua vida. Tudo é questão de visão! 👁️",
+    "25": "Você é uma força da natureza. Abrace seu poder! 🌊",
+    "26": "A gentileza é uma força, não uma fraqueza. Seja bom consigo mesmo. 🤗",
+    "27": "Cada dia é uma nova chance de recomeçar. Hoje importa! 🌅",
+    "28": "Você merece felicidade. Não deixe ninguém dizer o contrário! 🎁",
+    "29": "A fé move montanhas. Continue acreditando! ⛰️",
+    "30": "Você está exatamente onde precisa estar. Confie no processo. 🧭",
+    "31": "Sua história ainda não acabou. O melhor ainda está por vir! 📖",
+    "32": "Celebre cada vitória, mesmo as pequenas. Você é um campeão! 🏆",
+    "33": "A paz interior é seu direito de nascença. Reivindique-a! ☮️",
+    "34": "Ouse sonhar maior. O céu é apenas o começo! ☁️",
+    "35": "Você inspira mais pessoas do que sabe. Brilhe! ✨",
+    "36": "A vida é um presente. Desembrulhe-o com maravilhamento! 🎀",
+    "37": "Você tem o poder de criar a vida que deseja. Comece agora! 🎨",
+    "38": "Deixe ir o que te pesa. Viaje leve, voe alto! 🦅",
+    "39": "Seu potencial é ilimitado. Nunca se subestime! 🚀",
+    "40": "Você é um milagre vivo. Nunca esqueça isso! 🌈",
+    "41": "A autoconfiança é aprendida. Pratique-a todos os dias! 💎",
+    "42": "Você é o arquiteto do seu destino. Construa com amor! 🏗️",
+    "43": "Cante sua própria canção. O mundo precisa da sua melodia! 🎼",
+    "44": "Você é abençoado e você é uma bênção. Compartilhe sua luz! 🕯️",
+    "45": "O melhor investimento é em si mesmo. Você vale o esforço! 💰",
+    "46": "Maravilhe-se com as pequenas coisas. A magia está em todo lugar! ✨",
+    "47": "Você sobreviveu a 100% dos seus piores dias. Você é invencível! 🛡️",
+    "48": "Viva plenamente. Ame profundamente. Ria frequentemente. Isso é a vida! 🎭",
+    "49": "Você é uma obra de arte em progresso. Seja paciente consigo mesmo! 🖼️",
+    "50": "Você alcançou as alturas! Continue escalando. Você é extraordinário! 🏔️"
+  },
+  "levelMessages": {
+    "0": "Abandone a tristeza...",
+    "5": "Vista-se de força!",
+    "10": "Cultive a coragem!",
+    "15": "Transforme o desespero...",
+    "20": "...em grandes sonhos!",
+    "25": "A luz brilha na escuridão",
+    "30": "Você é mais forte do que pensa",
+    "40": "Cada bloco colocado é uma vitória",
+    "50": "Você está construindo algo bonito"
+  },
+  "comboMessages": [
+    "Bela construção! ✨",
+    "A luz está crescendo! 🌟",
+    "Continue assim! 💪",
+    "Magnífico! ⭐",
+    "Você está brilhando! ✝️",
+    "Força e coragem! 💫",
+    "Incrível! 🎯",
+    "Campeão! 👑"
+  ],
+  "encouragements": [
+    "CORAGEM", "FORÇA", "ESPERANÇA", "FÉ", "AMOR",
+    "PAZ", "LUZ", "VIDA", "ALEGRIA", "GRAÇA",
+    "VITÓRIA", "GLÓRIA", "HONRA", "BELEZA", "BONDADE",
+    "VERDADE", "LIBERDADE", "SABEDORIA", "PODER", "SONHO",
+    "PERSEVERE", "AVANCE", "BRILHE", "SUCESSO", "CRIE",
+    "CONSTRUA", "CRESÇA", "IRRADIE", "VENÇA", "CONFIANÇA"
+  ]
 }
 

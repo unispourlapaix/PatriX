@@ -20,6 +20,12 @@ class LineTracer {
         this.cellElementCache = new Map(); // row-col -> element
         this.cellPositionCache = new Map(); // row-col -> {x, y, rect}
         
+        // Vérification de sécurité
+        if (!this.grid || !this.grid.cells) {
+            console.error('[LineTracer] Grid ou grid.cells non initialisé');
+            return;
+        }
+        
         this.init();
     }
 
@@ -127,6 +133,12 @@ class LineTracer {
         if (!cell) return;
 
         const { row, col } = cell;
+        
+        // Vérification de sécurité
+        if (!this.grid || !this.grid.cells || !this.grid.cells[row] || !this.grid.cells[row][col]) {
+            return;
+        }
+        
         const gridCell = this.grid.cells[row][col];
         
         // Ne commencer QUE sur une cellule remplie (pour éviter conflit avec contrôles)
@@ -152,7 +164,7 @@ class LineTracer {
      * Continue le tracé
      */
     handleMove(e) {
-        if (!this.isDrawing) return; // Ne traiter que si on a commencé un tracé
+        if (!this.isDrawing || !this.path || this.path.length === 0) return; // Sécurité renforcée
 
         const cell = this.getCellFromEvent(e);
         if (cell) {
@@ -161,12 +173,21 @@ class LineTracer {
 
             // Vérifier si c'est une nouvelle cellule
             if (row !== lastCell.row || col !== lastCell.col) {
+                // Vérifications de sécurité
+                if (!this.grid || !this.grid.cells || !this.grid.cells[row] || !this.grid.cells[row][col]) {
+                    return;
+                }
+                
                 const gridCell = this.grid.cells[row][col];
                 
                 // Vérifier si c'est du même type que le premier
-                const firstCell = this.grid.cells[this.path[0].row][this.path[0].col];
+                const firstCellPos = this.path[0];
+                if (!firstCellPos || !this.grid.cells[firstCellPos.row] || !this.grid.cells[firstCellPos.row][firstCellPos.col]) {
+                    return; // Sécurité : cellule invalide
+                }
+                const firstCell = this.grid.cells[firstCellPos.row][firstCellPos.col];
                 
-                if (gridCell && gridCell.type === firstCell.type) {
+                if (gridCell && firstCell && gridCell.type === firstCell.type) {
                     // Vérifier si adjacent
                     const distance = Math.abs(row - lastCell.row) + Math.abs(col - lastCell.col);
                     if (distance === 1) {
