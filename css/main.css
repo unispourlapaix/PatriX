@@ -882,6 +882,8 @@ body {
     border: 1px solid rgba(79, 195, 247, 0.3);
     border-radius: 6px;
     transition: all 0.3s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(79, 195, 247, 0.2);
 }
 
 .discover-link:hover {
@@ -908,6 +910,8 @@ body {
     font-weight: normal;
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
 .trophies-close:hover {
@@ -966,6 +970,8 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(212, 175, 55, 0.2);
 }
 
 .scroll-to-top:hover {
@@ -1743,6 +1749,8 @@ body {
     padding: 8px 12px;
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
 }
 
 .emoticon-btn:hover {
@@ -1771,6 +1779,8 @@ body {
     font-size: 1em;
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
 }
 
 .form-btn.submit {

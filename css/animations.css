@@ -1266,6 +1266,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(79, 195, 247, 0.2);
 }
 
 .profile-share-btn:hover {
@@ -1332,6 +1334,9 @@
     overflow-y: auto;
     position: relative;
     box-shadow: 0 8px 30px rgba(245, 222, 179, 0.2);
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    scroll-behavior: smooth;
 }
 
 .profile-modal-content h2 {
@@ -1407,6 +1412,9 @@
     background: rgba(255, 255, 255, 0.4);
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(245, 222, 179, 0.15);
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    scroll-behavior: smooth;
 }
 
 .avatar-option {
