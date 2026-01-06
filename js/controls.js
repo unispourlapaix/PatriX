@@ -51,6 +51,11 @@ class Controls {
                 (e.target.closest('.mechanical-display') || 
                  e.target.closest('.treasure-modal') ||
                  e.target.closest('.trophy-modal') ||
+                 e.target.closest('.trophies-panel') ||
+                 e.target.closest('.contact-modal') ||
+                 e.target.closest('.language-selector-modal') ||
+                 e.target.closest('.profile-modal') ||
+                 e.target.closest('.web-browser-panel') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -71,6 +76,11 @@ class Controls {
                 (e.target.closest('.mechanical-display') || 
                  e.target.closest('.treasure-modal') ||
                  e.target.closest('.trophy-modal') ||
+                 e.target.closest('.trophies-panel') ||
+                 e.target.closest('.contact-modal') ||
+                 e.target.closest('.language-selector-modal') ||
+                 e.target.closest('.profile-modal') ||
+                 e.target.closest('.web-browser-panel') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -89,6 +99,11 @@ class Controls {
                 (e.target.closest('.mechanical-display') || 
                  e.target.closest('.treasure-modal') ||
                  e.target.closest('.trophy-modal') ||
+                 e.target.closest('.trophies-panel') ||
+                 e.target.closest('.contact-modal') ||
+                 e.target.closest('.language-selector-modal') ||
+                 e.target.closest('.profile-modal') ||
+                 e.target.closest('.web-browser-panel') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
