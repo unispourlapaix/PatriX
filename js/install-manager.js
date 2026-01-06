@@ -68,7 +68,7 @@ class InstallManager {
             <div class="install-banner-content">
                 <div class="install-banner-icon">📱</div>
                 <div class="install-banner-text">
-                    <strong>Installer PATRIX</strong>
+                    <strong>Installer Patri-X</strong>
                     <span>Jouez hors ligne et accédez rapidement à l'app</span>
                 </div>
                 <button class="install-btn-primary" id="install-btn">Installer</button>
@@ -83,7 +83,7 @@ class InstallManager {
         iosInstructions.innerHTML = `
             <div class="ios-instructions-content">
                 <button class="install-btn-close" id="ios-close">✕</button>
-                <h3>📱 Installer PATRIX sur iOS</h3>
+                <h3>📱 Installer Patri-X sur iOS</h3>
                 <div class="ios-steps">
                     <div class="ios-step">
                         <span class="ios-step-number">1</span>

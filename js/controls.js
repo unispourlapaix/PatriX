@@ -56,6 +56,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.install-banner') ||
+                 e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -81,6 +83,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.install-banner') ||
+                 e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
@@ -104,6 +108,8 @@ class Controls {
                  e.target.closest('.language-selector-modal') ||
                  e.target.closest('.profile-modal') ||
                  e.target.closest('.web-browser-panel') ||
+                 e.target.closest('.install-banner') ||
+                 e.target.closest('.ios-install-instructions') ||
                  e.target.closest('.game-over-panel') ||
                  e.target.closest('.pause-panel'))) {
                 return;
