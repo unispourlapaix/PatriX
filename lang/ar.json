@@ -108,6 +108,23 @@
     "validEmailRequired": "يرجى إدخال بريد إلكتروني صالح",
     "alreadyInstalled": "التطبيق مثبت بالفعل"
   },
+  "controls": {
+    "title": "التحكم",
+    "lineMode": "وضع الخط",
+    "lineModeDesc": "أكمل الخطوط",
+    "popMode": "وضع الفرقعة",
+    "popModeDesc": "اجمع الألوان",
+    "pushUp": "ادفع لأعلى",
+    "pushUpDesc": "اكسر القطعة",
+    "tapSides": "انقر الجوانب",
+    "tapSidesDesc": "اكسر القطعة",
+    "combos": "متتاليات",
+    "combosDesc": "أفرغ بسرعة",
+    "doubleTap": "نقر مزدوج",
+    "doubleTapDesc": "القطعة تسقط مباشرة",
+    "chooseNext": "اختر قطعة",
+    "chooseNextDesc": "انقر على القطعة التالية"
+  },
   "notifications": {
     "welcomeGuest": "مرحباً!",
     "accountCreated": "تم إنشاء الحساب بنجاح!",

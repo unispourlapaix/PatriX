@@ -426,6 +426,23 @@
     "validEmailRequired": "Valid email required",
     "alreadyInstalled": "App is already installed!"
   },
+  "controls": {
+    "title": "Controls",
+    "lineMode": "Line Mode",
+    "lineModeDesc": "Complete lines",
+    "popMode": "Pop Mode",
+    "popModeDesc": "Group colors",
+    "pushUp": "Push Up",
+    "pushUpDesc": "Break piece",
+    "tapSides": "Tap sides",
+    "tapSidesDesc": "Break piece",
+    "combos": "Combos",
+    "combosDesc": "Clear lines/pops fast",
+    "doubleTap": "Double Tap",
+    "doubleTapDesc": "Piece drops instantly",
+    "chooseNext": "Choose piece",
+    "chooseNextDesc": "Click on next piece"
+  },
   "notifications": {
     "gameSaved": "Game saved in Slot {slot}! 💾",
     "noSaveInSlot": "No save in this slot ❌",

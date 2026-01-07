@@ -428,6 +428,23 @@
     "validEmailRequired": "Kota email oyo ebongi",
     "alreadyInstalled": "Application esili kokota!"
   },
+  "controls": {
+    "title": "Bokonzi",
+    "lineMode": "Lolenge ya Milɔ́ngɔ́",
+    "lineModeDesc": "Kosilisa milɔ́ngɔ́",
+    "popMode": "Lolenge ya Pops",
+    "popModeDesc": "Kosangisa langi",
+    "pushUp": "Kobimisa likólo",
+    "pushUpDesc": "Kobuka eteni",
+    "tapSides": "Kofina mipanzi",
+    "tapSidesDesc": "Kobuka eteni",
+    "combos": "Ba combos",
+    "combosDesc": "Kolongola noki",
+    "doubleTap": "Kofina mbala mibale",
+    "doubleTapDesc": "Eteni ekwei mbala moko",
+    "chooseNext": "Kopona eteni",
+    "chooseNextDesc": "Kofina eteni oyo ekoya"
+  },
   "notifications": {
     "gameSaved": "Lisano ebombami na Esika {slot}! 💾",
     "noSaveInSlot": "Lisano ezali te na esika oyo ❌",

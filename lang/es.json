@@ -108,6 +108,23 @@
     "validEmailRequired": "Por favor, ingresa un correo válido",
     "alreadyInstalled": "La aplicación ya está instalada"
   },
+  "controls": {
+    "title": "Controles",
+    "lineMode": "Modo Línea",
+    "lineModeDesc": "Completa líneas",
+    "popMode": "Modo Pops",
+    "popModeDesc": "Agrupa colores",
+    "pushUp": "Push Up",
+    "pushUpDesc": "Rompe pieza",
+    "tapSides": "Tocar lados",
+    "tapSidesDesc": "Rompe pieza",
+    "combos": "Combos",
+    "combosDesc": "Vacía líneas/pops rápido",
+    "doubleTap": "Doble Toque",
+    "doubleTapDesc": "Pieza cae directo",
+    "chooseNext": "Elegir pieza",
+    "chooseNextDesc": "Clic en pieza futura"
+  },
   "notifications": {
     "welcomeGuest": "¡Bienvenido!",
     "accountCreated": "¡Cuenta creada con éxito!",

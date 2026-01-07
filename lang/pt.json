@@ -43,6 +43,23 @@
     }
   },
   "errors": {"fillAllFields": "Preencha todos os campos", "wrongCredentials": "Email ou senha incorretos", "connectionError": "Erro de conexão. Tente novamente.", "passwordMismatch": "As senhas não coincidem", "passwordTooShort": "A senha deve ter pelo menos 6 caracteres", "accountCreationError": "Erro ao criar conta", "enterEmail": "Digite seu email", "emailSendError": "Erro ao enviar email", "pseudoTooShort": "O apelido deve ter pelo menos 3 caracteres", "validEmailRequired": "Digite um email válido", "alreadyInstalled": "App já instalado"},
+  "controls": {
+    "title": "Controles",
+    "lineMode": "Modo Linha",
+    "lineModeDesc": "Complete linhas",
+    "popMode": "Modo Pops",
+    "popModeDesc": "Agrupe cores",
+    "pushUp": "Push Up",
+    "pushUpDesc": "Quebra peça",
+    "tapSides": "Toque lados",
+    "tapSidesDesc": "Quebra peça",
+    "combos": "Combos",
+    "combosDesc": "Limpe linhas/pops rápido",
+    "doubleTap": "Toque Duplo",
+    "doubleTapDesc": "Peça cai direto",
+    "chooseNext": "Escolher peça",
+    "chooseNextDesc": "Clique na próxima peça"
+  },
   "notifications": {
     "welcomeGuest": "Bem-vindo!",
     "accountCreated": "Conta criada com sucesso!",

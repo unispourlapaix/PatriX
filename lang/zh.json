@@ -108,6 +108,23 @@
     "validEmailRequired": "请输入有效的邮箱",
     "alreadyInstalled": "应用程序已安装"
   },
+  "controls": {
+    "title": "控制",
+    "lineMode": "行模式",
+    "lineModeDesc": "完成行",
+    "popMode": "消除模式",
+    "popModeDesc": "组合颜色",
+    "pushUp": "向上推",
+    "pushUpDesc": "破坏方块",
+    "tapSides": "点击侧面",
+    "tapSidesDesc": "破坏方块",
+    "combos": "连击",
+    "combosDesc": "快速消除",
+    "doubleTap": "双击",
+    "doubleTapDesc": "方块直接落下",
+    "chooseNext": "选择方块",
+    "chooseNextDesc": "点击下个方块"
+  },
   "notifications": {
     "welcomeGuest": "欢迎！",
     "accountCreated": "账户创建成功！",
