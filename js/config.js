@@ -5,6 +5,13 @@
  * Message: "Abandonne la tristesse, revêts-toi de force et courage"
  */
 
+// Mode debug (false = désactive tous les logs sauf erreurs critiques)
+const DEBUG_MODE = false;
+
+// Helper pour les logs (respecte DEBUG_MODE)
+const devLog = DEBUG_MODE ? console.log.bind(console) : () => {};
+const devWarn = DEBUG_MODE ? console.warn.bind(console) : () => {};
+
 const CONFIG = {
     // Grille de jeu
     GRID: {
