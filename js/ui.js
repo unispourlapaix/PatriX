@@ -1245,6 +1245,11 @@ class UserInterface {
                 } else {
                     this.wasPausedByTrophiesPanel = true;
                 }
+                
+                // Mettre à jour l'affichage du profil à l'ouverture
+                if (window.profileManager) {
+                    window.profileManager.updateProfileDisplay();
+                }
             } else {
                 // Fermeture : reprendre si nécessaire
                 if (!this.wasPausedByTrophiesPanel && this.engine.isRunning && this.engine.isPaused) {

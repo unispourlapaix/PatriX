@@ -277,6 +277,12 @@ function initUserSystem() {
         userInfo.style.display = 'block';
         userName.textContent = userManager.getUsername();
         userMaxScore.textContent = userManager.getMaxScore().toLocaleString();
+        
+        // Mettre à jour aussi le profil dans le panel trophées
+        const profileName = document.getElementById('profileName');
+        if (profileName) {
+            profileName.textContent = userManager.getUsername();
+        }
     }
     
     async function loadLeaderboard() {
