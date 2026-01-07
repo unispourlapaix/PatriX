@@ -24,7 +24,8 @@ function initUserSystem() {
     profileManager = new ProfileManager(userManager);
     webBrowser = new WebBrowserManager();
     
-    // Rendre webBrowser accessible globalement
+    // Rendre accessibles globalement
+    window.profileManager = profileManager;
     window.webBrowser = webBrowser;
     
     // Lancer automatiquement la musique après un délai
