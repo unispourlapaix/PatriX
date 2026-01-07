@@ -121,14 +121,6 @@ class ProfileManager {
         // Rafraîchir les données avant d'ouvrir le modal
         this.refresh();
 
-        // Remplir le pseudo actuel
-        if (pseudoInput) {
-            const username = this.userManager.getUsername();
-            console.log('ProfileManager: Loading username:', username);
-            console.log('ProfileManager: currentUser:', this.userManager.currentUser);
-            pseudoInput.value = username || '';
-        }
-
         // Générer la grille d'avatars
         if (avatarGrid && window.CHRISTIAN_AVATARS) {
             avatarGrid.innerHTML = window.CHRISTIAN_AVATARS.map(avatar => `
@@ -154,6 +146,16 @@ class ProfileManager {
         }
 
         modal.classList.add('show');
+
+        // Remplir le pseudo APRÈS avoir ouvert le modal pour être sûr que tout est à jour
+        setTimeout(() => {
+            if (pseudoInput) {
+                const username = this.userManager.getUsername();
+                console.log('ProfileManager: Loading username (after modal open):', username);
+                console.log('ProfileManager: currentUser:', this.userManager.currentUser);
+                pseudoInput.value = username || '';
+            }
+        }, 50);
     }
 
     async saveProfile() {
