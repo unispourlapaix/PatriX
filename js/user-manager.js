@@ -291,7 +291,7 @@ class UserManager {
             pseudo: existingUser.pseudo,
             email: existingUser.email,
             passwordHash: passwordHash,
-            avatar: existingUser.avatar || 'cross1', // Avatar depuis DB ou par défaut
+            avatar: existingUser.avatar || 'patrix', // Avatar depuis DB ou par défaut : icône Patri-X
             loginDate: new Date().toISOString(),
             gamesPlayed: 0
         };

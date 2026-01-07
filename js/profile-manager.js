@@ -17,7 +17,7 @@ class ProfileManager {
             this.selectedAvatar = this.userManager.currentUser.avatar;
         } else {
             const savedAvatar = localStorage.getItem('patrix_avatar');
-            this.selectedAvatar = savedAvatar || 'cross1'; // Avatar par défaut
+            this.selectedAvatar = savedAvatar || 'patrix'; // Avatar par défaut : icône Patri-X
         }
 
         // Event listeners
@@ -99,7 +99,7 @@ class ProfileManager {
             console.log('ProfileManager: Avatar loaded from currentUser:', this.selectedAvatar);
         } else {
             const savedAvatar = localStorage.getItem('patrix_avatar');
-            this.selectedAvatar = savedAvatar || 'cross1';
+            this.selectedAvatar = savedAvatar || 'patrix'; // Avatar par défaut : icône Patri-X
             console.log('ProfileManager: Avatar loaded from localStorage:', this.selectedAvatar);
         }
         this.updateProfileDisplay();

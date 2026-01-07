@@ -6,6 +6,8 @@
  */
 
 const CHRISTIAN_AVATARS = [
+    // Patri-X - Icône du jeu
+    { id: 'patrix', name: 'Patri-X', svg: '<svg viewBox="0 0 100 100"><defs><linearGradient id="patrixGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFD1DC"/><stop offset="25%" style="stop-color:#FFC0CB"/><stop offset="50%" style="stop-color:#FFB6C1"/><stop offset="75%" style="stop-color:#FFC0CB"/><stop offset="100%" style="stop-color:#FFD1DC"/></linearGradient></defs><circle cx="50" cy="50" r="45" fill="#1a1a2e"/><rect x="43" y="23" width="14" height="14" fill="url(#patrixGradient)" stroke="#4a5568" stroke-width="1.5"/><rect x="43" y="43" width="14" height="14" fill="url(#patrixGradient)" stroke="#4a5568" stroke-width="1.5"/><rect x="43" y="63" width="14" height="14" fill="url(#patrixGradient)" stroke="#4a5568" stroke-width="1.5"/><rect x="23" y="43" width="14" height="14" fill="url(#patrixGradient)" stroke="#4a5568" stroke-width="1.5"/><rect x="63" y="43" width="14" height="14" fill="url(#patrixGradient)" stroke="#4a5568" stroke-width="1.5"/></svg>' },
     // Croix - Thème Or et Bleu
     { id: 'cross1', name: 'Croix Simple', svg: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#4fc3f7"/><rect x="45" y="20" width="10" height="60" fill="#ffd700"/><rect x="25" y="45" width="50" height="10" fill="#ffd700"/></svg>' },
     { id: 'cross2', name: 'Croix Latine', svg: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ffd700"/><rect x="42" y="15" width="16" height="70" fill="#fff"/><rect x="20" y="40" width="60" height="16" fill="#fff"/></svg>' },
