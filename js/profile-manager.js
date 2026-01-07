@@ -205,12 +205,21 @@ class ProfileManager {
     updateProfileDisplay() {
         const profileAvatar = document.getElementById('profileAvatar');
         const profileName = document.getElementById('profileName');
+        const userAvatar = document.getElementById('userAvatar');
 
-        // Mettre à jour l'avatar
+        // Mettre à jour l'avatar dans la section profil
         if (profileAvatar && window.CHRISTIAN_AVATARS) {
             const avatar = window.CHRISTIAN_AVATARS.find(a => a.id === this.selectedAvatar);
             if (avatar) {
                 profileAvatar.innerHTML = avatar.svg;
+            }
+        }
+
+        // Mettre à jour l'avatar dans le modal de connexion
+        if (userAvatar && window.CHRISTIAN_AVATARS) {
+            const avatar = window.CHRISTIAN_AVATARS.find(a => a.id === this.selectedAvatar);
+            if (avatar) {
+                userAvatar.innerHTML = avatar.svg;
             }
         }
 
