@@ -215,8 +215,11 @@ class ProfileManager {
             const avatar = window.CHRISTIAN_AVATARS.find(a => a.id === this.selectedAvatar);
             console.log('updateProfileDisplay: avatar found?', !!avatar);
             if (avatar) {
+                // Vider complètement puis ajouter le nouveau SVG
+                profileAvatar.innerHTML = '';
                 profileAvatar.innerHTML = avatar.svg;
-                console.log('updateProfileDisplay: profileAvatar updated');
+                console.log('updateProfileDisplay: profileAvatar updated with:', this.selectedAvatar);
+                console.log('updateProfileDisplay: innerHTML length:', profileAvatar.innerHTML.length);
             } else {
                 console.warn('updateProfileDisplay: Avatar not found for id:', this.selectedAvatar);
             }
