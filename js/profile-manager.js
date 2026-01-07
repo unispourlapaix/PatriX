@@ -92,15 +92,12 @@ class ProfileManager {
      * Rafraîchit les données du profil (à appeler après connexion/inscription)
      */
     refresh() {
-        console.log('ProfileManager: Refreshing profile data');
         // Recharger l'avatar depuis currentUser
         if (this.userManager.currentUser && this.userManager.currentUser.avatar) {
             this.selectedAvatar = this.userManager.currentUser.avatar;
-            console.log('ProfileManager: Avatar loaded from currentUser:', this.selectedAvatar);
         } else {
             const savedAvatar = localStorage.getItem('patrix_avatar');
             this.selectedAvatar = savedAvatar || 'patrix'; // Avatar par défaut : icône Patri-X
-            console.log('ProfileManager: Avatar loaded from localStorage:', this.selectedAvatar);
         }
         this.updateProfileDisplay();
     }
@@ -151,8 +148,6 @@ class ProfileManager {
         setTimeout(() => {
             if (pseudoInput) {
                 const username = this.userManager.getUsername();
-                console.log('ProfileManager: Loading username (after modal open):', username);
-                console.log('ProfileManager: currentUser:', this.userManager.currentUser);
                 pseudoInput.value = username || '';
             }
         }, 50);
@@ -207,24 +202,14 @@ class ProfileManager {
         const profileName = document.getElementById('profileName');
         const userAvatar = document.getElementById('userAvatar');
 
-        console.log('updateProfileDisplay: selectedAvatar =', this.selectedAvatar);
-        console.log('updateProfileDisplay: CHRISTIAN_AVATARS exists?', !!window.CHRISTIAN_AVATARS);
-
         // Mettre à jour l'avatar dans la section profil
         if (profileAvatar && window.CHRISTIAN_AVATARS) {
             const avatar = window.CHRISTIAN_AVATARS.find(a => a.id === this.selectedAvatar);
-            console.log('updateProfileDisplay: avatar found?', !!avatar);
             if (avatar) {
                 // Vider complètement puis ajouter le nouveau SVG
                 profileAvatar.innerHTML = '';
                 profileAvatar.innerHTML = avatar.svg;
-                console.log('updateProfileDisplay: profileAvatar updated with:', this.selectedAvatar);
-                console.log('updateProfileDisplay: innerHTML length:', profileAvatar.innerHTML.length);
-            } else {
-                console.warn('updateProfileDisplay: Avatar not found for id:', this.selectedAvatar);
             }
-        } else {
-            console.warn('updateProfileDisplay: profileAvatar or CHRISTIAN_AVATARS missing');
         }
 
         // Mettre à jour l'avatar dans le modal de connexion

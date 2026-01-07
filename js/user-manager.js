@@ -160,10 +160,8 @@ class UserManager {
             if (response.ok) {
                 const users = await response.json();
                 if (users.length > 0) {
-                    console.log(`[UserManager] Utilisateur trouvé avec email "${email}"`);
                     return users[0];
                 } else {
-                    console.log(`[UserManager] Aucun utilisateur avec email "${email}"`);
                     return null;
                 }
             } else {
@@ -232,7 +230,6 @@ class UserManager {
 
         // Hash le mot de passe pour comparaison
         const passwordHash = await this.hashPassword(password);
-        console.log('[UserManager] Hash calculé:', passwordHash);
 
         // Vérifier d'abord si l'utilisateur existe localement
         const savedUser = localStorage.getItem(`${this.GAME_ID}_user`);
@@ -271,15 +268,10 @@ class UserManager {
 
         // Vérifier le mot de passe avec Supabase
         if (existingUser.password_hash) {
-            console.log('[UserManager] Hash dans Supabase:', existingUser.password_hash);
-            console.log('[UserManager] Hash calculé:', passwordHash);
-            console.log('[UserManager] Correspondent:', existingUser.password_hash === passwordHash);
-            
             // Supabase a un mot de passe enregistré, le vérifier
             if (existingUser.password_hash !== passwordHash) {
                 throw new Error('Mot de passe incorrect');
             }
-            console.log('[UserManager] Connexion depuis Supabase par email - mot de passe vérifié');
         } else {
             // Aucun mot de passe dans Supabase = compte incomplet
             console.warn('[UserManager] Compte trouvé sans mot de passe');
@@ -366,7 +358,7 @@ class UserManager {
         
         if (existingUser) {
             // Le compte existe déjà en ligne, vérifier le mot de passe
-            console.log('[UserManager] Compte existant trouvé dans Supabase');
+
             
             // Hash le mot de passe
             const passwordHash = await this.hashPassword(password);
@@ -427,9 +419,7 @@ class UserManager {
         this.saveUser();
         
         if (syncResult.alreadyExists) {
-            console.log('[UserManager] Compte créé localement (déjà existant en ligne)');
         } else {
-            console.log('[UserManager] Compte créé et synchronisé avec Supabase');
         }
 
         return this.currentUser;
@@ -862,7 +852,7 @@ class UserManager {
             );
 
             if (response.ok) {
-                console.log('[UserManager] Mot de passe mis à jour dans Supabase');
+
                 return true;
             } else {
                 console.error('[UserManager] Erreur mise à jour mot de passe:', response.statusText);
@@ -1000,9 +990,7 @@ class UserManager {
      * Récupère le nom d'utilisateur
      */
     getUsername() {
-        const username = this.currentUser ? this.currentUser.pseudo : 'Invité';
-        console.log('UserManager.getUsername(): returning', username, 'currentUser:', this.currentUser);
-        return username;
+        return this.currentUser ? this.currentUser.pseudo : 'Invité';
     }
 
     /**
@@ -1060,7 +1048,7 @@ class UserManager {
 
                 // Sauvegarder localement
                 this.saveUser();
-                console.log('[UserManager] Profil mis à jour');
+
             }
 
             return true;
