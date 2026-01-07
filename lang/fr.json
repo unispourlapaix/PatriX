@@ -428,6 +428,23 @@
     "validEmailRequired": "Email valide requis",
     "alreadyInstalled": "L'application est déjà installée !"
   },
+  "controls": {
+    "title": "Contrôles",
+    "lineMode": "Mode Ligne",
+    "lineModeDesc": "Complète des lignes",
+    "popMode": "Mode Pops",
+    "popModeDesc": "Groupe couleurs",
+    "pushUp": "Push Up",
+    "pushUpDesc": "Brise la pièce",
+    "tapSides": "Taper côtés",
+    "tapSidesDesc": "Casse la pièce",
+    "combos": "Combos",
+    "combosDesc": "Vide lignes/pops rapide",
+    "doubleTap": "Double Tap Pause",
+    "doubleTapDesc": "Pièce tombe direct",
+    "chooseNext": "Choisir pièce",
+    "chooseNextDesc": "Clique sur NEXT"
+  },
   "notifications": {
     "gameSaved": "Partie sauvegardée dans le Slot {slot} ! 💾",
     "noSaveInSlot": "Aucune sauvegarde dans ce slot ❌",

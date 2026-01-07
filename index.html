@@ -370,8 +370,12 @@
                     <div class="profile-actions">
                         <button class="profile-edit-btn" id="profileEditBtn" data-i18n="profile.edit">✏️ Modifier</button>
                         <button class="profile-edit-btn" id="openLanguageModalBtn">
-                            <span>�️</span>
+                            <span>🌍</span>
                             <span data-i18n="trophies.language">Langue</span>
+                        </button>
+                        <button class="profile-edit-btn" id="openControlsModalBtn">
+                            <span>🎮</span>
+                            <span data-i18n="controls.title">Contrôles</span>
                         </button>
                         <a href="https://www.tiktok.com/@unispourlapaix" target="_blank" rel="noopener noreferrer" class="profile-edit-btn" style="text-decoration: none;">
                             <span>🎥</span>
@@ -449,6 +453,72 @@
                 </div>
                 
                 <button class="profile-save-btn" id="profileSaveBtn" data-i18n="profile.saveButton">💾 Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Contrôles -->
+    <div class="profile-modal" id="controlsModal">
+        <div class="profile-modal-content">
+            <h2 data-i18n="controls.title">🎮 CONTRÔLES</h2>
+            <button class="profile-modal-close" id="controlsModalClose">✕</button>
+            
+            <div class="controls-guide">
+                <div class="control-item">
+                    <div class="control-icon">📊</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.lineMode">Mode Ligne</strong>
+                        <p data-i18n="controls.lineModeDesc">Complète des lignes</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">💥</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.popMode">Mode Pops</strong>
+                        <p data-i18n="controls.popModeDesc">Groupe couleurs</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⬆️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.pushUp">Push Up</strong>
+                        <p data-i18n="controls.pushUpDesc">Brise la pièce</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⬅️➡️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.tapSides">Taper côtés</strong>
+                        <p data-i18n="controls.tapSidesDesc">Casse la pièce</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">🔥</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.combos">Combos</strong>
+                        <p data-i18n="controls.combosDesc">Vide lignes/pops rapide</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⏬️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.doubleTap">Double Tap Pause</strong>
+                        <p data-i18n="controls.doubleTapDesc">Pièce tombe direct</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">🎯</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.chooseNext">Choisir pièce</strong>
+                        <p data-i18n="controls.chooseNextDesc">Clique sur NEXT</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

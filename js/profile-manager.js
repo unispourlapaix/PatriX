@@ -8,6 +8,7 @@ class ProfileManager {
         this.userManager = userManager;
         this.selectedAvatar = null;
         this.wasPausedByProfile = false;
+        this.wasPausedByControls = false;
         this.init();
     }
 
@@ -34,6 +35,9 @@ class ProfileManager {
         const profileModal = document.getElementById('profileModal');
         const profileShareBtn = document.getElementById('profileShareBtn');
         const profileMusicBtn = document.getElementById('profileMusicBtn');
+        const openControlsModalBtn = document.getElementById('openControlsModalBtn');
+        const controlsModal = document.getElementById('controlsModal');
+        const controlsModalClose = document.getElementById('controlsModalClose');
 
         if (profileEditBtn) {
             profileEditBtn.addEventListener('click', () => {
@@ -70,10 +74,28 @@ class ProfileManager {
             });
         }
 
+        // Modal des contrôles
+        if (openControlsModalBtn) {
+            openControlsModalBtn.addEventListener('click', () => {
+                this.openControlsModal();
+            });
+        }
+
+        if (controlsModalClose) {
+            controlsModalClose.addEventListener('click', () => {
+                this.closeControlsModal();
+            });
+        }
+
         // Fermer avec Échap
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && profileModal.classList.contains('show')) {
-                this.closeProfileModal();
+            if (e.key === 'Escape') {
+                if (profileModal.classList.contains('show')) {
+                    this.closeProfileModal();
+                }
+                if (controlsModal && controlsModal.classList.contains('show')) {
+                    this.closeControlsModal();
+                }
             }
         });
     }
@@ -84,6 +106,30 @@ class ProfileManager {
         
         // Reprendre le jeu si il n'était pas en pause avant
         if (!this.wasPausedByProfile && window.game && window.game.isRunning && window.game.isPaused) {
+            window.game.togglePause();
+        }
+    }
+
+    openControlsModal() {
+        const controlsModal = document.getElementById('controlsModal');
+        
+        // Mettre le jeu en pause si en cours
+        if (window.game && window.game.isRunning && !window.game.isPaused) {
+            this.wasPausedByControls = false;
+            window.game.togglePause();
+        } else {
+            this.wasPausedByControls = true;
+        }
+        
+        controlsModal.classList.add('show');
+    }
+
+    closeControlsModal() {
+        const controlsModal = document.getElementById('controlsModal');
+        controlsModal.classList.remove('show');
+        
+        // Reprendre le jeu si il n'était pas en pause avant
+        if (!this.wasPausedByControls && window.game && window.game.isRunning && window.game.isPaused) {
             window.game.togglePause();
         }
     }
