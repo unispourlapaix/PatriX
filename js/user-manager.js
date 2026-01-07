@@ -582,16 +582,25 @@ class UserManager {
         this.pendingSyncs.add(pseudoKey);
 
         try {
-            // Vérifier d'abord si l'utilisateur existe
-            const existingUser = await this.checkUserExists(userPseudo);
-            
-            if (existingUser) {
-                // L'utilisateur existe déjà, marquer comme synchronisé
-                this.syncedUsers.add(pseudoKey);
-                localStorage.setItem(`${this.GAME_ID}_synced_users`, JSON.stringify([...this.syncedUsers]));
-                return { success: true, alreadyExists: true };
+            // Vérifier si l'utilisateur existe déjà
+            const checkResponse = await fetch(`${this.supabaseUrl}/rest/v1/users?pseudo=eq.${encodeURIComponent(userPseudo)}&select=pseudo`, {
+                method: 'GET',
+                headers: {
+                    'apikey': this.supabaseKey,
+                    'Authorization': `Bearer ${this.supabaseKey}`
+                }
+            });
+
+            if (checkResponse.ok) {
+                const existingUsers = await checkResponse.json();
+                if (existingUsers && existingUsers.length > 0) {
+                    // L'utilisateur existe déjà
+                    this.syncedUsers.add(pseudoKey);
+                    localStorage.setItem(`${this.GAME_ID}_synced_users`, JSON.stringify([...this.syncedUsers]));
+                    return { success: true, alreadyExists: true };
+                }
             }
-            
+
             // Créer le nouvel utilisateur
             const body = {
                 pseudo: userPseudo,
