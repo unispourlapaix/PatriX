@@ -198,11 +198,10 @@ class GameEngine {
 
     /**
      * Swap bas - Fait descendre la pièce de 2 cases (ou moins si obstacle)
+     * Gratuit - ne consomme pas de swap
      */
     swapNextPiece() {
-        if (this.swapCount <= 0 || !this.currentPiece || !this.isRunning || this.isPaused) return false;
-        
-        this.swapCount--;
+        if (!this.currentPiece || !this.isRunning || this.isPaused) return false;
         
         // Descendre de 2 cases (ou le maximum possible)
         let moved = 0;
