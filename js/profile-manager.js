@@ -88,6 +88,23 @@ class ProfileManager {
         }
     }
 
+    /**
+     * Rafraîchit les données du profil (à appeler après connexion/inscription)
+     */
+    refresh() {
+        console.log('ProfileManager: Refreshing profile data');
+        // Recharger l'avatar depuis currentUser
+        if (this.userManager.currentUser && this.userManager.currentUser.avatar) {
+            this.selectedAvatar = this.userManager.currentUser.avatar;
+            console.log('ProfileManager: Avatar loaded from currentUser:', this.selectedAvatar);
+        } else {
+            const savedAvatar = localStorage.getItem('patrix_avatar');
+            this.selectedAvatar = savedAvatar || 'cross1';
+            console.log('ProfileManager: Avatar loaded from localStorage:', this.selectedAvatar);
+        }
+        this.updateProfileDisplay();
+    }
+
     openProfileModal() {
         const modal = document.getElementById('profileModal');
         const pseudoInput = document.getElementById('profilePseudoInput');
@@ -101,9 +118,15 @@ class ProfileManager {
             this.wasPausedByProfile = true;
         }
 
+        // Rafraîchir les données avant d'ouvrir le modal
+        this.refresh();
+
         // Remplir le pseudo actuel
         if (pseudoInput) {
-            pseudoInput.value = this.userManager.getUsername();
+            const username = this.userManager.getUsername();
+            console.log('ProfileManager: Loading username:', username);
+            console.log('ProfileManager: currentUser:', this.userManager.currentUser);
+            pseudoInput.value = username || '';
         }
 
         // Générer la grille d'avatars

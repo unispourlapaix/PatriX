@@ -121,6 +121,11 @@ function initUserSystem() {
             if (ui) {
                 ui.loadTrophies();
             }
+
+            // Rafraîchir le profil après inscription
+            if (window.profileManager) {
+                window.profileManager.refresh();
+            }
             
             showUserInfo();
             setTimeout(() => {
@@ -168,6 +173,11 @@ function initUserSystem() {
             // Recharger les trophées synchronisés
             if (ui) {
                 ui.loadTrophies();
+            }
+
+            // Rafraîchir le profil après connexion
+            if (window.profileManager) {
+                window.profileManager.refresh();
             }
             
             showUserInfo();

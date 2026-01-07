@@ -1000,7 +1000,9 @@ class UserManager {
      * Récupère le nom d'utilisateur
      */
     getUsername() {
-        return this.currentUser ? this.currentUser.pseudo : 'Invité';
+        const username = this.currentUser ? this.currentUser.pseudo : 'Invité';
+        console.log('UserManager.getUsername(): returning', username, 'currentUser:', this.currentUser);
+        return username;
     }
 
     /**
