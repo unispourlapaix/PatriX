@@ -440,10 +440,10 @@
     "tapSidesDesc": "Casse la pièce",
     "combos": "Combos",
     "combosDesc": "Vide lignes/pops rapide",
-    "doubleTap": "Double Tap Pause",
+    "doubleTap": "Double Tap",
     "doubleTapDesc": "Pièce tombe direct",
     "chooseNext": "Choisir pièce",
-    "chooseNextDesc": "Clique sur NEXT"
+    "chooseNextDesc": "Cliquez sur pièce future"
   },
   "notifications": {
     "gameSaved": "Partie sauvegardée dans le Slot {slot} ! 💾",

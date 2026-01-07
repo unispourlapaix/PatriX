@@ -1490,18 +1490,18 @@
 .controls-guide {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 10px 0;
+    gap: 10px;
+    padding: 5px 0;
 }
 
 .control-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 15px;
+    gap: 12px;
+    padding: 10px;
     background: rgba(255, 255, 255, 0.5);
     border: 2px solid rgba(245, 222, 179, 0.4);
-    border-radius: 10px;
+    border-radius: 8px;
     transition: all 0.3s;
 }
 
@@ -1512,8 +1512,8 @@
 }
 
 .control-icon {
-    font-size: 2.5em;
-    min-width: 50px;
+    font-size: 2em;
+    min-width: 40px;
     text-align: center;
 }
 
@@ -1524,12 +1524,12 @@
 .control-text strong {
     display: block;
     color: #c9a66b;
-    font-size: 1.2em;
-    margin-bottom: 5px;
+    font-size: 1em;
+    margin-bottom: 3px;
 }
 
 .control-text p {
     color: #8a7a6a;
-    font-size: 0.95em;
+    font-size: 0.85em;
     margin: 0;
 }
