@@ -6,6 +6,10 @@
 
 class GameGrid {
     constructor() {
+        if (typeof CONFIG === 'undefined') {
+            console.error('ERREUR CRITIQUE: CONFIG n\'est pas défini! Vérifiez que config.js est chargé avant grid.js');
+            throw new Error('CONFIG is not defined. Make sure config.js is loaded before grid.js');
+        }
         this.cols = CONFIG.GRID.COLS;
         this.rows = CONFIG.GRID.ROWS;
         this.cells = [];
