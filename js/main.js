@@ -524,9 +524,36 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (saveGameBtn) {
         saveGameBtn.addEventListener('click', () => {
-            if (game && userManager) {
-                showSaveLoadMenu('save');
+            console.log('[Main] Bouton sauvegarder cliqué');
+            console.log('[Main] Game existe:', !!game);
+            console.log('[Main] Game.isRunning:', game ? game.isRunning : 'N/A');
+            console.log('[Main] UserManager existe:', !!userManager);
+            
+            if (!game) {
+                console.error('[Main] Game non défini lors du clic sur sauvegarde');
+                if (effects) {
+                    effects.showSpiritualMessage('Jeu non initialisé', 2000);
+                }
+                return;
             }
+            
+            if (!game.isRunning) {
+                console.error('[Main] Aucune partie en cours');
+                if (effects) {
+                    effects.showSpiritualMessage('Aucune partie en cours à sauvegarder', 2000);
+                }
+                return;
+            }
+            
+            if (!userManager) {
+                console.error('[Main] UserManager non défini');
+                if (effects) {
+                    effects.showSpiritualMessage('Système de sauvegarde non initialisé', 2000);
+                }
+                return;
+            }
+            
+            showSaveLoadMenu('save');
         });
     }
 
@@ -654,21 +681,59 @@ function showSaveLoadMenu(mode) {
  * Sauvegarde dans un slot spécifique
  */
 function handleSaveToSlot(slotNumber) {
-    if (!game || !userManager) return;
+    console.log('[Main] handleSaveToSlot appelée, slot:', slotNumber);
     
-    const state = game.exportState();
-    const savedSlot = userManager.saveGameState(state, slotNumber);
-    
-    if (savedSlot) {
-        // Fermer le menu
-        document.getElementById('saveLoadModal').classList.remove('show');
-        
-        // Message de confirmation
+    if (!game) {
+        console.error('[Main] Game non initialisé');
         if (effects) {
-            effects.showSpiritualMessage(window.i18n.t('notifications.gameSaved', { slot: savedSlot }), 2000);
+            effects.showSpiritualMessage(window.i18n.t('errors.gameNotInitialized') || 'Jeu non initialisé', 2000);
         }
+        return;
+    }
+    
+    if (!userManager) {
+        console.error('[Main] UserManager non initialisé');
+        if (effects) {
+            effects.showSpiritualMessage(window.i18n.t('errors.saveError') || 'Erreur de sauvegarde', 2000);
+        }
+        return;
+    }
+    
+    if (!game.isRunning) {
+        console.error('[Main] Le jeu n\'est pas en cours');
+        if (effects) {
+            effects.showSpiritualMessage(window.i18n.t('errors.noGameToSave') || 'Aucune partie en cours', 2000);
+        }
+        return;
+    }
+    
+    try {
+        const state = game.exportState();
+        console.log('[Main] État exporté:', state);
         
-        console.log(`[Main] Partie sauvegardée dans le slot ${savedSlot}`);
+        const savedSlot = userManager.saveGameState(state, slotNumber);
+        
+        if (savedSlot) {
+            // Fermer le menu
+            document.getElementById('saveLoadModal').classList.remove('show');
+            
+            // Message de confirmation
+            if (effects) {
+                effects.showSpiritualMessage(window.i18n.t('notifications.gameSaved', { slot: savedSlot }), 2000);
+            }
+            
+            console.log(`[Main] Partie sauvegardée dans le slot ${savedSlot}`);
+        } else {
+            console.error('[Main] Échec de la sauvegarde');
+            if (effects) {
+                effects.showSpiritualMessage(window.i18n.t('errors.saveFailed') || 'Échec de la sauvegarde', 2000);
+            }
+        }
+    } catch (error) {
+        console.error('[Main] Erreur lors de la sauvegarde:', error);
+        if (effects) {
+            effects.showSpiritualMessage(window.i18n.t('errors.saveError') || 'Erreur de sauvegarde', 2000);
+        }
     }
 }
 
@@ -717,6 +782,22 @@ function handleLoadFromSlot(slotNumber) {
     const pausePanel = document.getElementById('pausePanel');
     if (pausePanel) {
         pausePanel.classList.remove('show');
+    }
+    
+    // Mettre à jour l'UI complètement
+    if (ui) {
+        ui.updateScore(game.score);
+        ui.updateLines(game.lines);
+        ui.updateLevel(game.level);
+        ui.updateSwapDots(game.swapCount);
+        ui.updateWallCharges(game.wallBreakCharges);
+        ui.renderNextPiece(game.nextPiece);
+    }
+    
+    // Redémarrer la boucle de jeu si nécessaire
+    if (!window.gameLoopRunning) {
+        lastTime = performance.now();
+        requestAnimationFrame(gameLoop);
     }
     
     if (effects) {

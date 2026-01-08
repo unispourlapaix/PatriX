@@ -168,29 +168,30 @@ class Controls {
             if (absDeltaX < CONFIG.MOBILE.TAP_THRESHOLD && 
                 absDeltaY < CONFIG.MOBILE.TAP_THRESHOLD) {
                 
-                const boardElement = document.getElementById('gameBoard');
-                const boardRect = boardElement.getBoundingClientRect();
-                const tapY = touchEndY - boardRect.top;
-                const boardHeight = boardRect.height;
+                const currentTime = Date.now();
                 
-                // Vérifier si le tap est dans la moitié inférieure
-                if (tapY > boardHeight / 2) {
-                    // Double tap en bas : hard drop
-                    const currentTime = Date.now();
-                    if (currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
-                        this.tapCount++;
-                        if (this.tapCount >= 2) {
-                            this.engine.hardDrop();
-                            this.tapCount = 0;
-                        }
-                    } else {
-                        this.tapCount = 1;
+                // Détecter double tap pour hard drop
+                if (currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
+                    this.tapCount++;
+                    if (this.tapCount >= 2) {
+                        // Double tap : hard drop (partout sur la grille)
+                        this.engine.hardDrop();
+                        this.tapCount = 0;
+                        this.lastTapTime = 0; // Reset pour éviter triple tap
+                        return;
                     }
-                    this.lastTapTime = currentTime;
                 } else {
-                    // Tap en haut : rotation
-                    this.handleTap();
+                    this.tapCount = 1;
                 }
+                this.lastTapTime = currentTime;
+                
+                // Tap simple : rotation (attendre pour voir si c'est un double tap)
+                setTimeout(() => {
+                    if (this.tapCount === 1) {
+                        this.handleTap();
+                        this.tapCount = 0;
+                    }
+                }, CONFIG.MOBILE.DOUBLE_TAP_DELAY);
             }
             // Swipe horizontal uniquement
             else if (absDeltaX > 20 && absDeltaX > absDeltaY) {
@@ -308,28 +309,29 @@ class Controls {
             // Click simple ou double click
             if (absDeltaX < 10 && absDeltaY < 10) {
                 const currentTime = Date.now();
-                const boardRect = boardElement.getBoundingClientRect();
-                const clickY = e.clientY - boardRect.top;
-                const boardHeight = boardRect.height;
                 
-                // Vérifier si le clic est dans la moitié inférieure
-                if (clickY > boardHeight / 2) {
-                    // Double-clic en bas : hard drop
-                    if (currentTime - this.lastClickTime < 300) {
-                        this.clickCount++;
-                        if (this.clickCount >= 2) {
-                            this.engine.hardDrop();
-                            this.clickCount = 0;
-                        }
-                    } else {
-                        this.clickCount = 1;
+                // Détecter double-clic pour hard drop
+                if (currentTime - this.lastClickTime < 300) {
+                    this.clickCount++;
+                    if (this.clickCount >= 2) {
+                        // Double-clic : hard drop
+                        this.engine.hardDrop();
+                        this.clickCount = 0;
+                        this.lastClickTime = 0;
+                        return;
                     }
-                    this.lastClickTime = currentTime;
                 } else {
-                    // Clic simple en haut : rotation
-                    this.engine.rotate();
-                    this.clickCount = 0;
+                    this.clickCount = 1;
                 }
+                this.lastClickTime = currentTime;
+                
+                // Clic simple : rotation (attendre pour voir si c'est un double clic)
+                setTimeout(() => {
+                    if (this.clickCount === 1) {
+                        this.engine.rotate();
+                        this.clickCount = 0;
+                    }
+                }, 300);
             }
             // Drag horizontal : déplacement
             else if (Math.abs(deltaX) > 20) {

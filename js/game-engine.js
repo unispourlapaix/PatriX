@@ -501,7 +501,7 @@ class GameEngine {
     }
 
     /**
-     * Fait pivoter la pièce
+     * Fait pivoter la pièce avec wall kick amélioré et calcul dynamique
      * @returns {boolean} true si la rotation a réussi
      */
     rotate() {
@@ -509,10 +509,75 @@ class GameEngine {
         
         const rotated = rotateShape(this.currentPiece.shape);
         
+        // Essayer la rotation à la position actuelle
         if (this.grid.isValidMove(this.currentPiece, this.currentPiece.x, this.currentPiece.y, rotated)) {
             this.currentPiece.shape = rotated;
             this.emit('rotate', { piece: this.currentPiece });
             return true;
+        }
+        
+        // Calculer la hauteur de la pièce après rotation
+        const rotatedHeight = rotated.length;
+        const currentY = this.currentPiece.y;
+        
+        // Calculer combien il faut remonter si on dépasse
+        const bottomPosition = currentY + rotatedHeight;
+        const overflow = bottomPosition - this.grid.rows;
+        
+        // Générer les wall kicks dynamiquement
+        const kicks = [];
+        
+        // Si dépassement, remonter d'abord de la quantité nécessaire et plus
+        if (overflow > 0) {
+            for (let up = overflow; up <= overflow + 3; up++) {
+                kicks.push({ x: 0, y: -up });
+                kicks.push({ x: -1, y: -up });
+                kicks.push({ x: 1, y: -up });
+                kicks.push({ x: -2, y: -up });
+                kicks.push({ x: 2, y: -up });
+            }
+        }
+        
+        // Puis essayer les positions standard
+        kicks.push(
+            { x: -1, y: 0 },  // Gauche
+            { x: 1, y: 0 },   // Droite
+            { x: 0, y: -1 },  // Haut
+            { x: -2, y: 0 },  // Gauche x2
+            { x: 2, y: 0 },   // Droite x2
+            { x: 0, y: -2 },  // Haut x2
+            { x: -1, y: -1 }, // Haut-gauche
+            { x: 1, y: -1 },  // Haut-droite
+            { x: 0, y: -3 },  // Haut x3
+            { x: -3, y: 0 },  // Gauche x3
+            { x: 3, y: 0 },   // Droite x3
+            { x: -1, y: -2 }, // Haut-gauche x2
+            { x: 1, y: -2 }   // Haut-droite x2
+        );
+        
+        // Si pas de dépassement et au milieu, essayer aussi vers le bas
+        if (overflow <= 0 && currentY < this.grid.rows - 6) {
+            kicks.push(
+                { x: 0, y: 1 },   // Bas
+                { x: -1, y: 1 },  // Bas-gauche
+                { x: 1, y: 1 }    // Bas-droite
+            );
+        }
+        
+        for (const kick of kicks) {
+            const testX = this.currentPiece.x + kick.x;
+            const testY = this.currentPiece.y + kick.y;
+            
+            // Ne pas tester des positions qui sortent trop haut
+            if (testY < -3) continue;
+            
+            if (this.grid.isValidMove(this.currentPiece, testX, testY, rotated)) {
+                this.currentPiece.x = testX;
+                this.currentPiece.y = testY;
+                this.currentPiece.shape = rotated;
+                this.emit('rotate', { piece: this.currentPiece });
+                return true;
+            }
         }
         
         return false;
@@ -862,27 +927,55 @@ class GameEngine {
      */
     exportState() {
         return {
+            // Grille
             grid: this.grid.cells.map(row => [...row]),
+            
+            // Pièces
             currentPiece: this.currentPiece ? {
                 shape: this.currentPiece.shape,
                 color: this.currentPiece.color,
                 x: this.currentPiece.x,
-                y: this.currentPiece.y
+                y: this.currentPiece.y,
+                type: this.currentPiece.type || 'unknown'
             } : null,
             nextPiece: this.nextPiece ? {
                 shape: this.nextPiece.shape,
-                color: this.nextPiece.color
+                color: this.nextPiece.color,
+                type: this.nextPiece.type || 'unknown'
             } : null,
+            
+            // Stats principales
             score: this.score,
             lines: this.lines,
             level: this.level,
+            
+            // Combos
             combo: this.combo,
             popCombo: this.popCombo,
             popPoints: this.popPoints,
+            lastPopTime: this.lastPopTime,
+            
+            // Bonus
             swapCount: this.swapCount,
+            maxSwaps: this.maxSwaps,
             wallBreakCharges: this.wallBreakCharges,
+            maxWallBreakCharges: this.maxWallBreakCharges,
+            
+            // Wall break mécanisme
+            lastPushDirection: this.lastPushDirection,
+            pushCount: this.pushCount,
+            
+            // Timing
             dropInterval: this.dropInterval,
-            maxLevelReached: this.maxLevelReached
+            dropTimer: this.dropTimer,
+            
+            // Progression
+            maxLevelReached: this.maxLevelReached,
+            
+            // État du jeu
+            isRunning: this.isRunning,
+            isPaused: this.isPaused,
+            isLevelingUp: this.isLevelingUp
         };
     }
 
@@ -893,41 +986,77 @@ class GameEngine {
         // Restaurer la grille
         this.grid.cells = state.grid.map(row => [...row]);
         
-        // Restaurer la pièce actuelle
+        // Restaurer la pièce actuelle avec toutes ses propriétés
         if (state.currentPiece) {
             this.currentPiece = {
                 shape: state.currentPiece.shape,
                 color: state.currentPiece.color,
                 x: state.currentPiece.x,
-                y: state.currentPiece.y
+                y: state.currentPiece.y,
+                type: state.currentPiece.type || 'unknown'
             };
+        } else {
+            this.currentPiece = null;
         }
         
         // Restaurer la pièce suivante
         if (state.nextPiece) {
             this.nextPiece = {
                 shape: state.nextPiece.shape,
-                color: state.nextPiece.color
+                color: state.nextPiece.color,
+                type: state.nextPiece.type || 'unknown'
             };
+        } else {
+            this.nextPiece = null;
         }
         
-        // Restaurer les stats
-        this.score = state.score;
-        this.lines = state.lines;
-        this.level = state.level;
+        // Restaurer les stats principales
+        this.score = state.score || 0;
+        this.lines = state.lines || 0;
+        this.level = state.level || 0;
+        
+        // Restaurer les combos
         this.combo = state.combo || 0;
         this.popCombo = state.popCombo || 0;
         this.popPoints = state.popPoints || 0;
+        this.lastPopTime = state.lastPopTime || 0;
+        
+        // Restaurer les bonus
         this.swapCount = state.swapCount || 0;
+        this.maxSwaps = state.maxSwaps || 3;
         this.wallBreakCharges = state.wallBreakCharges || 0;
+        this.maxWallBreakCharges = state.maxWallBreakCharges || 3;
+        
+        // Restaurer le wall break mécanisme
+        this.lastPushDirection = state.lastPushDirection || 0;
+        this.pushCount = state.pushCount || 0;
+        
+        // Restaurer le timing
         this.dropInterval = state.dropInterval || CONFIG.TIMING.INITIAL_DROP_SPEED;
+        this.dropTimer = state.dropTimer || 0;
+        
+        // Restaurer la progression
         this.maxLevelReached = state.maxLevelReached || 0;
         
-        // Redessiner le jeu
-        this.grid.draw();
-        if (this.currentPiece) {
-            this.drawPiece(this.currentPiece);
+        // Restaurer l'état du jeu (mais on force isRunning et pas isPaused)
+        this.isLevelingUp = false; // Toujours remettre à false au chargement
+        
+        // Nettoyer tous les timers
+        if (this.comboTimer) {
+            clearTimeout(this.comboTimer);
+            this.comboTimer = null;
         }
+        if (this.popComboTimer) {
+            clearTimeout(this.popComboTimer);
+            this.popComboTimer = null;
+        }
+        if (this.pushResetTimer) {
+            clearTimeout(this.pushResetTimer);
+            this.pushResetTimer = null;
+        }
+        
+        // Redessiner le jeu
+        this.grid.render(this.currentPiece);
         
         // Mettre à jour l'UI
         this.emit('score', this.score);

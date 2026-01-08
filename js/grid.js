@@ -200,13 +200,13 @@ class GameGrid {
                     const newX = x + col;
                     const newY = y + row;
                     
-                    // Vérifie les limites (FIXÉ: newY < 0 aussi vérifié maintenant)
-                    if (newX < 0 || newX >= this.cols || newY < 0 || newY >= this.rows) {
+                    // Vérifie les limites (autoriser rotation au-dessus de la grille)
+                    if (newX < 0 || newX >= this.cols || newY >= this.rows) {
                         return false;
                     }
                     
-                    // Vérifie les collisions
-                    if (this.cells[newY][newX]) {
+                    // Vérifie les collisions seulement si dans la grille
+                    if (newY >= 0 && this.cells[newY][newX]) {
                         return false;
                     }
                 }
