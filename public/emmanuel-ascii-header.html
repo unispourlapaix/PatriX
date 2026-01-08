@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,6 +45,37 @@
         .color-purple { color: #c44569; text-shadow: 0 0 10px #c44569; }
         .color-pink { color: #f78fb3; text-shadow: 0 0 10px #f78fb3; }
         .color-white { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
+
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-selector select {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #ffd93d;
+            border-radius: 8px;
+            color: #ffd93d;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .language-selector select option {
+            background: #1a1a2e;
+            color: #ffd93d;
+        }
 
         .nav-section {
             margin: 40px 0;
@@ -106,6 +137,14 @@
             font-size: 32px;
             display: block;
             margin-bottom: 10px;
+        }
+
+        .link-icon-img {
+            width: 48px;
+            height: 48px;
+            display: block;
+            margin: 0 auto 10px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
         }
 
         .link-title {
@@ -213,6 +252,24 @@
     </style>
 </head>
 <body>
+    <!-- Sélecteur de langue -->
+    <div class="language-selector">
+        <select id="languageSelector">
+            <option value="en">🇬🇧 English</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="pt">🇵🇹 Português</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="uk">🇺🇦 Українська</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="ar">🇸🇦 العربية</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
+        </select>
+    </div>
+
     <div class="ascii-header">
 <span class="ascii-line color-red">╔══════════════════════════════════════════════════════════════════════════╗</span>
 <span class="ascii-line color-orange">║                                                                          ║</span>
@@ -230,7 +287,7 @@
 <span class="ascii-line color-purple">║       ╚██████╔╝██║  ██║███████╗███████╗███████╗██║  ██║   ██║          ║</span>
 <span class="ascii-line color-pink">║        ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝          ║</span>
 <span class="ascii-line color-white">║                                                                          ║</span>
-<span class="ascii-line color-yellow">║              ✝ Artiste Chrétien • Créateur • Inspirateur ✝               ║</span>
+<span class="ascii-line color-yellow" data-i18n="subtitle">║              ✝ Artiste Chrétien • Créateur • Inspirateur ✝               ║</span>
 <span class="ascii-line color-white">║                                                                          ║</span>
 <span class="ascii-line color-red">╚══════════════════════════════════════════════════════════════════════════╝</span>
     </div>
@@ -238,39 +295,82 @@
     <div class="nav-section">
         <div class="nav-ascii">
 <span class="ascii-line color-cyan">╔════════════════════════════════════════════════════════════════╗</span>
-<span class="ascii-line color-blue">║            ✝  Découvrez Mon Univers Créatif  ✝                ║</span>
+<span class="ascii-line color-blue" data-i18n="discover">║            ✝  Découvrez Mon Univers Créatif  ✝                ║</span>
 <span class="ascii-line color-cyan">╚════════════════════════════════════════════════════════════════╝</span>
         </div>
 
         <div class="nav-links">
             <a href="https://emmanuel.gallery" class="nav-link link-gallery" target="_blank">
                 <span class="link-emoji">🎮</span>
-                <span class="link-title">Jeux & Déco</span>
+                <span class="link-title" data-i18n="gamesDecor">Jeux & Déco</span>
                 <span class="link-url">emmanuel.gallery</span>
             </a>
 
             <a href="https://emmanuelpayet.art" class="nav-link link-art" target="_blank">
                 <span class="link-emoji">📚</span>
-                <span class="link-title">Livres & Art</span>
+                <span class="link-title" data-i18n="booksArt">Livres & Art</span>
                 <span class="link-url">emmanuelpayet.art</span>
             </a>
 
             <a href="https://audiomack.com/emmanuelpayet888" class="nav-link link-music" target="_blank">
                 <span class="link-emoji">🎵</span>
-                <span class="link-title">Gospel Gratuit</span>
+                <span class="link-title" data-i18n="freeGospel">Gospel Gratuit</span>
                 <span class="link-url">audiomack.com</span>
             </a>
 
             <a href="https://www.redbubble.com/fr/people/h777plx/shop" class="nav-link link-shop" target="_blank">
                 <span class="link-emoji">🛍️</span>
-                <span class="link-title">La Bonne Heure</span>
+                <span class="link-title" data-i18n="goodTime">La Bonne Heure</span>
                 <span class="link-url">redbubble.com</span>
             </a>
         </div>
     </div>
 
+    <!-- Section Jeux Spirituels -->
+    <div class="nav-section">
+        <div class="nav-ascii">
+<span class="ascii-line color-yellow">╔════════════════════════════════════════════════════════════════╗</span>
+<span class="ascii-line color-orange" data-i18n="games">║      🎮  Mes Jeux Spirituels - free to play  🎮              ║</span>
+<span class="ascii-line color-yellow">╚════════════════════════════════════════════════════════════════╝</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="https://unispourlapaix.github.io/unityquest-chronicles-of-love/" class="nav-link link-gallery" target="_blank">
+                <img src="UnityQ-icon-192x192.png" alt="UNITYQUEST" class="link-icon-img">
+                <span class="link-title" data-i18n="unityquest">UNITYQUEST</span>
+                <span class="link-url" data-i18n="unityquestSub">Chroniques de l'Amour</span>
+            </a>
+
+            <a href="https://unispourlapaix.github.io/petitbateau/petitbateauRouge.html" class="nav-link link-art" target="_blank">
+                <img src="petitbateau-icon-128x128.png" alt="Le Petit Bateau Rouge" class="link-icon-img">
+                <span class="link-title" data-i18n="petitbateau">Le Petit Bateau Rouge</span>
+                <span class="link-url" data-i18n="petitbateauSub">33 Millions de Raisons de Partager la Paix</span>
+            </a>
+
+            <a href="https://unispourlapaix.github.io/dove-of-hope-sky-blessing/" class="nav-link link-music" target="_blank">
+                <img src="dove-of-hope-sky-blessing-icon-96x96.png" alt="Dove of Hope" class="link-icon-img">
+                <span class="link-title" data-i18n="dove">Dove of Hope</span>
+                <span class="link-url" data-i18n="doveSub">Sky Blessing</span>
+            </a>
+
+            <!-- Temporairement masqué
+            <a href="https://unispourlapaix.github.io/mots-en-croix-chretiens/" class="nav-link link-shop" target="_blank">
+                <img src="mots-en-croix-chretiens-icon-128x128.png" alt="Mots En Croix" class="link-icon-img">
+                <span class="link-title" data-i18n="motscroix">Mots En Croix</span>
+                <span class="link-url" data-i18n="motscroixSub">Chrétiens</span>
+            </a>
+            -->
+
+            <a href="https://unispourlapaix.github.io/PatriX/" class="nav-link link-gallery" target="_blank">
+                <img src="../assets/images/icon-32.svg" alt="PATRI-X" class="link-icon-img">
+                <span class="link-title" data-i18n="patrix">PATRI-X</span>
+                <span class="link-url" data-i18n="patrixSub">Transformer le Désespoir en Grands Rêves</span>
+            </a>
+        </div>
+    </div>
+
     <div class="quote-section">
-        <p class="quote-text">
+        <p class="quote-text" data-i18n="quote">
             L'art chrétien unit les cœurs au-delà des différences,<br>
             célébrant la beauté de la création divine<br>
             dans toute sa diversité.
@@ -279,7 +379,9 @@
 
     <div class="footer">
         <div class="ascii-line color-purple">✝════════════════════════════════════════════════════════✝</div>
-        <p style="margin: 15px 0;">Emmanuel Payet © 2024 • Gloire à Dieu</p>
+        <p style="margin: 15px 0;">
+            <span data-i18n="copyright">Emmanuel Payet © 2024</span> • <span data-i18n="footer">Gloire à Dieu</span>
+        </p>
         <div class="ascii-line color-purple">✝════════════════════════════════════════════════════════✝</div>
     </div>
 
@@ -336,5 +438,8 @@
         console.log('%cGloire à Dieu pour toute Sa création',
             'font-size: 16px; color: #45b7d1;');
     </script>
+
+    <!-- Système de traduction multilingue -->
+    <script src="emmanuel-i18n.js"></script>
 </body>
 </html>
