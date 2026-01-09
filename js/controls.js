@@ -170,11 +170,20 @@ class Controls {
                 
                 const currentTime = Date.now();
                 
-                // Détecter double tap pour hard drop
-                if (currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
+                // Calculer la position Y relative à la grille pour déterminer si on est dans la zone de double tap
+                const boardElement = document.getElementById('gameBoard');
+                const boardRect = boardElement.getBoundingClientRect();
+                const relativeY = touchEndY - boardRect.top;
+                const cellHeight = CONFIG.GRID.CELL_SIZE + CONFIG.GRID.GAP;
+                const bottomThreeRows = CONFIG.GRID.ROWS - 3; // Les 3 dernières lignes
+                const doubleTapZoneY = bottomThreeRows * cellHeight;
+                const isInDoubleTapZone = relativeY >= doubleTapZoneY;
+                
+                // Détecter double tap pour hard drop (seulement dans les 3 dernières lignes)
+                if (isInDoubleTapZone && currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
                     this.tapCount++;
                     if (this.tapCount >= 2) {
-                        // Double tap : hard drop (partout sur la grille)
+                        // Double tap : hard drop (seulement dans la zone du bas)
                         this.engine.hardDrop();
                         this.tapCount = 0;
                         this.lastTapTime = 0; // Reset pour éviter triple tap
@@ -185,13 +194,19 @@ class Controls {
                 }
                 this.lastTapTime = currentTime;
                 
-                // Tap simple : rotation (attendre pour voir si c'est un double tap)
-                setTimeout(() => {
-                    if (this.tapCount === 1) {
-                        this.handleTap();
-                        this.tapCount = 0;
-                    }
-                }, CONFIG.MOBILE.DOUBLE_TAP_DELAY);
+                // Tap simple : rotation (attendre pour voir si c'est un double tap, mais seulement si on est dans la zone)
+                if (isInDoubleTapZone) {
+                    setTimeout(() => {
+                        if (this.tapCount === 1) {
+                            this.handleTap();
+                            this.tapCount = 0;
+                        }
+                    }, CONFIG.MOBILE.DOUBLE_TAP_DELAY);
+                } else {
+                    // En dehors de la zone de double tap, rotation immédiate
+                    this.engine.rotate();
+                    this.tapCount = 0;
+                }
             }
             // Swipe horizontal uniquement
             else if (absDeltaX > 20 && absDeltaX > absDeltaY) {
