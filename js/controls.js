@@ -152,14 +152,11 @@ class Controls {
                 return;
             }
             
-            // Swipe DOWN - Uniquement swipe normal descend
-            if (deltaY > 30 && absDeltaY > absDeltaX) {
+            // Swipe DOWN - Hard drop
+            if (deltaY > 80 && absDeltaY > absDeltaX) {
                 if (this.engine.isRunning && !this.engine.isPaused) {
-                    // Swipe rapide (> 150px) = rien (ignoré)
-                    if (deltaY <= 150) {
-                        // Swipe normal = descendre d'1 case seulement
-                        this.engine.move(0, 1);
-                    }
+                    // Swipe vers le bas = hard drop
+                    this.engine.hardDrop();
                 }
                 return;
             }
@@ -169,43 +166,28 @@ class Controls {
                 absDeltaY < CONFIG.MOBILE.TAP_THRESHOLD) {
                 
                 const currentTime = Date.now();
+                const timeSinceLastTap = currentTime - this.lastTapTime;
                 
-                // Calculer la position Y relative à la grille pour déterminer si on est dans la zone de double tap
-                const boardElement = document.getElementById('gameBoard');
-                const boardRect = boardElement.getBoundingClientRect();
-                const relativeY = touchEndY - boardRect.top;
-                const cellHeight = CONFIG.GRID.CELL_SIZE + CONFIG.GRID.GAP;
-                const bottomThreeRows = CONFIG.GRID.ROWS - 3; // Les 3 dernières lignes
-                const doubleTapZoneY = bottomThreeRows * cellHeight;
-                const isInDoubleTapZone = relativeY >= doubleTapZoneY;
-                
-                // Détecter double tap pour hard drop (seulement dans les 3 dernières lignes)
-                if (isInDoubleTapZone && currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
-                    this.tapCount++;
-                    if (this.tapCount >= 2) {
-                        // Double tap : hard drop (seulement dans la zone du bas)
-                        this.engine.hardDrop();
-                        this.tapCount = 0;
-                        this.lastTapTime = 0; // Reset pour éviter triple tap
-                        return;
-                    }
-                } else {
+                // Si le dernier tap est trop ancien, c'est un nouveau premier tap
+                if (timeSinceLastTap > CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
                     this.tapCount = 1;
-                }
-                this.lastTapTime = currentTime;
-                
-                // Tap simple : rotation (attendre pour voir si c'est un double tap, mais seulement si on est dans la zone)
-                if (isInDoubleTapZone) {
+                    this.lastTapTime = currentTime;
+                    
+                    // Attendre pour voir si un deuxième tap arrive
                     setTimeout(() => {
                         if (this.tapCount === 1) {
-                            this.handleTap();
+                            this.engine.rotate();
                             this.tapCount = 0;
                         }
                     }, CONFIG.MOBILE.DOUBLE_TAP_DELAY);
                 } else {
-                    // En dehors de la zone de double tap, rotation immédiate
-                    this.engine.rotate();
-                    this.tapCount = 0;
+                    // Deuxième tap rapide = double tap
+                    this.tapCount++;
+                    if (this.tapCount >= 2) {
+                        this.engine.hardDrop();
+                        this.tapCount = 0;
+                        this.lastTapTime = 0;
+                    }
                 }
             }
             // Swipe horizontal uniquement
@@ -219,32 +201,12 @@ class Controls {
     }
 
     /**
-     * Gère les taps (simple/double)
+     * Gère les taps simples (rotation uniquement)
      */
     handleTap() {
-        const currentTime = Date.now();
-        
-        if (currentTime - this.lastTapTime < CONFIG.MOBILE.DOUBLE_TAP_DELAY) {
-            this.tapCount++;
-        } else {
-            this.tapCount = 1;
-        }
-        
-        this.lastTapTime = currentTime;
-        
-        // Simple tap : rotation
-        if (this.tapCount === 1) {
-            setTimeout(() => {
-                if (this.tapCount === 1) {
-                    this.engine.rotate();
-                }
-            }, CONFIG.MOBILE.DOUBLE_TAP_DELAY);
-        }
-        // Double tap : hard drop
-        else if (this.tapCount >= 2) {
-            this.engine.hardDrop();
-            this.tapCount = 0;
-        }
+        // Cette fonction est appelée uniquement pour les rotations
+        // Le double tap est géré directement dans initTouchControls
+        this.engine.rotate();
     }
 
     /**
@@ -317,6 +279,15 @@ class Controls {
                     if (window.audioManager) {
                         window.audioManager.playWindPush();
                     }
+                }
+                return;
+            }
+            
+            // Swipe DOWN - Hard drop (même logique que tactile)
+            if (deltaY > 80 && absDeltaY > absDeltaX) {
+                if (this.engine.isRunning && !this.engine.isPaused) {
+                    // Swipe vers le bas = hard drop
+                    this.engine.hardDrop();
                 }
                 return;
             }

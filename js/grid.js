@@ -149,7 +149,8 @@ class GameGrid {
      * @returns {boolean} true si le chemin est valide
      */
     isValidPath(path) {
-        if (path.length < 4) return false;
+        // Minimum 2 cellules pour le nouveau système automatique
+        if (path.length < 2) return false;
         
         // Vérifier que toutes les cellules sont du même type
         const firstCell = this.cells[path[0].row][path[0].col];
@@ -162,13 +163,8 @@ class GameGrid {
             if (!cell || cell.type !== type) return false;
         }
         
-        // Vérifier que chaque cellule est adjacente à la suivante
-        for (let i = 1; i < path.length; i++) {
-            const prev = path[i - 1];
-            const curr = path[i];
-            const distance = Math.abs(prev.row - curr.row) + Math.abs(prev.col - curr.col);
-            if (distance !== 1) return false;
-        }
+        // Note: Pas besoin de vérifier l'adjacence car autoCompletePath garantit que
+        // toutes les cellules du chemin sont connectées via BFS
         
         return true;
     }

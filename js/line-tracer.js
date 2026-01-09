@@ -200,10 +200,60 @@ class LineTracer {
                             } else if (!this.isInPath(row, col)) {
                                 // Nouvelle cellule
                                 this.path.push({ row, col });
+                                
+                                // Auto-complétion : dès qu'on atteint 2 cases, chercher toutes les cases adjacentes
+                                if (this.path.length === 2) {
+                                    this.autoCompletePath();
+                                    this.highlightPath();
+                                    this.drawPath();
+                                    
+                                    // Délai visuel pour voir la connexion avant l'explosion (500ms)
+                                    setTimeout(() => {
+                                        if (this.path.length >= 2 && this.grid.isValidPath(this.path)) {
+                                            if (this.onPathComplete) {
+                                                this.onPathComplete(this.path);
+                                            }
+                                        }
+                                        // Réinitialiser après explosion
+                                        this.path = [];
+                                        this.clearCanvas();
+                                        this.clearHighlight();
+                                    }, 500);
+                                    
+                                    // Arrêter le dessin immédiatement
+                                    this.isDrawing = false;
+                                    this.currentPos = null;
+                                    return;
+                                }
                             }
                         } else {
                             // Deuxième cellule
                             this.path.push({ row, col });
+                            
+                            // Auto-complétion : dès qu'on atteint 2 cases, chercher toutes les cases adjacentes
+                            if (this.path.length === 2) {
+                                this.autoCompletePath();
+                                this.highlightPath();
+                                this.drawPath();
+                                
+                                // Délai visuel pour voir la connexion avant l'explosion (500ms)
+                                setTimeout(() => {
+                                    if (this.path.length >= 2 && this.grid.isValidPath(this.path)) {
+                                        if (this.onPathComplete) {
+                                            this.onPathComplete(this.path);
+                                        }
+                                    }
+                                    // Réinitialiser après explosion
+                                    this.path = [];
+                                    this.clearCanvas();
+                                    this.clearHighlight();
+                                }, 500);
+                                
+                                // Arrêter le dessin immédiatement
+                                this.isDrawing = false;
+                                this.currentPos = null;
+                                return;
+                            }
                         }
                         
                         this.highlightPath();
@@ -219,6 +269,53 @@ class LineTracer {
             this.drawPath();
         }
     }
+    
+    /**
+     * Auto-complète le chemin en trouvant toutes les cases adjacentes du même type
+     */
+    autoCompletePath() {
+        if (this.path.length < 2) return;
+        
+        const firstCell = this.grid.cells[this.path[0].row][this.path[0].col];
+        if (!firstCell) return;
+        
+        const targetType = firstCell.type;
+        const visited = new Set();
+        const toVisit = [...this.path];
+        
+        // Marquer les cases déjà dans le chemin comme visitées
+        this.path.forEach(cell => visited.add(`${cell.row}-${cell.col}`));
+        
+        // BFS pour trouver toutes les cases adjacentes du même type
+        while (toVisit.length > 0) {
+            const current = toVisit.shift();
+            const neighbors = [
+                { row: current.row - 1, col: current.col }, // haut
+                { row: current.row + 1, col: current.col }, // bas
+                { row: current.row, col: current.col - 1 }, // gauche
+                { row: current.row, col: current.col + 1 }  // droite
+            ];
+            
+            for (const neighbor of neighbors) {
+                const key = `${neighbor.row}-${neighbor.col}`;
+                if (visited.has(key)) continue;
+                
+                if (neighbor.row >= 0 && neighbor.row < this.grid.rows &&
+                    neighbor.col >= 0 && neighbor.col < this.grid.cols) {
+                    
+                    const neighborCell = this.grid.cells[neighbor.row][neighbor.col];
+                    if (neighborCell && neighborCell.type === targetType) {
+                        visited.add(key);
+                        this.path.push(neighbor);
+                        toVisit.push(neighbor);
+                    }
+                }
+            }
+        }
+        
+        this.highlightPath();
+        this.drawPath();
+    }
 
     /**
      * Termine le tracé
@@ -229,17 +326,19 @@ class LineTracer {
         this.isDrawing = false;
         this.currentPos = null;
 
-        // Valider le chemin
-        if (this.path.length >= 4 && this.grid.isValidPath(this.path)) {
-            if (this.onPathComplete) {
-                this.onPathComplete(this.path);
-            }
+        // Si on a moins de 2 cases, annuler (car l'auto-complétion se fait déjà à 2 cases)
+        if (this.path.length > 0 && this.path.length < 2) {
+            // Réinitialiser sans explosion
+            this.path = [];
+            this.clearCanvas();
+            this.clearHighlight();
         }
-
-        // Réinitialiser
-        this.path = [];
-        this.clearCanvas();
-        this.clearHighlight();
+        // Si on relâche sur une seule case, annuler
+        else if (this.path.length === 1) {
+            this.path = [];
+            this.clearCanvas();
+            this.clearHighlight();
+        }
     }
 
     /**
@@ -256,8 +355,8 @@ class LineTracer {
         const pos = this.getEventPosition(e);
         if (!pos) return null;
 
-        const cells = this.boardElement.querySelectorAll('.cell');
-        for (const cell of cells) {
+        // Utiliser le cache au lieu de querySelectorAll
+        for (const [key, cell] of this.cellElementCache) {
             const rect = cell.getBoundingClientRect();
             if (pos.x >= rect.left && pos.x <= rect.right &&
                 pos.y >= rect.top && pos.y <= rect.bottom) {
@@ -369,7 +468,7 @@ class LineTracer {
     highlightPath() {
         this.clearHighlight();
         for (const { row, col } of this.path) {
-            const cell = this.boardElement.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            const cell = this.getCellElement(row, col);
             if (cell) {
                 cell.classList.add('traced');
             }
