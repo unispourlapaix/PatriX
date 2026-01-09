@@ -287,10 +287,11 @@ class ProfileManager {
      */
     async shareScore() {
         try {
-            // Récupérer les stats du jeu
-            const score = window.game ? window.game.score : 0;
-            const level = window.game ? window.game.level : 0;
-            const lines = window.game ? window.game.linesCleared : 0;
+            // Récupérer les stats du jeu depuis l'engine global
+            const engine = window.gameEngine || window.ui?.engine;
+            const score = engine ? engine.score : 0;
+            const level = engine ? engine.level : 0;
+            const lines = engine ? engine.linesCleared : 0;
             const username = this.userManager.getUsername();
 
             // Créer l'image de la grille
@@ -365,13 +366,27 @@ class ProfileManager {
             ctx.textBaseline = 'middle';
             ctx.fillText('PATRI-X', size / 2, 120);
 
-            // Score en petit dessous
-            if (window.game) {
-                ctx.fillStyle = '#666666';
-                ctx.font = '32px Arial, sans-serif';
-                const scoreText = `Score: ${window.game.score.toLocaleString()} • Niveau ${window.game.level} • ${window.game.linesCleared} lignes`;
-                ctx.fillText(scoreText, size / 2, 180);
-            }
+            // Récupérer le score maximum et le score actuel
+            const engine = window.gameEngine || window.ui?.engine;
+            const currentScore = engine ? engine.score : 0;
+            const maxScore = this.userManager?.maxScore || 0;
+            
+            // Afficher le plus élevé entre score actuel et score max
+            const displayScore = Math.max(currentScore, maxScore);
+            const score = displayScore > 0 ? displayScore : 7777777;
+            
+            const level = engine && engine.level > 0 ? engine.level : 8;
+            const lines = engine && engine.linesCleared > 0 ? engine.linesCleared : 7;
+            
+            // Score principal en GROS et BOLD
+            ctx.fillStyle = '#d4af37';
+            ctx.font = 'bold 64px Arial Black, sans-serif';
+            ctx.fillText(`SCORE: ${score.toLocaleString()}`, size / 2, 220);
+            
+            // Niveau et lignes en dessous
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 36px Arial, sans-serif';
+            ctx.fillText(`Niveau ${level}  •  ${lines} lignes`, size / 2, 270);
 
             // Icône PATRIX plus grande au centre
             this.drawPatrixIcon(ctx, size / 2, size / 2, 320);
