@@ -134,3 +134,29 @@ body {background:linear-gradient(135deg,#302a38,#695044 55%,#ae7647);}
 .pixel-ending-actions:not([hidden]) {display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:16px;}
 @media (max-height:500px) {.pixel-ending{padding:6px;}.pixel-ending-top{padding:4px 10px;}.pixel-ending canvas{max-height:calc(100dvh - 150px);}.pixel-ending-caption{padding:6px;}.pixel-ending-actions:not([hidden]){padding:6px;}.pixel-ending button,.pixel-ending a{padding:6px 12px;}}
 @media (max-width:600px) {.pixel-ending{padding:10px;}.pixel-ending-top{letter-spacing:1px;padding:10px;}.pixel-ending-shell{border-width:2px;}.mechanical-display::before{background-size:180px 100px;}}
+/* Paysage : aperçu en haut à gauche, tableau de bord sur deux rangées compactes. */
+@media (orientation:landscape) and (min-width:600px) {
+ .mechanical-display {display:grid;grid-template-columns:64px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:12px;row-gap:3px;padding:6px 10px;}
+ .mechanical-display .next-section,.mechanical-display .next-content {display:contents;}
+ .mechanical-display .title-section {grid-column:2 / 4;grid-row:1;width:auto;padding:0;border:0;min-height:18px;}
+ .mechanical-display .title-section .game-title {font-size:15px;padding:0;letter-spacing:.2em;}
+ .mechanical-display .next-grid {grid-column:1;grid-row:1 / 3;align-self:start;width:63px;max-width:63px!important;height:63px;margin:0;padding:6px;grid-template-columns:repeat(4,11px);grid-template-rows:repeat(4,11px);gap:1px;}
+ .mechanical-display .next-cell {width:11px;height:11px;}
+ .mechanical-display .stats-container {grid-column:2;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:3px 6px;gap:2px 6px;min-width:0;}
+ .mechanical-display .stats-container > .stat-line {padding:0 3px;gap:0;}
+ .mechanical-display .stats-container .stat-label {font-size:9px!important;}
+ .mechanical-display .stats-container .stat-value {font-size:16px!important;line-height:1.1;}
+ .mechanical-display .stats-container .combo-crosses {margin:0;gap:3px;min-height:5px;}
+ .mechanical-display .combo-cross {height:5px;width:5px;font-size:5px;}
+ .mechanical-display .next-header {grid-column:3;grid-row:2;gap:6px;max-width:none;flex-wrap:nowrap;}
+ .mechanical-display .next-header > .display-label {display:none;}
+ .mechanical-display .next-header .stat-line {padding:2px;gap:4px;}
+ .mechanical-display .next-header .stat-label {font-size:9px;}
+ .mechanical-display .next-header .stat-value {font-size:15px;}
+ .mechanical-display .next-header .game-button-mini,.mechanical-display .next-header .trophy-button-compact {width:30px;height:30px;font-size:16px;}
+}
+@media (orientation:landscape) and (min-width:600px) and (max-width:749px) {
+ .mechanical-display {column-gap:6px;padding:4px 6px;}
+ .mechanical-display .next-header {gap:4px;}
+ .mechanical-display .next-header .game-button-mini,.mechanical-display .next-header .trophy-button-compact {width:28px;height:28px;}
+}
