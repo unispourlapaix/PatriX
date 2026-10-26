@@ -108,3 +108,29 @@ body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; over
 }
 .board-grid {touch-action:none;}
 .cell.traced {outline:2px solid #ffca28;outline-offset:-2px;background:#fff3bf!important;box-shadow:inset 0 0 0 2px #fff,0 0 8px #ffca28;}
+/* Menu automnal : papier chaud, cuivre et silhouettes de branches en pixels. */
+body {background:linear-gradient(135deg,#302a38,#695044 55%,#ae7647);}
+.mechanical-display {position:relative;isolation:isolate;background:#f2dfb9;border:2px solid #855338;box-shadow:inset 0 0 0 2px #ffecc9,0 3px 0 #5c3b2c;border-radius:0;}
+.mechanical-display::before {content:'';position:absolute;inset:0;z-index:-1;background:url('../assets/images/autumn-trees.svg') left bottom/240px 130px no-repeat,url('../assets/images/autumn-trees.svg') right bottom/240px 130px no-repeat;opacity:.18;pointer-events:none;}
+.title-section {border-bottom:1px solid #b57d4f;}
+.title-section .game-title {background:none;-webkit-text-fill-color:#57372c;color:#57372c;text-shadow:2px 2px #f8c77d;filter:none;letter-spacing:.26em;}
+.stats-container {background:#fff0d1d9;border:1px solid #bf8b58;border-radius:0;}
+.stat-line {background:#e8c99b55;}
+.stat-label,.display-label {color:#704b37;}
+.next-grid {background:#d0ae7c;border:2px solid #8e6144;box-shadow:inset 2px 2px #b18a61;border-radius:2px;}
+.mechanical-display button {background:#ebc186;border:1px solid #94623e;border-radius:2px;box-shadow:inset 1px 1px #ffe8b7,1px 2px #9c6c47;}
+.mechanical-display button:hover {background:#ffdc9d;}
+.game-footer {background:#e4bd7e;color:#51362a;border-top:2px solid #855338;}
+.pixel-ending {position:fixed;inset:0;z-index:1000000;display:grid;place-items:center;padding:16px;background:#161725f5;overflow:auto;color:#ffe0aa;font-family:Consolas,monospace;}
+.pixel-ending-shell {width:min(1100px,100%);margin:auto;border:3px solid #bc804f;background:#292638;box-shadow:0 0 0 4px #171824,0 24px 90px #0009;}
+.pixel-ending-top {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:2px solid #775045;font-size:13px;letter-spacing:2px;}
+.pixel-ending button,.pixel-ending a {font:600 14px Consolas,monospace;border:2px solid #d3955d;border-radius:0;color:#ffe0aa;background:#483444;padding:9px 18px;text-decoration:none;cursor:pointer;}
+.pixel-ending button:hover,.pixel-ending a:hover {background:#734848;}
+.pixel-ending button:focus-visible,.pixel-ending a:focus-visible {outline:3px solid #fff1bb;outline-offset:3px;}
+.pixel-ending canvas {display:block;width:100%;height:auto;max-height:calc(100dvh - 220px);object-fit:contain;image-rendering:pixelated;background:#24253e;}
+.pixel-ending-caption {padding:16px 12px;text-align:center;font-size:clamp(14px,2vw,20px);letter-spacing:1px;}
+.pixel-ending-progress {height:4px;background:#483444;}
+.pixel-ending-progress i {display:block;height:100%;background:#ecaf68;width:0;}
+.pixel-ending-actions:not([hidden]) {display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:16px;}
+@media (max-height:500px) {.pixel-ending{padding:6px;}.pixel-ending-top{padding:4px 10px;}.pixel-ending canvas{max-height:calc(100dvh - 150px);}.pixel-ending-caption{padding:6px;}.pixel-ending-actions:not([hidden]){padding:6px;}.pixel-ending button,.pixel-ending a{padding:6px 12px;}}
+@media (max-width:600px) {.pixel-ending{padding:10px;}.pixel-ending-top{letter-spacing:1px;padding:10px;}.pixel-ending-shell{border-width:2px;}.mechanical-display::before{background-size:180px 100px;}}

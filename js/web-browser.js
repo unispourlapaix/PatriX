@@ -37,8 +37,11 @@ class WebBrowserManager {
   document.getElementById('webBrowserMinimize').onclick=()=>{clearTimeout(this.minimizeTimer);this.panel.classList.remove('show');};
   this.panel.querySelector('.privacy-text').textContent='Musique via Audiomack · Internet requis. − masque le lecteur ; 🔇 arrête la musique.';
  }
+ isOpen(){return this.panel.classList.contains('show')||!!this.frame.getAttribute('src');}
+ close(){clearTimeout(this.minimizeTimer);this.panel.classList.remove('show');this.frame.removeAttribute('src');}
  load(index){clearTimeout(this.minimizeTimer);this.armed=true;this.index=index;this.select.value=index;localStorage.setItem('patrix_playlist_index',String(index));this.frame.src=this.items[index].url;}
  toggle(){clearTimeout(this.minimizeTimer);this.armed=true;const open=this.panel.classList.toggle('show');if(open&&!this.frame.getAttribute('src'))this.load(this.index);}
 }
+
 
 

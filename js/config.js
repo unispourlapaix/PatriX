@@ -13,6 +13,7 @@ const devLog = DEBUG_MODE ? console.log.bind(console) : () => {};
 const devWarn = DEBUG_MODE ? console.warn.bind(console) : () => {};
 
 const CONFIG = {
+    MAX_LEVEL: 50,
     // Grille de jeu
     GRID: {
         COLS: 10,
@@ -269,7 +270,7 @@ const CONFIG = {
             name: 'TROPHÉE ULTIME',
             icon: '🏆',
             message: 'Niveau MAXIMUM atteint ! Tu es un champion absolu ! Découvre l\'univers inclusif d\'Emmanuel.',
-            condition: { type: 'level', value: 20 },
+            condition: { type: 'level', value: 50 },
             unlocked: false,
             special: true,
             hasLinks: true,
@@ -302,7 +303,7 @@ const CONFIG = {
         { id: 'level_12', name: 'Niveau 12', icon: '🥇', message: 'Niveau 12 ! Impressionnant !', condition: { type: 'level', value: 12 }, unlocked: false },
         { id: 'level_13', name: 'Niveau 13', icon: '🥇', message: 'Niveau 13 ! Pas de malchance pour toi !', condition: { type: 'level', value: 13 }, unlocked: false },
         { id: 'level_14', name: 'Niveau 14', icon: '🥇', message: 'Niveau 14 ! Tu es sur la bonne voie !', condition: { type: 'level', value: 14 }, unlocked: false },
-        { id: 'level_15', name: 'Niveau 15', icon: '🥇', message: 'Niveau 15 ! Un quart du chemin !', condition: { type: 'level', value: 15 }, unlocked: false },
+        { id: 'level_15', name: 'Niveau 15', icon: '🥇', message: 'Niveau 15 !', condition: { type: 'level', value: 15 }, unlocked: false },
         { id: 'level_16', name: 'Niveau 16', icon: '🥇', message: 'Niveau 16 ! Tu brilles !', condition: { type: 'level', value: 16 }, unlocked: false },
         { id: 'level_17', name: 'Niveau 17', icon: '🥇', message: 'Niveau 17 ! Superbe performance !', condition: { type: 'level', value: 17 }, unlocked: false },
         { id: 'level_18', name: 'Niveau 18', icon: '🥇', message: 'Niveau 18 ! Tu es en feu !', condition: { type: 'level', value: 18 }, unlocked: false },
@@ -427,3 +428,4 @@ window.CONFIG = CONFIG;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CONFIG;
 }
+

@@ -401,13 +401,12 @@ class GameEngine {
         
         // Effet visuel de nouveau niveau via pop
         if (this.level > previousLevel && this.level > 0) {
-            // Vérifier si niveau maximum atteint (niveau 20)
-            if (this.level >= 20) {
+            // Vérifier si niveau maximum atteint (niveau 50)
+            if (this.level >= CONFIG.MAX_LEVEL) {
                 this.isPaused = true;
                 this.isLevelingUp = true;
                 this.emit('maxLevelReached');
-                return; // Arrêter le traitement
-            }
+            } else {
             
             // Pause temporaire pour l'animation de niveau
             const wasPaused = this.isPaused;
@@ -423,6 +422,8 @@ class GameEngine {
             }, 3000);
         }
         
+        }
+
         // Calculer les points de pop avec bonus combo
         const popPointsBase = group.length;
         const comboPointsBonus = this.popCombo > 1 ? Math.floor(group.length * (this.popCombo - 1) * 0.3) : 0;
@@ -772,6 +773,11 @@ class GameEngine {
         
         // Effet visuel de nouveau niveau
         if (this.level > previousLevel && this.level > 0) {
+            if (this.level >= CONFIG.MAX_LEVEL) {
+                this.isPaused = true;
+                this.isLevelingUp = true;
+                this.emit('maxLevelReached');
+            } else {
             // Son de level up
             if (audioManager) audioManager.playLevelUp();
             
@@ -789,6 +795,8 @@ class GameEngine {
             }, 3000);
         }
         
+        }
+
         // Transformation et effacement
         this.grid.removeLinesWithTransform(lines);
         
@@ -1086,5 +1094,6 @@ window.GameEngine = GameEngine;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = GameEngine;
 }
+
 
 

@@ -120,6 +120,11 @@
     "mega": "🔥 MEGA POP x{count}! 🔥"
   },
   "endingAnimation": {
+    "pixelForest": "Chaque pas compte.",
+    "pixelJourney": "Garde ta lumière.",
+    "pixelDawn": "Un nouveau jour.",
+    "pixelFinal": "De grands rêves.",
+    "skip": "Passer",
     "title": "🌟 BRAVO ! 🌟",
     "message1": "Bon courage !",
     "message2": "Tu es arrivé au bout 🎉",
@@ -145,7 +150,7 @@
     "finalMessage2": "Sagement, tu rachèteras le temps",
     "finalQuote": "\"Chaque instant est une opportunité\"",
     "congratulations": "Félicitations!",
-    "maxLevelReached": "Niveau Maximum Atteint",
+    "maxLevelReached": "Niveau 50 atteint !",
     "bossWarning": "TU PASSERAS PAS !"
   },
   "music": {
@@ -289,7 +294,7 @@
       "12": "Niveau 12 ! Impressionnant !",
       "13": "Niveau 13 ! Pas de malchance pour toi !",
       "14": "Niveau 14 ! Tu es sur la bonne voie !",
-      "15": "Niveau 15 ! Un quart du chemin !",
+      "15": "Niveau 15 !",
       "16": "Niveau 16 ! Tu brilles !",
       "17": "Niveau 17 ! Superbe performance !",
       "18": "Niveau 18 ! Tu es en feu !",
@@ -324,7 +329,7 @@
       "47": "Niveau 47 ! Plus que 3 !",
       "48": "Niveau 48 ! Dernière ligne droite !",
       "49": "Niveau 49 ! Un seul niveau restant !",
-      "50": "Niveau 50 ! MAXIMUM atteint ! Tu es un MAÎTRE !",
+      "50": "Niveau 50 ! Bravo !",
       "default": "Niveau {level} ! Continue ainsi !"
     }
   },
@@ -465,3 +470,5 @@
     "gameLoaded": "Partie chargée du Slot {slot} ! 📂"
   }
 }
+
+
