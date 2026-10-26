@@ -33,3 +33,58 @@ body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; over
 #localShare:focus-visible { outline:2px solid #675314; outline-offset:4px; }
 /* Aucune limite de largeur ni nombre fixe de colonnes. */
 .game-wrapper {width:100%;max-width:none;}
+/* Les pistes restent carrées à chaque changement de viewport. */
+.board-grid > .cell { min-width:0; min-height:0; height:100%; font-size:var(--cell-font-size,12px); line-height:1; overflow:hidden; transition:background .15s ease,box-shadow .15s ease,transform .15s ease; }
+.board-grid > .connection-canvas {max-width:none;max-height:none;}
+/* Ordinateur : un tableau de bord réparti sur toute la largeur. */
+@media (min-width:900px), (orientation:landscape) and (min-width:600px) {
+ .mechanical-display { padding:8px 20px 12px; gap:10px; }
+ .title-section {padding:4px 0 8px;}
+ .next-section {flex-direction:row;align-items:center;gap:24px;}
+ .next-content {flex:1;min-width:0;justify-content:space-between;gap:24px;}
+ .stats-container {flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px 12px;}
+ .stats-container > .stat-line {flex-direction:column;justify-content:center;gap:4px;padding:6px 10px;}
+ .stats-container .stat-label {font-size:11px;letter-spacing:1px;}
+ .stats-container .stat-value {font-size:22px;}
+ .stats-container .combo-crosses {grid-column:1 / -1;justify-content:center;}
+ .next-header {flex:none;gap:12px;flex-wrap:wrap;justify-content:flex-end;max-width:360px;}
+ .next-header .stat-label,.next-header .display-label {font-size:11px;}
+ .next-header .stat-value {font-size:20px;}
+ .next-header .game-button-mini,.next-header .trophy-button-compact {width:40px;height:40px;font-size:20px;}
+}
+@media (min-width:900px), (orientation:landscape) and (min-width:600px) {
+ .next-header {flex-wrap:nowrap;max-width:none;gap:10px;}
+ .stats-container .stat-value {font-size:22px!important;}
+ .stats-container .stat-label {font-size:11px!important;}
+}
+
+/* Paysage mobile : les mêmes informations, avec une barre moins haute. */
+@media (orientation:landscape) and (min-width:600px) and (max-width:899px) {
+ .mechanical-display {padding:3px 8px 5px;gap:4px;}
+ .title-section {padding:0 0 3px;}
+ .title-section .game-title {font-size:16px;}
+ .next-section,.next-content {gap:8px;}
+ .stats-container {padding:4px;gap:3px;}
+ .stats-container > .stat-line {padding:3px;gap:2px;}
+ .stats-container .stat-label {font-size:9px!important;}
+ .stats-container .stat-value {font-size:16px!important;}
+ .next-header {gap:5px;}
+ .next-header .stat-label,.next-header .display-label {font-size:9px;}
+ .next-header .stat-value {font-size:15px;}
+ .next-header .game-button-mini,.next-header .trophy-button-compact {width:30px;height:30px;font-size:16px;}
+ .next-grid {max-width:85px!important;}
+ .game-wrapper {min-height:320px;}
+}
+@media (orientation:landscape) and (min-width:600px) and (max-width:899px) {
+ .next-grid {flex:none;grid-template-columns:repeat(4,12px);grid-template-rows:repeat(4,12px);gap:2px;padding:8px;margin:2px 0;}
+ .next-grid .next-cell {width:12px;height:12px;}
+}
+/* Séparation des deux actions du pied de page. */
+.game-footer a {
+ padding-right:16px;
+ border-right:1px solid rgba(72,57,12,.5);
+ line-height:1.5;
+}
+@media (max-width:430px) {
+ .game-footer a {padding-right:10px;}
+}

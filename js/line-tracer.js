@@ -8,7 +8,7 @@ class LineTracer {
     constructor(grid, boardElement) {
         this.grid = grid;
         this.boardElement = boardElement;
-        this.canvas = document.getElementById('connectionCanvas');
+        this.canvas = grid.connectionCanvas;
         this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
         
         this.isDrawing = false;
@@ -259,9 +259,9 @@ class LineTracer {
         const canvasRect = this.canvas.getBoundingClientRect();
         
         // Redimensionner le canvas si nécessaire
-        if (this.canvas.width !== canvasRect.width || this.canvas.height !== canvasRect.height) {
-            this.canvas.width = canvasRect.width;
-            this.canvas.height = canvasRect.height;
+        if (this.canvas.width !== Math.round(canvasRect.width) || this.canvas.height !== Math.round(canvasRect.height)) {
+            this.canvas.width = Math.round(canvasRect.width);
+            this.canvas.height = Math.round(canvasRect.height);
         }
 
         this.clearCanvas();
@@ -368,5 +368,7 @@ window.LineTracer = LineTracer;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = LineTracer;
 }
+
+
 
 

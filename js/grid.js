@@ -97,8 +97,8 @@ class GameGrid {
         // Le canvas est dans board-grid, dimensions exactes de la zone de jeu
         const rect = this.gridElement.getBoundingClientRect();
         
-        this.connectionCanvas.width = rect.width;
-        this.connectionCanvas.height = rect.height;
+        this.connectionCanvas.width = Math.round(rect.width);
+        this.connectionCanvas.height = Math.round(rect.height);
         this.connectionCanvas.style.width = '100%';
         this.connectionCanvas.style.height = '100%';
     }
@@ -405,6 +405,7 @@ window.GameGrid = GameGrid;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = GameGrid;
 }
+
 
 
 
