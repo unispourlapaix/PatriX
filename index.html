@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-src 'none'; img-src 'self' data: blob:">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Patri-X - Transforme le désespoir en grands rêves. Un jeu de blocs inspirant.">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4fc3f7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PATRI-X">
+    
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="assets/images/icon-32.svg">
+    <link rel="icon" type="image/svg+xml" sizes="192x192" href="assets/images/icon-192.svg">
+    <link rel="apple-touch-icon" href="assets/images/icon-192.svg">
+
+    <title>Patri-X - Transformer le Désespoir en Grands Rêves</title>
+    
+    <!-- Styles CSS modulaires -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/install.css">
+    <link rel="stylesheet" href="css/ending.css">
+    <link rel="stylesheet" href="css/web-browser.css">
+    <link rel="stylesheet" href="css/language.css">
+<link rel="stylesheet" href="css/local.css?v=4"></head>
+<body>
+    <!-- Modal de sélection de langue -->
+    <div class="language-selector-modal hidden" id="languageModal">
+        <div class="language-selector-content">
+            <h2 class="language-selector-title">�️ Choose Your Language</h2>
+            <p class="language-selector-subtitle">Choisissez votre langue</p>
+            
+            <div class="language-options">
+                <div class="language-option" data-lang="fr">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇫🇷</span>
+                        <div class="language-info">
+                            <span class="language-name">Français</span>
+                            <span class="language-native">French</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="en">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇬🇧</span>
+                        <div class="language-info">
+                            <span class="language-name">English</span>
+                            <span class="language-native">Anglais</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="es">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇪🇸</span>
+                        <div class="language-info">
+                            <span class="language-name">Español</span>
+                            <span class="language-native">Spanish</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="zh">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇨🇳</span>
+                        <div class="language-info">
+                            <span class="language-name">中文</span>
+                            <span class="language-native">Chinese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ar">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇸🇦</span>
+                        <div class="language-info">
+                            <span class="language-name">العربية</span>
+                            <span class="language-native">Arabic</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="pt">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇵🇹</span>
+                        <div class="language-info">
+                            <span class="language-name">Português</span>
+                            <span class="language-native">Portuguese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ja">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇯🇵</span>
+                        <div class="language-info">
+                            <span class="language-name">日本語</span>
+                            <span class="language-native">Japanese</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="uk">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇺🇦</span>
+                        <div class="language-info">
+                            <span class="language-name">Українська</span>
+                            <span class="language-native">Ukrainian</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+                
+                <div class="language-option" data-lang="ln">
+                    <div class="language-option-content">
+                        <span class="language-flag">🇨🇩</span>
+                        <div class="language-info">
+                            <span class="language-name">Lingala</span>
+                            <span class="language-native">Congo</span>
+                        </div>
+                    </div>
+                    <span class="language-check">✓</span>
+                </div>
+            </div>
+            
+            <button class="language-continue-btn" id="languageContinueBtn" disabled style="display: none;">Continue</button>
+        </div>
+    </div>
+
+    <!-- Bouton sortie plein écran -->
+    <button id="exitFullscreenBtn" class="exit-fullscreen-btn" aria-label="Sortir du plein écran">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+            <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- Conteneur principal - Grille maximisée -->
+    <div class="game-wrapper">
+        <!-- Grille de jeu maximisée -->
+        <div class="game-board">
+            <!-- Top bar - Panneau d'affichage mécanique compact -->
+            <div class="mechanical-display">
+                <div class="display-section title-section">
+                    <span class="game-title">PATRI-X</span>
+                </div>
+                
+                <div class="display-section next-section">
+                    <div class="next-content">
+                        <div class="next-grid" id="nextGrid"></div>
+                        
+                        <div class="stats-container">                            <!-- NOTE: LINES, COMBO, SCORE labels restent en anglais (design) - pas de data-i18n -->                            <div class="stat-line">
+                                <span class="stat-label">LINES</span>
+                                <span class="stat-value" id="lines">000</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">COMBO</span>
+                                <span class="stat-value combo-value" id="combo">00</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">SCORE</span>
+                                <span class="stat-value" id="score">000000</span>
+                            </div>
+                            <div class="combo-crosses" id="comboCrosses">
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                                <div class="combo-cross">✝</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="next-header">
+                        <!-- NOTE: NEXT et LEVEL labels restent en anglais (design) - pas de data-i18n -->
+                        <span class="display-label">NEXT</span>
+                        <div class="swap-indicator">
+                            <div class="swap-dots" id="swapDots">
+                                <div class="swap-dot"></div>
+                                <div class="swap-dot"></div>
+                                <div class="swap-dot"></div>
+                            </div>
+                        </div>
+                        <div class="wall-break-indicator" id="wallBreakIndicator">
+                            <div class="wall-charges" id="wallCharges">
+                                <div class="wall-charge"></div>
+                                <div class="wall-charge"></div>
+                                <div class="wall-charge"></div>
+                            </div>
+                        </div>
+                        <div class="stat-line">
+                            <span class="stat-label">LEVEL</span>
+                            <span class="stat-value" id="level">00</span>
+                        </div>
+                        <button class="trophy-button-compact" id="trophyBtn">🏆</button>
+                        <!-- <button class="game-button-mini" id="user-login-btn" title="Connexion">🔐</button> -->
+                        <button class="game-button-mini" id="audioBtn" data-i18n-title="tooltips.sound" title="Son">🔊</button>
+                        <button class="game-button-mini" id="musicBtn" data-i18n-title="tooltips.music" title="Audiomack">🎵</button>
+                        <button class="game-button-mini" id="pauseBtn">⏸</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Canvas pour tracer les lignes -->
+            <canvas id="connectionCanvas" class="connection-canvas"></canvas>
+            <!-- La grille sera générée par JavaScript -->
+        </div>
+        
+        <!-- Affichage combo pop -->
+        <div class="pop-combo-display" id="popCombo">POP x2!</div>
+        
+        <!-- Footer Links -->
+        <div class="game-footer">
+            <a href="https://www.redbubble.com/fr/people/H777plx" target="_blank" rel="noopener noreferrer" data-i18n="footer.support">Soutenir l'artiste</a>
+        </div>
+    </div>
+    
+    <!-- Contact Form Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-form-container">
+            <div class="contact-form-title" data-i18n="footer.contactTitle">📧 Contactez-moi</div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="contactSubject" data-i18n="footer.subject">Objet :</label>
+                    <input type="text" id="contactSubject" required data-i18n-placeholder="footer.subjectPlaceholder" tabindex="1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="contactMessageText" data-i18n="footer.message">Message :</label>
+                    <textarea id="contactMessageText" required data-i18n-placeholder="footer.messagePlaceholder" tabindex="2" rows="5" autocomplete="off"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="footer.emoticon">Émoticône :</label>
+                    <div class="emoticon-selector">
+                        <button type="button" class="emoticon-btn" data-emoticon="😊">😊</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="😂">😂</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🤔">🤔</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="👍">👍</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="❤️">❤️</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🎮">🎮</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="✨">✨</button>
+                        <button type="button" class="emoticon-btn" data-emoticon="🔥">🔥</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="form-btn submit" data-i18n="footer.send">Envoyer</button>
+                    <button type="button" class="form-btn cancel" id="cancelContactBtn" data-i18n="footer.cancel">Annuler</button>
+                </div>
+                <div class="form-message" id="contactFormStatus" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Panel Game Over -->
+    <div class="game-over-panel" id="gameOver">
+        <h2 data-i18n="game.gameOverTitle">Partie Terminée</h2>
+        <p id="gameOverMessage" data-i18n="game.gameOverMessage">Continue de rêver !</p>
+        <p><span data-i18n="game.finalScore">Score Final</span>: <span id="finalScore">0</span></p>
+        <button class="game-button" id="restartBtn" data-i18n="game.restart">Recommencer</button>
+    </div>
+    
+    <!-- Panel Pause -->
+    <div class="pause-panel" id="pausePanel">
+        <div class="pause-icon" id="pauseIcon">⏸️</div>
+        <div class="pause-content" id="pauseContent">
+            <div class="pause-buttons">
+                <!-- Sauvegarde/Chargement temporairement désactivés -->
+                <!-- <button class="pause-action-btn" id="saveGameBtn" data-i18n-title="game.save" title="Sauvegarder">💾</button>
+                <button class="pause-action-btn" id="loadGameBtn" data-i18n-title="game.load" title="Charger">📂</button> -->
+                <button class="pause-action-btn" id="resumeBtn" data-i18n-title="game.resume" title="Reprendre">▶️</button>
+            </div>
+            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
+        </div>
+        <p id="saveStatus" style="color: #66bb6a; margin-top: 3px; font-size: 10px; opacity: 0; transition: opacity 0.3s; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;"></p>
+    </div>
+
+    <!-- Menu Sauvegardes/Chargement -->
+    <div class="save-load-modal" id="saveLoadModal">
+        <div class="save-load-content">
+            <h2 id="saveLoadTitle" data-i18n="game.savesTitle">💾 Sauvegardes</h2>
+            <div class="save-slots" id="saveSlots"></div>
+            <button class="save-load-close" id="saveLoadClose" data-i18n="game.close">Fermer</button>
+        </div>
+    </div>
+    
+    <!-- Modal Trésor -->
+    <div class="treasure-modal" id="treasureModal">
+        <div class="treasure-content">
+            <div class="treasure-icon">💎</div>
+            <div class="treasure-level"><span data-i18n="game.treasureLevel">Niveau</span> <span id="treasureLevel">1</span></div>
+            <div class="treasure-message" id="treasureMessage"></div>
+            <button class="treasure-button" id="treasureContinue" data-i18n="game.treasureContinue">Continuer ✨</button>
+        </div>
+    </div>
+    
+    <!-- Modal Trophée -->
+    <div class="trophy-modal" id="trophyModal">
+        <div class="trophy-content">
+            <div class="trophy-banner" data-i18n="trophies.unlocked">🏆 TROPHÉE DÉBLOQUÉ 🏆</div>
+            <div class="trophy-icon" id="trophyIcon">⭐</div>
+            <div class="trophy-name" id="trophyName">CHAMPION</div>
+            <div class="trophy-message" id="trophyMessage"></div>
+            <button class="trophy-button" id="trophyContinue" data-i18n="trophies.thanks">Merci ! 🙏</button>
+        </div>
+    </div>
+    
+    <!-- Panel Trophées -->
+    <button class="trophies-toggle" id="trophiesToggle" style="display: none;">
+        🏆
+        <span class="trophies-count" id="trophiesCount">0/62</span>
+    </button>
+    <div class="trophies-panel" id="trophiesPanel">
+        <div class="trophies-panel-content" id="trophiesPanelContent">
+            <div class="trophies-header">
+                <h2 data-i18n="trophies.title">🏆 MES TROPHÉES</h2>
+                <div class="trophies-header-actions">
+                    <div class="language-switcher-compact" style="display: none;">
+                        <button class="lang-btn" data-lang="fr" id="langBtnFr">🇫🇷</button>
+                        <button class="lang-btn" data-lang="en" id="langBtnEn">🇬🇧</button>
+                        <button class="lang-btn" data-lang="es" id="langBtnEs">🇪🇸</button>
+                        <button class="lang-btn" data-lang="zh" id="langBtnZh">🇨🇳</button>
+                        <button class="lang-btn" data-lang="ar" id="langBtnAr">🇸🇦</button>
+                        <button class="lang-btn" data-lang="pt" id="langBtnPt">🇵🇹</button>
+                        <button class="lang-btn" data-lang="ja" id="langBtnJa">🇯🇵</button>
+                        <button class="lang-btn" data-lang="uk" id="langBtnUk">🇺🇦</button>
+                        <button class="lang-btn" data-lang="ln" id="langBtnLn">🇨🇩</button>
+                    </div>
+                    <button class="trophies-close" id="trophiesClose">✕</button>
+                </div>
+            </div>
+            
+            <button class="scroll-to-top" id="scrollToTop" style="display: none;">↑</button>
+            
+            <div class="trophies-scrollable">
+            <!-- Découverte Emmanuel -->
+            <div class="emmanuel-discover">
+                <p class="discover-title" data-i18n="trophies.discover">Découvrez l'univers inclusif d'Emmanuel !</p>
+                <div class="discover-links">
+                    <a href="https://emmanuelpayet.art" target="_blank" class="discover-link">emmanuelpayet.art</a>
+                    <a href="https://emmanuel.gallery" target="_blank" class="discover-link">emmanuel.gallery</a>
+                </div>
+            </div>
+            
+            <!-- Section Profil -->
+            <div class="profile-section">
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <svg viewBox="0 0 100 100" width="40" height="40">
+                                <circle cx="50" cy="50" r="45" fill="#4fc3f7"/>
+                                <path d="M30,50 L50,30 L70,50 L50,70 Z" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <div class="profile-name" id="profileName" data-i18n="profile.guest">Invité</div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-edit-btn" id="profileEditBtn" data-i18n="profile.edit">✏️ Modifier</button>
+                        <button class="profile-edit-btn" id="openLanguageModalBtn">
+                            <span>🌍</span>
+                            <span data-i18n="trophies.language">Langue</span>
+                        </button>
+                        <button class="profile-edit-btn" id="openControlsModalBtn">
+                            <span>🎮</span>
+                            <span data-i18n="controls.title">Contrôles</span>
+                        </button>
+                        <a href="https://www.tiktok.com/@unispourlapaix" target="_blank" rel="noopener noreferrer" class="profile-edit-btn" style="text-decoration: none;">
+                            <span>🎥</span>
+                            <span data-i18n="footer.tiktok">TikTok</span>
+                        </a>
+                        <button class="profile-edit-btn contact-btn" id="contactBtn">
+                            <span>✉️</span>
+                            <span data-i18n="footer.contact">Contact</span>
+                        </button>
+                        <button class="profile-share-btn" id="profileShareBtn">
+                            <span class="share-icon">🎮</span>
+                            <span class="share-text">
+                                <span data-i18n="profile.shareScore">Partager mon score</span><br>
+                                <span data-i18n="profile.supportArtist">Soutenir l'artiste</span>
+                            </span>
+                        </button>
+                        <button class="profile-music-btn" id="profileMusicBtn">
+                            <span class="music-icon">🎵</span>
+                            <span class="music-text" data-i18n="profile.audiomackMusic">Musique Audiomack</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trophies-grid" id="trophiesGrid">
+                <!-- Les trophées seront générés par JavaScript -->
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigateur Web Intégré -->
+    <div class="web-browser-panel" id="webBrowserPanel">
+        <div class="web-browser-content">
+            <div class="web-browser-header">
+                <button class="web-browser-close" id="webBrowserClose" data-i18n-title="tooltips.close" title="Fermer">🔇</button>
+                <div class="web-browser-controls">
+                    <button class="web-nav-btn" id="webBackBtn" data-i18n-title="tooltips.back" title="Précédent">←</button>
+                    <button class="web-nav-btn" id="webForwardBtn" data-i18n-title="tooltips.forward" title="Suivant">→</button>
+                    <button class="web-nav-btn" id="webRefreshBtn" data-i18n-title="tooltips.refresh" title="Actualiser">↻</button>
+                </div>
+                <div class="web-browser-url" id="webBrowserUrl">Audiomack</div>
+                <button class="web-browser-minimize" id="webBrowserMinimize" data-i18n-title="tooltips.minimize" title="Minimiser">−</button>
+            </div>
+            <div class="web-browser-body">
+                <iframe 
+                    id="webBrowserFrame" 
+                    referrerpolicy="no-referrer"
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                    frameborder="0"
+                    style="border: none;">
+                </iframe>
+                <div class="web-privacy-info">
+                    <span class="privacy-icon">🔒</span>
+                    <span class="privacy-text">Navigation sécurisée</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Édition Profil -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <h2 data-i18n="profile.title">✏️ MON PROFIL</h2>
+            <button class="profile-modal-close" id="profileModalClose">✕</button>
+            
+            <div class="profile-form">
+                <label data-i18n="profile.pseudoLabel">Pseudo</label>
+                <input type="text" id="profilePseudoInput" data-i18n-placeholder="profile.pseudoPlaceholder" placeholder="Ton pseudo" maxlength="20">
+                
+                <label data-i18n="profile.avatarLabel">Avatar Chrétien</label>
+                <div class="avatar-grid" id="avatarGrid">
+                    <!-- Avatars générés par JS -->
+                </div>
+                
+                <button class="profile-save-btn" id="profileSaveBtn" data-i18n="profile.saveButton">💾 Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Contrôles -->
+    <div class="profile-modal" id="controlsModal">
+        <div class="profile-modal-content">
+            <h2 data-i18n="controls.title">🎮 CONTRÔLES</h2>
+            <button class="profile-modal-close" id="controlsModalClose">✕</button>
+            
+            <div class="controls-guide">
+                <div class="control-item">
+                    <div class="control-icon">
+                        <svg viewBox="0 0 100 100" width="40" height="40">
+                            <defs>
+                                <linearGradient id="patrixControlGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FFD1DC"/>
+                                    <stop offset="50%" style="stop-color:#FFB6C1"/>
+                                    <stop offset="100%" style="stop-color:#FFD1DC"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="30" y="20" width="12" height="12" fill="url(#patrixControlGradient)" stroke="#4a5568" stroke-width="1.2"/>
+                            <rect x="30" y="35" width="12" height="12" fill="url(#patrixControlGradient)" stroke="#4a5568" stroke-width="1.2"/>
+                            <rect x="30" y="50" width="12" height="12" fill="url(#patrixControlGradient)" stroke="#4a5568" stroke-width="1.2"/>
+                            <rect x="15" y="35" width="12" height="12" fill="url(#patrixControlGradient)" stroke="#4a5568" stroke-width="1.2"/>
+                            <rect x="45" y="35" width="12" height="12" fill="url(#patrixControlGradient)" stroke="#4a5568" stroke-width="1.2"/>
+                        </svg>
+                    </div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.lineMode">Mode Ligne</strong>
+                        <p data-i18n="controls.lineModeDesc">Complète des lignes</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">💥</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.popMode">Mode Pops</strong>
+                        <p data-i18n="controls.popModeDesc">Groupe couleurs</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⬆️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.pushUp">Push Up</strong>
+                        <p data-i18n="controls.pushUpDesc">Brise la pièce</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⬅️➡️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.tapSides">Taper côtés</strong>
+                        <p data-i18n="controls.tapSidesDesc">Casse la pièce</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">🔥</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.combos">Combos</strong>
+                        <p data-i18n="controls.combosDesc">Vide lignes/pops rapide</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">⏬️</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.doubleTap">Double Tap</strong>
+                        <p data-i18n="controls.doubleTapDesc">Pièce tombe direct</p>
+                    </div>
+                </div>
+                
+                <div class="control-item">
+                    <div class="control-icon">🎯</div>
+                    <div class="control-text">
+                        <strong data-i18n="controls.chooseNext">Choisir pièce</strong>
+                        <p data-i18n="controls.chooseNextDesc">Cliquez sur pièce future</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modules JavaScript (ordre important !) -->
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/language-manager.js"></script>
+
+    <script src="js/avatars.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/grid.js?v=6"></script>
+    <script src="js/user-manager.js"></script>
+    <script src="js/profile-manager.js"></script>
+
+    <script src="js/ending-animation.js"></script>
+    <script src="js/game-engine.js?v=5"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/effects.js?v=6"></script>
+    <script src="js/line-tracer.js?v=7"></script>
+
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    
+
+<script src="js/local-share.js?v=3"></script><script src="js/local-layout.js"></script></body>
+</html>
+
+
+
+
+
+
+
+

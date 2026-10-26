@@ -1,0 +1,7 @@
+PatriX local — adaptation du jeu d’Emmanuel Payet
+
+Double-cliquer sur Ouvrir-PatriX.cmd (Python requis), puis ouvrir http://localhost:8787.
+Le jeu et ses ressources sont locaux. Aucun compte et aucune synchronisation cloud.
+Scores, profil et trois sauvegardes sont conservés dans le navigateur utilisé : ne pas effacer ses données si vous souhaitez les garder.
+Partager une brique : pièce et couleur aléatoires, message modifiable, visage kawaii, partage système si disponible ou téléchargement PNG.
+Les liens externes conservés dans les crédits nécessitent Internet si vous choisissez de les ouvrir.

@@ -1,0 +1,372 @@
+/**
+ * PATRIX - Gestionnaire de Tracé de Ligne
+ * ID: E-manuel-line-tracer
+ * Auteur: Emmanuel Payet
+ */
+
+class LineTracer {
+    constructor(grid, boardElement) {
+        this.grid = grid;
+        this.boardElement = boardElement;
+        this.canvas = document.getElementById('connectionCanvas');
+        this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+        
+        this.isDrawing = false;
+        this.path = [];
+        this.currentPos = null;
+        this.onPathComplete = null;
+        
+        // Cache pour performance
+        this.cellElementCache = new Map(); // row-col -> element
+        this.cellPositionCache = new Map(); // row-col -> {x, y, rect}
+        
+        // Vérification de sécurité
+        if (!this.grid || !this.grid.cells) {
+            console.error('[LineTracer] Grid ou grid.cells non initialisé');
+            return;
+        }
+        
+        this.init();
+    }
+
+    /**
+     * Initialise les événements
+     */
+    init() {
+        if (!this.boardElement) return;
+
+        // Construire le cache de cellules
+        this.buildCellCache();
+
+        // Initialiser les dimensions du canvas
+        if (this.canvas) {
+            this.resizeCanvas();
+            window.addEventListener('resize', () => {
+                this.resizeCanvas();
+                this.updateCellPositions(); // Recalculer positions
+            });
+        }
+
+        // Événements souris
+        this.boardElement.addEventListener('mousedown', (e) => this.handleStart(e));
+        document.addEventListener('mousemove', (e) => this.handleMove(e));
+        document.addEventListener('mouseup', (e) => this.handleEnd(e));
+
+        // Événements tactiles
+        this.boardElement.addEventListener('touchstart', (e) => this.handleStart(e), { passive: false });
+        document.addEventListener('touchmove', (e) => this.handleMove(e), { passive: false });
+        document.addEventListener('touchend', (e) => this.handleEnd(e));
+    }
+
+    /**
+     * Construit le cache de cellules DOM
+     */
+    buildCellCache() {
+        if (!this.boardElement) return;
+        
+        const gridElement = this.boardElement.querySelector('.board-grid');
+        if (!gridElement) return;
+        
+        this.cellElementCache.clear();
+        const cells = gridElement.querySelectorAll('.cell');
+        
+        cells.forEach(cell => {
+            const row = cell.dataset.row;
+            const col = cell.dataset.col;
+            if (row !== undefined && col !== undefined) {
+                const key = `${row}-${col}`;
+                this.cellElementCache.set(key, cell);
+            }
+        });
+        
+        this.updateCellPositions();
+    }
+    
+    /**
+     * Met à jour le cache des positions
+     */
+    updateCellPositions() {
+        if (!this.canvas) return;
+        
+        const canvasRect = this.canvas.getBoundingClientRect();
+        this.cellPositionCache.clear();
+        
+        this.cellElementCache.forEach((element, key) => {
+            const cellRect = element.getBoundingClientRect();
+            const posX = cellRect.left + cellRect.width / 2 - canvasRect.left;
+            const posY = cellRect.top + cellRect.height / 2 - canvasRect.top;
+            
+            this.cellPositionCache.set(key, {
+                x: posX,
+                y: posY,
+                rect: cellRect
+            });
+        });
+    }
+    
+    /**
+     * Récupère un élément cellule depuis le cache
+     */
+    getCellElement(row, col) {
+        const key = `${row}-${col}`;
+        return this.cellElementCache.get(key);
+    }
+    
+    /**
+     * Récupère la position d'une cellule depuis le cache
+     */
+    getCellPosition(row, col) {
+        const key = `${row}-${col}`;
+        return this.cellPositionCache.get(key);
+    }
+
+    /**
+     * Démarre le tracé
+     */
+    handleStart(e) {
+        // Ignorer si le clic est sur la zone mécanique (NEXT, etc.)
+        if (e.target.closest('.mechanical-display')) {
+            return;
+        }
+        
+        const cell = this.getCellFromEvent(e);
+        if (!cell) return;
+
+        const { row, col } = cell;
+        
+        // Vérification de sécurité
+        if (!this.grid || !this.grid.cells || !this.grid.cells[row] || !this.grid.cells[row][col]) {
+            return;
+        }
+        
+        const gridCell = this.grid.cells[row][col];
+        
+        // Ne commencer QUE sur une cellule remplie (pour éviter conflit avec contrôles)
+        if (!gridCell) {
+            // Pas de cellule remplie = laisser passer pour les contrôles
+            return;
+        }
+
+        e.preventDefault();
+        this.isDrawing = true;
+        this.path = [{ row, col }];
+        
+        // Stocker la position en coordonnées écran
+        const pos = this.getEventPosition(e);
+        if (pos) {
+            this.currentPos = pos;
+        }
+        
+        this.drawPath();
+    }
+
+    /**
+     * Continue le tracé
+     */
+    handleMove(e) {
+        if (!this.isDrawing || !this.path.length) return;
+        const cell = this.getCellFromEvent(e);
+        if (cell) {
+            const {row,col} = cell;
+            const last = this.path[this.path.length-1];
+            const first = this.path[0];
+            const distance = Math.abs(row-last.row)+Math.abs(col-last.col);
+            if (distance === 1 && this.grid.samePopColor(this.grid.cells[row]?.[col],this.grid.cells[first.row]?.[first.col])) {
+                const previous = this.path[this.path.length-2];
+                if (previous && previous.row === row && previous.col === col) {
+                    this.path.pop();
+                } else if (!this.isInPath(row,col)) {
+                    this.path.push({row,col});
+                }
+                this.highlightPath();
+            }
+        }
+        const pos = this.getEventPosition(e);
+        if (pos) this.currentPos = pos;
+        e.preventDefault();
+        this.drawPath();
+    }
+    /**
+     * Auto-complète le chemin en trouvant toutes les cases adjacentes du même type
+     */
+    /**
+     * Termine le tracé
+     */
+    handleEnd(e) {
+        if (!this.isDrawing) return;
+        this.isDrawing = false;
+        this.currentPos = null;
+        const completedPath = this.path.map(({row,col}) => ({row,col}));
+        this.path = [];
+        this.clearCanvas();
+        this.clearHighlight();
+        if (this.grid.isValidPath(completedPath) && this.onPathComplete) {
+            this.onPathComplete(completedPath);
+        }
+    }
+    /**
+     * Vérifie si une cellule est déjà dans le chemin
+     */
+    isInPath(row, col) {
+        return this.path.some(cell => cell.row === row && cell.col === col);
+    }
+
+    /**
+     * Obtient la cellule à partir d'un événement
+     */
+    getCellFromEvent(e) {
+        const pos = this.getEventPosition(e);
+        if (!pos) return null;
+
+        // Utiliser le cache au lieu de querySelectorAll
+        for (const [key, cell] of this.cellElementCache) {
+            const rect = cell.getBoundingClientRect();
+            if (pos.x >= rect.left && pos.x <= rect.right &&
+                pos.y >= rect.top && pos.y <= rect.bottom) {
+                return {
+                    row: parseInt(cell.dataset.row),
+                    col: parseInt(cell.dataset.col)
+                };
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Obtient la position d'un événement
+     */
+    getEventPosition(e) {
+        if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        if (e.clientX !== undefined) {
+            return { x: e.clientX, y: e.clientY };
+        }
+        return null;
+    }
+
+    /**
+     * Dessine le chemin sur le canvas
+     */
+    drawPath() {
+        if (!this.ctx || this.path.length === 0) return;
+
+        const gridElement = this.boardElement.querySelector('.board-grid');
+        if (!gridElement) return;
+        
+        // Recalculer les dimensions du canvas à chaque dessin
+        const gridRect = gridElement.getBoundingClientRect();
+        const canvasRect = this.canvas.getBoundingClientRect();
+        
+        // Redimensionner le canvas si nécessaire
+        if (this.canvas.width !== canvasRect.width || this.canvas.height !== canvasRect.height) {
+            this.canvas.width = canvasRect.width;
+            this.canvas.height = canvasRect.height;
+        }
+
+        this.clearCanvas();
+
+        // Style du tracé - blanc lumineux pour le nouveau thème
+        this.updateCellPositions();
+        const first = this.grid.cells[this.path[0].row]?.[this.path[0].col];
+        const color = CONFIG.COLORS.LIGHT[first?.color] || '#ffd700';
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = 5;
+        this.ctx.lineCap = 'round';
+        this.ctx.lineJoin = 'round';
+        this.ctx.shadowColor = color;
+        this.ctx.shadowBlur = 20;
+
+        this.ctx.beginPath();
+        
+        // Chaque segment relie deux voisines réelles, même dans un groupe ramifié.
+        const selected = new Set(this.path.map(p => `${p.row},${p.col}`));
+        for (const cell of this.path) {
+            const pos = this.getCellPosition(cell.row, cell.col);
+            if (!pos) continue;
+            for (const next of [{row:cell.row,col:cell.col+1},{row:cell.row+1,col:cell.col}]) {
+                if (!selected.has(`${next.row},${next.col}`)) continue;
+                const end = this.getCellPosition(next.row,next.col);
+                if (end) {this.ctx.moveTo(pos.x,pos.y);this.ctx.lineTo(end.x,end.y);}
+            }
+        }
+        const last = this.path[this.path.length-1];
+        const lastPos = this.getCellPosition(last.row,last.col);
+        if (lastPos) this.ctx.moveTo(lastPos.x,lastPos.y);
+        // Ligne vers la position actuelle du curseur/doigt
+        if (this.currentPos) {
+            const adjustedX = this.currentPos.x - canvasRect.left;
+            const adjustedY = this.currentPos.y - canvasRect.top;
+            this.ctx.lineTo(adjustedX, adjustedY);
+        }
+
+        this.ctx.stroke();
+
+        // Dessiner des points lumineux aux intersections
+        this.ctx.fillStyle = color;
+        this.ctx.shadowColor = color;
+        this.ctx.shadowBlur = 25;
+        
+        for (const cell of this.path) {
+            const cellElement = gridElement.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
+            if (!cellElement) continue;
+            
+            const cellRect = cellElement.getBoundingClientRect();
+            const posX = cellRect.left + cellRect.width / 2 - canvasRect.left;
+            const posY = cellRect.top + cellRect.height / 2 - canvasRect.top;
+            
+            this.ctx.beginPath();
+            this.ctx.arc(posX, posY, 10, 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+    }
+
+    /**
+     * Efface le canvas
+     */
+    clearCanvas() {
+        if (!this.ctx) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    /**
+     * Surligne les cellules du chemin
+     */
+    highlightPath() {
+        this.clearHighlight();
+        for (const { row, col } of this.path) {
+            const cell = this.getCellElement(row, col);
+            if (cell) {
+                cell.classList.add('traced');
+            }
+        }
+    }
+
+    /**
+     * Retire le surlignage
+     */
+    clearHighlight() {
+        const cells = this.boardElement.querySelectorAll('.cell.traced');
+        cells.forEach(cell => cell.classList.remove('traced'));
+    }
+
+    /**
+     * Redimensionne le canvas (simplifié car géré dans drawPath)
+     */
+    resizeCanvas() {
+        if (!this.canvas || !this.boardElement) return;
+        
+        // Le canvas se redimensionne automatiquement dans drawPath
+        // Cette fonction existe juste pour la compatibilité
+    }
+}
+
+// Rendre disponible globalement
+window.LineTracer = LineTracer;
+
+// Export pour Node.js
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = LineTracer;
+}
+
+

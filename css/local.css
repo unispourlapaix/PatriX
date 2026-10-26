@@ -1,0 +1,35 @@
+#localShare{position:fixed;bottom:12px;right:12px;z-index:1500;border:1px solid #aee9ff;border-radius:24px;padding:12px 18px;background:#252340;color:white;font:600 14px sans-serif;cursor:pointer}#shareDialog{width:min(480px,92vw);max-height:90vh;overflow:auto;border:1px solid #aee9ff;border-radius:24px;background:#1b1e35;color:white;padding:24px;box-sizing:border-box}#shareDialog::backdrop{background:#060817cc}#shareDialog h2{font:600 23px sans-serif}#shareDialog canvas{width:100%;border-radius:16px}#shareDialog textarea{display:block;box-sizing:border-box;width:100%;min-height:90px;margin:8px 0 16px;padding:12px;border-radius:12px;background:#101326;color:white;border:1px solid #717c9c;font:16px sans-serif}#shareDialog button{border:0;border-radius:12px;padding:10px;margin:4px 0;background:#b0eaff;color:#15182e;cursor:pointer}#shareDialog form button{float:right}#shareDialog p{font:14px sans-serif;line-height:1.5}#contactBtn,#contactModal,#webBrowserPanel,#musicToggleBtn,#logoutBtn,#user-login-btn{display:none!important}
+#musicBtn{display:none!important}
+
+/* Réserver une place réelle à chaque élément, y compris au pied de page. */
+html { min-height:100%; overflow-x:hidden; }
+body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; overflow-y:auto; align-items:flex-start; }
+.game-wrapper {
+ width:min(100%,600px); max-width:600px; aspect-ratio:auto;
+ height:100vh; height:100dvh; min-height:440px;
+ padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+ display:flex; flex-direction:column; justify-content:flex-start; overflow:visible;
+}
+.game-board { flex:1 1 0; width:100%; height:auto; min-height:0; padding:4px; gap:4px; overflow:visible; }
+.mechanical-display { flex:none; margin:0; }
+.board { flex:none; width:var(--fitted-board-width,180px)!important; max-width:100%; max-height:none; padding:4px; margin:auto; }
+.board-grid { gap:2px; grid-auto-rows:auto; }
+.game-footer { position:static; flex:none; transform:none; width:100%; padding:6px 10px; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:center; text-align:center; }
+#localShare { position:static; flex:none; margin:0; padding:10px 14px; font-size:13px; }
+#shareDialog { position:fixed; inset:0; margin:auto; width:min(480px,calc(100vw - 24px)); max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); padding:20px; overscroll-behavior:contain; }
+#shareDialog canvas { display:block; max-height:42dvh; object-fit:contain; }
+#shareDialog form { position:sticky; top:0; z-index:1; }
+#shareDialog form button { min-width:40px; min-height:40px; }
+@media (max-width:430px) { .game-footer {gap:4px 10px;padding:4px;} #localShare {padding:8px 12px;} }
+@media (max-height:500px) { .game-wrapper {min-height:440px;} }
+/* Partage présenté comme le lien de soutien voisin. */
+#localShare {
+ border:0; border-radius:0; padding:2px 0; margin:0;
+ background:none; box-shadow:none; color:#000;
+ font:inherit; font-weight:bold; cursor:pointer;
+ text-decoration:none; -webkit-tap-highlight-color:rgba(0,0,0,.1);
+}
+#localShare:hover { color:#333; text-decoration:underline; }
+#localShare:focus-visible { outline:2px solid #675314; outline-offset:4px; }
+/* Aucune limite de largeur ni nombre fixe de colonnes. */
+.game-wrapper {width:100%;max-width:none;}
