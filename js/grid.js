@@ -311,83 +311,34 @@ class GameGrid {
      * @param {Object} currentPiece - Pièce en cours (optionnel)
      */
     render(currentPiece = null) {
-        if (!this.gridElement) {
-            console.error('[Grid] gridElement non défini, impossible de render');
-            return;
-        }
-        
-        // Utiliser le cache ou construire si nécessaire
-        if (!this.cellElementsCache || this.cellElementsCache.length === 0) {
-            this.buildCellCache();
-        }
-        
-        const cells = this.cellElementsCache;
-        
-        if (!cells || cells.length === 0) {
-            console.error('[Grid] Aucune cellule trouvée dans gridElement');
-            return;
-        }
-        
-        // Cache pour groupes poppables (calculer une seule fois)
-        const poppableCache = new Map();
-        
-        cells.forEach(cell => {
-            const row = parseInt(cell.dataset.row);
-            const col = parseInt(cell.dataset.col);
-            const gridCell = this.cells[row][col];
-            
-            // Reset
-            cell.className = 'cell';
-            cell.textContent = '';
-            
-            // Cellule de la grille
-            if (gridCell) {
-                const colorKey = gridCell.isTransformed ? 'LIGHT' : 'SHADOW';
-                cell.classList.add('filled', gridCell.type);
-                cell.dataset.popColor = CONFIG.COLORS.LIGHT[gridCell.color] || '#ffd700';
-                cell.textContent = gridCell.icon;
-                cell.style.borderColor = CONFIG.COLORS[colorKey][gridCell.color];
-                cell.style.color = CONFIG.COLORS[colorKey][gridCell.color];
-                
-                if (gridCell.isTransformed) {
-                    cell.classList.add('transforming');
-                    cell.style.boxShadow = `0 0 20px ${CONFIG.COLORS.GLOW}`;
-                }
-                
-                // Vérifier si cette cellule fait partie d'un groupe poppable (avec cache)
-                const cacheKey = `${row}-${col}`;
-                if (!poppableCache.has(cacheKey)) {
-                    const group = this.findConnectedGroup(row, col);
-                    poppableCache.set(cacheKey, group.length >= 4);
-                }
-                if (poppableCache.get(cacheKey)) {
-                    cell.classList.add('poppable');
-                }
+        if (!this.gridElement) return;
+        if (!this.cellElementsCache?.length) this.buildCellCache();
+        const falling = new Map();
+        for (const piece of this.getFallingPieces?.() || (currentPiece ? [currentPiece] : [])) {
+            for (let r=0;r<piece.shape.length;r++) for(let c=0;c<piece.shape[r].length;c++) {
+                if(piece.shape[r][c]) falling.set((piece.y+r)*this.cols+piece.x+c,piece);
             }
-            
-            // Pièce en cours
-            for (const fallingPiece of (this.getFallingPieces?.() || (currentPiece ? [currentPiece] : []))) {
-                for (let r = 0; r < fallingPiece.shape.length; r++) {
-                    for (let c = 0; c < fallingPiece.shape[r].length; c++) {
-                        if (fallingPiece.shape[r][c]) {
-                            const pieceRow = fallingPiece.y + r;
-                            const pieceCol = fallingPiece.x + c;
-                            
-                            if (pieceRow === row && pieceCol === col && pieceRow >= 0) {
-                                cell.classList.add('filled', 'current-piece', fallingPiece.type);
-                                cell.textContent = fallingPiece.icon;
-                                if(fallingPiece === this.selectedPiece)cell.classList.add('selected-piece');
-                                const colorKey = 'SHADOW';
-                                cell.style.borderColor = CONFIG.COLORS[colorKey][fallingPiece.color];
-                                cell.style.color = CONFIG.COLORS[colorKey][fallingPiece.color];
-                            }
-                        }
-                    }
-                }
-            }
+        }
+        this.cellElementsCache.forEach((element,index)=>{
+            const row=Math.floor(index/this.cols),col=index%this.cols;
+            const piece=falling.get(index),settled=this.cells[row][col],value=piece||settled;
+            const selected=!!piece&&piece===this.selectedPiece;
+            // Dès deux cases reliées, le tracé manuel peut créer un pop.
+            const poppable=!piece&&!!settled&&[[row-1,col],[row+1,col],[row,col-1],[row,col+1]].some(([r,c])=>this.samePopColor(settled,this.cells[r]?.[c]));
+            const transformed=!piece&&!!settled?.isTransformed;
+            const signature=value?`${piece?'p':'s'}|${value.type}|${value.color}|${value.icon}|${selected}|${transformed}|${poppable}`:'empty';
+            if(element._renderSignature===signature)return;
+            element._renderSignature=signature;
+            // Garder le tracé manuel, indépendant de l'état des blocs.
+            const traced=element.classList.contains('traced');
+            element.className='cell'+(value?` filled ${value.type}`:'')+(piece?' current-piece':'')+(selected?' selected-piece':'')+(transformed?' transforming':'')+(poppable?' poppable':'')+(traced?' traced':'');
+            element.textContent=value?.icon||'';
+            const color=value?(CONFIG.COLORS[transformed?'LIGHT':'SHADOW'][value.color]||''):'';
+            element.style.borderColor=color;element.style.color=color;
+            element.style.boxShadow=transformed?`0 0 20px ${CONFIG.COLORS.GLOW}`:'';
+            element.dataset.popColor=value?(CONFIG.COLORS.LIGHT[value.color]||'#ffd700'):'';
         });
     }
-
     /**
      * Reset la grille
      */
@@ -406,6 +357,7 @@ window.GameGrid = GameGrid;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = GameGrid;
 }
+
 
 
 

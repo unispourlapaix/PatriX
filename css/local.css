@@ -98,3 +98,13 @@ body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; over
 #webBrowserPanel .web-privacy-info {position:static;flex:none;}
 .music-auto-minimize {display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f3f1ff;color:#292541;font:13px/1.4 sans-serif;flex:none;}
 .music-auto-minimize input {width:18px;height:18px;flex:none;}
+/* Les blocs fixes n'ont pas besoin d'animations continues sur une grande grille. */
+@media (orientation:landscape) {
+ .game-board {backdrop-filter:none;}
+ .cell.filled {animation:none;}
+ .cell.poppable {animation:none;}
+ .cell.current-piece {animation:none;}
+ .cell.transforming {animation:lineTransform .6s ease-out forwards;}
+}
+.board-grid {touch-action:none;}
+.cell.traced {outline:2px solid #ffca28;outline-offset:-2px;background:#fff3bf!important;box-shadow:inset 0 0 0 2px #fff,0 0 8px #ffca28;}

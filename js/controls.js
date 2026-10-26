@@ -46,6 +46,7 @@ class Controls {
      */
     initTouchControls() {
         document.addEventListener('touchstart', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
                 (e.target.closest('.mechanical-display') || 
@@ -76,6 +77,7 @@ class Controls {
         
         // Nouveau : touchmove pour suivre la position (ne fait plus descendre)
         document.addEventListener('touchmove', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
                 (e.target.closest('.mechanical-display') || 
@@ -104,6 +106,7 @@ class Controls {
         }, { passive: false });
 
         document.addEventListener('touchend', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
                 (e.target.closest('.mechanical-display') || 
@@ -216,6 +219,7 @@ class Controls {
         const boardElement = document.getElementById('gameBoard');
         
         document.addEventListener('mousedown', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les clics sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
                 (e.target.closest('.mechanical-display') ||
@@ -241,6 +245,7 @@ class Controls {
         });
 
         document.addEventListener('mousemove', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             if (!this.engine.isRunning) return;
             
             const boardRect = boardElement.getBoundingClientRect();
@@ -256,6 +261,7 @@ class Controls {
         });
 
         document.addEventListener('mouseup', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les clics sur la zone mécanique
             if (e.target && e.target.closest && e.target.closest('.mechanical-display')) {
                 return;
@@ -345,6 +351,7 @@ class Controls {
      */
     initKeyboardControls() {
         document.addEventListener('keydown', (e) => {
+            if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             if (!this.engine.isRunning || this.engine.isPaused) return;
             
             switch(e.key) {
@@ -452,3 +459,4 @@ window.Controls = Controls;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Controls;
 }
+

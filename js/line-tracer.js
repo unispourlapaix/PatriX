@@ -116,10 +116,11 @@ class LineTracer {
      * Récupère la position d'une cellule depuis le cache
      */
     getCellPosition(row, col) {
-        const key = `${row}-${col}`;
-        return this.cellPositionCache.get(key);
+        const element=this.getCellElement(row,col);
+        if(!element||!this.canvas)return null;
+        const rect=element.getBoundingClientRect(),canvas=this.canvas.getBoundingClientRect();
+        return {x:rect.left+rect.width/2-canvas.left,y:rect.top+rect.height/2-canvas.top};
     }
-
     /**
      * Démarre le tracé
      */
@@ -165,8 +166,13 @@ class LineTracer {
      */
     handleMove(e) {
         if (!this.isDrawing || !this.path.length) return;
-        const cell = this.getCellFromEvent(e);
-        if (cell) {
+        const position=this.getEventPosition(e);
+        const metrics=this.getHitMetrics();
+        const from=this.currentPos||position;
+        const steps=position&&from?Math.min(128,Math.max(1,Math.ceil(Math.hypot(position.x-from.x,position.y-from.y)/Math.max(3,(metrics?.pitchX||12)/3)))):1;
+        for(let step=1;step<=steps;step++){
+        const event=position&&from?{clientX:from.x+(position.x-from.x)*step/steps,clientY:from.y+(position.y-from.y)*step/steps}:e;
+        const cell = this.getCellFromEvent(event,metrics);        if (cell) {
             const {row,col} = cell;
             const last = this.path[this.path.length-1];
             const first = this.path[0];
@@ -180,6 +186,7 @@ class LineTracer {
                 }
                 this.highlightPath();
             }
+        }
         }
         const pos = this.getEventPosition(e);
         if (pos) this.currentPos = pos;
@@ -214,24 +221,30 @@ class LineTracer {
     /**
      * Obtient la cellule à partir d'un événement
      */
-    getCellFromEvent(e) {
-        const pos = this.getEventPosition(e);
-        if (!pos) return null;
-
-        // Utiliser le cache au lieu de querySelectorAll
-        for (const [key, cell] of this.cellElementCache) {
-            const rect = cell.getBoundingClientRect();
-            if (pos.x >= rect.left && pos.x <= rect.right &&
-                pos.y >= rect.top && pos.y <= rect.bottom) {
-                return {
-                    row: parseInt(cell.dataset.row),
-                    col: parseInt(cell.dataset.col)
-                };
-            }
-        }
-        return null;
+    getHitMetrics(){
+        const grid=this.grid.gridElement;if(!grid)return null;
+        const rect=grid.getBoundingClientRect(),style=getComputedStyle(grid);
+        const gx=parseFloat(style.columnGap)||0,gy=parseFloat(style.rowGap)||0;
+        return {rect,pitchX:(rect.width+gx)/this.grid.cols,pitchY:(rect.height+gy)/this.grid.rows};
     }
-
+    getCellFromEvent(e,metrics=this.getHitMetrics()) {
+        const pos=this.getEventPosition(e);if(!pos||!metrics)return null;
+        const {rect,pitchX,pitchY}=metrics;
+        const col=Math.floor((pos.x-rect.left)/pitchX),row=Math.floor((pos.y-rect.top)/pitchY);
+        const first=this.path?.[0],origin=first?this.grid.cells[first.row]?.[first.col]:null;
+        const eligible=(r,c)=>r>=0&&r<this.grid.rows&&c>=0&&c<this.grid.cols&&this.grid.cells[r]?.[c]&&(!this.isDrawing||this.grid.samePopColor(origin,this.grid.cells[r][c]));
+        if(eligible(row,col))return {row,col};
+        // Une petite marge autour d'une case occupée facilite le toucher.
+        const radius=Math.min(14,Math.min(pitchX,pitchY)*0.7);
+        let best=null,distance=Infinity;
+        for(let r=row-1;r<=row+1;r++)for(let c=col-1;c<=col+1;c++){
+            if(!eligible(r,c))continue;
+            const x=rect.left+(c+.5)*pitchX,y=rect.top+(r+.5)*pitchY;
+            const d=Math.hypot(pos.x-x,pos.y-y);
+            if(d<=radius&&d<distance){best={row:r,col:c};distance=d;}
+        }
+        return best;
+    }
     /**
      * Obtient la position d'un événement
      */
@@ -267,7 +280,6 @@ class LineTracer {
         this.clearCanvas();
 
         // Style du tracé - blanc lumineux pour le nouveau thème
-        this.updateCellPositions();
         const first = this.grid.cells[this.path[0].row]?.[this.path[0].col];
         const color = CONFIG.COLORS.LIGHT[first?.color] || '#ffd700';
         this.ctx.strokeStyle = color;
@@ -368,6 +380,8 @@ window.LineTracer = LineTracer;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = LineTracer;
 }
+
+
 
 
 
