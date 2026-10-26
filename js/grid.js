@@ -366,19 +366,20 @@ class GameGrid {
             }
             
             // Pièce en cours
-            if (currentPiece) {
-                for (let r = 0; r < currentPiece.shape.length; r++) {
-                    for (let c = 0; c < currentPiece.shape[r].length; c++) {
-                        if (currentPiece.shape[r][c]) {
-                            const pieceRow = currentPiece.y + r;
-                            const pieceCol = currentPiece.x + c;
+            for (const fallingPiece of (this.getFallingPieces?.() || (currentPiece ? [currentPiece] : []))) {
+                for (let r = 0; r < fallingPiece.shape.length; r++) {
+                    for (let c = 0; c < fallingPiece.shape[r].length; c++) {
+                        if (fallingPiece.shape[r][c]) {
+                            const pieceRow = fallingPiece.y + r;
+                            const pieceCol = fallingPiece.x + c;
                             
                             if (pieceRow === row && pieceCol === col && pieceRow >= 0) {
-                                cell.classList.add('filled', 'current-piece', currentPiece.type);
-                                cell.textContent = currentPiece.icon;
+                                cell.classList.add('filled', 'current-piece', fallingPiece.type);
+                                cell.textContent = fallingPiece.icon;
+                                if(fallingPiece === this.selectedPiece)cell.classList.add('selected-piece');
                                 const colorKey = 'SHADOW';
-                                cell.style.borderColor = CONFIG.COLORS[colorKey][currentPiece.color];
-                                cell.style.color = CONFIG.COLORS[colorKey][currentPiece.color];
+                                cell.style.borderColor = CONFIG.COLORS[colorKey][fallingPiece.color];
+                                cell.style.color = CONFIG.COLORS[colorKey][fallingPiece.color];
                             }
                         }
                     }
@@ -405,6 +406,7 @@ window.GameGrid = GameGrid;
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = GameGrid;
 }
+
 
 
 

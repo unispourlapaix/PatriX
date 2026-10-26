@@ -24,6 +24,8 @@ function initUserSystem() {
     window.userManager = userManager;
     profileManager = new ProfileManager(userManager);
     window.profileManager = profileManager;
+    webBrowser = new WebBrowserManager();
+    window.webBrowser = webBrowser;
     const fullscreen = document.getElementById('exitFullscreenBtn');
     if (fullscreen) fullscreen.addEventListener('click', toggleFullscreen);
     startGame();
@@ -521,5 +523,6 @@ function deleteSaveSlot(slotNumber, event) {
         }
     }
 }
+
 
 

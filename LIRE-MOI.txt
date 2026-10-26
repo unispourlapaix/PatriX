@@ -5,3 +5,5 @@ Le jeu et ses ressources sont locaux. Aucun compte et aucune synchronisation clo
 Scores, profil et trois sauvegardes sont conservés dans le navigateur utilisé : ne pas effacer ses données si vous souhaitez les garder.
 Partager une brique : pièce et couleur aléatoires, message modifiable, visage kawaii, partage système si disponible ou téléchargement PNG.
 Les liens externes conservés dans les crédits nécessitent Internet si vous choisissez de les ouvrir.
+
+Mode horizontal : plusieurs pièces tombent en même temps (une par tranche de 12 colonnes). Cliquer ou toucher une pièce pour la sélectionner ; les gestes et les flèches agissent sur celle-ci. La quantité reste stable pendant la partie et est recalculée au démarrage suivant.

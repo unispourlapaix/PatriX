@@ -1,5 +1,5 @@
-#localShare{position:fixed;bottom:12px;right:12px;z-index:1500;border:1px solid #aee9ff;border-radius:24px;padding:12px 18px;background:#252340;color:white;font:600 14px sans-serif;cursor:pointer}#shareDialog{width:min(480px,92vw);max-height:90vh;overflow:auto;border:1px solid #aee9ff;border-radius:24px;background:#1b1e35;color:white;padding:24px;box-sizing:border-box}#shareDialog::backdrop{background:#060817cc}#shareDialog h2{font:600 23px sans-serif}#shareDialog canvas{width:100%;border-radius:16px}#shareDialog textarea{display:block;box-sizing:border-box;width:100%;min-height:90px;margin:8px 0 16px;padding:12px;border-radius:12px;background:#101326;color:white;border:1px solid #717c9c;font:16px sans-serif}#shareDialog button{border:0;border-radius:12px;padding:10px;margin:4px 0;background:#b0eaff;color:#15182e;cursor:pointer}#shareDialog form button{float:right}#shareDialog p{font:14px sans-serif;line-height:1.5}#contactBtn,#contactModal,#webBrowserPanel,#musicToggleBtn,#logoutBtn,#user-login-btn{display:none!important}
-#musicBtn{display:none!important}
+#localShare{position:fixed;bottom:12px;right:12px;z-index:1500;border:1px solid #aee9ff;border-radius:24px;padding:12px 18px;background:#252340;color:white;font:600 14px sans-serif;cursor:pointer}#shareDialog{width:min(480px,92vw);max-height:90vh;overflow:auto;border:1px solid #aee9ff;border-radius:24px;background:#1b1e35;color:white;padding:24px;box-sizing:border-box}#shareDialog::backdrop{background:#060817cc}#shareDialog h2{font:600 23px sans-serif}#shareDialog canvas{width:100%;border-radius:16px}#shareDialog textarea{display:block;box-sizing:border-box;width:100%;min-height:90px;margin:8px 0 16px;padding:12px;border-radius:12px;background:#101326;color:white;border:1px solid #717c9c;font:16px sans-serif}#shareDialog button{border:0;border-radius:12px;padding:10px;margin:4px 0;background:#b0eaff;color:#15182e;cursor:pointer}#shareDialog form button{float:right}#shareDialog p{font:14px sans-serif;line-height:1.5}#contactBtn,#contactModal,#musicToggleBtn,#logoutBtn,#user-login-btn{display:none!important}
+
 
 /* Réserver une place réelle à chaque élément, y compris au pied de page. */
 html { min-height:100%; overflow-x:hidden; }
@@ -88,3 +88,13 @@ body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; over
 @media (max-width:430px) {
  .game-footer a {padding-right:10px;}
 }
+.cell.current-piece.selected-piece {outline:2px solid #fff;outline-offset:-2px;box-shadow:inset 0 0 0 1px #534517,0 0 8px #ffd700;z-index:2;}
+#webBrowserPanel {max-width:760px;}
+#webBrowserPanel .web-browser-content {height:min(600px,calc(100dvh - 24px));}
+#webBrowserPanel .web-browser-header {gap:8px;flex-wrap:wrap;padding:10px;}
+#playlistChoice {flex:1;min-width:120px;max-width:100%;padding:10px;border-radius:8px;color:#222;background:white;}
+#webBrowserFrame {width:100%;height:100%;flex:1;min-height:180px;}
+#webBrowserPanel .web-browser-body {display:flex;flex-direction:column;min-height:0;overflow:auto;}
+#webBrowserPanel .web-privacy-info {position:static;flex:none;}
+.music-auto-minimize {display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f3f1ff;color:#292541;font:13px/1.4 sans-serif;flex:none;}
+.music-auto-minimize input {width:18px;height:18px;flex:none;}
