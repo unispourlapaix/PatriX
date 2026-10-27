@@ -1,16 +1,22 @@
 /* Plusieurs pièces indépendantes ; les commandes ciblent la sélection. */
 (()=>{
  const proto=GameEngine.prototype;
+ function pieceCount(engine){
+  const landscape=window.innerWidth>window.innerHeight;
+  if(!landscape)return 1;
+  return Math.max(1,Math.min(Math.floor(engine.grid.cols/6),Math.floor(window.innerWidth/300)));
+ }
  const baseReset=proto.reset,baseUpdate=proto.update,basePlace=proto.placePiece,baseExport=proto.exportState,baseImport=proto.importState;
  proto.reset=function(){
   this.activePieces=[];
-  this.parallelCount=window.innerWidth>window.innerHeight?Math.max(1,Math.floor(this.grid.cols/12)):1;
+  this.parallelCount=pieceCount(this);
   this.grid.getFallingPieces=()=>this.activePieces||[];
   baseReset.call(this);
  };
  proto.spawnPiece=function(){
   if(!this.activePieces)this.activePieces=[];
   const count=this.parallelCount||1;
+  if(this.activePieces.length>=count){this.currentPiece=this.activePieces[0]||null;this.grid.selectedPiece=this.currentPiece;return;}
   do {
    const piece=this.nextPiece||createRandomPiece();this.nextPiece=createRandomPiece();
    const occupied=new Set(this.activePieces.map(p=>p.lane));
@@ -41,6 +47,8 @@
  proto.update=function(delta){
   if(!this.isRunning||this.isPaused)return;
   const selected=this.currentPiece;
+  this.parallelCount=pieceCount(this);
+  if(this.activePieces.length<this.parallelCount)this.spawnPiece();
   // Une seule avancée de chaque pièce par frame, sans déplacer la sélection.
   for(const piece of [...(this.activePieces||[])]){
    if(!this.isRunning||this.isPaused)break;
@@ -96,4 +104,5 @@
   document.addEventListener('mouseup',end,true);document.addEventListener('touchend',end,{capture:true,passive:false});
  });
 })();
+
 
