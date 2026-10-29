@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title">
+  <title id="title">Flybot — papillon</title>
+  <defs>
+    <linearGradient id="sky" x2="1" y2="1">
+      <stop stop-color="#302b63"/>
+      <stop offset="1" stop-color="#0f0c29"/>
+    </linearGradient>
+    <linearGradient id="metal" x2="0.7" y2="1">
+      <stop stop-color="#e4fbff"/>
+      <stop offset="1" stop-color="#45b7d1"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="182" height="182" rx="42" fill="url(#sky)" stroke="#ffa502" stroke-width="5"/>
+  <circle cx="96" cy="94" r="59" fill="#ffa502" opacity=".08"/>
+  <path d="M92 96C67 32 25 28 30 75c2 24 28 36 62 32M100 96c25-64 67-68 62-21-2 24-28 36-62 32" fill="url(#metal)" stroke="#45b7d1" stroke-width="4"/>
+  <path d="M91 105c-48-17-65 18-43 39 19 18 37-4 45-23m8-16c48-17 65 18 43 39-19 18-37-4-45-23" fill="#f78fb3" stroke="#ff6b6b" stroke-width="4"/>
+  <path d="M96 82c-2-18-9-27-17-29m17 29c2-18 9-27 17-29" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="96" cy="108" rx="7" ry="31" fill="#ffd93d"/>
+  <circle cx="96" cy="81" r="8" fill="#ffd93d"/>
+  <path d="M49 66c10 3 18 12 25 23m69-23c-10 3-18 12-25 23" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+  <path d="M35 44v12m-6-6h12m110 89v10m-5-5h10" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+</svg>
