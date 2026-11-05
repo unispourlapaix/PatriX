@@ -316,8 +316,8 @@ class VisualEffects {
             // Particules pour chaque cellule
             for (let i = 0; i < 6; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'explosion-particle';
-                particle.textContent = '✦';
+                particle.className = 'explosion-particle pixel-pop-spark';
+                particle.setAttribute('aria-hidden', 'true');
                 
                 const angle = (Math.PI * 2 * i) / 6;
                 const distance = 30 + Math.random() * 30;

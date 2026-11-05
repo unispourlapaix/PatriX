@@ -1,0 +1,52 @@
+/* Cadres arcade nets ; aucune police distante nécessaire. */
+.pixel-pop-spark {width:12px;height:12px;background:currentColor;clip-path:polygon(40% 0,60% 0,60% 20%,80% 20%,80% 40%,100% 40%,100% 60%,80% 60%,80% 80%,60% 80%,60% 100%,40% 100%,40% 80%,20% 80%,20% 60%,0 60%,0 40%,20% 40%,20% 20%,40% 20%);filter:none;}
+.combo-message,.line-message,.spiritual-message,.pop-combo-display {
+ font-family:'Courier New',monospace;border:3px solid var(--pixel-ink,#382c41);border-radius:0;
+ background:var(--pixel-paper,#fff1d3);color:var(--pixel-ink,#382c41);
+ box-shadow:inset 0 0 0 2px var(--pixel-line,#88614c),4px 4px 0 #10172d88;
+ text-shadow:none;backdrop-filter:none;padding:12px 18px;max-width:calc(100vw - 32px);box-sizing:border-box;
+ pointer-events:none;
+}
+.combo-message .combo-text,.combo-message .combo-extra,.line-message .line-text,.line-message .line-extra {
+ font-family:'Courier New',monospace;color:inherit;text-shadow:none;letter-spacing:1px;line-height:1.4;
+ background:none;-webkit-text-fill-color:currentColor;
+}
+.combo-message .combo-text {font-size:clamp(18px,5vw,32px);font-weight:900;}
+.combo-message .combo-extra {font-size:clamp(12px,3vw,16px);margin-top:6px;border-top:2px dashed var(--pixel-line,#88614c);padding-top:6px;}
+.combo-message.combo-ultimate,.combo-message.combo-legendary {border-color:#bd8634;box-shadow:inset 0 0 0 2px #eacb76,4px 4px 0 #10172d88;}
+.web-browser-content,.contact-form-container {border:4px solid var(--pixel-ink,#382c41);border-radius:0;box-shadow:inset 0 0 0 2px var(--pixel-line,#88614c),6px 6px 0 #10172d88;font-family:'Courier New',monospace;}
+.treasure-icon,.trophy-icon {filter:none;text-shadow:none;}
+@media (prefers-reduced-motion:reduce) {.pixel-pop-spark {display:none;}.combo-message,.line-message,.spiritual-message {animation:none!important;}}
+body {--pixel-paper:var(--theme-panel,#fff1d3);--pixel-ink:var(--theme-ink,#382c41);--pixel-line:var(--theme-accent,#88614c);}
+.game-over-panel,.pause-panel,.save-load-content,.treasure-content,.trophy-content,
+.trophies-panel-content,.profile-modal-content,.language-selector-content,#shareDialog,.pixel-ending-shell {
+ font-family:'Courier New',monospace;
+ color:var(--pixel-ink);background:var(--pixel-paper);
+ border:4px solid var(--pixel-ink);border-radius:0;
+ box-shadow:inset 0 0 0 3px var(--pixel-paper),inset 0 0 0 5px var(--pixel-line),6px 6px 0 #15182e88;
+ text-shadow:none;backdrop-filter:none;
+}
+.game-over-panel {width:min(420px,calc(100vw - 32px));box-sizing:border-box;padding:24px;max-height:calc(100dvh - 32px);overflow:auto;}
+.pixel-menu-brand {border-bottom:2px dashed var(--pixel-line);padding-bottom:10px;font-size:12px;letter-spacing:3px;font-weight:bold;text-align:left;}
+.pixel-result-badge {display:block;margin:16px auto 10px;image-rendering:pixelated;filter:drop-shadow(3px 3px 0 #0002);}
+.game-over-panel h2 {font:900 clamp(20px,5vw,28px)/1.3 'Courier New',monospace;letter-spacing:1px;color:var(--pixel-ink);text-shadow:none;margin:8px 0 12px;}
+#gameOverMessage {font:15px/1.6 'Courier New',monospace;color:var(--pixel-ink);margin:8px 0 20px;overflow-wrap:anywhere;}
+.game-over-panel .pixel-result-score {display:grid;gap:8px;margin:16px 0 24px;padding:16px 8px;border:2px solid var(--pixel-line);background:#8186a014;font-size:12px;text-transform:uppercase;letter-spacing:2px;}
+.game-over-panel #finalScore {display:block;font:900 clamp(26px,8vw,42px)/1.2 'Courier New',monospace;color:var(--pixel-ink);font-variant-numeric:tabular-nums;letter-spacing:1px;text-shadow:2px 2px #b6a58d55;overflow-wrap:anywhere;}
+.game-over-panel button,.pause-panel button,.save-load-content button,.treasure-content button,
+.trophy-content button,.trophies-panel-content button,.profile-modal-content button,
+.language-selector-content button,#shareDialog button,.pixel-ending-shell button,.pixel-ending-shell a {
+ border:2px solid var(--pixel-ink);border-radius:0;background:var(--pixel-paper);color:var(--pixel-ink);
+ box-shadow:inset 2px 2px #ffffff70,inset -2px -2px #0002,3px 3px 0 var(--pixel-ink);
+ font-family:'Courier New',monospace;font-weight:bold;text-shadow:none;min-height:40px;cursor:pointer;
+}
+.game-over-panel #restartBtn {width:100%;padding:14px 8px;font-size:16px;background:var(--pixel-ink);color:var(--pixel-paper);letter-spacing:1px;}
+.game-over-panel button:active,#shareDialog button:active,.pause-panel button:active {translate:2px 2px;box-shadow:1px 1px 0 var(--pixel-ink);}
+.game-over-panel button:focus-visible,.pause-panel button:focus-visible,
+.profile-modal-content button:focus-visible,#shareDialog button:focus-visible {outline:3px solid #e88f3f;outline-offset:4px;}
+.profile-modal-content h2,.save-load-content h2,.trophies-header h2,.treasure-level,.trophy-name {color:var(--pixel-ink);font-family:'Courier New',monospace;text-shadow:none;}
+.profile-modal-content p,.profile-modal-content li,.treasure-message,.trophy-message {color:var(--pixel-ink);line-height:1.6;}
+.pixel-ending-shell canvas {image-rendering:pixelated;border-block:3px solid var(--pixel-line);}
+#shareDialog textarea {border:2px solid var(--pixel-line);border-radius:0;background:var(--pixel-paper);color:var(--pixel-ink);font-family:'Courier New',monospace;}
+@media (max-height:500px) {.game-over-panel {padding:14px 20px;}.pixel-result-badge {width:40px;height:40px;margin:8px auto;}.game-over-panel .pixel-result-score {margin:8px 0;padding:8px;}.game-over-panel h2 {margin:4px 0;}#gameOverMessage {margin:4px 0;font-size:13px;}}
+@media (prefers-reduced-motion:reduce) {.game-over-panel,.game-over-panel * {animation:none!important;transition:none!important;}}

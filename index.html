@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="css/language.css">
 <link rel="stylesheet" href="css/local.css?v=25">
 <link rel="stylesheet" href="css/visual-themes.css?v=1">
+<link rel="stylesheet" href="css/pixel-menus.css?v=1">
 <script src="js/visual-themes.js?v=1" defer></script></head>
 <body>
     <!-- Modal de sélection de langue -->
@@ -288,9 +289,11 @@
     
     <!-- Panel Game Over -->
     <div class="game-over-panel" id="gameOver">
+        <div class="pixel-menu-brand" aria-hidden="true">PATRI-X / ✦</div>
+        <img class="pixel-result-badge" src="assets/images/pixel-trophy.svg" alt="" width="80" height="80">
         <h2 data-i18n="game.gameOverTitle">Partie Terminée</h2>
         <p id="gameOverMessage" data-i18n="game.gameOverMessage">Continue de rêver !</p>
-        <p><span data-i18n="game.finalScore">Score Final</span>: <span id="finalScore">0</span></p>
+        <p class="pixel-result-score"><span data-i18n="game.finalScore">Score Final</span><span id="finalScore">0</span></p>
         <button class="game-button" id="restartBtn" data-i18n="game.restart">Recommencer</button>
     </div>
     

@@ -4,8 +4,18 @@
     const seasons = ['autumn', 'winter', 'spring', 'summer'];
     const mode = document.getElementById('visualMode');
     const season = document.getElementById('visualSeason');
-    document.getElementById('topGameTools').append(document.querySelector('.visual-controls'));
-    document.querySelector('label[for="visualMode"]').textContent = '🎨 Style';
+    document.querySelector('.visual-controls').hidden = true;
+    const button = document.createElement('button');
+    button.id = 'visualStyleButton';
+    button.type = 'button';
+    const icon = document.createElement('img');
+    icon.src = 'assets/images/pixel-tv.svg';
+    icon.alt = '';
+    icon.width = icon.height = 28;
+    button.append(icon);
+    document.getElementById('topGameTools').append(button);
+    const cycle = ['classic', 'kawaii', 'galaxy', ...seasons];
+    const names = { classic: 'Classique', kawaii: 'Kawaii', galaxy: 'Galaxie', autumn: 'Automne', winter: 'Hiver', spring: 'Printemps', summer: 'Été' };
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem('patrixVisualStyle')) || {}; } catch {}
     mode.value = modes.includes(saved.mode) ? saved.mode : 'classic';
@@ -14,6 +24,8 @@
         const seasonal = mode.value === 'seasons';
         const theme = seasonal ? season.value : mode.value;
         document.body.dataset.visualTheme = theme;
+        button.title = `Style : ${names[theme]} — cliquer pour changer`;
+        button.setAttribute('aria-label', button.title);
         season.hidden = !seasonal;
         document.querySelector('label[for="visualSeason"]').hidden = !seasonal;
         try {
@@ -24,5 +36,11 @@
     }
     mode.addEventListener('change', apply);
     season.addEventListener('change', apply);
+    button.addEventListener('click', () => {
+        const next = cycle[(cycle.indexOf(document.body.dataset.visualTheme) + 1) % cycle.length];
+        mode.value = seasons.includes(next) ? 'seasons' : next;
+        if (seasons.includes(next)) season.value = next;
+        apply();
+    });
     apply();
 })();
