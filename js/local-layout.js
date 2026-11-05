@@ -1,7 +1,7 @@
 /* Calcule les carrés à partir de la place restante après l'en-tête et le pied. */
 document.addEventListener('DOMContentLoaded',()=>{
  const wrapper=document.querySelector('.game-wrapper'),panel=document.querySelector('.game-board'),header=document.querySelector('.mechanical-display'),footer=document.querySelector('.game-footer'),share=document.querySelector('#localShare');
- if(share)footer.append(share);
+ if(share)document.getElementById('topGameTools').append(share);
  let frame;
  function fit(){
   cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{

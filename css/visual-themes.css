@@ -1,0 +1,141 @@
+.visual-controls {display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;font:600 12px/1.3 sans-serif;}
+.visual-controls select {min-height:36px;max-width:125px;padding:5px 8px;border:1px solid #855338;border-radius:8px;background:#fff7e7;color:#382c27;font:inherit;cursor:pointer;}
+.visual-controls select:focus-visible {outline:3px solid #4766b6;outline-offset:2px;}
+.visual-controls [hidden] {display:none;}
+.mechanical-display .title-section {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;}
+.top-game-tools {display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;min-width:0;}
+.top-game-tools .visual-controls {gap:4px;}
+.top-game-tools #localShare {display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:1px solid var(--theme-accent,#855338);border-radius:8px;background:var(--theme-panel,#fff7e7);font-size:23px;text-decoration:none;}
+.top-game-tools #localShare:focus-visible {outline:3px solid #4766b6;outline-offset:2px;}
+@media (max-width:430px) {.mechanical-display .title-section {justify-content:center;}.top-game-tools {gap:5px;}.top-game-tools .visual-controls select {max-width:105px;font-size:11px;}}
+body[data-visual-theme="kawaii"] {--theme-bg:#ffe5ef;--theme-panel:#fff4fa;--theme-ink:#683e67;--theme-accent:#d978a9;--theme-grid:#f6dbef;--theme-cell:#fff9fd;--theme-radius:20px;--theme-pattern:radial-gradient(ellipse at 20% 20%,#ffffffb3 0 8%,transparent 8.5%),radial-gradient(ellipse at 80% 80%,#ffffff99 0 10%,transparent 10.5%);}
+body[data-visual-theme="autumn"] {--theme-bg:#704532;--theme-panel:#fff0d5;--theme-ink:#613d28;--theme-accent:#b5672e;--theme-grid:#dcc29b;--theme-cell:#fff5e5;--theme-radius:6px;--theme-pattern:repeating-linear-gradient(35deg,transparent 0 50px,#ffc77a20 51px 54px,transparent 55px 100px);}
+body[data-visual-theme="winter"] {--theme-bg:#28465e;--theme-panel:#eaf7ff;--theme-ink:#20445e;--theme-accent:#548cae;--theme-grid:#b7d4e4;--theme-cell:#f4fbff;--theme-radius:10px;--theme-pattern:radial-gradient(circle,#ffffff80 1.5px,transparent 2px);}
+body[data-visual-theme="spring"] {--theme-bg:#bcd9b6;--theme-panel:#f5ffeb;--theme-ink:#345139;--theme-accent:#6f9460;--theme-grid:#c4deb5;--theme-cell:#fbfff5;--theme-radius:16px;--theme-pattern:radial-gradient(ellipse at center,#f9bfda88 0 12%,transparent 14%);}
+body[data-visual-theme="summer"] {--theme-bg:#69c8da;--theme-panel:#fff8d9;--theme-ink:#58491f;--theme-accent:#bd9030;--theme-grid:#e4d7a1;--theme-cell:#fffdf0;--theme-radius:12px;--theme-pattern:repeating-radial-gradient(ellipse at 0 100%,transparent 0 35px,#ffffff26 36px 39px,transparent 40px 70px);}
+body[data-visual-theme]:not([data-visual-theme="classic"]) {background-color:var(--theme-bg);background-image:var(--theme-pattern);background-size:120px 120px;color:var(--theme-ink);}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .game-board,
+body[data-visual-theme]:not([data-visual-theme="classic"]) .mechanical-display {background:var(--theme-panel);border-color:var(--theme-accent);border-radius:var(--theme-radius);box-shadow:0 3px 12px #0002;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .mechanical-display::before {background-image:var(--theme-pattern);background-size:80px 80px;opacity:.6;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .title-section .game-title {color:var(--theme-ink);-webkit-text-fill-color:var(--theme-ink);text-shadow:1px 2px #fff8;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .stat-label,
+body[data-visual-theme]:not([data-visual-theme="classic"]) .display-label {color:var(--theme-ink);}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .stats-container {background:var(--theme-cell);border-color:var(--theme-accent);border-radius:8px;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .board,
+body[data-visual-theme]:not([data-visual-theme="classic"]) .next-grid {background:var(--theme-grid);border-color:var(--theme-accent);box-shadow:none;border-radius:8px;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell:not(.filled):not(.current-piece) {background:var(--theme-cell);border-color:var(--theme-grid);}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .visual-controls select {background:var(--theme-panel);color:var(--theme-ink);border-color:var(--theme-accent);}
+body[data-visual-theme="kawaii"] .cell {border-radius:30%;}
+body[data-visual-theme="kawaii"] .cell.filled,
+body[data-visual-theme="kawaii"] .cell.current-piece {box-shadow:inset 0 2px 2px #fff9,inset 0 -2px 3px #9d4b7d40;}
+body[data-visual-theme="winter"] .cell.filled {box-shadow:inset 0 2px 2px #ffffffcf,inset 0 -2px 2px #2b6b8b40;border-radius:3px;}
+body[data-visual-theme="spring"] .cell {border-radius:25% 5% 25% 5%;}
+body[data-visual-theme="summer"] .cell.filled {box-shadow:inset 0 2px 3px #fff9;border-radius:20%;}
+/* Galaxie : nébuleuses et étoiles statiques pour préserver la fluidité mobile. */
+body[data-visual-theme="galaxy"] {--theme-bg:#080b24;--theme-panel:#131831;--theme-ink:#d7f6ff;--theme-accent:#79dfff;--theme-grid:#28365d;--theme-cell:#111a39;--theme-radius:12px;--theme-pattern:radial-gradient(circle at 18% 28%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 72% 65%,#8be9ff 0 1px,transparent 1.8px),radial-gradient(circle at 85% 12%,#e5baff 0 1.4px,transparent 2px);}
+body[data-visual-theme="galaxy"]:not([data-visual-theme="classic"]) {background-image:var(--theme-pattern),radial-gradient(ellipse at 20% 70%,#742c9c80,transparent 55%),radial-gradient(ellipse at 90% 15%,#164f8280,transparent 60%);background-size:173px 193px,100% 100%,100% 100%;}
+body[data-visual-theme="galaxy"] .game-board {background-image:radial-gradient(ellipse at 80% 30%,#522d754d,transparent 65%);}
+body[data-visual-theme="galaxy"] .board {background-image:var(--theme-pattern);background-size:97px 113px;}
+body[data-visual-theme="galaxy"] .board-grid > .cell,
+body[data-visual-theme="galaxy"] .next-cell {clip-path:polygon(25% 2%,75% 2%,100% 50%,75% 98%,25% 98%,0 50%);border-radius:0;}
+body[data-visual-theme="galaxy"] .cell.filled,
+body[data-visual-theme="galaxy"] .cell.current-piece {box-shadow:inset 0 0 0 2px #9beaff,inset 0 0 10px #a45fff99;}
+/* Le contour de sélection reste visible même sur les cases découpées. */
+body[data-visual-theme="galaxy"] .cell.current-piece.selected-piece {box-shadow:inset 0 0 0 3px #fff,inset 0 0 12px #79dfff;}
+body[data-visual-theme="galaxy"] .cell.traced {box-shadow:inset 0 0 0 3px #ffd93d,inset 0 0 12px #ffd93d;}
+body[data-visual-theme="galaxy"] .stat-value {color:#e8d6ff;text-shadow:0 0 8px #ba82ff80;}
+body[data-visual-theme="galaxy"] .title-section .game-title {letter-spacing:.3em;}
+body[data-visual-theme="galaxy"] .game-footer,
+body[data-visual-theme="galaxy"] .game-footer a,
+body[data-visual-theme="galaxy"] #localShare {color:#d7f6ff;}
+body[data-visual-theme="galaxy"] .game-footer a {border-color:#79dfff80;}
+
+/* Chaque univers possède sa matière, sa silhouette et ses petits détails.
+   Les symboles des pièces restent lisibles au centre des cases. */
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell {position:relative;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell.filled::before,
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell.filled::after {content:'';position:absolute;pointer-events:none;}
+
+/* Kawaii : coussins de guimauve, joues roses et reflet de bonbon. */
+body[data-visual-theme="kawaii"] .cell.filled {border:1px solid #ad6a98;border-radius:38% 38% 30% 30%;box-shadow:inset 0 3px 2px #fffc,inset 0 -3px 3px #b7518240;}
+body[data-visual-theme="kawaii"] .cell.filled::before {inset:0;background:radial-gradient(ellipse at 19% 65%,#f26f9680 0 8%,transparent 12%),radial-gradient(ellipse at 81% 65%,#f26f9680 0 8%,transparent 12%);}
+body[data-visual-theme="kawaii"] .cell.filled::after {top:12%;left:19%;width:24%;height:10%;border-radius:50%;background:#fffc;transform:rotate(-20deg);}
+body[data-visual-theme="kawaii"] .board {border:4px double #d978a9;border-radius:18px;}
+body[data-visual-theme="kawaii"] .mechanical-display {border:3px double #d978a9;}
+
+/* Automne : petits carreaux de bois, veinures et feuilles cuivrées. */
+/* Kawaii : frises de jouets et confiseries, hors des symboles des pièces. */
+body[data-visual-theme="kawaii"] .board::before,
+body[data-visual-theme="kawaii"] .board::after {position:absolute;left:4%;right:4%;height:14px;text-align:center;font:12px/14px sans-serif;letter-spacing:clamp(2px,1vw,10px);white-space:nowrap;overflow:hidden;pointer-events:none;z-index:11;}
+body[data-visual-theme="kawaii"] .board::before {content:'🧸 🍭 🎀 🍬 🧸';top:-9px;}
+body[data-visual-theme="kawaii"] .board::after {content:'🍬 🧁 🧸 🍭 🍬';bottom:-9px;}
+body[data-visual-theme="kawaii"] .game-board {border:3px double #df97bc;background-image:radial-gradient(circle at 0 0,#ffc8df99,transparent 40%),radial-gradient(circle at 100% 100%,#cec5ff99,transparent 45%);}
+body[data-visual-theme="kawaii"] .mechanical-display::before {background-image:url('../assets/images/kawaii-treats.svg');background-size:160px 80px;opacity:.22;}
+body[data-visual-theme="kawaii"] .cell.filled.cross::after {width:28%;height:28%;left:7%;top:5%;border-radius:50%;transform:none;background:#c68f65;box-shadow:-2px -2px 0 -1px #c68f65,2px -2px 0 -1px #c68f65,inset 0 -1px #ffe0b7;}
+body[data-visual-theme="kawaii"] .cell.filled.heart::after {width:24%;height:24%;left:7%;top:5%;border-radius:50%;transform:rotate(-25deg);background:repeating-radial-gradient(circle,#fff0f7 0 1px,#e77caa 2px 3px);box-shadow:0 3px 0 -1px #fff;}
+body[data-visual-theme="kawaii"] .cell.filled.star::after {width:28%;height:18%;left:7%;top:7%;border-radius:3px;transform:rotate(-20deg);background:#a6dcd5;box-shadow:-2px 0 #78beb5,2px 0 #78beb5;}
+body[data-visual-theme="autumn"] .cell.filled {border:2px outset #c68b4d;border-radius:2px 25% 2px 25%;box-shadow:inset 0 0 4px #69391670;}
+body[data-visual-theme="autumn"] .cell.filled::before {inset:0;background:repeating-linear-gradient(12deg,transparent 0 18%,#65361625 20% 23%,transparent 26% 40%);}
+body[data-visual-theme="autumn"] .cell.filled::after {right:5%;bottom:5%;width:25%;height:20%;border-radius:100% 0 100% 0;background:#a64d22;box-shadow:inset 1px 1px #efc376;transform:rotate(-20deg);}
+body[data-visual-theme="autumn"] .board {border:5px ridge #a7794a;}
+
+/* Hiver : cristaux biseautés, sommet enneigé et éclats de givre. */
+body[data-visual-theme="winter"] .cell.filled {border:1px solid #7eaccc;border-radius:3px;clip-path:polygon(15% 0,85% 0,100% 15%,100% 85%,85% 100%,15% 100%,0 85%,0 15%);box-shadow:inset 2px 2px 3px #fffe,inset -2px -2px 3px #447aa57a;}
+body[data-visual-theme="winter"] .cell.filled::before {inset:0;background:linear-gradient(135deg,#fff8,transparent 45%,#b3dfff55 47%,transparent 52%);border-top:3px solid #fff;}
+body[data-visual-theme="winter"] .cell.filled::after {right:9%;bottom:9%;width:17%;height:17%;background:#fff;clip-path:polygon(40% 0,60% 0,60% 40%,100% 40%,100% 60%,60% 60%,60% 100%,40% 100%,40% 60%,0 60%,0 40%,40% 40%);}
+body[data-visual-theme="winter"] .board {border:4px ridge #b8e5ff;}
+
+/* Printemps : boutons floraux, pétales et petites feuilles. */
+body[data-visual-theme="spring"] .cell.filled {border:1px solid #6f9460;border-radius:40% 12% 40% 12%;box-shadow:inset 0 2px 3px #ffffffe0,inset 0 -2px 3px #5d873a40;}
+body[data-visual-theme="spring"] .cell.filled::before {inset:0;background:radial-gradient(ellipse at 15% 15%,#fff9,transparent 45%);}
+body[data-visual-theme="spring"] .cell.filled::after {right:3%;bottom:3%;width:24%;height:24%;border-radius:0 100% 0 100%;background:#56884b;border-left:1px solid #d6f5a9;}
+body[data-visual-theme="spring"] .board {border:4px double #6f9460;border-radius:16px 4px 16px 4px;}
+
+/* Été : galets polis, reflets d'eau et petit soleil doré. */
+body[data-visual-theme="summer"] .cell.filled {border:1px solid #ae8531;border-radius:45%;box-shadow:inset 2px 3px 3px #fffd,inset -2px -3px 3px #9b6c3045;}
+body[data-visual-theme="summer"] .cell.filled::before {inset:0;background:repeating-radial-gradient(ellipse at 0 100%,transparent 0 25%,#ffffff45 28% 32%,transparent 35% 55%);}
+body[data-visual-theme="summer"] .cell.filled::after {right:8%;top:8%;width:16%;height:16%;border-radius:50%;background:#ffe77e;box-shadow:0 0 2px 1px #fff2b4;}
+body[data-visual-theme="summer"] .board {border:4px solid #dfb760;border-radius:20px;}
+
+/* Galaxie : modules hexagonaux à double coque, circuits et étoiles. */
+body[data-visual-theme="galaxy"] .cell.filled {border:0;background-image:linear-gradient(135deg,#243766,#713984 65%,#142c53);color:#f1faff;box-shadow:inset 0 0 8px #79dfff80;}
+body[data-visual-theme="galaxy"] .cell.filled::before {inset:4%;border:1px solid #9beaff;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:linear-gradient(120deg,#c4eaff44,transparent 40%);}
+body[data-visual-theme="galaxy"] .cell.filled::after {right:22%;top:12%;width:17%;height:17%;background:#e4faff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);}
+body[data-visual-theme="galaxy"] .cell.cross {background-image:linear-gradient(135deg,#173b68,#25598d);}
+body[data-visual-theme="galaxy"] .cell.heart {background-image:linear-gradient(135deg,#41296b,#803e83);}
+body[data-visual-theme="galaxy"] .cell.star {background-image:linear-gradient(135deg,#665223,#967534);}
+body[data-visual-theme="galaxy"] .cell.anchor {background-image:linear-gradient(135deg,#154d58,#25768a);}
+body[data-visual-theme="galaxy"] .board {border:4px double #79dfff;box-shadow:0 0 15px #5874ff55;}
+/* Frises de saison : décor hors de la grille, sans intercepter les gestes. */
+body[data-visual-theme="autumn"] {--season-frieze:'🍂 🍁 🍂';--season-edge:#a96b32;}
+body[data-visual-theme="winter"] {--season-frieze:'❄ ✧ ❄';--season-edge:#ccefff;}
+body[data-visual-theme="spring"] {--season-frieze:'🌸 🌿 🌼';--season-edge:#a7c789;}
+body[data-visual-theme="summer"] {--season-frieze:'☀ 🌻 ☀';--season-edge:#f2cf6c;}
+body[data-visual-theme="autumn"] .board,
+body[data-visual-theme="winter"] .board,
+body[data-visual-theme="spring"] .board,
+body[data-visual-theme="summer"] .board {border-color:var(--season-edge);box-shadow:0 0 0 2px var(--theme-accent),0 0 12px color-mix(in srgb,var(--season-edge) 55%,transparent);}
+body[data-visual-theme="autumn"] .board::before,
+body[data-visual-theme="winter"] .board::before,
+body[data-visual-theme="spring"] .board::before,
+body[data-visual-theme="summer"] .board::before,
+body[data-visual-theme="autumn"] .board::after,
+body[data-visual-theme="winter"] .board::after,
+body[data-visual-theme="spring"] .board::after,
+body[data-visual-theme="summer"] .board::after {content:var(--season-frieze);position:absolute;left:5%;right:5%;height:10px;font:10px/10px sans-serif;letter-spacing:clamp(3px,2vw,14px);text-align:center;pointer-events:none;z-index:11;color:var(--theme-ink);white-space:nowrap;overflow:hidden;}
+body[data-visual-theme="autumn"] .board::before,
+body[data-visual-theme="winter"] .board::before,
+body[data-visual-theme="spring"] .board::before,
+body[data-visual-theme="summer"] .board::before {top:-7px;}
+body[data-visual-theme="autumn"] .board::after,
+body[data-visual-theme="winter"] .board::after,
+body[data-visual-theme="spring"] .board::after,
+body[data-visual-theme="summer"] .board::after {bottom:-7px;}
+body[data-visual-theme="autumn"] .game-board {border:3px ridge #bd8349;background-image:radial-gradient(ellipse at 0 100%,#de9a4266,transparent 45%),radial-gradient(ellipse at 100% 0,#ba603944,transparent 40%);}
+body[data-visual-theme="winter"] .game-board {border:3px solid #ccefff;border-top:5px solid #fff;background-image:radial-gradient(circle at 20% 20%,#fff 0 2px,transparent 3px),radial-gradient(circle at 70% 70%,#fff 0 1px,transparent 2px);background-size:63px 81px,47px 59px;}
+body[data-visual-theme="spring"] .game-board {border:3px double #7eaa67;background-image:radial-gradient(ellipse at 0 100%,#b3d78a80,transparent 40%),radial-gradient(ellipse at 100% 0,#f7b6d366,transparent 40%);}
+body[data-visual-theme="summer"] .game-board {border:3px solid #e6bd52;background-image:radial-gradient(ellipse at 0 100%,#e9cd7d80,transparent 50%),radial-gradient(ellipse at 100% 0,#8bdfea70,transparent 45%);}
+/* Indices de jeu prioritaires sur les matières décoratives. */
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell.poppable {border-color:#fff;box-shadow:inset 0 0 0 2px #fff;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell.selected-piece {box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 4px #403767;}
+body[data-visual-theme]:not([data-visual-theme="classic"]) .cell.traced {box-shadow:inset 0 0 0 3px #ffd93d,inset 0 0 0 4px #6a4910;}

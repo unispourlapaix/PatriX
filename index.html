@@ -31,7 +31,9 @@
     <link rel="stylesheet" href="css/ending.css">
     <link rel="stylesheet" href="css/web-browser.css">
     <link rel="stylesheet" href="css/language.css">
-<link rel="stylesheet" href="css/local.css?v=25"></head>
+<link rel="stylesheet" href="css/local.css?v=25">
+<link rel="stylesheet" href="css/visual-themes.css?v=1">
+<script src="js/visual-themes.js?v=1" defer></script></head>
 <body>
     <!-- Modal de sélection de langue -->
     <div class="language-selector-modal hidden" id="languageModal">
@@ -159,6 +161,7 @@
             <div class="mechanical-display">
                 <div class="display-section title-section">
                     <span class="game-title">PATRI-X</span>
+                    <div id="topGameTools" class="top-game-tools" aria-label="Style et partage"></div>
                 </div>
                 
                 <div class="display-section next-section">
@@ -227,6 +230,22 @@
         
         <!-- Footer Links -->
         <div class="game-footer">
+            <div class="visual-controls">
+                <label for="visualMode">Style</label>
+                <select id="visualMode">
+                    <option value="classic">Classique</option>
+                    <option value="kawaii">Kawaii</option>
+                    <option value="galaxy">Galaxie</option>
+                    <option value="seasons">Saisons</option>
+                </select>
+                <label for="visualSeason" hidden>Saison</label>
+                <select id="visualSeason" hidden>
+                    <option value="autumn">Automne</option>
+                    <option value="winter">Hiver</option>
+                    <option value="spring">Printemps</option>
+                    <option value="summer">Été</option>
+                </select>
+            </div>
             <a href="https://www.redbubble.com/fr/people/H777plx" target="_blank" rel="noopener noreferrer" data-i18n="footer.support">Soutenir l'artiste</a>
             <a href="public/emmanuel-artist-module.html" target="_blank" rel="noopener noreferrer">Galerie Emmanuel</a>
         </div>
