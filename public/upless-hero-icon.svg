@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title">
+  <title id="title">Upless — le héros en kimono blanc et lunettes de soleil</title>
+  <defs>
+    <linearGradient id="sky" x2="1" y2="1">
+      <stop stop-color="#302b63"/>
+      <stop offset="1" stop-color="#0f0c29"/>
+    </linearGradient>
+    <linearGradient id="fur" x2=".7" y2="1">
+      <stop stop-color="#fff7df"/>
+      <stop offset="1" stop-color="#bfc2c8"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="182" height="182" rx="42" fill="url(#sky)" stroke="#ff6b6b" stroke-width="5"/>
+  <circle cx="96" cy="87" r="62" fill="#f78fb3" opacity=".1"/>
+  <g stroke="#302844" stroke-width="4" stroke-linejoin="round">
+    <path d="M139 155c37-14 34-54 13-51-17 2-11 24-2 16" fill="none" stroke="#e3dfd4" stroke-width="12" stroke-linecap="round"/>
+    <path d="M63 117 42 156l25 14 8-22h43l9 22 24-14-24-39Z" fill="#f8f8f2"/>
+    <path d="m70 113 26 28 27-28 7 60H61Z" fill="#fffdf4"/>
+    <path d="m72 117 24 24-14 15m38-39-24 24" fill="none" stroke="#c6cbd6"/>
+    <path d="M65 153h64v10H65Z" fill="#171723"/>
+    <path d="m99 158 14 21 8-7-14-16" fill="#171723"/>
+    <circle cx="53" cy="78" r="17" fill="#d7b18d"/>
+    <circle cx="139" cy="78" r="17" fill="#d7b18d"/>
+    <path d="M56 83C42 54 60 33 80 35l17-16 2 17 19-10-3 14c34 6 37 38 20 62-16 25-63 25-79-19Z" fill="url(#fur)"/>
+    <path d="M66 78c4-17 24-11 30-4 10-12 30-9 32 7l-1 16c-3 26-59 27-63 0Z" fill="#d7b18d"/>
+    <path d="m61 68 31 3-4 20H70Zm39 3 31-3-9 23h-18Z" fill="#171723"/>
+    <path d="M91 76h11" fill="none"/>
+    <path d="m70 75 13 2m26 0 12-2" stroke="#85cbd6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M92 94h8m-19 8q15 15 30-1" fill="none" stroke-linecap="round"/>
+  </g>
+  <path d="M151 31v14m-7-7h14M28 111v10m-5-5h10" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+</svg>

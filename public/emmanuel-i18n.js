@@ -18,6 +18,7 @@ const translations = {
         motscroixSub: "Christians",
         patrix: "PATRI-X",
         patrixSub: "Transform Despair into Grand Dreams",
+        uplessSub: "The Way of the Universe",
         quote: "Christian art unites hearts beyond differences,<br>celebrating the beauty of divine creation<br>in all its diversity.",
         footer: "Glory to God",
         copyright: "Emmanuel Payet © 2024"
@@ -40,6 +41,7 @@ const translations = {
         motscroixSub: "Chrétiens",
         patrix: "PATRI-X",
         patrixSub: "Transformer le Désespoir en Grands Rêves",
+        uplessSub: "La Voie de l’Univers",
         quote: "L'art chrétien unit les cœurs au-delà des différences,<br>célébrant la beauté de la création divine<br>dans toute sa diversité.",
         footer: "Gloire à Dieu",
         copyright: "Emmanuel Payet © 2024"
@@ -62,6 +64,7 @@ const translations = {
         motscroixSub: "Cristianos",
         patrix: "PATRI-X",
         patrixSub: "Transformar la Desesperación en Grandes Sueños",
+        uplessSub: "El Camino del Universo",
         quote: "El arte cristiano une corazones más allá de las diferencias,<br>celebrando la belleza de la creación divina<br>en toda su diversidad.",
         footer: "Gloria a Dios",
         copyright: "Emmanuel Payet © 2024"
@@ -84,6 +87,7 @@ const translations = {
         motscroixSub: "Christen",
         patrix: "PATRI-X",
         patrixSub: "Verzweiflung in Große Träume Verwandeln",
+        uplessSub: "Der Weg des Universums",
         quote: "Christliche Kunst vereint Herzen über Unterschiede hinweg,<br>und feiert die Schönheit der göttlichen Schöpfung<br>in ihrer ganzen Vielfalt.",
         footer: "Ehre sei Gott",
         copyright: "Emmanuel Payet © 2024"
@@ -106,6 +110,7 @@ const translations = {
         motscroixSub: "Cristiani",
         patrix: "PATRI-X",
         patrixSub: "Trasformare la Disperazione in Grandi Sogni",
+        uplessSub: "La Via dell’Universo",
         quote: "L'arte cristiana unisce i cuori oltre le differenze,<br>celebrando la bellezza della creazione divina<br>in tutta la sua diversità.",
         footer: "Gloria a Dio",
         copyright: "Emmanuel Payet © 2024"
@@ -128,6 +133,7 @@ const translations = {
         motscroixSub: "Cristãos",
         patrix: "PATRI-X",
         patrixSub: "Transformar o Desespero em Grandes Sonhos",
+        uplessSub: "O Caminho do Universo",
         quote: "A arte cristã une corações além das diferenças,<br>celebrando a beleza da criação divina<br>em toda a sua diversidade.",
         footer: "Glória a Deus",
         copyright: "Emmanuel Payet © 2024"
@@ -150,6 +156,7 @@ const translations = {
         motscroixSub: "Христиане",
         patrix: "PATRI-X",
         patrixSub: "Превратить Отчаяние в Великие Мечты",
+        uplessSub: "Путь Вселенной",
         quote: "Христианское искусство объединяет сердца за пределами различий,<br>празднуя красоту божественного творения<br>во всем его разнообразии.",
         footer: "Слава Богу",
         copyright: "Emmanuel Payet © 2024"
@@ -172,6 +179,7 @@ const translations = {
         motscroixSub: "基督徒",
         patrix: "PATRI-X",
         patrixSub: "将绝望转化为伟大梦想",
+        uplessSub: "宇宙之道",
         quote: "基督教艺术超越差异团结人心，<br>在其多样性中<br>庆祝神圣创造的美丽。",
         footer: "荣耀归于神",
         copyright: "Emmanuel Payet © 2024"
@@ -194,6 +202,7 @@ const translations = {
         motscroixSub: "クリスチャン",
         patrix: "PATRI-X",
         patrixSub: "絶望を偉大な夢に変える",
+        uplessSub: "宇宙の道",
         quote: "キリスト教芸術は違いを超えて心を結びつけ、<br>その多様性の中で<br>神の創造の美しさを讃えます。",
         footer: "神に栄光あれ",
         copyright: "Emmanuel Payet © 2024"
@@ -216,6 +225,7 @@ const translations = {
         motscroixSub: "مسيحيون",
         patrix: "PATRI-X",
         patrixSub: "تحويل اليأس إلى أحلام عظيمة",
+        uplessSub: "طريق الكون",
         quote: "الفن المسيحي يوحد القلوب عبر الاختلافات،<br>محتفلاً بجمال الخلق الإلهي<br>في كل تنوعه.",
         footer: "المجد لله",
         copyright: "Emmanuel Payet © 2024"
@@ -238,6 +248,7 @@ const translations = {
         motscroixSub: "Християни",
         patrix: "PATRI-X",
         patrixSub: "Перетворити Відчай на Великі Мрії",
+        uplessSub: "Шлях Всесвіту",
         quote: "Християнське мистецтво об'єднує серця понад відмінностями,<br>святкуючи красу божественного творіння<br>у всій його різноманітності.",
         footer: "Слава Богу",
         copyright: "Emmanuel Payet © 2024"
@@ -260,6 +271,7 @@ const translations = {
         motscroixSub: "ईसाई",
         patrix: "PATRI-X",
         patrixSub: "निराशा को महान सपनों में बदलें",
+        uplessSub: "ब्रह्मांड का मार्ग",
         quote: "ईसाई कला मतभेदों से परे दिलों को जोड़ती है,<br>अपनी सारी विविधता में<br>दिव्य सृष्टि की सुंदरता का जश्न मनाती है।",
         footer: "भगवान की महिमा",
         copyright: "Emmanuel Payet © 2024"
