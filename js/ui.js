@@ -1151,11 +1151,12 @@ class UserInterface {
         if (this.elements.trophyIcon) {
             this.elements.trophyIcon.textContent = trophy.icon;
         }
+        const localizedTrophy = window.i18n?.translations?.trophyData?.[trophy.id];
         if (this.elements.trophyName) {
-            this.elements.trophyName.textContent = trophy.name;
+            this.elements.trophyName.textContent = localizedTrophy?.name ?? trophy.name;
         }
         if (this.elements.trophyMessage) {
-            this.elements.trophyMessage.textContent = trophy.message;
+            this.elements.trophyMessage.textContent = localizedTrophy?.message ?? trophy.message;
         }
         
         // Ajouter les liens pour le trophée ultime
@@ -1358,7 +1359,7 @@ class UserInterface {
         let displayMessage = trophy.message;
         
         // Vérifier si c'est un trophée spécial avec traduction
-        if (trophy.special && translations?.trophyData?.[trophy.id]) {
+        if (translations?.trophyData?.[trophy.id]) {
             const trophyData = translations.trophyData[trophy.id];
             displayName = trophyData.name;
             displayMessage = trophyData.message;

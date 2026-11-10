@@ -158,16 +158,23 @@ const CONFIG = {
     TROPHIES: [
         // Médailles du respect : une réflexion à chaque étape.
         ...[
-            ['dignity', 'Égale dignité', '🤝', 1, 'Une femme a la même dignité que toi. Ses idées, ses décisions et sa liberté ont autant de valeur que les tiennes.'],
-            ['consent', 'Un oui libre', '💬', 3, 'Un oui doit être libre et clair. Le silence, l’hésitation ou la pression ne valent pas un oui. On peut changer d’avis à tout moment.'],
-            ['boundaries', 'Respecter un non', '🛑', 6, 'Quand elle dit non, arrête-toi. Elle n’a pas à se justifier. Tu peux être déçu sans insister ni lui faire payer son refus.'],
-            ['empathy', 'À sa place', '🪞', 10, 'Ne fais pas subir ce que tu ne voudrais pas subir. Et quand vos limites diffèrent, écoute les siennes : elle seule peut te dire ce qui lui convient.'],
-            ['freedom', 'Aimer sans contrôler', '🕊️', 15, 'Aimer ne donne aucun droit sur son téléphone, ses vêtements ou ses amitiés. La jalousie est une émotion, jamais une permission de contrôler.'],
-            ['anger', 'La force du calme', '🌿', 21, 'La colère n’autorise ni menace, ni insulte, ni coup. Prends de la distance avant de parler et demande de l’aide si tu crains de perdre le contrôle.'],
-            ['sexism', 'Refuser le sexisme', '🗣️', 28, 'Même entre amis, une blague qui rabaisse les femmes mérite une réponse. Tu peux dire simplement : « Ce n’est pas drôle. »'],
-            ['privacy', 'Protéger son intimité', '🔒', 36, 'Une photo intime confiée ne t’appartient pas. Ne la montre pas et ne la transfère pas sans son accord explicite.'],
-            ['solidarity', 'Soutenir sans imposer', '🛡️', 45, 'Si une femme te parle de violence, écoute-la sans la juger. Demande-lui ce qui l’aiderait et respecte ses décisions.'],
-            ['accountability', 'Assumer ses actes', '🌱', 55, 'Si tu as fait du mal, reconnais tes actes sans chercher d’excuse. Respecte la distance qu’elle demande et fais-toi aider pour changer.']
+            ['dignity', 'Égale dignité', '🤝', 1, "Si tu respectes seulement les femmes dont tu approuves les choix, c’est ton approbation que tu respectes."],
+            ['consent', 'Un oui libre', '💬', 3, "Si elle ne peut pas dire non sans craindre ta réaction, que vaut le oui que tu attends ?"],
+            ['boundaries', 'Respecter un non', '🛑', 6, "Ta déception t’appartient. Elle n’a pas à dire oui pour t’en soulager."],
+            ['empathy', 'À sa place', '🪞', 10, "Imagine ce que tu ressentirais à sa place, puis écoute-la : ton imagination ne remplace pas son expérience."],
+            ['freedom', 'Aimer sans contrôler', '🕊️', 15, "Ta peur de la perdre ne te donne aucun droit sur sa liberté."],
+            ['anger', 'La force du calme', '🌿', 21, "Le respect se voit aussi dans ce que tu choisis de ne pas faire quand tu es en colère."],
+            ['sexism', 'Refuser le sexisme', '🗣️', 28, "Avant de rire avec les autres, demande-toi qui doit faire semblant de trouver ça drôle."],
+            ['privacy', 'Protéger son intimité', '🔒', 36, "Elle t’a confié quelque chose d’elle. Ce geste ne t’a jamais donné le droit de l’exposer."],
+            ['solidarity', 'Soutenir sans imposer', '🛡️', 45, "L’aider, c’est lui rendre de la place pour décider, pas décider à sa place."],
+            ['accountability', 'Assumer ses actes', '🌱', 55, "Tu sauras que tu as changé le jour où tu réagiras autrement à la même frustration."],
+            ['happiness', 'Le bonheur de l’autre', '🌻', 66, "Se réjouir de la voir s’épanouir, c’est aussi se réjouir de ce qu’elle accomplit sans toi."],
+            ['fantasy', 'Fantasme', '💭', 72, "La sexualité n’est pas le plus important dans la vie. La tendresse, la confiance et la complicité comptent bien davantage dans le bonheur qu’on construit à deux. Cherche avant tout à être heureux et à contribuer à son bonheur et à son épanouissement."],
+            ['worth', 'La valeur', '💎', 78, "Avoir ou non une vie sexuelle ne dit rien de ta valeur. Tu n’as rien à prouver."],
+            ['tenderness', 'La tendresse', '🫶', 84, "Il y a des moments de bonheur qui tiennent à peu de chose : quelqu’un qui t’écoute, un rire partagé, une présence qui te fait du bien."],
+            ['desire', 'Le désir', '🧭', 90, "Tu peux désirer quelqu’un sans faire de sa réponse la mesure de ton bonheur."],
+            ['love', 'L’amour', '💛', 96, "La qualité d’une relation se voit aussi dans la liberté que chacun garde d’être soi, de parler et de dire non."],
+            ['full_life', 'Une vie pleine', '🌈', 102, "L’amitié, la création, l’entraide et la joie d’apprendre peuvent donner autant de sens à ta vie que l’amour ou la sexualité."]
         ].map(([id, name, icon, value, message]) => ({
             id: `respect_${id}`, name, icon, message,
             condition: { type: 'lines', value }, unlocked: false, special: false

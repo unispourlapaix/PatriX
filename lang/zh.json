@@ -73,7 +73,7 @@
     "logout": "登出",
     "welcome": "欢迎勇敢的小探险家",
     "forgotPasswordLink": "忘记密码？",
-    "resetNote": "你的密码将被重置。然后使用"创建账户"设置新密码。",
+    "resetNote": "你的密码将被重置。然后使用“创建账户”设置新密码。",
     "errors": {
       "fillAllFields": "请填写所有字段",
       "invalidEmail": "无效的邮箱",
@@ -281,6 +281,24 @@
     "you": "(你)"
   },
   "trophyData": {
+    "respect_dignity": {"name":"同等的尊严","message":"如果你只尊重那些做出你认同的选择的女性，你尊重的其实是自己的认同。"},
+    "respect_consent": {"name":"自愿的同意","message":"如果她因为害怕你的反应而不敢说“不”，你期待的那句“愿意”还有什么意义？"},
+    "respect_boundaries": {"name":"尊重拒绝","message":"失落是你要面对的情绪。她不必为了安慰你而答应。"},
+    "respect_empathy": {"name":"设身处地","message":"想象自己处在她的位置会有什么感受，然后听她说：你的想象不能代替她的经历。"},
+    "respect_freedom": {"name":"爱而不控制","message":"害怕失去她，并不赋予你限制她自由的权利。"},
+    "respect_anger": {"name":"冷静的力量","message":"生气时你选择不做什么，也能体现你对她的尊重。"},
+    "respect_sexism": {"name":"拒绝性别歧视","message":"跟着大家笑之前，问问自己：谁不得不假装觉得好笑？"},
+    "respect_privacy": {"name":"守护隐私","message":"她把私事告诉你，是因为信任你。这份信任从未赋予你公开它的权利。"},
+    "respect_solidarity": {"name":"支持而不替她决定","message":"帮助她，是给她留出自己作决定的空间，而不是替她决定。"},
+    "respect_accountability": {"name":"为行为负责","message":"当你面对同样的挫折却作出不同的反应，你就知道自己改变了。"},
+    "respect_happiness": {"name":"她的幸福","message":"为她活出自我而高兴，也意味着为她不依赖你而取得的成就感到高兴。"},
+    "respect_fantasy": {"name":"幻想","message":"性不是人生中最重要的事。在两个人共同创造的幸福里，温柔、信任和默契重要得多。首先努力让自己幸福，也为她的幸福和成长出一份力。"},
+    "respect_worth": {"name":"自我价值","message":"有没有性生活，都不能说明你的价值。你不需要证明什么。"},
+    "respect_tenderness": {"name":"温柔","message":"有些幸福源于简单的小事：有人愿意听你说话，一起笑一场，或是有人陪着你，让你感到安心。"},
+    "respect_desire": {"name":"渴望","message":"你可以渴望与某个人亲近，却不必拿对方的答复衡量自己的幸福。"},
+    "respect_love": {"name":"爱","message":"一段关系好不好，也看双方是否依然可以做自己、说出自己的想法，并自由地说“不”。"},
+    "respect_full_life": {"name":"充实的人生","message":"友谊、创造、互助和学习的乐趣，都能像爱情或性生活一样赋予人生意义。"},
+
     "first_steps": {
       "name": "抬起头来",
       "message": "你是一个奇妙的生物！第一步总是最重要的。"

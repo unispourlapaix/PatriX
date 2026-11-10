@@ -217,6 +217,24 @@
     "you": "(you)"
   },
   "trophyData": {
+    "respect_dignity": {"name":"Equal dignity","message":"If you respect only women whose choices you approve of, what you respect is your own approval."},
+    "respect_consent": {"name":"A freely given yes","message":"If she cannot say no without fearing your reaction, what is the yes you hope for worth?"},
+    "respect_boundaries": {"name":"Respecting a no","message":"Your disappointment is yours to handle. She does not owe you a yes to ease it."},
+    "respect_empathy": {"name":"In her shoes","message":"Imagine how you would feel in her place, then listen to her: your imagination cannot replace her experience."},
+    "respect_freedom": {"name":"Love without control","message":"Fear of losing her gives you no claim over her freedom."},
+    "respect_anger": {"name":"The strength to stay calm","message":"Respect also shows in what you choose not to do when you are angry."},
+    "respect_sexism": {"name":"Standing up to sexism","message":"Before you laugh along, ask who has to pretend it is funny."},
+    "respect_privacy": {"name":"Respecting her privacy","message":"She trusted you with something personal. That trust never gave you the right to expose it."},
+    "respect_solidarity": {"name":"Support without imposing","message":"Helping her means making room for her to decide, not deciding for her."},
+    "respect_accountability": {"name":"Owning your actions","message":"You will know you have changed when you respond differently to the same frustration."},
+    "respect_happiness": {"name":"Her happiness","message":"Taking joy in seeing her thrive also means celebrating what she achieves without you."},
+    "respect_fantasy": {"name":"Fantasy","message":"Sex is not the most important thing in life. Tenderness, trust and closeness matter much more to the happiness you build together. Seek your own happiness and help her find hers and flourish."},
+    "respect_worth": {"name":"Self-worth","message":"Whether or not you have a sex life says nothing about your worth. You have nothing to prove."},
+    "respect_tenderness": {"name":"Tenderness","message":"Some moments of happiness take very little: someone who listens, a shared laugh, or company that makes you feel good."},
+    "respect_desire": {"name":"Desire","message":"You can desire someone without making their response the measure of your happiness."},
+    "respect_love": {"name":"Love","message":"The quality of a relationship also shows in how free both people are to be themselves, speak and say no."},
+    "respect_full_life": {"name":"A full life","message":"Friendship, creating things, helping one another and the joy of learning can give your life as much meaning as love or sex."},
+
     "first_steps": {
       "name": "LIFT YOUR HEAD",
       "message": "You are a wonderful creature! The first step is always the most important."

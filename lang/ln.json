@@ -219,6 +219,24 @@
     "you": "(yo)"
   },
   "trophyData": {
+    "respect_dignity": {"name":"Lokumu moko","message":"Soki ozali komemya kaka basi oyo ondimi maponi na bango, ozali nde komemya makanisi na yo moko."},
+    "respect_consent": {"name":"Kondima na bonsomi","message":"Soki akoki koloba « te » te mpo azali kobanga ndenge okoyanola, « ɛɛ » oyo ozali kozela ezali na ntina nini?"},
+    "respect_boundaries": {"name":"Komemya « te »","message":"Mawa na yo ezali mokumba na yo. Asengeli koloba « ɛɛ » te mpo na kokitisa mawa na yo."},
+    "respect_empathy": {"name":"Komitia na esika na ye","message":"Kanisá ndenge okoyoka soki ozali na esika na ye, mpe yoká ye: makanisi na yo ekoki kozwa esika ya makambo oyo ye azali kokutana na yango te."},
+    "respect_freedom": {"name":"Kolinga kozanga kokamba","message":"Kobanga ete akotika yo epesi yo ndingisa ya kokanga bonsomi na ye te."},
+    "respect_anger": {"name":"Nguya ya kimya","message":"Limemya emonanaka mpe na makambo oyo oponi kosala te ntango osiliki."},
+    "respect_sexism": {"name":"Koboya kotiola basi","message":"Liboso ya kosɛka elongo na baninga, omituna nani asengeli komonisa lokola ete likambo yango ezali kosekisa."},
+    "respect_privacy": {"name":"Kobatela makambo na ye","message":"Ayebisaki yo likambo na ye ya sekele. Kondimela yo epesaki yo ndingisa ya kopanza yango te."},
+    "respect_solidarity": {"name":"Kosalisa kozanga kotinda","message":"Kosalisa ye ezali kotikela ye esika ya kozwa ekateli, kasi te kozwa ekateli na esika na ye."},
+    "respect_accountability": {"name":"Kondima mokumba ya misala na yo","message":"Okoyeba ete obongwani ntango okosala ndenge mosusu liboso ya likambo oyo ezalaki kotungisa yo."},
+    "respect_happiness": {"name":"Esengo na ye","message":"Kosepela komona ye azali kokola ezali mpe kosepela na makambo oyo azali kokokisa kozanga yo."},
+    "respect_fantasy": {"name":"Ndɔtɔ","message":"Kosangisa nzoto ezali likambo ya motuya koleka na bomoi te. Boboto, kotyelana motema mpe kozala penepene na motema ezali na motuya mingi koleka mpo na esengo oyo bozali kotonga elongo. Luká libosoliboso kozala na esengo mpe kosalisa ye azala na esengo mpe akola."},
+    "respect_worth": {"name":"Motuya na yo","message":"Kosangisa nzoto to te elakisi eloko te mpo na motuya na yo. Ozali na eloko ya komonisa te."},
+    "respect_tenderness": {"name":"Boboto","message":"Mbala mosusu esengo eutaka na makambo ya mike: moto oyo ayoki yo, kosɛka elongo, to kozala na moto oyo apesi yo kimya."},
+    "respect_desire": {"name":"Mposa","message":"Okoki kozala na mposa ya moto kozanga kokómisa eyano na ye emekeli ya esengo na yo."},
+    "respect_love": {"name":"Bolingo","message":"Bolamu ya boyokani emonanaka mpe na bonsomi oyo moto na moto azali na yango ya kozala ndenge azali, ya koloba mpe ya koloba « te »."},
+    "respect_full_life": {"name":"Bomoi ya litomba","message":"Boninga, kokela, kosalisana mpe esengo ya koyekola ekoki kopesa bomoi na yo ntina lokola bolingo to kosangisa nzoto."},
+
     "first_steps": {
       "name": "TOMBOLÁ MOTÓ",
       "message": "Ozali ekelamu kitoko! Litamboli ya liboso ezali ntango nyonso ya ntina!"

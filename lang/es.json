@@ -279,6 +279,24 @@
     "you": "(tú)"
   },
   "trophyData": {
+    "respect_dignity": {"name":"Igual dignidad","message":"Si solo respetas a las mujeres cuyas decisiones apruebas, lo que respetas es tu propia aprobación."},
+    "respect_consent": {"name":"Un sí libre","message":"Si ella no puede decir que no sin temer tu reacción, ¿qué vale el sí que esperas?"},
+    "respect_boundaries": {"name":"Respetar un no","message":"Tu decepción te corresponde a ti. Ella no tiene que decir que sí para aliviarla."},
+    "respect_empathy": {"name":"En su lugar","message":"Imagina cómo te sentirías en su lugar y luego escúchala: tu imaginación no sustituye su experiencia."},
+    "respect_freedom": {"name":"Amar sin controlar","message":"El miedo a perderla no te da ningún derecho sobre su libertad."},
+    "respect_anger": {"name":"La fuerza de la calma","message":"El respeto también se ve en lo que eliges no hacer cuando te enfadas."},
+    "respect_sexism": {"name":"Rechazar el sexismo","message":"Antes de reírte con los demás, pregúntate quién tiene que fingir que le hace gracia."},
+    "respect_privacy": {"name":"Cuidar su intimidad","message":"Ella te confió algo personal. Esa confianza nunca te dio derecho a exponerlo."},
+    "respect_solidarity": {"name":"Apoyar sin imponer","message":"Ayudarla es darle espacio para decidir, no decidir por ella."},
+    "respect_accountability": {"name":"Hacerse cargo","message":"Sabrás que has cambiado cuando reacciones de otra manera ante la misma frustración."},
+    "respect_happiness": {"name":"La felicidad de la otra persona","message":"Alegrarte de verla crecer también significa celebrar lo que logra sin ti."},
+    "respect_fantasy": {"name":"Fantasía","message":"La sexualidad no es lo más importante de la vida. La ternura, la confianza y la complicidad cuentan mucho más en la felicidad que construís juntos. Busca ante todo ser feliz y contribuir a su felicidad y a que pueda realizarse."},
+    "respect_worth": {"name":"La valía","message":"Tener o no una vida sexual no dice nada de tu valor. No tienes nada que demostrar."},
+    "respect_tenderness": {"name":"La ternura","message":"Hay momentos de felicidad que nacen de cosas sencillas: alguien que te escucha, una risa compartida, una compañía que te hace bien."},
+    "respect_desire": {"name":"El deseo","message":"Puedes desear a alguien sin hacer de su respuesta la medida de tu felicidad."},
+    "respect_love": {"name":"El amor","message":"La calidad de una relación también se ve en la libertad de cada persona para ser ella misma, hablar y decir que no."},
+    "respect_full_life": {"name":"Una vida plena","message":"La amistad, la creatividad, la ayuda mutua y el placer de aprender pueden dar tanto sentido a tu vida como el amor o la sexualidad."},
+
     "first_steps": {
       "name": "LEVANTA LA CABEZA",
       "message": "¡Eres una criatura maravillosa! El primer paso siempre es el más importante."

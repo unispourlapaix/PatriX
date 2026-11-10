@@ -224,6 +224,24 @@
     "you": "(toi)"
   },
   "trophyData": {
+    "respect_dignity": {"name":"Égale dignité","message":"Si tu respectes seulement les femmes dont tu approuves les choix, c’est ton approbation que tu respectes."},
+    "respect_consent": {"name":"Un oui libre","message":"Si elle ne peut pas dire non sans craindre ta réaction, que vaut le oui que tu attends ?"},
+    "respect_boundaries": {"name":"Respecter un non","message":"Ta déception t’appartient. Elle n’a pas à dire oui pour t’en soulager."},
+    "respect_empathy": {"name":"À sa place","message":"Imagine ce que tu ressentirais à sa place, puis écoute-la : ton imagination ne remplace pas son expérience."},
+    "respect_freedom": {"name":"Aimer sans contrôler","message":"Ta peur de la perdre ne te donne aucun droit sur sa liberté."},
+    "respect_anger": {"name":"La force du calme","message":"Le respect se voit aussi dans ce que tu choisis de ne pas faire quand tu es en colère."},
+    "respect_sexism": {"name":"Refuser le sexisme","message":"Avant de rire avec les autres, demande-toi qui doit faire semblant de trouver ça drôle."},
+    "respect_privacy": {"name":"Protéger son intimité","message":"Elle t’a confié quelque chose d’elle. Ce geste ne t’a jamais donné le droit de l’exposer."},
+    "respect_solidarity": {"name":"Soutenir sans imposer","message":"L’aider, c’est lui rendre de la place pour décider, pas décider à sa place."},
+    "respect_accountability": {"name":"Assumer ses actes","message":"Tu sauras que tu as changé le jour où tu réagiras autrement à la même frustration."},
+    "respect_happiness": {"name":"Le bonheur de l’autre","message":"Se réjouir de la voir s’épanouir, c’est aussi se réjouir de ce qu’elle accomplit sans toi."},
+    "respect_fantasy": {"name":"Fantasme","message":"La sexualité n’est pas le plus important dans la vie. La tendresse, la confiance et la complicité comptent bien davantage dans le bonheur qu’on construit à deux. Cherche avant tout à être heureux et à contribuer à son bonheur et à son épanouissement."},
+    "respect_worth": {"name":"La valeur","message":"Avoir ou non une vie sexuelle ne dit rien de ta valeur. Tu n’as rien à prouver."},
+    "respect_tenderness": {"name":"La tendresse","message":"Il y a des moments de bonheur qui tiennent à peu de chose : quelqu’un qui t’écoute, un rire partagé, une présence qui te fait du bien."},
+    "respect_desire": {"name":"Le désir","message":"Tu peux désirer quelqu’un sans faire de sa réponse la mesure de ton bonheur."},
+    "respect_love": {"name":"L’amour","message":"La qualité d’une relation se voit aussi dans la liberté que chacun garde d’être soi, de parler et de dire non."},
+    "respect_full_life": {"name":"Une vie pleine","message":"L’amitié, la création, l’entraide et la joie d’apprendre peuvent donner autant de sens à ta vie que l’amour ou la sexualité."},
+
     "first_steps": {
       "name": "RELÈVE LA TÊTE",
       "message": "Tu es une créature merveilleuse ! Le premier pas est toujours le plus important."
