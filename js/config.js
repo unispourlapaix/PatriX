@@ -156,6 +156,22 @@ const CONFIG = {
     
     // Système de trophées
     TROPHIES: [
+        // Médailles du respect : une réflexion à chaque étape.
+        ...[
+            ['dignity', 'Égale dignité', '🤝', 1, 'Une femme a la même dignité que toi. Ses idées, ses décisions et sa liberté ont autant de valeur que les tiennes.'],
+            ['consent', 'Un oui libre', '💬', 3, 'Un oui doit être libre et clair. Le silence, l’hésitation ou la pression ne valent pas un oui. On peut changer d’avis à tout moment.'],
+            ['boundaries', 'Respecter un non', '🛑', 6, 'Quand elle dit non, arrête-toi. Elle n’a pas à se justifier. Tu peux être déçu sans insister ni lui faire payer son refus.'],
+            ['empathy', 'À sa place', '🪞', 10, 'Ne fais pas subir ce que tu ne voudrais pas subir. Et quand vos limites diffèrent, écoute les siennes : elle seule peut te dire ce qui lui convient.'],
+            ['freedom', 'Aimer sans contrôler', '🕊️', 15, 'Aimer ne donne aucun droit sur son téléphone, ses vêtements ou ses amitiés. La jalousie est une émotion, jamais une permission de contrôler.'],
+            ['anger', 'La force du calme', '🌿', 21, 'La colère n’autorise ni menace, ni insulte, ni coup. Prends de la distance avant de parler et demande de l’aide si tu crains de perdre le contrôle.'],
+            ['sexism', 'Refuser le sexisme', '🗣️', 28, 'Même entre amis, une blague qui rabaisse les femmes mérite une réponse. Tu peux dire simplement : « Ce n’est pas drôle. »'],
+            ['privacy', 'Protéger son intimité', '🔒', 36, 'Une photo intime confiée ne t’appartient pas. Ne la montre pas et ne la transfère pas sans son accord explicite.'],
+            ['solidarity', 'Soutenir sans imposer', '🛡️', 45, 'Si une femme te parle de violence, écoute-la sans la juger. Demande-lui ce qui l’aiderait et respecte ses décisions.'],
+            ['accountability', 'Assumer ses actes', '🌱', 55, 'Si tu as fait du mal, reconnais tes actes sans chercher d’excuse. Respecte la distance qu’elle demande et fais-toi aider pour changer.']
+        ].map(([id, name, icon, value, message]) => ({
+            id: `respect_${id}`, name, icon, message,
+            condition: { type: 'lines', value }, unlocked: false, special: false
+        })),
         // Trophées spéciaux
         {
             id: 'first_steps',

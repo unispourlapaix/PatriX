@@ -2,9 +2,9 @@
 (()=>{
  const proto=GameEngine.prototype;
  function pieceCount(engine){
-  const landscape=window.innerWidth>window.innerHeight;
+  const landscape=window.matchMedia('(orientation: landscape)').matches;
   if(!landscape)return 1;
-  return Math.max(1,Math.min(Math.floor(engine.grid.cols/6),Math.floor(window.innerWidth/300)));
+  return Math.max(1,Math.min(Math.floor(engine.grid.cols/5),Math.floor(window.innerWidth/300)));
  }
  const baseReset=proto.reset,baseUpdate=proto.update,basePlace=proto.placePiece,baseExport=proto.exportState,baseImport=proto.importState;
  proto.reset=function(){
@@ -18,7 +18,7 @@
   const count=this.parallelCount||1;
   if(this.activePieces.length>=count){this.currentPiece=this.activePieces[0]||null;this.grid.selectedPiece=this.currentPiece;return;}
   do {
-   const piece=this.nextPiece||createRandomPiece();this.nextPiece=createRandomPiece();
+   const piece=this.nextPiece||createRandomPiece();
    const occupied=new Set(this.activePieces.map(p=>p.lane));
    let lane=0;while(occupied.has(lane))lane++;
    piece.lane=lane;piece.dropTimer=0;
@@ -32,7 +32,8 @@
      if(this.grid.isValidMove(piece,x,0)){placed=true;break;}
     }
    }
-   if(!placed){this.gameOver();return;}
+   if(!placed){if(!this.activePieces.length)this.gameOver();return;}
+   this.nextPiece=createRandomPiece();
    this.activePieces.push(piece);this.currentPiece=piece;
    this.grid.selectedPiece=piece;
    this.emit('spawn',{current:piece,next:this.nextPiece});

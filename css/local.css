@@ -2,6 +2,8 @@
 
 
 /* Réserver une place réelle à chaque élément, y compris au pied de page. */
+.fullscreen-rotate-hint {position:fixed;z-index:2000;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px);padding:10px 14px;background:#252340;color:#fff;border:2px solid #aee9ff;text-align:center;font:600 14px/1.4 sans-serif;pointer-events:none;}
+@media (orientation:landscape) {.fullscreen-rotate-hint {display:none;}}
 html { min-height:100%; overflow-x:hidden; }
 body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; overflow-y:auto; align-items:flex-start; }
 .game-wrapper {
@@ -79,14 +81,9 @@ body { min-height:100vh; min-height:100dvh; height:auto; overflow-x:hidden; over
  .next-grid {flex:none;grid-template-columns:repeat(4,12px);grid-template-rows:repeat(4,12px);gap:2px;padding:8px;margin:2px 0;}
  .next-grid .next-cell {width:12px;height:12px;}
 }
-/* Séparation des deux actions du pied de page. */
+/* Lien de la galerie en pied de page. */
 .game-footer a {
- padding-right:16px;
- border-right:1px solid rgba(72,57,12,.5);
  line-height:1.5;
-}
-@media (max-width:430px) {
- .game-footer a {padding-right:10px;}
 }
 .cell.current-piece.selected-piece {outline:2px solid #fff;outline-offset:-2px;box-shadow:inset 0 0 0 1px #534517,0 0 8px #ffd700;z-index:2;}
 #webBrowserPanel {max-width:760px;}

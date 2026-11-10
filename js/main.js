@@ -50,46 +50,63 @@ function startGame() {
 /**
  * Basculer entre plein écran et mode normal
  */
-function toggleFullscreen() {
-    const isFullscreen = document.fullscreenElement || 
-                        document.webkitFullscreenElement || 
-                        document.mozFullScreenElement || 
-                        document.msFullscreenElement;
-    
-    if (isFullscreen) {
-        // Sortir du plein écran
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    } else {
-        // Entrer en plein écran
-        const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(err => {
-                console.log('Plein écran non disponible:', err);
-            });
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen().catch(err => {
-                console.log('Plein écran non disponible:', err);
-            });
-        } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen().catch(err => {
-                console.log('Plein écran non disponible:', err);
-            });
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen().catch(err => {
-                console.log('Plein écran non disponible:', err);
-            });
-        }
+function fullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement ||
+        document.mozFullScreenElement || document.msFullscreenElement;
+}
+
+let landscapeLocked = false;
+
+function releaseFullscreenOrientation() {
+    if (!fullscreenElement() && landscapeLocked) {
+        landscapeLocked = false;
+        screen.orientation?.unlock?.();
     }
 }
 
+for (const event of ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']) {
+    document.addEventListener(event, releaseFullscreenOrientation);
+}
+
+async function toggleFullscreen() {
+    if (fullscreenElement()) {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen ||
+            document.mozCancelFullScreen || document.msExitFullscreen;
+        try {
+            await exit?.call(document);
+            releaseFullscreenOrientation();
+        } catch (err) {
+            console.warn('Impossible de quitter le plein écran :', err);
+        }
+        return;
+    }
+
+    const elem = document.documentElement;
+    const enter = elem.requestFullscreen || elem.webkitRequestFullscreen ||
+        elem.mozRequestFullScreen || elem.msRequestFullscreen;
+    try {
+        if (enter) {
+            await enter.call(elem);
+            if (fullscreenElement() && screen.orientation?.lock) {
+                await screen.orientation.lock('landscape');
+                landscapeLocked = true;
+                releaseFullscreenOrientation();
+            }
+        }
+    } catch (err) {
+        console.warn('Plein écran ou orientation paysage non disponible :', err);
+    }
+
+    if (!landscapeLocked && matchMedia('(pointer: coarse) and (orientation: portrait)').matches) {
+        const hint = document.createElement('div');
+        hint.className = 'fullscreen-rotate-hint';
+        hint.setAttribute('role', 'status');
+        hint.textContent = 'Tourne ton téléphone pour jouer en paysage.';
+        document.querySelector('.fullscreen-rotate-hint')?.remove();
+        document.body.append(hint);
+        setTimeout(() => hint.remove(), 4500);
+    }
+}
 /**
  * Initialise le jeu
  */
