@@ -1,4 +1,21 @@
 /* Cadres arcade nets ; aucune police distante nécessaire. */
+#popCombo {
+ --pop-accent:#8fe9db;
+ background:#171b31;color:var(--pop-accent);
+ border:2px solid var(--pop-accent);border-radius:0;
+ box-shadow:0 0 0 3px #171b31,5px 5px 0 #090c1f;
+ font:900 clamp(15px,4vw,24px)/1.25 'Courier New',monospace;
+ letter-spacing:.1em;text-shadow:2px 2px #000;-webkit-text-stroke:0;
+ padding:8px 14px;max-width:calc(100vw - 32px);
+ white-space:normal;overflow-wrap:anywhere;animation:none;backdrop-filter:none;
+}
+#popCombo.pop-big {--pop-accent:#ffd178;}
+#popCombo.pop-mega {--pop-accent:#ff9dd4;}
+#popCombo::before {
+ content:'';display:inline-block;width:14px;height:14px;margin-inline-end:10px;
+ background:currentColor;vertical-align:-1px;
+ clip-path:polygon(42% 0,58% 0,58% 28%,72% 28%,72% 42%,100% 42%,100% 58%,72% 58%,72% 72%,58% 72%,58% 100%,42% 100%,42% 72%,28% 72%,28% 58%,0 58%,0 42%,28% 42%,28% 28%,42% 28%);
+}
 .pixel-pop-spark {width:12px;height:12px;background:currentColor;clip-path:polygon(40% 0,60% 0,60% 20%,80% 20%,80% 40%,100% 40%,100% 60%,80% 60%,80% 80%,60% 80%,60% 100%,40% 100%,40% 80%,20% 80%,20% 60%,0 60%,0 40%,20% 40%,20% 20%,40% 20%);filter:none;}
 .combo-message,.line-message,.spiritual-message,.pop-combo-display {
  font-family:'Courier New',monospace;border:3px solid var(--pixel-ink,#382c41);border-radius:0;

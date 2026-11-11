@@ -11,6 +11,41 @@
 #dashboardSummary .stat-value {font-size:clamp(13px,3.8vw,22px)!important;letter-spacing:0;line-height:1.2;}
 #dashboardSummary .combo-crosses {grid-column:1 / -1;justify-content:center;margin:0;min-height:5px;}
 .mechanical-display .next-header {align-self:center;justify-content:center;flex-wrap:wrap;max-width:100%;}
+/* Paysage : titre, aperçu, compteurs et commandes sur une seule rangée. */
+@media (orientation: landscape) {
+    .game-wrapper {min-height:0;}
+    .game-board .mechanical-display {
+        box-sizing:border-box; width:100%; display:flex; flex-direction:row;
+        align-items:center; justify-content:space-between; gap:6px;
+        padding:3px 48px 3px 6px; overflow-x:auto; overflow-y:hidden;
+    }
+    .game-board .mechanical-display .title-section {
+        flex:0 0 auto; width:auto; min-height:0; padding:0; border:0; gap:2px;
+    }
+    .game-board .mechanical-display .title-section .game-title {font-size:12px;padding:0;letter-spacing:.12em;}
+    .game-board .mechanical-display .next-section {flex:1 0 auto;width:auto;flex-direction:row;align-items:center;justify-content:space-between;gap:6px;}
+    .game-board #dashboardSummary {
+        display:flex; width:auto; flex:0 0 auto; gap:4px; padding:2px 4px;
+    }
+    .game-board #dashboardSummary .next-grid {
+        width:30px; height:30px; padding:1px; gap:1px;
+        grid-template-columns:repeat(4,6px);grid-template-rows:repeat(4,6px);
+    }
+    .game-board #dashboardSummary .next-cell {width:6px;height:6px;}
+    .game-board #dashboardSummary .stats-container {display:flex;flex-direction:row;gap:3px;}
+    .game-board #dashboardSummary .stat-line {gap:1px;padding:0 3px;}
+    .game-board #dashboardSummary .stat-value {font-size:13px!important;}
+    .game-board #dashboardSummary .combo-crosses,
+    .game-board .mechanical-display .next-header > .display-label {display:none;}
+    .game-board .mechanical-display .next-header {flex:0 0 auto;gap:3px;flex-wrap:nowrap;}
+    .game-board .mechanical-display .next-header .stat-line {gap:2px;padding:0;}
+    .game-board .mechanical-display .next-header .stat-label {font-size:8px;}
+    .game-board .mechanical-display .next-header .stat-value {font-size:13px;}
+    .game-board .mechanical-display .next-header :is(.game-button-mini,.trophy-button-compact) {width:30px;height:32px;padding:0;font-size:15px;}
+    .game-board .top-game-tools {gap:1px;}
+    .game-board .top-game-tools :is(#visualStyleButton,#localShare) {width:26px;height:32px;}
+    .game-board .top-game-tools img {width:22px;height:22px;}
+}
 .visual-controls select {min-height:36px;max-width:125px;padding:5px 8px;border:1px solid #855338;border-radius:8px;background:#fff7e7;color:#382c27;font:inherit;cursor:pointer;}
 .visual-controls select:focus-visible {outline:3px solid #4766b6;outline-offset:2px;}
 .visual-controls [hidden] {display:none;}

@@ -518,17 +518,16 @@ class UserInterface {
         popComboDisplay.className = `pop-combo-display pop-${intensity}`;
         popComboDisplay.style.display = 'block';
         
-        // Animation adaptée à l'intensité (direct, pas de setTimeout inutile)
-        if (intensity === 'mega') {
-            popComboDisplay.style.animation = 'comboPulseMega 0.8s ease-out';
-        } else if (intensity === 'big') {
-            popComboDisplay.style.animation = 'comboPulseBig 0.6s ease-out';
-        } else {
-            popComboDisplay.style.animation = 'comboPulse 0.5s ease-out';
+        this.popShake?.cancel();
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.popShake = popComboDisplay.animate?.(
+                [0, -4, 4, -2, 2, 0].map(x => ({ translate: `${x}px`, easing: 'steps(1, end)' })),
+                { duration: 180 }
+            );
         }
         
         // Cacher après un temps adapté
-        const displayTime = intensity === 'mega' ? 2500 : intensity === 'big' ? 2200 : 2000;
+        const displayTime = intensity === 'mega' ? 1500 : 1200;
         this.popComboTimeout = setTimeout(() => {
             popComboDisplay.style.display = 'none';
         }, displayTime);

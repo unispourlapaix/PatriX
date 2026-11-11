@@ -7,7 +7,6 @@
 class VisualEffects {
     constructor(containerElement) {
         this.container = containerElement;
-        this.comboTimeout = null;
         this.lineTimeout = null;
     }
 
@@ -341,81 +340,6 @@ class VisualEffects {
             }
         });
         
-        // Message combo si > 1
-        if (combo > 1) {
-            this.showComboMessage(combo, group.length);
-        }
-    }
-
-    /**
-     * Affiche le message de combo
-     * @param {number} combo - Niveau de combo
-     * @param {number} count - Nombre de cases
-     */
-    showComboMessage(combo, count) {
-        // Réutiliser l'élément existant ou le créer une seule fois
-        let msg = document.getElementById('combo-message-display');
-        if (!msg) {
-            msg = document.createElement('div');
-            msg.id = 'combo-message-display';
-            msg.className = 'combo-message';
-            document.body.appendChild(msg);
-        }
-        
-        // Annuler l'animation précédente si elle existe
-        if (this.comboTimeout) {
-            clearTimeout(this.comboTimeout);
-        }
-        
-        // Messages spéciaux basés sur le combo ET la taille
-        let comboKey, emoji, intensity;
-        
-        if (combo >= 10) {
-            comboKey = 'combo.ultimate';
-            intensity = 'ultimate';
-        } else if (combo >= 8) {
-            comboKey = 'combo.legendary';
-            intensity = 'legendary';
-        } else if (combo >= 6) {
-            comboKey = 'combo.amazing';
-            intensity = 'amazing';
-        } else if (combo >= 5) {
-            comboKey = 'combo.mega';
-            intensity = 'mega';
-        } else if (combo >= 3) {
-            comboKey = 'combo.super';
-            intensity = 'super';
-        } else {
-            comboKey = 'combo.normal';
-            intensity = 'normal';
-        }
-        
-        // Emoji basé sur la taille
-        if (count >= 15) emoji = '🎆';
-        else if (count >= 12) emoji = '💎';
-        else if (count >= 10) emoji = '🔥';
-        else if (count >= 8) emoji = '⚡';
-        else emoji = '💥';
-        
-        const comboText = window.i18n ? window.i18n.t(comboKey, { count: combo }) : `COMBO x${combo}!`;
-        const blocksText = window.i18n ? window.i18n.t('combo.blocks', { count, emoji }) : `${count} blocs ${emoji}`;
-        
-        msg.innerHTML = `
-            <div class="combo-text">${comboText}</div>
-            <div class="combo-extra">${blocksText}</div>
-        `;
-        msg.className = `combo-message combo-${intensity}`;
-        msg.style.display = 'block';
-        
-        // Reset et trigger reflow pour animation fluide
-        msg.style.animation = 'none';
-        void msg.offsetHeight; // Force reflow
-        msg.style.animation = 'comboAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        
-        this.comboTimeout = setTimeout(() => {
-            msg.style.animation = 'comboDisappear 0.2s cubic-bezier(0.4, 0, 1, 1) forwards';
-            setTimeout(() => msg.style.display = 'none', 200);
-        }, 1500);
     }
 
     /**
