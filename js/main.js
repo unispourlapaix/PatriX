@@ -69,6 +69,11 @@ for (const event of ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscree
 }
 
 async function toggleFullscreen() {
+    if (document.documentElement.classList.contains('game-immersive')) {
+        document.documentElement.classList.remove('game-immersive');
+        window.dispatchEvent(new Event('resize'));
+        return;
+    }
     if (fullscreenElement()) {
         const exit = document.exitFullscreen || document.webkitExitFullscreen ||
             document.mozCancelFullScreen || document.msExitFullscreen;
@@ -95,6 +100,11 @@ async function toggleFullscreen() {
         }
     } catch (err) {
         console.warn('Plein écran ou orientation paysage non disponible :', err);
+    }
+
+    if (!fullscreenElement()) {
+        document.documentElement.classList.add('game-immersive');
+        window.dispatchEvent(new Event('resize'));
     }
 
     if (!landscapeLocked && matchMedia('(pointer: coarse) and (orientation: portrait)').matches) {

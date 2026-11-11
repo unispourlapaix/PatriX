@@ -2,6 +2,12 @@
 
 
 /* Réserver une place réelle à chaque élément, y compris au pied de page. */
+html.game-immersive, html.game-immersive body {overflow:hidden;}
+.game-immersive .game-wrapper {position:fixed;inset:0;z-index:100;width:100%;height:100dvh;min-height:0;max-width:none;}
+.game-immersive .game-footer {display:none;}
+.exit-fullscreen-btn {top:max(4px,env(safe-area-inset-top));right:max(4px,env(safe-area-inset-right));width:44px;height:44px;border:0;background:#fff1d3;color:#382c41;}
+.exit-fullscreen-btn svg {position:static;color:inherit;vertical-align:middle;}
+.exit-fullscreen-btn:focus-visible {outline:2px solid #4766b6;outline-offset:2px;}
 .fullscreen-rotate-hint {position:fixed;z-index:2000;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px);padding:10px 14px;background:#252340;color:#fff;border:2px solid #aee9ff;text-align:center;font:600 14px/1.4 sans-serif;pointer-events:none;}
 @media (orientation:landscape) {.fullscreen-rotate-hint {display:none;}}
 html { min-height:100%; overflow-x:hidden; }
