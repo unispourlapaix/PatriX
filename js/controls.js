@@ -46,7 +46,7 @@ class Controls {
      */
     initTouchControls() {
         document.addEventListener('touchstart', (e) => {
-            if (e.target.closest?.('#exitFullscreenBtn')) return;
+            if (e.target.closest?.('#exitFullscreenBtn, #shareDialog, #endingModal')) return;
             if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
@@ -78,7 +78,7 @@ class Controls {
         
         // Nouveau : touchmove pour suivre la position (ne fait plus descendre)
         document.addEventListener('touchmove', (e) => {
-            if (e.target.closest?.('#exitFullscreenBtn')) return;
+            if (e.target.closest?.('#exitFullscreenBtn, #shareDialog, #endingModal')) return;
             if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 
@@ -108,7 +108,7 @@ class Controls {
         }, { passive: false });
 
         document.addEventListener('touchend', (e) => {
-            if (e.target.closest?.('#exitFullscreenBtn')) return;
+            if (e.target.closest?.('#exitFullscreenBtn, #shareDialog, #endingModal')) return;
             if (typeof lineTracer !== 'undefined' && lineTracer?.isDrawing) return;
             // Ignorer les touches sur la zone mécanique et les modals
             if (e.target && e.target.closest && 

@@ -428,6 +428,7 @@ class GameEngine {
         const popPointsBase = group.length;
         const comboPointsBonus = this.popCombo > 1 ? Math.floor(group.length * (this.popCombo - 1) * 0.3) : 0;
         const popPointsEarned = popPointsBase + comboPointsBonus;
+        this.popPointsTotal = (this.popPointsTotal || 0) + popPointsEarned;
         this.popPoints += popPointsEarned;
         
         // Vérifier si on gagne un swap (tous les 20 points de pop)
@@ -708,12 +709,13 @@ class GameEngine {
     }
     handleLinesCleared(lines) {
         const count = lines.length;
+        const landscapeChallenge = window.matchMedia('(orientation: landscape)').matches;
         this.lines += count;
-        this.combo++;
+        this.combo += landscapeChallenge ? count : 1;
         
         // Sons
         if (audioManager) {
-            if (this.combo > 1) {
+            if (landscapeChallenge || this.combo > 1) {
                 audioManager.playCombo(this.combo);
             } else {
                 audioManager.playLineCleared();
@@ -721,7 +723,7 @@ class GameEngine {
         }
         
         // Animation visuelle pour les combos (2 lignes ou plus)
-        if (this.combo > 1) {
+        if (!landscapeChallenge && this.combo > 1) {
             const board = document.querySelector('.board');
             if (board) {
                 const rect = board.getBoundingClientRect();
@@ -819,6 +821,7 @@ class GameEngine {
         }, CONFIG.TIMING.COMBO_TIMEOUT);
         
         this.emit('linesCleared', {
+            landscapeChallenge,
             lines: lines,
             count: count,
             total: this.lines,

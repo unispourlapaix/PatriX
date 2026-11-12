@@ -128,9 +128,9 @@ class AudioManager {
         if (ctx.state === 'suspended') ctx.resume().catch(() => {});
         const now = ctx.currentTime;
         // Éviter l'empilement lors d'un appui prolongé.
-        if (this.lastSlideTime !== undefined && now - this.lastSlideTime < 0.055) return;
+        if (this.lastSlideTime !== undefined && now - this.lastSlideTime < 0.09) return;
         this.lastSlideTime = now;
-        const duration = 0.13;
+        const duration = 0.22;
         if (!this.slideNoise || this.slideNoise.sampleRate !== ctx.sampleRate) {
             this.slideNoise = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * duration), ctx.sampleRate);
             const samples = this.slideNoise.getChannelData(0);
@@ -141,13 +141,13 @@ class AudioManager {
         const gain = ctx.createGain();
         source.buffer = this.slideNoise;
         filter.type = 'bandpass';
-        filter.Q.setValueAtTime(0.7, now);
-        filter.frequency.setValueAtTime(900, now);
-        filter.frequency.exponentialRampToValueAtTime(3200, now + 0.045);
-        filter.frequency.exponentialRampToValueAtTime(1200, now + duration);
+        filter.Q.setValueAtTime(0.95, now);
+        filter.frequency.setValueAtTime(700, now);
+        filter.frequency.exponentialRampToValueAtTime(2000, now + 0.075);
+        filter.frequency.exponentialRampToValueAtTime(950, now + duration);
         gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(this.volume * 0.2, now + 0.018);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + duration - 0.01);
+        gain.gain.linearRampToValueAtTime(this.volume * 0.12, now + 0.045);
+        gain.gain.linearRampToValueAtTime(this.volume * 0.055, now + 0.115);
         gain.gain.linearRampToValueAtTime(0, now + duration);
         source.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
         source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };

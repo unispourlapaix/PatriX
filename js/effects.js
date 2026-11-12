@@ -347,7 +347,7 @@ class VisualEffects {
      * @param {number} count - Nombre de lignes (1-4)
      * @param {number} combo - Niveau de combo
      */
-    showLineMessage(count, combo) {
+    showLineMessage(count, combo, landscapeChallenge = false) {
         // Réutiliser l'élément existant ou le créer une seule fois
         let msg = document.getElementById('line-message-display');
         if (!msg) {
@@ -360,6 +360,26 @@ class VisualEffects {
         // Annuler l'animation précédente
         if (this.lineTimeout) {
             clearTimeout(this.lineTimeout);
+        }
+        if (landscapeChallenge) {
+            const cheers = {
+                fr: ['Super', 'Génial', 'Bravo', 'Grandiose', 'Méga top'],
+                en: ['Great', 'Amazing', 'Bravo', 'Magnificent', 'Mega'],
+                es: ['Súper', 'Genial', 'Bravo', 'Grandioso', 'Increíble'],
+                pt: ['Super', 'Genial', 'Bravo', 'Grandioso', 'Incrível'],
+                ar: ['رائع', 'ممتاز', 'أحسنت', 'مذهل', 'مبهر'],
+                ja: ['すごい', '最高', 'お見事', '大成功', '超最高'],
+                zh: ['好棒', '太棒了', '漂亮', '精彩绝伦', '超级棒'],
+                uk: ['Супер', 'Чудово', 'Браво', 'Грандіозно', 'Мегатоп'],
+                ln: ['Kitoko', 'Malamu mpenza', 'Longonya', 'Kitoko mingi', 'Elongi mpenza']
+            };
+            const labels = cheers[window.i18n?.currentLang] || cheers.fr;
+            msg.className = 'line-message line-challenge';
+            msg.style.animation = 'none';
+            msg.textContent = `${labels[Math.min(4, Math.max(0, combo - 1))]} ! · ×${combo}`;
+            msg.style.display = 'block';
+            this.lineTimeout = setTimeout(() => { msg.style.display = 'none'; }, 1250);
+            return;
         }
         
         let lineKey, intensity;

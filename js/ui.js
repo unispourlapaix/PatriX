@@ -153,10 +153,10 @@ class UserInterface {
             this.updateLevel(data.level);
             this.updateCombo(data.combo);
             this.checkLevelMessage(data.level);
-            this.showComboMessage(data.combo);
+            if (!data.landscapeChallenge) this.showComboMessage(data.combo);
             
             // Message pour les lignes
-            this.effects.showLineMessage(data.count, data.combo);
+            this.effects.showLineMessage(data.count, data.combo, data.landscapeChallenge);
             
             // Effets visuels
             data.lines.forEach(lineY => {

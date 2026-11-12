@@ -56,6 +56,7 @@ class LineTracer {
         this.boardElement.addEventListener('touchstart', (e) => this.handleStart(e), { passive: false });
         document.addEventListener('touchmove', (e) => this.handleMove(e), { passive: false });
         document.addEventListener('touchend', (e) => this.handleEnd(e));
+        document.addEventListener('touchcancel', (e) => this.handleEnd(e));
     }
 
     /**
@@ -126,7 +127,7 @@ class LineTracer {
      */
     handleStart(e) {
         // Ignorer si le clic est sur la zone mécanique (NEXT, etc.)
-        if (e.target.closest('.mechanical-display')) {
+        if (e.target.closest('.mechanical-display, .current-piece')) {
             return;
         }
         
@@ -154,6 +155,10 @@ class LineTracer {
         
         // Stocker la position en coordonnées écran
         const pos = this.getEventPosition(e);
+        this.quickPop = e.type === 'touchstart' && e.touches.length === 1 &&
+            window.matchMedia('(orientation: landscape)').matches && pos
+            ? { ...pos, identifier: e.touches[0].identifier, row, col, cell: gridCell }
+            : null;
         if (pos) {
             this.currentPos = pos;
         }
@@ -167,6 +172,10 @@ class LineTracer {
     handleMove(e) {
         if (!this.isDrawing || !this.path.length) return;
         const position=this.getEventPosition(e);
+        if (this.quickPop && (!position || e.touches?.length !== 1 ||
+            Math.hypot(position.x - this.quickPop.x, position.y - this.quickPop.y) > 10)) {
+            this.quickPop = null;
+        }
         const metrics=this.getHitMetrics();
         const from=this.currentPos||position;
         const steps=position&&from?Math.min(128,Math.max(1,Math.ceil(Math.hypot(position.x-from.x,position.y-from.y)/Math.max(3,(metrics?.pitchX||12)/3)))):1;
@@ -203,11 +212,19 @@ class LineTracer {
         if (!this.isDrawing) return;
         this.isDrawing = false;
         this.currentPos = null;
-        const completedPath = this.path.map(({row,col}) => ({row,col}));
+        let completedPath = this.path.map(({row,col}) => ({row,col}));
+        const tap = this.quickPop;
+        this.quickPop = null;
+        const touch = e.changedTouches?.[0];
+        if (tap && e.type === 'touchend' && touch?.identifier === tap.identifier &&
+            Math.hypot(touch.clientX - tap.x, touch.clientY - tap.y) <= 10 &&
+            this.grid.cells[tap.row]?.[tap.col] === tap.cell) {
+            completedPath = this.grid.findConnectedGroup(tap.row, tap.col);
+        }
         this.path = [];
         this.clearCanvas();
         this.clearHighlight();
-        if (this.grid.isValidPath(completedPath) && this.onPathComplete) {
+        if (e.type !== 'touchcancel' && this.grid.isValidPath(completedPath) && this.onPathComplete) {
             this.onPathComplete(completedPath);
         }
     }

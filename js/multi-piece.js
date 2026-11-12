@@ -1,14 +1,20 @@
 /* Plusieurs pièces indépendantes ; les commandes ciblent la sélection. */
 (()=>{
  const proto=GameEngine.prototype;
+ const thirdPieceAt=30,fourthPieceAt=70;
  function pieceCount(engine){
   const landscape=window.matchMedia('(orientation: landscape)').matches;
   if(!landscape)return 1;
+  if(engine.grid.cols>=10&&window.innerWidth>=600){
+   if(engine.popPointsTotal>=fourthPieceAt)return 4;
+   if(engine.popPointsTotal>=thirdPieceAt)return 3;
+  }
   return Math.max(1,Math.min(Math.floor(engine.grid.cols/5),Math.floor(window.innerWidth/300)));
  }
  const baseReset=proto.reset,baseUpdate=proto.update,basePlace=proto.placePiece,baseExport=proto.exportState,baseImport=proto.importState;
  proto.reset=function(){
   this.activePieces=[];
+  this.popPointsTotal=0;
   this.parallelCount=pieceCount(this);
   this.grid.getFallingPieces=()=>this.activePieces||[];
   baseReset.call(this);
@@ -66,11 +72,12 @@
   if(!piece||!this.isRunning||this.isPaused)return false;
   this.currentPiece=piece;this.grid.selectedPiece=piece;this.grid.render(piece);return true;
  };
- proto.exportState=function(){return {...baseExport.call(this),activePieces:JSON.parse(JSON.stringify(this.activePieces||[])),selectedPieceIndex:(this.activePieces||[]).indexOf(this.currentPiece),parallelCount:this.parallelCount||1};};
+ proto.exportState=function(){return {...baseExport.call(this),activePieces:JSON.parse(JSON.stringify(this.activePieces||[])),selectedPieceIndex:(this.activePieces||[]).indexOf(this.currentPiece),parallelCount:this.parallelCount||1,popPointsTotal:this.popPointsTotal||0};};
  proto.importState=function(state){
   this.activePieces=[];baseImport.call(this,state);
   this.activePieces=state.activePieces?.length?JSON.parse(JSON.stringify(state.activePieces)):(this.currentPiece?[this.currentPiece]:[]);
-  this.parallelCount=state.parallelCount||1;
+  this.popPointsTotal=state.popPointsTotal||0;
+  this.parallelCount=pieceCount(this);
   for(const p of this.activePieces){if(!p.icon)p.icon=Object.values(BLOCKS).find(b=>b.type===p.type)?.icon||'◆';}
   if(this.nextPiece&&!this.nextPiece.icon)this.nextPiece.icon=Object.values(BLOCKS).find(b=>b.type===this.nextPiece.type)?.icon||'◆';
   this.currentPiece=this.activePieces[state.selectedPieceIndex]||this.activePieces[0]||null;

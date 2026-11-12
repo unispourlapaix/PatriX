@@ -11,6 +11,7 @@
 }
 #popCombo.pop-big {--pop-accent:#ffd178;}
 #popCombo.pop-mega {--pop-accent:#ff9dd4;}
+.line-message.line-challenge {top:28%;padding:6px 12px;background:#171b31;color:#ffd178;border-color:#ffd178;font:900 clamp(14px,4dvh,22px)/1.25 'Courier New',monospace;}
 #popCombo::before {
  content:'';display:inline-block;width:14px;height:14px;margin-inline-end:10px;
  background:currentColor;vertical-align:-1px;
@@ -66,4 +67,41 @@ body {--pixel-paper:var(--theme-panel,#fff1d3);--pixel-ink:var(--theme-ink,#382c
 .pixel-ending-shell canvas {image-rendering:pixelated;border-block:3px solid var(--pixel-line);}
 #shareDialog textarea {border:2px solid var(--pixel-line);border-radius:0;background:var(--pixel-paper);color:var(--pixel-ink);font-family:'Courier New',monospace;}
 @media (max-height:500px) {.game-over-panel {padding:14px 20px;}.pixel-result-badge {width:40px;height:40px;margin:8px auto;}.game-over-panel .pixel-result-score {margin:8px 0;padding:8px;}.game-over-panel h2 {margin:4px 0;}#gameOverMessage {margin:4px 0;font-size:13px;}}
+@media (orientation:landscape) and (max-height:500px) {
+    body {
+        --landscape-modal-height:calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+        --landscape-modal-width:calc(100vw - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right)));
+    }
+    :is(.treasure-content,.trophy-content,.save-load-content,.profile-modal-content,.language-selector-content,.contact-form-container,.game-over-panel,#shareDialog,.pixel-ending-shell) {
+        box-sizing:border-box;
+        max-width:var(--landscape-modal-width);
+        max-height:var(--landscape-modal-height);
+        padding:10px 14px;
+        overflow:auto;
+        overscroll-behavior:contain;
+        touch-action:pan-y;
+        overflow-wrap:anywhere;
+    }
+    :is(.trophy-content,.treasure-content,.game-over-panel) {width:min(520px,var(--landscape-modal-width));}
+    :is(.trophy-content,.treasure-content,.save-load-content,.profile-modal-content) {animation:none;}
+    :is(.trophy-content,.treasure-content)::before {display:none;}
+    :is(.trophy-icon,.treasure-icon) {font-size:32px;line-height:1.1;margin:4px 0;animation:none;}
+    :is(.trophy-banner,.trophy-name,.treasure-level) {font-size:16px;margin:4px 0;padding:4px;}
+    :is(.trophy-message,.treasure-message) {font-size:14px;line-height:1.4;margin:6px 0;}
+    :is(.trophy-button,.treasure-button) {font-size:14px;margin:4px 0;padding:6px 12px;}
+    .trophies-panel-content {width:min(780px,var(--landscape-modal-width));max-width:none;max-height:var(--landscape-modal-height);}
+    .trophies-header {flex:none;padding:6px 10px;}
+    .trophies-header h2 {font-size:16px;margin:0;}
+    .trophies-scrollable {min-height:0;padding:8px 12px;scroll-behavior:auto;}
+    .language-selector-content .language-list {max-height:none;overflow:visible;}
+    #webBrowserPanel {max-width:var(--landscape-modal-width);}
+    #webBrowserPanel .web-browser-content {height:var(--landscape-modal-height);}
+    #webBrowserFrame {min-height:100px;}
+    #shareDialog {width:min(540px,var(--landscape-modal-width));}
+    #shareDialog canvas {max-height:32dvh;}
+    #shareDialog textarea {min-height:56px;}
+    .pixel-ending-shell {padding:0;}
+    .pixel-ending canvas {max-height:max(60px,calc(var(--landscape-modal-height) - 140px));}
+    #popCombo {top:28%;font-size:clamp(14px,4dvh,20px);padding:5px 10px;}
+}
 @media (prefers-reduced-motion:reduce) {.game-over-panel,.game-over-panel * {animation:none!important;transition:none!important;}}
