@@ -158,13 +158,13 @@ const CONFIG = {
     TROPHIES: [
         // Médailles du respect : une réflexion à chaque étape.
         ...[
-            ['dignity', 'Égale dignité', '🤝', 1, "Si tu respectes seulement les femmes dont tu approuves les choix, c’est ton approbation que tu respectes."],
+            ['dignity', 'Égale dignité', '🤝', 1, "Devant Dieu, la femme a les mêmes droits et la même dignité que l’homme. Respecter l’égalité, c’est défendre sa liberté de choisir et le droit de faire entendre sa voix."],
             ['consent', 'Un oui libre', '💬', 3, "Si elle ne peut pas dire non sans craindre ta réaction, que vaut le oui que tu attends ?"],
-            ['boundaries', 'Respecter un non', '🛑', 6, "Ta déception t’appartient. Elle n’a pas à dire oui pour t’en soulager."],
+            ['boundaries', 'Respecter un non', '🛑', 6, "Insister après un non, c’est faire pression sur elle pour qu’elle cède. Sa liberté de choisir compte plus que ta déception. Accepte sa réponse."],
             ['empathy', 'À sa place', '🪞', 10, "Imagine ce que tu ressentirais à sa place, puis écoute-la : ton imagination ne remplace pas son expérience."],
-            ['freedom', 'Aimer sans contrôler', '🕊️', 15, "Ta peur de la perdre ne te donne aucun droit sur sa liberté."],
+            ['freedom', 'Aimer sans contrôler', '🕊️', 15, "Fouiller son téléphone ou lui interdire de voir ses amis, c’est contrôler sa vie. Si tu es jaloux, parle de ce que tu ressens sans lui demander de renoncer à sa liberté."],
             ['anger', 'La force du calme', '🌿', 21, "Le respect se voit aussi dans ce que tu choisis de ne pas faire quand tu es en colère."],
-            ['sexism', 'Refuser le sexisme', '🗣️', 28, "Avant de rire avec les autres, demande-toi qui doit faire semblant de trouver ça drôle."],
+            ['sexism', 'Refuser le sexisme', '🗣️', 28, "Une blague qui rabaisse les femmes reste humiliante même si tout le monde rit. Tu peux dire à tes amis : « Ça la rabaisse. Ce n’est pas drôle. »"],
             ['privacy', 'Protéger son intimité', '🔒', 36, "Elle t’a confié quelque chose d’elle. Ce geste ne t’a jamais donné le droit de l’exposer."],
             ['solidarity', 'Soutenir sans imposer', '🛡️', 45, "L’aider, c’est lui rendre de la place pour décider, pas décider à sa place."],
             ['accountability', 'Assumer ses actes', '🌱', 55, "Tu sauras que tu as changé le jour où tu réagiras autrement à la même frustration."],
@@ -172,9 +172,28 @@ const CONFIG = {
             ['fantasy', 'Fantasme', '💭', 72, "La sexualité n’est pas le plus important dans la vie. La tendresse, la confiance et la complicité comptent bien davantage dans le bonheur qu’on construit à deux. Cherche avant tout à être heureux et à contribuer à son bonheur et à son épanouissement."],
             ['worth', 'La valeur', '💎', 78, "Avoir ou non une vie sexuelle ne dit rien de ta valeur. Tu n’as rien à prouver."],
             ['tenderness', 'La tendresse', '🫶', 84, "Il y a des moments de bonheur qui tiennent à peu de chose : quelqu’un qui t’écoute, un rire partagé, une présence qui te fait du bien."],
-            ['desire', 'Le désir', '🧭', 90, "Tu peux désirer quelqu’un sans faire de sa réponse la mesure de ton bonheur."],
+            ['desire', 'Le désir', '🧭', 90, "Le mal te fait croire que rien n’est plus important que ton désir. Peu importe ce que tu désires : sans la sagesse de l’amour, ton désir peut te mener à la folie et au chagrin. Regarde avec le cœur : si ton désir est d’aimer, protège et respecte l’autre avant tout."],
             ['love', 'L’amour', '💛', 96, "La qualité d’une relation se voit aussi dans la liberté que chacun garde d’être soi, de parler et de dire non."],
-            ['full_life', 'Une vie pleine', '🌈', 102, "L’amitié, la création, l’entraide et la joie d’apprendre peuvent donner autant de sens à ta vie que l’amour ou la sexualité."]
+            ['full_life', 'Une vie pleine', '🌈', 102, "L’amitié, la création, l’entraide et la joie d’apprendre peuvent donner autant de sens à ta vie que l’amour ou la sexualité."],
+            ["break_the_chain","Brise la chaîne du viol","🛡️",108,"Minimiser les gestes sexuels imposés et le harcèlement, c’est entretenir la culture du viol. Quand ces violences touchent quelqu’un de ta famille, c’est aussi ta vie qui est ébranlée. N’attends pas qu’elles touchent tes proches pour réagir. Dis non au harcèlement sexuel, défends le droit des femmes à vivre sans violence et soutiens celles qui en parlent."],
+            ["no_manipulation","Non à la manipulation","🗝️",114,"L’amour n’est ni un programme ni un jeu. Vouloir enfermer quelqu’un dans une cage dorée, c’est de la folie : même dorée, une cage prive de liberté. L’amour ne se manipule pas. Si tu aimes quelqu’un, respecte sa liberté de choisir."],
+            ["no_perfidy","Non à la perfidie","🤍",120,"Trop souvent, entre hommes, nos conversations et nos partages manquent de respect à l’intimité des femmes. Une remarque sexuelle humiliante ou une photo intime diffusée sans accord contribue à les faire vivre dans l’insécurité. Change ton cœur : choisis l’amour vrai, celui qui respecte leur intimité, même quand elles ne sont pas là."],
+            ["protect_without_control","La protection sans emprise","🛡️",126,"Si tu veux la protéger, demande-lui ce dont elle a besoin. Décider à sa place peut lui retirer la liberté que tu voulais défendre."],
+            ["trust_not_debt","La confiance n’est pas une dette","🤝",132,"Si tu lui dis « après tout ce que j’ai fait pour toi » pour obtenir un oui, tu transformes ta générosité en pression."],
+            ["respect_in_absence","Le respect en son absence","🔒",138,"Quand un ami partage une photo intime sans son accord, ne la relaie pas. Dis-lui de la supprimer. Le respect se voit aussi dans ce que tu refuses de cautionner."],
+            ["listen_first","Écouter avant de se défendre","👂",144,"Si elle te dit que tu lui as fait peur, ne commence pas par lui expliquer pourquoi elle n’aurait pas dû avoir peur. Écoute ce qu’elle a vécu."],
+            ["faith_and_freedom","La foi et la liberté","🕊️",150,"N’invoque pas Dieu pour obtenir d’elle ce qu’elle ne veut pas te donner. Sa conscience et sa liberté méritent autant de respect que les tiennes."],
+            ["make_amends","Réparer sans réclamer","🌱",156,"Tu peux reconnaître le mal que tu as fait sans lui demander de te pardonner. Le premier signe du changement, c’est de respecter la distance qu’elle demande."],
+            ["integrity","L’intégrité","🧭",162,"Tiens parole même quand personne ne te regarde. Si tu ne peux plus tenir un engagement, dis-le franchement."],
+            ["humility","L’humilité","🌿",168,"Quand quelqu’un te corrige, cherche d’abord ce que tu peux apprendre. Reconnaître une erreur ne diminue pas ta valeur."],
+            ["healthy_boundaries","Le courage de poser une limite","✋",174,"Tu peux dire non avec calme, même à tes amis. Respecter les autres ne t’oblige pas à accepter ce qui te blesse."],
+            ["share_responsibilities","Le partage des responsabilités","🤲",180,"Prends ta part du travail quotidien sans attendre qu’elle te le rappelle. Organiser et prévoir, c’est aussi du travail."],
+            ["celebrate_success","La joie de voir l’autre réussir","🌟",186,"Célèbre sa réussite sans la comparer à la tienne. Son talent n’enlève rien au tien."],
+            ["consideration","La délicatesse","💙",192,"Avant de plaisanter sur une fragilité qu’elle t’a confiée, rappelle-toi pourquoi elle t’en a parlé : elle te faisait confiance."],
+            ["ask_for_help","La force de demander de l’aide","🫂",198,"Quand tu ne sais plus comment agir sans blesser, parle à une personne de confiance. Demander de l’aide, c’est prendre tes actes au sérieux."],
+            ["share_peace","Recherche la paix et partage-la","🕊️",204,"Recherche la paix dans tes paroles et dans tes actes. Quand un conflit éclate, écoute avant de répondre et refuse d’humilier. Partager la paix, c’est aussi poser des limites quand quelqu’un fait du mal."],
+            ["gods_light","La lumière de Dieu","🕯️",210,"Garde l'amour de Dieu comme lumière et sa sagesse dans ton cœur"],
+            ["valiant_hero","Vaillant héros","⚔️",216,"Dieu te donnera la force : il est avec toi. Vaillant héros, ne reste pas prisonnier des erreurs du passé. Construis ta vie avec justice, foi et espérance, malgré les combats."]
         ].map(([id, name, icon, value, message]) => ({
             id: `respect_${id}`, name, icon, message,
             condition: { type: 'lines', value }, unlocked: false, special: false
