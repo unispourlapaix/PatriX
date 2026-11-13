@@ -128,7 +128,7 @@ class AudioManager {
         if (ctx.state === 'suspended') ctx.resume().catch(() => {});
         const now = ctx.currentTime;
         // Éviter l'empilement lors d'un appui prolongé.
-        if (this.lastSlideTime !== undefined && now - this.lastSlideTime < 0.09) return;
+        if (this.lastSlideTime !== undefined && now - this.lastSlideTime < 0.15) return;
         this.lastSlideTime = now;
         const duration = 0.22;
         if (!this.slideNoise || this.slideNoise.sampleRate !== ctx.sampleRate) {
@@ -141,16 +141,20 @@ class AudioManager {
         const gain = ctx.createGain();
         source.buffer = this.slideNoise;
         filter.type = 'bandpass';
-        filter.Q.setValueAtTime(0.95, now);
-        filter.frequency.setValueAtTime(700, now);
-        filter.frequency.exponentialRampToValueAtTime(2000, now + 0.075);
-        filter.frequency.exponentialRampToValueAtTime(950, now + duration);
+        filter.Q.setValueAtTime(0.8, now);
+        filter.frequency.setValueAtTime(430, now);
+        filter.frequency.exponentialRampToValueAtTime(1050, now + 0.08);
+        filter.frequency.exponentialRampToValueAtTime(480, now + duration);
+        const damping = ctx.createBiquadFilter();
+        damping.type = 'lowpass';
+        damping.frequency.setValueAtTime(1350, now);
+        damping.Q.setValueAtTime(0, now);
         gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(this.volume * 0.12, now + 0.045);
-        gain.gain.linearRampToValueAtTime(this.volume * 0.055, now + 0.115);
+        gain.gain.linearRampToValueAtTime(this.volume * 0.045, now + 0.055);
+        gain.gain.linearRampToValueAtTime(this.volume * 0.016, now + 0.12);
         gain.gain.linearRampToValueAtTime(0, now + duration);
-        source.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
-        source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };
+        source.connect(filter); filter.connect(damping); damping.connect(gain); gain.connect(ctx.destination);
+        source.onended = () => { source.disconnect(); filter.disconnect(); damping.disconnect(); gain.disconnect(); };
         source.start(now); source.stop(now + duration);
     }
 

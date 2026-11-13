@@ -72,6 +72,7 @@ class Controls {
             e.preventDefault();
             this.touchStartX = e.touches[0].clientX;
             this.touchStartY = e.touches[0].clientY;
+            this.touchStartTime = e.timeStamp;
             this.lastTouchY = e.touches[0].clientY;
             this.touchMoveCount = 0; // Réinitialiser le compteur
         }, { passive: false });
@@ -198,10 +199,7 @@ class Controls {
             }
             // Swipe horizontal uniquement
             else if (absDeltaX > 20 && absDeltaX > absDeltaY) {
-                const steps = Math.floor(absDeltaX / 50);
-                for (let i = 0; i < Math.min(steps, 3); i++) {
-                    this.engine.move(deltaX > 0 ? 1 : -1, 0);
-                }
+                this.pushHorizontally(deltaX, e.timeStamp - this.touchStartTime, 50, 3);
             }
         }, { passive: false });
     }
@@ -218,6 +216,16 @@ class Controls {
     /**
      * Contrôles souris (desktop)
      */
+    pushHorizontally(deltaX, elapsed, distancePerStep, normalLimit) {
+        const distance = Math.abs(deltaX);
+        const speed = elapsed > 0 ? distance / elapsed : 0;
+        const boost = speed >= 1.3 ? 2 : speed >= 0.75 ? 1 : 0;
+        const steps = Math.min(normalLimit + boost, Math.max(1, Math.floor(distance / distancePerStep)) + boost);
+        for (let i = 0; i < steps; i++) {
+            if (!this.engine.move(Math.sign(deltaX), 0)) break;
+        }
+    }
+
     initMouseControls() {
         const boardElement = document.getElementById('gameBoard');
         
@@ -241,6 +249,7 @@ class Controls {
                 this.isMouseDown = true;
                 this.mouseStartX = e.clientX;
                 this.mouseStartY = e.clientY;
+                this.mouseStartTime = e.timeStamp;
                 e.preventDefault();
                 
                 boardElement.style.cursor = 'grabbing';
@@ -330,10 +339,7 @@ class Controls {
             }
             // Drag horizontal : déplacement
             else if (Math.abs(deltaX) > 20) {
-                const steps = Math.floor(Math.abs(deltaX) / 35);
-                for (let i = 0; i < Math.min(steps, 4); i++) {
-                    this.engine.move(deltaX > 0 ? 1 : -1, 0);
-                }
+                this.pushHorizontally(deltaX, e.timeStamp - this.mouseStartTime, 35, 4);
                 this.clickCount = 0;
             }
         });
