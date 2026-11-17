@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Tema y pantalla completa","fullscreen":"Alternar pantalla completa","pause":"P o Esc","rotate":"Gira el móvil para jugar en horizontal.","themeLabel":"Tema: {theme} — pulsa para cambiar","themes":{"classic":"Clásico","kawaii":"Kawaii","galaxy":"Galaxia","science":"Laboratorio","scifi":"Ciencia ficción","autumn":"Otoño","winter":"Invierno","spring":"Primavera","summer":"Verano"}},
   "language": {
     "name": "Español",
     "code": "es"

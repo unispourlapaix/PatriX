@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Tema e ecrã inteiro","fullscreen":"Alternar ecrã inteiro","pause":"P ou Esc","rotate":"Vira o telemóvel para jogar na horizontal.","themeLabel":"Tema: {theme} — toca para mudar","themes":{"classic":"Clássico","kawaii":"Kawaii","galaxy":"Galáxia","science":"Laboratório","scifi":"Ficção científica","autumn":"Outono","winter":"Inverno","spring":"Primavera","summer":"Verão"}},
   "language": {"name": "Português", "code": "pt"},
   "menu": {"play": "Jogar", "login": "Entrar", "register": "Registrar", "logout": "Sair", "playGuest": "Jogar sem conta", "backToLogin": "← Voltar ao login"},
   "tooltips": {"sound": "Som", "music": "Audiomack", "back": "Anterior", "forward": "Próximo", "refresh": "Atualizar", "minimize": "Minimizar", "close": "Fechar", "videoLink": "Ver vídeo no YouTube"},

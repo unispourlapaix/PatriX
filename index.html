@@ -43,7 +43,7 @@
 <link rel="stylesheet" href="css/visual-themes.css?v=5">
 <link rel="stylesheet" href="css/pixel-menus.css?v=5">
 <link rel="stylesheet" href="css/pixel-arcade.css?v=5">
-<script src="js/visual-themes.js?v=3" defer></script></head>
+<script src="js/visual-themes.js?v=4" defer></script></head>
 <body>
     <dialog id="startModeDialog" aria-labelledby="startModeTitle">
         <h2 id="startModeTitle"></h2>
@@ -169,8 +169,8 @@
             <div class="mechanical-display">
                 <div class="display-section title-section">
                     <span class="game-title">PATRI-X</span>
-                    <div id="topGameTools" class="top-game-tools" aria-label="Style et plein écran">
-                        <button type="button" id="exitFullscreenBtn" class="exit-fullscreen-btn" aria-label="Basculer le plein écran">
+                    <div id="topGameTools" class="top-game-tools" role="group" data-i18n-aria="arcadeUi.tools" aria-label="Style et plein écran">
+                        <button type="button" id="exitFullscreenBtn" class="exit-fullscreen-btn" data-i18n-aria="arcadeUi.fullscreen" aria-label="Basculer le plein écran">
                             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
                                 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="currentColor"/>
                             </svg>
@@ -321,7 +321,7 @@
                 <button class="pause-action-btn" id="loadGameBtn" data-i18n-title="game.load" title="Charger">📂</button> -->
                 <button class="pause-action-btn" id="resumeBtn" data-i18n-title="game.resume" title="Reprendre">▶️</button>
             </div>
-            <p style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
+            <p data-i18n="arcadeUi.pause" style="color: #81c784; margin-top: 8px; font-size: 10px;">P ou Échap</p>
         </div>
         <p id="saveStatus" style="color: #66bb6a; margin-top: 3px; font-size: 10px; opacity: 0; transition: opacity 0.3s; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;"></p>
     </div>
@@ -595,7 +595,7 @@
     <script src="js/line-tracer.js?v=22"></script>
 
     <script src="js/ui.js?v=5"></script>
-    <script src="js/multi-piece.js?v=29"></script><script src="js/web-browser.js?v=22"></script><script src="js/main.js?v=20"></script>
+    <script src="js/multi-piece.js?v=29"></script><script src="js/web-browser.js?v=22"></script><script src="js/main.js?v=21"></script>
     
 
 <script src="js/local-share.js?v=8"></script><script src="js/local-layout.js?v=9"></script></body>

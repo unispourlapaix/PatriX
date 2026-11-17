@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"المظهر وملء الشاشة","fullscreen":"تبديل وضع ملء الشاشة","pause":"P أو Esc","rotate":"أدر هاتفك للعب في الوضع الأفقي.","themeLabel":"المظهر: {theme} — اضغط للتغيير","themes":{"classic":"كلاسيكي","kawaii":"كاوايي","galaxy":"مجرة","science":"مختبر","scifi":"خيال علمي","autumn":"الخريف","winter":"الشتاء","spring":"الربيع","summer":"الصيف"}},
   "language": {
     "name": "العربية",
     "code": "ar"

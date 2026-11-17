@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Style et plein écran","fullscreen":"Basculer le plein écran","pause":"P ou Échap","rotate":"Tourne ton téléphone pour jouer en paysage.","themeLabel":"Style : {theme} — cliquer pour changer","themes":{"classic":"Classique","kawaii":"Kawaii","galaxy":"Galaxie","science":"Laboratoire","scifi":"Science-fiction","autumn":"Automne","winter":"Hiver","spring":"Printemps","summer":"Été"}},
   "language": {
     "name": "Français",
     "code": "fr"

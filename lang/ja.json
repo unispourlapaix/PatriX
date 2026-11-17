@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"テーマと全画面","fullscreen":"全画面を切り替える","pause":"P または Esc","rotate":"スマートフォンを横向きにして遊ぼう。","themeLabel":"テーマ：{theme} — 押して切り替え","themes":{"classic":"クラシック","kawaii":"かわいい","galaxy":"銀河","science":"実験室","scifi":"SF","autumn":"秋","winter":"冬","spring":"春","summer":"夏"}},
   "language": {"name": "日本語", "code": "ja"},
   "menu": {"play": "プレイ", "login": "ログイン", "register": "登録", "logout": "ログアウト", "playGuest": "ゲストでプレイ", "backToLogin": "← ログインに戻る"},
   "tooltips": {"sound": "サウンド", "music": "Audiomack", "back": "戻る", "forward": "進む", "refresh": "更新", "minimize": "最小化", "close": "閉じる", "videoLink": "YouTube動画を見る"},

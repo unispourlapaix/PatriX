@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Motindo mpe écran mobimba","fullscreen":"Balusá écran mobimba","pause":"P to Esc","rotate":"Balusá telefone na ngámbo mpo na kosakana.","themeLabel":"Motindo: {theme} — finá mpo na kobongola","themes":{"classic":"Ya kala","kawaii":"Kawaii","galaxy":"Galaksi","science":"Laboratware","scifi":"Lisapo ya siansi","autumn":"Eleko ya nkasa kokwea","winter":"Eleko ya malili","spring":"Eleko ya bafololo","summer":"Eleko ya molunge"}},
   "language": {
     "name": "Lingala",
     "code": "ln"

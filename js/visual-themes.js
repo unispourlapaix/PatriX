@@ -20,12 +20,18 @@
     try { saved = JSON.parse(localStorage.getItem('patrixVisualStyle')) || {}; } catch {}
     mode.value = modes.includes(saved.mode) ? saved.mode : 'classic';
     season.value = seasons.includes(saved.season) ? saved.season : 'autumn';
+    function translateButton() {
+        const theme = document.body.dataset.visualTheme;
+        const labels = window.i18n?.translations?.arcadeUi;
+        const name = labels?.themes?.[theme] || names[theme];
+        button.title = (labels?.themeLabel || 'Style : {theme} — cliquer pour changer').replace('{theme}', name);
+        button.setAttribute('aria-label', button.title);
+    }
     function apply() {
         const seasonal = mode.value === 'seasons';
         const theme = seasonal ? season.value : mode.value;
         document.body.dataset.visualTheme = theme;
-        button.title = `Style : ${names[theme]} — cliquer pour changer`;
-        button.setAttribute('aria-label', button.title);
+        translateButton();
         season.hidden = !seasonal;
         document.querySelector('label[for="visualSeason"]').hidden = !seasonal;
         try {
@@ -43,4 +49,5 @@
         apply();
     });
     apply();
+    window.i18n?.addObserver(translateButton);
 })();

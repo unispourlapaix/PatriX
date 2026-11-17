@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Тема й повноекранний режим","fullscreen":"Перемкнути повноекранний режим","pause":"P або Esc","rotate":"Поверни телефон горизонтально, щоб грати.","themeLabel":"Тема: {theme} — натисни, щоб змінити","themes":{"classic":"Класична","kawaii":"Каваї","galaxy":"Галактика","science":"Лабораторія","scifi":"Наукова фантастика","autumn":"Осінь","winter":"Зима","spring":"Весна","summer":"Літо"}},
   "language": {"name": "Українська", "code": "uk"},
   "menu": {"play": "Грати", "login": "Вхід", "register": "Реєстрація", "logout": "Вихід", "playGuest": "Грати без акаунта", "backToLogin": "← Повернутися до входу"},
   "tooltips": {"sound": "Звук", "music": "Audiomack", "back": "Назад", "forward": "Вперед", "refresh": "Оновити", "minimize": "Згорнути", "close": "Закрити", "videoLink": "Дивитися YouTube відео"},

@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"Theme and full screen","fullscreen":"Toggle full screen","pause":"P or Esc","rotate":"Turn your phone sideways to play.","themeLabel":"Theme: {theme} — click to change","themes":{"classic":"Classic","kawaii":"Kawaii","galaxy":"Galaxy","science":"Laboratory","scifi":"Science fiction","autumn":"Autumn","winter":"Winter","spring":"Spring","summer":"Summer"}},
   "language": {
     "name": "English",
     "code": "en"

@@ -1,4 +1,5 @@
 {
+  "arcadeUi": {"tools":"主题与全屏","fullscreen":"切换全屏","pause":"P 或 Esc","rotate":"请横向转动手机游玩。","themeLabel":"主题：{theme} — 点击切换","themes":{"classic":"经典","kawaii":"可爱","galaxy":"银河","science":"实验室","scifi":"科幻","autumn":"秋天","winter":"冬天","spring":"春天","summer":"夏天"}},
   "language": {
     "name": "中文",
     "code": "zh"

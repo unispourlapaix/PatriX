@@ -115,7 +115,7 @@ for (const event of ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscree
     document.addEventListener(event, releaseFullscreenOrientation);
 }
 
-async function toggleFullscreen(rotateHint = 'Tourne ton téléphone pour jouer en paysage.') {
+async function toggleFullscreen(rotateHint = window.i18n?.translations?.arcadeUi?.rotate || 'Tourne ton téléphone pour jouer en paysage.') {
     if (document.documentElement.classList.contains('game-immersive')) {
         document.documentElement.classList.remove('game-immersive');
         window.dispatchEvent(new Event('resize'));
