@@ -4,21 +4,29 @@
     <meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-src https://audiomack.com; img-src 'self' data: blob:">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="description" content="Patri-X - Transforme le désespoir en grands rêves. Un jeu de blocs inspirant.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Patri-X — De petites briques, de grands rêves">
+    <meta property="og:description" content="Un jeu de blocs pixel art, des défis et des pensées à découvrir.">
+    <meta property="og:image" content="https://unispourlapaix.github.io/PatriX/assets/images/patrix-arcade-share.png?v=3">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Patri-X, croix de cinq briques roses en pixel art sur fond crème">
+    <meta name="twitter:card" content="summary_large_image">
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#4fc3f7">
+    <meta name="theme-color" content="#201b31">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PATRI-X">
     
     <!-- Manifest PWA -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json?v=4">
     
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" sizes="32x32" href="assets/images/icon-32.svg">
-    <link rel="icon" type="image/svg+xml" sizes="192x192" href="assets/images/icon-192.svg">
-    <link rel="apple-touch-icon" href="assets/images/icon-192.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/patrix-arcade-32.png?v=3">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/patrix-arcade-192.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/patrix-arcade-180.png?v=3">
 
     <title>Patri-X - Transformer le Désespoir en Grands Rêves</title>
     
@@ -32,10 +40,10 @@
     <link rel="stylesheet" href="css/web-browser.css">
     <link rel="stylesheet" href="css/language.css">
 <link rel="stylesheet" href="css/local.css?v=29">
-<link rel="stylesheet" href="css/visual-themes.css?v=4">
+<link rel="stylesheet" href="css/visual-themes.css?v=5">
 <link rel="stylesheet" href="css/pixel-menus.css?v=5">
 <link rel="stylesheet" href="css/pixel-arcade.css?v=5">
-<script src="js/visual-themes.js?v=2" defer></script></head>
+<script src="js/visual-themes.js?v=3" defer></script></head>
 <body>
     <dialog id="startModeDialog" aria-labelledby="startModeTitle">
         <h2 id="startModeTitle"></h2>
@@ -153,13 +161,6 @@
         </div>
     </div>
 
-    <!-- Bouton sortie plein écran -->
-    <button id="exitFullscreenBtn" class="exit-fullscreen-btn" aria-label="Basculer le plein écran">
-        <svg viewBox="0 0 24 24" width="20" height="20">
-            <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="currentColor"/>
-        </svg>
-    </button>
-
     <!-- Conteneur principal - Grille maximisée -->
     <div class="game-wrapper">
         <!-- Grille de jeu maximisée -->
@@ -168,7 +169,13 @@
             <div class="mechanical-display">
                 <div class="display-section title-section">
                     <span class="game-title">PATRI-X</span>
-                    <div id="topGameTools" class="top-game-tools" aria-label="Style et partage"></div>
+                    <div id="topGameTools" class="top-game-tools" aria-label="Style et plein écran">
+                        <button type="button" id="exitFullscreenBtn" class="exit-fullscreen-btn" aria-label="Basculer le plein écran">
+                            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="display-section next-section">
@@ -591,7 +598,7 @@
     <script src="js/multi-piece.js?v=29"></script><script src="js/web-browser.js?v=22"></script><script src="js/main.js?v=20"></script>
     
 
-<script src="js/local-share.js?v=3"></script><script src="js/local-layout.js?v=8"></script></body>
+<script src="js/local-share.js?v=8"></script><script src="js/local-layout.js?v=9"></script></body>
 </html>
 
 

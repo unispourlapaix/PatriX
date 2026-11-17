@@ -13,7 +13,7 @@
     icon.alt = '';
     icon.width = icon.height = 28;
     button.append(icon);
-    document.getElementById('topGameTools').append(button);
+    document.getElementById('topGameTools').prepend(button);
     const cycle = [...modes.filter(mode => mode !== 'seasons'), ...seasons];
     const names = { classic: 'Classique', kawaii: 'Kawaii', galaxy: 'Galaxie', science: 'Laboratoire', scifi: 'Science-fiction', autumn: 'Automne', winter: 'Hiver', spring: 'Printemps', summer: 'Été' };
     let saved = {};
