@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 16" shape-rendering="crispEdges">
+  <!-- Croix, paix, cœur, étoile, ancre, lumière et pilier. -->
+  <g fill="#ffe3a1" stroke="#572634" stroke-width="1" stroke-linejoin="miter">
+    <path d="M6 1h4v4h4v4h-4v6H6V9H2V5h4z"/>
+    <path transform="translate(16)" d="M5 1h6v2h3v3h1v4h-1v3h-3v2H5v-2H2v-3H1V6h1V3h3zM6 4H4v5l2-2zm4 0v3l2 2V4zm-2 5-3 3h6z" fill-rule="evenodd"/>
+    <path transform="translate(32)" fill="#ff8268" d="M2 3h4v2h4V3h4v2h1v5h-2v2h-2v2H9v1H7v-1H5v-2H3v-2H1V5h1z"/>
+    <path transform="translate(48)" d="M7 1h2v4h2v2h4v2h-3v2h-1v4H9v-2H7v2H5v-4H4V9H1V7h4V5h2z"/>
+    <path transform="translate(64)" d="M6 1h4v2h2v3h-2v5h2V8h3v4h-2v2h-3v1H6v-1H3v-2H1V8h3v3h2V6H4V3h2z"/>
+    <path transform="translate(80)" fill="#ffbf62" d="M5 1h6v2h2v6h-2v3H5V9H3V3h2zm1 12h4v2H6z"/>
+    <path transform="translate(96)" d="M3 1h10v2h2v3h-4v6h3v3H2v-3h3V6H1V3h2z"/>
+  </g>
+</svg>

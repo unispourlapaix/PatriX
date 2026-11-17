@@ -96,3 +96,181 @@ body :is(#popCombo,.line-message,.spiritual-message) {
 }
 body :is(.mechanical-display,#exitFullscreenBtn) button:focus-visible,
 body #exitFullscreenBtn:focus-visible {outline:2px solid #fff2a8;outline-offset:-2px;}
+
+/* Momiji : cuivre, érable japonais et détails carrés réservés à l’automne. */
+body[data-visual-theme="autumn"] {
+    --momiji:url('../assets/images/momiji-pixel.svg');
+    --momiji-pieces:url('../assets/images/momiji-pieces.svg');
+    --arcade-edge:#f5b56c;
+    --arcade-shell:#4a272e;
+    --arcade-screen:#291c2a;
+    --arcade-empty:#38252e;
+}
+body[data-visual-theme="autumn"] .game-board .mechanical-display::before {
+    background:var(--momiji) repeat-x left center/27px 27px;
+    opacity:.22;
+}
+body[data-visual-theme="autumn"] .game-board .board::before,
+body[data-visual-theme="autumn"] .game-board .board::after {
+    content:'';
+    height:12px;
+    background:var(--momiji) repeat-x center/12px 12px;
+}
+body[data-visual-theme="autumn"] :is(.board-grid > .cell,#dashboardSummary .next-cell) {
+    border-radius:0;
+    clip-path:polygon(16% 0,84% 0,84% 8%,92% 8%,92% 16%,100% 16%,100% 84%,92% 84%,92% 92%,84% 92%,84% 100%,16% 100%,16% 92%,8% 92%,8% 84%,0 84%,0 16%,8% 16%,8% 8%,16% 8%);
+}
+body[data-visual-theme="autumn"] .board-grid > .cell.filled {
+    border-left-color:#d57a4f;
+}
+.cross {--momiji-glyph:0%;}
+.tcross {--momiji-glyph:16.6667%;}
+.heart {--momiji-glyph:33.3333%;}
+.star {--momiji-glyph:50%;}
+.anchor {--momiji-glyph:66.6667%;}
+.llight {--momiji-glyph:83.3333%;}
+.pillar {--momiji-glyph:100%;}
+body[data-visual-theme="autumn"] .board-grid > .cell.filled {font-size:0;}
+body[data-visual-theme="autumn"] .board-grid > .cell.filled::before {
+    inset:9%;
+    background:var(--momiji-pieces) var(--momiji-glyph,0%) center/700% 100% no-repeat;
+    image-rendering:pixelated;
+}
+body[data-visual-theme="autumn"] .board-grid > .cell.filled::after {
+    right:2%;
+    bottom:2%;
+    width:36%;
+    height:36%;
+    border-radius:0;
+    background:var(--momiji) center/contain no-repeat;
+    box-shadow:none;
+    transform:none;
+}
+body[data-visual-theme="autumn"] #dashboardSummary .next-cell.filled {
+    background-image:var(--momiji-pieces);
+    background-size:700% 100%;
+    background-repeat:no-repeat;
+    background-position:var(--momiji-glyph,0%) center;
+    image-rendering:pixelated;
+}
+body[data-visual-theme="autumn"] .mechanical-display :is(#visualStyleButton,#localShare,.game-button-mini,.trophy-button-compact) {
+    background-image:var(--momiji);
+    background-size:11px 11px;
+    background-repeat:no-repeat;
+    background-position:bottom right;
+}
+
+body[data-visual-theme="winter"] {
+    --season-sprite:url('../assets/images/season-givre.svg');
+    --arcade-edge:#b9efff;--arcade-shell:#243d56;--arcade-screen:#132536;--arcade-empty:#233c53;
+    --season-shape:polygon(18% 0,82% 0,100% 18%,100% 82%,82% 100%,18% 100%,0 82%,0 18%);
+    --season-glyph-filter:hue-rotate(162deg) saturate(.63) brightness(1.18);
+}
+body[data-visual-theme="spring"] {
+    --season-sprite:url('../assets/images/season-sakura.svg');
+    --arcade-edge:#f9abd0;--arcade-shell:#39453b;--arcade-screen:#202c26;--arcade-empty:#324638;
+    --season-shape:polygon(22% 0,78% 0,78% 8%,92% 8%,92% 22%,100% 22%,100% 78%,92% 78%,92% 92%,78% 92%,78% 100%,22% 100%,22% 92%,8% 92%,8% 78%,0 78%,0 22%,8% 22%,8% 8%,22% 8%);
+    --season-glyph-filter:hue-rotate(300deg) saturate(.78) brightness(1.17);
+}
+body[data-visual-theme="summer"] {
+    --season-sprite:url('../assets/images/season-soleil.svg');
+    --arcade-edge:#ffda78;--arcade-shell:#29525b;--arcade-screen:#15333d;--arcade-empty:#21515c;
+    --season-shape:polygon(22% 0,78% 0,78% 7%,93% 7%,93% 22%,100% 22%,100% 82%,89% 82%,89% 94%,76% 94%,76% 100%,24% 100%,24% 94%,11% 94%,11% 82%,0 82%,0 22%,7% 22%,7% 7%,22% 7%);
+    --season-glyph-filter:hue-rotate(14deg) saturate(1.22) brightness(1.12);
+}
+body[data-visual-theme="classic"] {
+    --season-sprite:url('../assets/images/theme-classic.svg');
+    --arcade-edge:#eebc7b;--arcade-shell:#433041;--arcade-screen:#251e2b;--arcade-empty:#352839;
+    --season-shape:none;
+    --season-glyph-filter:none;
+}
+body[data-visual-theme="kawaii"] {
+    --season-sprite:url('../assets/images/theme-kawaii.svg');
+    --arcade-edge:#ffc4e3;--arcade-shell:#583951;--arcade-screen:#34233f;--arcade-empty:#4e3151;
+    --season-shape:none;
+    --season-glyph-filter:hue-rotate(300deg) brightness(1.15);
+}
+body[data-visual-theme="galaxy"] {
+    --season-sprite:url('../assets/images/theme-galaxy.svg');
+    --arcade-edge:#b1bbff;--arcade-shell:#302957;--arcade-screen:#161835;--arcade-empty:#26254c;
+    --season-shape:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);
+    --season-glyph-filter:hue-rotate(170deg) brightness(1.18);
+}
+body[data-visual-theme="science"] {
+    --season-sprite:url('../assets/images/theme-science.svg');
+    --arcade-edge:#9de6bf;--arcade-shell:#24473f;--arcade-screen:#152a29;--arcade-empty:#244038;
+    --season-shape:polygon(0 0,70% 0,70% 9%,100% 9%,100% 100%,30% 100%,30% 91%,0 91%);
+    --season-glyph-filter:hue-rotate(91deg) saturate(.75) brightness(1.2);
+}
+body[data-visual-theme="scifi"] {
+    --season-sprite:url('../assets/images/theme-scifi.svg');
+    --arcade-edge:#7ef4fb;--arcade-shell:#293057;--arcade-screen:#171829;--arcade-empty:#2d2852;
+    --season-shape:polygon(16% 0,100% 0,100% 67%,90% 67%,90% 84%,74% 84%,74% 100%,0 100%,0 30%,16% 30%);
+    --season-glyph-filter:hue-rotate(185deg) saturate(1.35) brightness(1.22);
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) {
+    --season-pieces:url('../assets/images/momiji-pieces.svg');
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .mechanical-display::before {
+    background:var(--season-sprite) repeat-x left center/26px 26px;
+    opacity:.22;
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .game-board .board::before,
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .game-board .board::after {
+    content:'';height:12px;
+    background:var(--season-sprite) repeat-x center/12px 12px;
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) :is(.board-grid > .cell,#dashboardSummary .next-cell) {
+    border-radius:0;
+    clip-path:var(--season-shape);
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .board-grid > .cell.filled {position:relative;font-size:0;}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .board-grid > .cell.filled::before,
+body[data-visual-theme]:not([data-visual-theme="autumn"]) #dashboardSummary .next-cell.filled::before {
+    content:'';position:absolute;inset:8%;pointer-events:none;
+    background:var(--season-pieces) var(--momiji-glyph,0%) center/700% 100% no-repeat;
+    filter:var(--season-glyph-filter);
+    border:0;image-rendering:pixelated;
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) #dashboardSummary .next-cell.filled {position:relative;}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .board-grid > .cell.filled::after {
+    content:'';position:absolute;inset:auto 3% 3% auto;width:32%;height:32%;
+    background:var(--season-sprite) center/contain no-repeat;
+    clip-path:none;border:0;border-radius:0;box-shadow:none;
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .mechanical-display :is(#visualStyleButton,#localShare,.game-button-mini,.trophy-button-compact) {
+    background-image:var(--season-sprite);background-size:10px 10px;
+    background-repeat:no-repeat;background-position:bottom right;
+}
+body[data-visual-theme="winter"] .game-board {
+    background-image:var(--arcade-grain),radial-gradient(circle,#d9f5ff5c 1px,transparent 2px);
+    background-size:32px 32px,37px 43px;
+}
+body[data-visual-theme="spring"] .game-board {
+    background-image:var(--arcade-grain),radial-gradient(ellipse at 12% 72%,#eb90b84d,transparent 48%);
+    background-size:32px 32px,100% 100%;
+}
+body[data-visual-theme="summer"] .game-board {
+    background-image:var(--arcade-grain),repeating-linear-gradient(0deg,#a8f1ec17 0 2px,transparent 2px 20px);
+    background-size:32px 32px,100% 100%;
+}
+body:is([data-visual-theme="science"],[data-visual-theme="scifi"]) .game-board {
+    background-image:var(--arcade-grain),var(--theme-pattern);
+    background-size:32px 32px,24px 24px;
+}
+body[data-visual-theme="science"] {
+    --theme-cell:#d9f6e9;--theme-panel:#d9f6e9;--theme-accent:#438e79;--theme-ink:#173e37;
+    --theme-pattern:linear-gradient(90deg,#7ae0c126 1px,transparent 1px),linear-gradient(#7ae0c126 1px,transparent 1px);
+}
+body[data-visual-theme="scifi"] {
+    --theme-cell:#303757;--theme-panel:#202443;--theme-accent:#81dff3;--theme-ink:#e7fcff;
+    --theme-pattern:linear-gradient(135deg,transparent 45%,#9a83ff48 45% 50%,transparent 50% 74%,#6deafe2a 74% 78%,transparent 78%);
+}
+body:is([data-visual-theme="classic"],[data-visual-theme="kawaii"],[data-visual-theme="galaxy"],[data-visual-theme="science"],[data-visual-theme="scifi"]) .game-board .board::before,
+body:is([data-visual-theme="classic"],[data-visual-theme="kawaii"],[data-visual-theme="galaxy"],[data-visual-theme="science"],[data-visual-theme="scifi"]) .game-board .board::after {
+    position:absolute;left:5%;right:5%;pointer-events:none;z-index:11;
+}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .game-board .board::before {top:-7px;}
+body[data-visual-theme]:not([data-visual-theme="autumn"]) .game-board .board::after {bottom:-7px;}
+body[data-visual-theme="kawaii"] :is(.board-grid > .cell,#dashboardSummary .next-cell) {border-radius:27%;}
+body[data-visual-theme="classic"] :is(.board-grid > .cell,#dashboardSummary .next-cell) {border-radius:1px;}

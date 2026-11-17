@@ -851,6 +851,7 @@ class UserInterface {
                     pieceCol >= 0 && pieceCol < cols && 
                     shape[pieceRow][pieceCol]) {
                     cell.classList.add('filled');
+                    if (piece.type) cell.classList.add(piece.type);
                     cell.style.backgroundColor = CONFIG.COLORS.SHADOW[piece.color];
                 }
                 

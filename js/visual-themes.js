@@ -1,6 +1,6 @@
 /* Habillages visuels : aucune modification des règles ou de la partie. */
 (() => {
-    const modes = ['classic', 'kawaii', 'galaxy', 'seasons'];
+    const modes = ['classic', 'kawaii', 'galaxy', 'science', 'scifi', 'seasons'];
     const seasons = ['autumn', 'winter', 'spring', 'summer'];
     const mode = document.getElementById('visualMode');
     const season = document.getElementById('visualSeason');
@@ -14,8 +14,8 @@
     icon.width = icon.height = 28;
     button.append(icon);
     document.getElementById('topGameTools').append(button);
-    const cycle = ['classic', 'kawaii', 'galaxy', ...seasons];
-    const names = { classic: 'Classique', kawaii: 'Kawaii', galaxy: 'Galaxie', autumn: 'Automne', winter: 'Hiver', spring: 'Printemps', summer: 'Été' };
+    const cycle = [...modes.filter(mode => mode !== 'seasons'), ...seasons];
+    const names = { classic: 'Classique', kawaii: 'Kawaii', galaxy: 'Galaxie', science: 'Laboratoire', scifi: 'Science-fiction', autumn: 'Automne', winter: 'Hiver', spring: 'Printemps', summer: 'Été' };
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem('patrixVisualStyle')) || {}; } catch {}
     mode.value = modes.includes(saved.mode) ? saved.mode : 'classic';
