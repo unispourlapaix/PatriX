@@ -251,5 +251,5 @@ class LanguageManager {
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
     window.languageManager = new LanguageManager();
-    window.languageManager.initialize();
+    window.languageManagerReady = window.languageManager.initialize();
 });

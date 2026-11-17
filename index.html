@@ -31,11 +31,17 @@
     <link rel="stylesheet" href="css/ending.css">
     <link rel="stylesheet" href="css/web-browser.css">
     <link rel="stylesheet" href="css/language.css">
-<link rel="stylesheet" href="css/local.css?v=28">
+<link rel="stylesheet" href="css/local.css?v=29">
 <link rel="stylesheet" href="css/visual-themes.css?v=4">
-<link rel="stylesheet" href="css/pixel-menus.css?v=4">
+<link rel="stylesheet" href="css/pixel-menus.css?v=5">
+<link rel="stylesheet" href="css/pixel-arcade.css?v=1">
 <script src="js/visual-themes.js?v=1" defer></script></head>
 <body>
+    <dialog id="startModeDialog" aria-labelledby="startModeTitle">
+        <h2 id="startModeTitle"></h2>
+        <button type="button" data-mode="simple"></button>
+        <button type="button" data-mode="landscape"></button>
+    </dialog>
     <!-- Modal de sélection de langue -->
     <div class="language-selector-modal hidden" id="languageModal">
         <div class="language-selector-content">
@@ -564,7 +570,7 @@
     <!-- Modules JavaScript (ordre important !) -->
     <script src="js/config.js?v=35"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/language-manager.js"></script>
+    <script src="js/language-manager.js?v=2"></script>
 
     <script src="js/avatars.js"></script>
     <script src="js/audio.js?v=16"></script>
@@ -574,13 +580,13 @@
     <script src="js/profile-manager.js"></script>
 
     <script src="js/ending-animation.js?v=24"></script>
-    <script src="js/game-engine.js?v=23"></script>
+    <script src="js/game-engine.js?v=24"></script>
     <script src="js/controls.js?v=23"></script>
     <script src="js/effects.js?v=8"></script>
-    <script src="js/line-tracer.js?v=21"></script>
+    <script src="js/line-tracer.js?v=22"></script>
 
     <script src="js/ui.js?v=4"></script>
-    <script src="js/multi-piece.js?v=28"></script><script src="js/web-browser.js?v=22"></script><script src="js/main.js?v=18"></script>
+    <script src="js/multi-piece.js?v=29"></script><script src="js/web-browser.js?v=22"></script><script src="js/main.js?v=20"></script>
     
 
 <script src="js/local-share.js?v=3"></script><script src="js/local-layout.js?v=8"></script></body>

@@ -709,7 +709,8 @@ class GameEngine {
     }
     handleLinesCleared(lines) {
         const count = lines.length;
-        const landscapeChallenge = window.matchMedia('(orientation: landscape)').matches;
+        const landscapeChallenge = document.documentElement.dataset.gameMode !== 'simple' &&
+            window.matchMedia('(orientation: landscape)').matches;
         this.lines += count;
         this.combo += landscapeChallenge ? count : 1;
         

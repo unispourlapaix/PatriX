@@ -4,7 +4,7 @@
  const thirdPieceAt=30,fourthPieceAt=70;
  function pieceCount(engine){
   const landscape=window.matchMedia('(orientation: landscape)').matches;
-  if(!landscape)return 1;
+  if(!landscape||document.documentElement.dataset.gameMode==='simple')return 1;
   if(engine.grid.cols>=10&&window.innerWidth>=600){
    if(engine.popPointsTotal>=fourthPieceAt)return 4;
    if(engine.popPointsTotal>=thirdPieceAt)return 3;

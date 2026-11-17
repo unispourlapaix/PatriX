@@ -1,0 +1,98 @@
+/* Matières communes : boîtier, écran et papier imprimé. */
+body {
+    --arcade-grain:url('../assets/images/pixel-dither.svg');
+    --arcade-night:#191927;
+    --arcade-edge:color-mix(in srgb,var(--theme-accent,#d7a76c) 78%,#fff);
+    --arcade-shell:color-mix(in srgb,var(--theme-bg,#493747) 30%,#211e2e);
+    --arcade-screen:color-mix(in srgb,var(--theme-grid,#c6a578) 25%,#171725);
+    --arcade-empty:color-mix(in srgb,var(--theme-cell,#e8c797) 22%,#222134);
+    --arcade-ink:#fff4db;
+    --arcade-font:Consolas,'Courier New',monospace;
+}
+html body, html body[data-visual-theme] {
+    background:var(--arcade-grain) repeat 0 0/32px 32px,
+        var(--theme-pattern,linear-gradient(transparent,transparent)),
+        linear-gradient(150deg,var(--theme-bg,#6c4b49),var(--arcade-night));
+}
+body .game-board {
+    background:var(--arcade-grain) repeat 0 0/32px 32px,
+        linear-gradient(145deg,var(--arcade-shell),var(--arcade-night));
+    border-radius:0;
+    border-color:var(--arcade-edge);
+    box-shadow:inset 0 0 0 2px var(--arcade-night);
+}
+body .game-board .mechanical-display {
+    background:var(--arcade-grain) repeat 0 0/32px 32px,var(--arcade-shell);
+    border:2px solid var(--arcade-edge);
+    border-radius:0;
+    box-shadow:inset 0 -3px #0005;
+    color:var(--arcade-ink);
+}
+body .game-board .mechanical-display::before {opacity:.16;}
+body .game-board .title-section .game-title {
+    font-family:var(--arcade-font);
+    color:var(--arcade-edge);
+    -webkit-text-fill-color:var(--arcade-edge);
+    text-shadow:2px 2px #12101d;
+}
+body #dashboardSummary {
+    background:var(--arcade-grain) repeat 0 0/24px 24px,var(--arcade-screen);
+    border-color:var(--arcade-edge);
+    border-radius:0;
+    box-shadow:inset 2px 2px #100e1c99;
+}
+body .mechanical-display :is(.stat-label,.display-label,.stat-value) {
+    color:var(--arcade-ink);
+    font-family:var(--arcade-font);
+    text-shadow:none;
+}
+body .mechanical-display .stat-value {color:var(--arcade-edge);font-variant-numeric:tabular-nums;}
+body .mechanical-display .next-header :is(.game-button-mini,.trophy-button-compact) {
+    background:var(--arcade-grain) repeat 0 0/24px 24px,var(--arcade-screen);
+    border:1px solid var(--arcade-edge);
+    border-radius:0;
+    box-shadow:inset 0 -2px #0007;
+}
+body .game-board .board {
+    background:var(--arcade-grain) repeat 0 0/24px 24px,
+        var(--theme-pattern,linear-gradient(transparent,transparent)),var(--arcade-screen);
+    border-color:var(--arcade-edge);
+    box-shadow:inset 0 0 0 2px #11101f,3px 3px #0c0b16;
+}
+body .board-grid > .cell:not(.filled):not(.current-piece) {
+    background:var(--arcade-grain) repeat 0 0/16px 16px,var(--arcade-empty);
+    border-color:#ffffff22;
+}
+body .board-grid > .cell.filled:not(.poppable):not(.traced):not(.current-piece) {
+    border-top-color:#ffffffaa;
+    border-bottom-color:#241b3d99;
+}
+body .board-grid > .cell.poppable:not(.traced) {
+    outline:2px solid #fff2a8;
+    outline-offset:-2px;
+}
+body .game-footer {
+    background:var(--arcade-grain) repeat 0 0/32px 32px,var(--arcade-shell);
+    border-color:var(--arcade-edge);
+}
+body .game-footer a,
+body #exitFullscreenBtn,
+body #exitFullscreenBtn:hover svg {color:var(--arcade-ink);}
+body :is(#startModeDialog,.game-over-panel,.pause-panel,.trophy-content,.treasure-content,
+           .trophies-panel-content,.language-selector-content,.profile-modal-content,
+           .save-load-content,.contact-form-container,.pixel-ending-shell,#shareDialog) {
+    background-image:var(--arcade-grain);
+    background-size:24px 24px;
+    border-radius:0;
+}
+body :is(.trophy-card,.language-option,.save-slot,.pixel-result-score) {
+    border-radius:0;
+    background-image:var(--arcade-grain);
+    background-size:24px 24px;
+}
+body :is(#popCombo,.line-message,.spiritual-message) {
+    background-image:var(--arcade-grain);
+    background-size:24px 24px;
+}
+body :is(.mechanical-display,#exitFullscreenBtn) button:focus-visible,
+body #exitFullscreenBtn:focus-visible {outline:2px solid #fff2a8;outline-offset:-2px;}

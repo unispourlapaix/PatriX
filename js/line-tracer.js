@@ -156,6 +156,7 @@ class LineTracer {
         // Stocker la position en coordonnées écran
         const pos = this.getEventPosition(e);
         this.quickPop = e.type === 'touchstart' && e.touches.length === 1 &&
+            document.documentElement.dataset.gameMode !== 'simple' &&
             window.matchMedia('(orientation: landscape)').matches && pos
             ? { ...pos, identifier: e.touches[0].identifier, row, col, cell: gridCell }
             : null;

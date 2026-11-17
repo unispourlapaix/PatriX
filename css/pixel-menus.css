@@ -1,4 +1,9 @@
 /* Cadres arcade nets ; aucune police distante nécessaire. */
+#startModeDialog {box-sizing:border-box;margin:auto;width:min(420px,calc(100% - 28px));max-height:calc(100dvh - 24px);overflow:auto;padding:20px;border:4px double #88614c;background:#fff1d3;color:#382c41;box-shadow:5px 5px #171b31;font-family:'Courier New',monospace;text-align:center;}
+#startModeDialog::backdrop {background:#171b31cc;}
+#startModeTitle {font-size:clamp(17px,5vw,23px);margin:0 0 12px;}
+#startModeDialog button {display:block;width:100%;min-height:44px;margin:8px 0;padding:8px;border:2px solid #382c41;background:#382c41;color:#fff1d3;font:700 15px 'Courier New',monospace;cursor:pointer;}
+#startModeDialog button:focus-visible {outline:3px solid #4766b6;outline-offset:2px;}
 #popCombo {
  --pop-accent:#8fe9db;
  background:#171b31;color:var(--pop-accent);

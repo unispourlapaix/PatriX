@@ -27,8 +27,55 @@ function initUserSystem() {
     webBrowser = new WebBrowserManager();
     window.webBrowser = webBrowser;
     const fullscreen = document.getElementById('exitFullscreenBtn');
-    if (fullscreen) fullscreen.addEventListener('click', toggleFullscreen);
-    startGame();
+    if (fullscreen) fullscreen.addEventListener('click', () => toggleFullscreen());
+    showStartMode();
+}
+
+async function showStartMode() {
+    await window.languageManagerReady?.catch(() => {});
+    const languageModal = document.getElementById('languageModal');
+    if (!languageModal.classList.contains('hidden')) {
+        await new Promise(resolve => {
+            const observer = new MutationObserver(() => {
+                if (!languageModal.classList.contains('hidden')) return;
+                observer.disconnect();
+                resolve();
+            });
+            observer.observe(languageModal, { attributes: true, attributeFilter: ['class'] });
+        });
+    }
+    const labels = {
+        fr: ['Choisis ton mode de jeu', 'Mode simple', 'Nouveau mode horizontal', 'Tourne ton téléphone pour jouer en paysage.'],
+        en: ['Choose your game mode', 'Simple mode', 'New landscape mode', 'Turn your phone sideways to play.'],
+        es: ['Elige tu modo de juego', 'Modo sencillo', 'Nuevo modo horizontal', 'Gira el móvil para jugar en horizontal.'],
+        pt: ['Escolhe o modo de jogo', 'Modo simples', 'Novo modo horizontal', 'Vira o telemóvel para jogar na horizontal.'],
+        ar: ['اختر وضع اللعب', 'الوضع البسيط', 'الوضع الأفقي الجديد', 'أدر هاتفك للعب في الوضع الأفقي.'],
+        ja: ['ゲームモードを選択', 'シンプルモード', '新しい横画面モード', 'スマートフォンを横向きにして遊ぼう。'],
+        zh: ['选择游戏模式', '简单模式', '全新横屏模式', '请横向转动手机游玩。'],
+        uk: ['Обери режим гри', 'Простий режим', 'Новий горизонтальний режим', 'Поверни телефон горизонтально, щоб грати.'],
+        ln: ['Poná lolenge ya kosakana', 'Lolenge ya pɛtɛɛ', 'Lolenge ya sika na ngámbo', 'Balusá telefone na ngámbo mpo na kosakana.']
+    };
+    const dialog = document.getElementById('startModeDialog');
+    const lang = window.i18n?.getLanguage() || 'fr';
+    const [title, simple, landscape, rotateHint] = labels[lang] || labels.fr;
+    dialog.lang = lang;
+    dialog.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('startModeTitle').textContent = title;
+    dialog.querySelector('[data-mode="simple"]').textContent = simple;
+    dialog.querySelector('[data-mode="landscape"]').textContent = landscape;
+    function choose(mode) {
+        document.documentElement.dataset.gameMode = mode;
+        dialog.close();
+        if (!fullscreenElement() && !document.documentElement.classList.contains('game-immersive')) {
+            void toggleFullscreen(rotateHint);
+        }
+        startGame();
+    }
+    for (const button of dialog.querySelectorAll('button')) {
+        button.addEventListener('click', () => choose(button.dataset.mode), { once: true });
+    }
+    dialog.addEventListener('cancel', event => { event.preventDefault(); choose('simple'); });
+    dialog.showModal();
 }
 function startGame() {
     // Démarrer une nouvelle partie (les sauvegardes sont gérées via le menu pause)
@@ -68,7 +115,7 @@ for (const event of ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscree
     document.addEventListener(event, releaseFullscreenOrientation);
 }
 
-async function toggleFullscreen() {
+async function toggleFullscreen(rotateHint = 'Tourne ton téléphone pour jouer en paysage.') {
     if (document.documentElement.classList.contains('game-immersive')) {
         document.documentElement.classList.remove('game-immersive');
         window.dispatchEvent(new Event('resize'));
@@ -92,7 +139,7 @@ async function toggleFullscreen() {
     try {
         if (enter) {
             await enter.call(elem);
-            if (fullscreenElement() && screen.orientation?.lock) {
+            if (document.documentElement.dataset.gameMode !== 'simple' && fullscreenElement() && screen.orientation?.lock) {
                 await screen.orientation.lock('landscape');
                 landscapeLocked = true;
                 releaseFullscreenOrientation();
@@ -107,11 +154,11 @@ async function toggleFullscreen() {
         window.dispatchEvent(new Event('resize'));
     }
 
-    if (!landscapeLocked && matchMedia('(pointer: coarse) and (orientation: portrait)').matches) {
+    if (document.documentElement.dataset.gameMode !== 'simple' && !landscapeLocked && matchMedia('(pointer: coarse) and (orientation: portrait)').matches) {
         const hint = document.createElement('div');
         hint.className = 'fullscreen-rotate-hint';
         hint.setAttribute('role', 'status');
-        hint.textContent = 'Tourne ton téléphone pour jouer en paysage.';
+        hint.textContent = rotateHint;
         document.querySelector('.fullscreen-rotate-hint')?.remove();
         document.body.append(hint);
         setTimeout(() => hint.remove(), 4500);
