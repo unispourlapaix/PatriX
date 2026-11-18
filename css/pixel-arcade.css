@@ -1,4 +1,17 @@
 /* Matières communes : boîtier, écran et papier imprimé. */
+.theme-fall {position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;color:var(--arcade-edge);}
+.theme-fall-particle {
+    position:absolute;top:-28px;display:block;opacity:.46;white-space:nowrap;
+    font:bold var(--fall-size,18px)/1 Consolas,'Courier New',monospace;
+    animation:theme-fall var(--fall-duration,11s) linear var(--fall-delay,0s) infinite;
+}
+.theme-fall-particle img {display:block; width:var(--fall-size,18px);height:auto;image-rendering:pixelated;}
+.theme-fall-rain {width:2px;height:14px;background:#bcf1ff;}
+@keyframes theme-fall {
+    from {transform:translate(0,0);}
+    to {transform:translate(var(--fall-drift,0px),calc(100dvh + 28px));}
+}
+@media (prefers-reduced-motion:reduce) {.theme-fall {display:none;}}
 body {
     --arcade-grain:url('../assets/images/pixel-dither.svg');
     --arcade-night:#191927;
