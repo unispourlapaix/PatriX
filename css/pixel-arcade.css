@@ -1,5 +1,5 @@
 /* Matières communes : boîtier, écran et papier imprimé. */
-.theme-fall {position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;color:var(--arcade-edge);}
+.theme-fall {position:absolute;inset:0;z-index:12;overflow:hidden;pointer-events:none;user-select:none;color:var(--arcade-edge);}
 .theme-fall-particle {
     position:absolute;top:-28px;display:block;opacity:.46;white-space:nowrap;
     font:bold var(--fall-size,18px)/1 Consolas,'Courier New',monospace;
