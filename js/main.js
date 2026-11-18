@@ -63,16 +63,59 @@ async function showStartMode() {
     document.getElementById('startModeTitle').textContent = title;
     dialog.querySelector('[data-mode="simple"]').textContent = simple;
     dialog.querySelector('[data-mode="landscape"]').textContent = landscape;
-    function choose(mode) {
-        document.documentElement.dataset.gameMode = mode;
-        dialog.close();
-        if (!fullscreenElement() && !document.documentElement.classList.contains('game-immersive')) {
+    const orientation = matchMedia('(orientation: landscape)');
+    const touchDevice = matchMedia('(any-pointer: coarse)').matches;
+    const status = document.getElementById('startModeOrientation');
+    let pending = false;
+    let started = false;
+    let fullscreenRequested = false;
+
+    function requestGameFullscreen() {
+        if (!fullscreenRequested && !fullscreenElement() &&
+            !document.documentElement.classList.contains('game-immersive')) {
+            fullscreenRequested = true;
             void toggleFullscreen(rotateHint);
         }
+    }
+
+    function launch() {
+        if (started) return;
+        started = true;
+        orientation.removeEventListener('change', checkLandscape);
+        window.removeEventListener('resize', checkLandscape);
+        dialog.close();
         startGame();
     }
+
+    function checkLandscape() {
+        if (!pending || started) return;
+        status.hidden = orientation.matches;
+        if (!orientation.matches) return;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            if (pending && orientation.matches && window.innerWidth > window.innerHeight) {
+                launch();
+            }
+        }));
+    }
+
+    function choose(mode) {
+        if (started || (pending && mode === 'landscape')) return;
+        document.documentElement.dataset.gameMode = mode;
+        requestGameFullscreen();
+        if (mode === 'landscape' && touchDevice) {
+            pending = true;
+            status.textContent = rotateHint;
+            status.hidden = orientation.matches;
+            orientation.addEventListener('change', checkLandscape);
+            window.addEventListener('resize', checkLandscape);
+            checkLandscape();
+        } else {
+            pending = false;
+            launch();
+        }
+    }
     for (const button of dialog.querySelectorAll('button')) {
-        button.addEventListener('click', () => choose(button.dataset.mode), { once: true });
+        button.addEventListener('click', () => choose(button.dataset.mode));
     }
     dialog.addEventListener('cancel', event => { event.preventDefault(); choose('simple'); });
     dialog.showModal();
