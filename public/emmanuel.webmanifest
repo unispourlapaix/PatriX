@@ -1,0 +1,22 @@
+{
+  "id": "./emmanuel-ascii-header.html",
+  "name": "Emmanuel Gallery",
+  "short_name": "Emmanuel",
+  "start_url": "./emmanuel-ascii-header.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#302b63",
+  "icons": [
+    {
+      "src": "emmanuel-ascii-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "emmanuel-ascii-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
