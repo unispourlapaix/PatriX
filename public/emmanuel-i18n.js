@@ -4,7 +4,7 @@ const translations = {
         subtitle: "✝ Christian Artist • Creator • Inspirer ✝",
         discover: "✝ Discover My Creative Universe ✝",
         games: "Spiritual Games - free to play",
-        gamesDecor: "Games & Decor",
+        gamesDecor: "Games & Exhibitions",
         booksArt: "Books & Art",
         booksAmazon: "Also available on Amazon",
         freeGospel: "Free Gospel",
@@ -22,13 +22,14 @@ const translations = {
         uplessSub: "The Way of the Universe",
         quote: "Christian art unites hearts beyond differences,<br>celebrating the beauty of divine creation<br>in all its diversity.",
         footer: "Glory to God",
+        adventure: "Life is an extraordinary adventure. Take courage! • To You alone be the glory, Eternal Lord. Open my eyes and my heart. Thank You.",
         copyright: "Emmanuel Payet © 2024"
     },
     fr: {
         subtitle: "✝ Artiste Chrétien • Créateur • Inspirateur ✝",
         discover: "✝ Découvrez Mon Univers Créatif ✝",
         games: "Mes Jeux Spirituels - free to play",
-        gamesDecor: "Jeux & Déco",
+        gamesDecor: "Jeux & Expositions",
         booksArt: "Livres & Art",
         booksAmazon: "Disponible aussi sur Amazon",
         freeGospel: "Gospel Gratuit",
@@ -46,13 +47,14 @@ const translations = {
         uplessSub: "La Voie de l’Univers",
         quote: "L'art chrétien unit les cœurs au-delà des différences,<br>célébrant la beauté de la création divine<br>dans toute sa diversité.",
         footer: "Gloire à Dieu",
+        adventure: "La vie est une aventure extraordinaire, courage ! • À toi seul la gloire, Éternel. Ouvre mes yeux et mon cœur. Merci.",
         copyright: "Emmanuel Payet © 2024"
     },
     es: {
         subtitle: "✝ Artista Cristiano • Creador • Inspirador ✝",
         discover: "✝ Descubre Mi Universo Creativo ✝",
         games: "Mis Juegos Espirituales - gratis",
-        gamesDecor: "Juegos & Deco",
+        gamesDecor: "Juegos y exposiciones",
         booksArt: "Libros & Arte",
         booksAmazon: "También disponible en Amazon",
         freeGospel: "Gospel Gratis",
@@ -70,13 +72,14 @@ const translations = {
         uplessSub: "El Camino del Universo",
         quote: "El arte cristiano une corazones más allá de las diferencias,<br>celebrando la belleza de la creación divina<br>en toda su diversidad.",
         footer: "Gloria a Dios",
+        adventure: "¡La vida es una aventura extraordinaria, ánimo! • A ti solo sea la gloria, Eterno. Abre mis ojos y mi corazón. Gracias.",
         copyright: "Emmanuel Payet © 2024"
     },
     de: {
         subtitle: "✝ Christlicher Künstler • Schöpfer • Inspirator ✝",
         discover: "✝ Entdecke Mein Kreatives Universum ✝",
         games: "Meine Spirituellen Spiele - kostenlos",
-        gamesDecor: "Spiele & Deko",
+        gamesDecor: "Spiele & Ausstellungen",
         booksArt: "Bücher & Kunst",
         booksAmazon: "Auch bei Amazon erhältlich",
         freeGospel: "Kostenloses Gospel",
@@ -94,13 +97,14 @@ const translations = {
         uplessSub: "Der Weg des Universums",
         quote: "Christliche Kunst vereint Herzen über Unterschiede hinweg,<br>und feiert die Schönheit der göttlichen Schöpfung<br>in ihrer ganzen Vielfalt.",
         footer: "Ehre sei Gott",
+        adventure: "Das Leben ist ein außergewöhnliches Abenteuer. Nur Mut! • Dir allein gebührt die Ehre, ewiger Herr. Öffne meine Augen und mein Herz. Danke.",
         copyright: "Emmanuel Payet © 2024"
     },
     it: {
         subtitle: "✝ Artista Cristiano • Creatore • Ispiratore ✝",
         discover: "✝ Scopri Il Mio Universo Creativo ✝",
         games: "I Miei Giochi Spirituali - gratuiti",
-        gamesDecor: "Giochi & Deco",
+        gamesDecor: "Giochi e mostre",
         booksArt: "Libri & Arte",
         booksAmazon: "Disponibile anche su Amazon",
         freeGospel: "Gospel Gratuito",
@@ -118,13 +122,14 @@ const translations = {
         uplessSub: "La Via dell’Universo",
         quote: "L'arte cristiana unisce i cuori oltre le differenze,<br>celebrando la bellezza della creazione divina<br>in tutta la sua diversità.",
         footer: "Gloria a Dio",
+        adventure: "La vita è un’avventura straordinaria, coraggio! • A te solo la gloria, Eterno. Apri i miei occhi e il mio cuore. Grazie.",
         copyright: "Emmanuel Payet © 2024"
     },
     pt: {
         subtitle: "✝ Artista Cristão • Criador • Inspirador ✝",
         discover: "✝ Descubra Meu Universo Criativo ✝",
         games: "Meus Jogos Espirituais - grátis",
-        gamesDecor: "Jogos & Deco",
+        gamesDecor: "Jogos e exposições",
         booksArt: "Livros & Arte",
         booksAmazon: "Também disponível na Amazon",
         freeGospel: "Gospel Grátis",
@@ -142,13 +147,14 @@ const translations = {
         uplessSub: "O Caminho do Universo",
         quote: "A arte cristã une corações além das diferenças,<br>celebrando a beleza da criação divina<br>em toda a sua diversidade.",
         footer: "Glória a Deus",
+        adventure: "A vida é uma aventura extraordinária, coragem! • A ti somente a glória, Eterno. Abre meus olhos e meu coração. Obrigado.",
         copyright: "Emmanuel Payet © 2024"
     },
     ru: {
         subtitle: "✝ Христианский Художник • Создатель • Вдохновитель ✝",
         discover: "✝ Откройте Мой Творческий Мир ✝",
         games: "Мои Духовные Игры - бесплатно",
-        gamesDecor: "Игры & Декор",
+        gamesDecor: "Игры и выставки",
         booksArt: "Книги & Искусство",
         booksAmazon: "Также доступно на Amazon",
         freeGospel: "Бесплатный Госпел",
@@ -166,13 +172,14 @@ const translations = {
         uplessSub: "Путь Вселенной",
         quote: "Христианское искусство объединяет сердца за пределами различий,<br>празднуя красоту божественного творения<br>во всем его разнообразии.",
         footer: "Слава Богу",
+        adventure: "Жизнь — необыкновенное приключение. Смелее! • Тебе одному слава, Вечный Господь. Открой мои глаза и моё сердце. Спасибо.",
         copyright: "Emmanuel Payet © 2024"
     },
     zh: {
         subtitle: "✝ 基督教艺术家 • 创作者 • 启发者 ✝",
         discover: "✝ 发现我的创意宇宙 ✝",
         games: "我的灵性游戏 - 免费",
-        gamesDecor: "游戏与装饰",
+        gamesDecor: "游戏与展览",
         booksArt: "书籍与艺术",
         booksAmazon: "亚马逊也有售",
         freeGospel: "免费福音音乐",
@@ -190,13 +197,14 @@ const translations = {
         uplessSub: "宇宙之道",
         quote: "基督教艺术超越差异团结人心，<br>在其多样性中<br>庆祝神圣创造的美丽。",
         footer: "荣耀归于神",
+        adventure: "生命是一场非凡的冒险，勇敢前行！ • 荣耀唯独归于你，永恒的主。求你开启我的双眼和心灵。感谢你。",
         copyright: "Emmanuel Payet © 2024"
     },
     ja: {
         subtitle: "✝ クリスチャンアーティスト • クリエイター • インスパイア ✝",
         discover: "✝ 私のクリエイティブな宇宙を発見 ✝",
         games: "私のスピリチュアルゲーム - 無料",
-        gamesDecor: "ゲーム＆デコ",
+        gamesDecor: "ゲーム＆展示",
         booksArt: "本＆アート",
         booksAmazon: "Amazonでも購入できます",
         freeGospel: "無料ゴスペル",
@@ -214,13 +222,14 @@ const translations = {
         uplessSub: "宇宙の道",
         quote: "キリスト教芸術は違いを超えて心を結びつけ、<br>その多様性の中で<br>神の創造の美しさを讃えます。",
         footer: "神に栄光あれ",
+        adventure: "人生は素晴らしい冒険。勇気を持って！ • 永遠の主よ、あなただけに栄光を。私の目と心を開いてください。ありがとうございます。",
         copyright: "Emmanuel Payet © 2024"
     },
     ar: {
         subtitle: "✝ فنان مسيحي • مبدع • ملهم ✝",
         discover: "✝ اكتشف عالمي الإبداعي ✝",
         games: "ألعابي الروحية - مجانية",
-        gamesDecor: "الألعاب والديكور",
+        gamesDecor: "الألعاب والمعارض",
         booksArt: "الكتب والفن",
         booksAmazon: "متوفر أيضًا على أمازون",
         freeGospel: "الإنجيل المجاني",
@@ -238,13 +247,14 @@ const translations = {
         uplessSub: "طريق الكون",
         quote: "الفن المسيحي يوحد القلوب عبر الاختلافات،<br>محتفلاً بجمال الخلق الإلهي<br>في كل تنوعه.",
         footer: "المجد لله",
+        adventure: "الحياة مغامرة استثنائية، تشجّع! • لك وحدك المجد، أيها الرب الأزلي. افتح عينيّ وقلبي. شكرًا لك.",
         copyright: "Emmanuel Payet © 2024"
     },
     uk: {
         subtitle: "✝ Христианський Художник • Творець • Натхненник ✝",
         discover: "✝ Відкрийте Мій Творчий Всесвіт ✝",
         games: "Мої Духовні Ігри - безкоштовно",
-        gamesDecor: "Ігри та Декор",
+        gamesDecor: "Ігри та виставки",
         booksArt: "Книги та Мистецтво",
         booksAmazon: "Також доступно на Amazon",
         freeGospel: "Безкоштовний Госпел",
@@ -262,13 +272,14 @@ const translations = {
         uplessSub: "Шлях Всесвіту",
         quote: "Християнське мистецтво об'єднує серця понад відмінностями,<br>святкуючи красу божественного творіння<br>у всій його різноманітності.",
         footer: "Слава Богу",
+        adventure: "Життя — надзвичайна пригода. Сміливіше! • Тобі одному слава, Вічний Господи. Відкрий мої очі та моє серце. Дякую.",
         copyright: "Emmanuel Payet © 2024"
     },
     hi: {
         subtitle: "✝ ईसाई कलाकार • निर्माता • प्रेरक ✝",
         discover: "✝ मेरा रचनात्मक ब्रह्मांड खोजें ✝",
         games: "मेरे आध्यात्मिक खेल - मुफ्त",
-        gamesDecor: "खेल और सजावट",
+        gamesDecor: "खेल और प्रदर्शनियाँ",
         booksArt: "पुस्तकें और कला",
         booksAmazon: "Amazon पर भी उपलब्ध",
         freeGospel: "मुफ्त गॉस्पेल",
@@ -286,6 +297,7 @@ const translations = {
         uplessSub: "ब्रह्मांड का मार्ग",
         quote: "ईसाई कला मतभेदों से परे दिलों को जोड़ती है,<br>अपनी सारी विविधता में<br>दिव्य सृष्टि की सुंदरता का जश्न मनाती है।",
         footer: "भगवान की महिमा",
+        adventure: "जीवन एक असाधारण रोमांच है, हिम्मत रखो! • हे अनंत प्रभु, केवल तेरी महिमा हो। मेरी आँखें और मेरा हृदय खोल दे। धन्यवाद।",
         copyright: "Emmanuel Payet © 2024"
     }
 };
