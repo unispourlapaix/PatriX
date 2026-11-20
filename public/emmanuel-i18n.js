@@ -22,7 +22,7 @@ const translations = {
         uplessSub: "The Way of the Universe",
         quote: "Christian art unites hearts beyond differences,<br>celebrating the beauty of divine creation<br>in all its diversity.",
         footer: "Glory to God",
-        adventure: "Life is an extraordinary adventure. Take courage! • To You alone be the glory, Eternal Lord. Open my eyes and my heart. Thank You.",
+        adventure: "Life is an extraordinary adventure. Take courage!",
         copyright: "Emmanuel Payet © 2024"
     },
     fr: {
@@ -47,7 +47,7 @@ const translations = {
         uplessSub: "La Voie de l’Univers",
         quote: "L'art chrétien unit les cœurs au-delà des différences,<br>célébrant la beauté de la création divine<br>dans toute sa diversité.",
         footer: "Gloire à Dieu",
-        adventure: "La vie est une aventure extraordinaire, courage ! • À toi seul la gloire, Éternel. Ouvre mes yeux et mon cœur. Merci.",
+        adventure: "La vie est une aventure extraordinaire, courage !",
         copyright: "Emmanuel Payet © 2024"
     },
     es: {
@@ -72,7 +72,7 @@ const translations = {
         uplessSub: "El Camino del Universo",
         quote: "El arte cristiano une corazones más allá de las diferencias,<br>celebrando la belleza de la creación divina<br>en toda su diversidad.",
         footer: "Gloria a Dios",
-        adventure: "¡La vida es una aventura extraordinaria, ánimo! • A ti solo sea la gloria, Eterno. Abre mis ojos y mi corazón. Gracias.",
+        adventure: "¡La vida es una aventura extraordinaria, ánimo!",
         copyright: "Emmanuel Payet © 2024"
     },
     de: {
@@ -97,7 +97,7 @@ const translations = {
         uplessSub: "Der Weg des Universums",
         quote: "Christliche Kunst vereint Herzen über Unterschiede hinweg,<br>und feiert die Schönheit der göttlichen Schöpfung<br>in ihrer ganzen Vielfalt.",
         footer: "Ehre sei Gott",
-        adventure: "Das Leben ist ein außergewöhnliches Abenteuer. Nur Mut! • Dir allein gebührt die Ehre, ewiger Herr. Öffne meine Augen und mein Herz. Danke.",
+        adventure: "Das Leben ist ein außergewöhnliches Abenteuer. Nur Mut!",
         copyright: "Emmanuel Payet © 2024"
     },
     it: {
@@ -122,7 +122,7 @@ const translations = {
         uplessSub: "La Via dell’Universo",
         quote: "L'arte cristiana unisce i cuori oltre le differenze,<br>celebrando la bellezza della creazione divina<br>in tutta la sua diversità.",
         footer: "Gloria a Dio",
-        adventure: "La vita è un’avventura straordinaria, coraggio! • A te solo la gloria, Eterno. Apri i miei occhi e il mio cuore. Grazie.",
+        adventure: "La vita è un’avventura straordinaria, coraggio!",
         copyright: "Emmanuel Payet © 2024"
     },
     pt: {
@@ -147,7 +147,7 @@ const translations = {
         uplessSub: "O Caminho do Universo",
         quote: "A arte cristã une corações além das diferenças,<br>celebrando a beleza da criação divina<br>em toda a sua diversidade.",
         footer: "Glória a Deus",
-        adventure: "A vida é uma aventura extraordinária, coragem! • A ti somente a glória, Eterno. Abre meus olhos e meu coração. Obrigado.",
+        adventure: "A vida é uma aventura extraordinária, coragem!",
         copyright: "Emmanuel Payet © 2024"
     },
     ru: {
@@ -172,7 +172,7 @@ const translations = {
         uplessSub: "Путь Вселенной",
         quote: "Христианское искусство объединяет сердца за пределами различий,<br>празднуя красоту божественного творения<br>во всем его разнообразии.",
         footer: "Слава Богу",
-        adventure: "Жизнь — необыкновенное приключение. Смелее! • Тебе одному слава, Вечный Господь. Открой мои глаза и моё сердце. Спасибо.",
+        adventure: "Жизнь — необыкновенное приключение. Смелее!",
         copyright: "Emmanuel Payet © 2024"
     },
     zh: {
@@ -197,7 +197,7 @@ const translations = {
         uplessSub: "宇宙之道",
         quote: "基督教艺术超越差异团结人心，<br>在其多样性中<br>庆祝神圣创造的美丽。",
         footer: "荣耀归于神",
-        adventure: "生命是一场非凡的冒险，勇敢前行！ • 荣耀唯独归于你，永恒的主。求你开启我的双眼和心灵。感谢你。",
+        adventure: "生命是一场非凡的冒险，勇敢前行！",
         copyright: "Emmanuel Payet © 2024"
     },
     ja: {
@@ -222,7 +222,7 @@ const translations = {
         uplessSub: "宇宙の道",
         quote: "キリスト教芸術は違いを超えて心を結びつけ、<br>その多様性の中で<br>神の創造の美しさを讃えます。",
         footer: "神に栄光あれ",
-        adventure: "人生は素晴らしい冒険。勇気を持って！ • 永遠の主よ、あなただけに栄光を。私の目と心を開いてください。ありがとうございます。",
+        adventure: "人生は素晴らしい冒険。勇気を持って！",
         copyright: "Emmanuel Payet © 2024"
     },
     ar: {
@@ -247,7 +247,7 @@ const translations = {
         uplessSub: "طريق الكون",
         quote: "الفن المسيحي يوحد القلوب عبر الاختلافات،<br>محتفلاً بجمال الخلق الإلهي<br>في كل تنوعه.",
         footer: "المجد لله",
-        adventure: "الحياة مغامرة استثنائية، تشجّع! • لك وحدك المجد، أيها الرب الأزلي. افتح عينيّ وقلبي. شكرًا لك.",
+        adventure: "الحياة مغامرة استثنائية، تشجّع!",
         copyright: "Emmanuel Payet © 2024"
     },
     uk: {
@@ -272,7 +272,7 @@ const translations = {
         uplessSub: "Шлях Всесвіту",
         quote: "Християнське мистецтво об'єднує серця понад відмінностями,<br>святкуючи красу божественного творіння<br>у всій його різноманітності.",
         footer: "Слава Богу",
-        adventure: "Життя — надзвичайна пригода. Сміливіше! • Тобі одному слава, Вічний Господи. Відкрий мої очі та моє серце. Дякую.",
+        adventure: "Життя — надзвичайна пригода. Сміливіше!",
         copyright: "Emmanuel Payet © 2024"
     },
     hi: {
@@ -297,7 +297,7 @@ const translations = {
         uplessSub: "ब्रह्मांड का मार्ग",
         quote: "ईसाई कला मतभेदों से परे दिलों को जोड़ती है,<br>अपनी सारी विविधता में<br>दिव्य सृष्टि की सुंदरता का जश्न मनाती है।",
         footer: "भगवान की महिमा",
-        adventure: "जीवन एक असाधारण रोमांच है, हिम्मत रखो! • हे अनंत प्रभु, केवल तेरी महिमा हो। मेरी आँखें और मेरा हृदय खोल दे। धन्यवाद।",
+        adventure: "जीवन एक असाधारण रोमांच है, हिम्मत रखो!",
         copyright: "Emmanuel Payet © 2024"
     }
 };
