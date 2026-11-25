@@ -45,15 +45,15 @@ async function showStartMode() {
         });
     }
     const labels = {
-        fr: ['Choisis ton mode de jeu', 'Mode simple', 'Nouveau mode horizontal', 'Tourne ton téléphone pour jouer en paysage.'],
-        en: ['Choose your game mode', 'Simple mode', 'New landscape mode', 'Turn your phone sideways to play.'],
-        es: ['Elige tu modo de juego', 'Modo sencillo', 'Nuevo modo horizontal', 'Gira el móvil para jugar en horizontal.'],
-        pt: ['Escolhe o modo de jogo', 'Modo simples', 'Novo modo horizontal', 'Vira o telemóvel para jogar na horizontal.'],
-        ar: ['اختر وضع اللعب', 'الوضع البسيط', 'الوضع الأفقي الجديد', 'أدر هاتفك للعب في الوضع الأفقي.'],
-        ja: ['ゲームモードを選択', 'シンプルモード', '新しい横画面モード', 'スマートフォンを横向きにして遊ぼう。'],
-        zh: ['选择游戏模式', '简单模式', '全新横屏模式', '请横向转动手机游玩。'],
-        uk: ['Обери режим гри', 'Простий режим', 'Новий горизонтальний режим', 'Поверни телефон горизонтально, щоб грати.'],
-        ln: ['Poná lolenge ya kosakana', 'Lolenge ya pɛtɛɛ', 'Lolenge ya sika na ngámbo', 'Balusá telefone na ngámbo mpo na kosakana.']
+        fr: ['Choisis ton mode de jeu', 'Mode simple', 'Horizontal — Brique fun!', 'Tourne ton téléphone pour jouer en paysage.'],
+        en: ['Choose your game mode', 'Simple mode', 'Landscape — Brick fun!', 'Turn your phone sideways to play.'],
+        es: ['Elige tu modo de juego', 'Modo sencillo', 'Horizontal — ¡Diversión con bloques!', 'Gira el móvil para jugar en horizontal.'],
+        pt: ['Escolhe o modo de jogo', 'Modo simples', 'Horizontal — Diversão com blocos!', 'Vira o telemóvel para jogar na horizontal.'],
+        ar: ['اختر وضع اللعب', 'الوضع البسيط', 'أفقي — متعة المكعبات!', 'أدر هاتفك للعب في الوضع الأفقي.'],
+        ja: ['ゲームモードを選択', 'シンプルモード', '横画面 — ブロックで楽しもう！', 'スマートフォンを横向きにして遊ぼう。'],
+        zh: ['选择游戏模式', '简单模式', '横屏 — 方块乐趣！', '请横向转动手机游玩。'],
+        uk: ['Обери режим гри', 'Простий режим', 'Горизонтально — Веселі блоки!', 'Поверни телефон горизонтально, щоб грати.'],
+        ln: ['Poná lolenge ya kosakana', 'Lolenge ya pɛtɛɛ', 'Na ngámbo — Bisengo ya babriki!', 'Balusá telefone na ngámbo mpo na kosakana.']
     };
     const dialog = document.getElementById('startModeDialog');
     const lang = window.i18n?.getLanguage() || 'fr';
